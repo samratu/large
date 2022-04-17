@@ -650,7 +650,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 1080,
+      "port": 108,
       "protocol": "socks",
       "settings": {
         "auth": "password",
@@ -1298,6 +1298,10 @@ iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 5443 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 5443 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 3443 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 3443 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 108 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 108 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 1080 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 1080 -j ACCEPT
 iptables-save > /etc/iptables.up.rules
 iptables-restore -t < /etc/iptables.up.rules
 netfilter-persistent save
