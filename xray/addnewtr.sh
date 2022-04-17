@@ -18,7 +18,7 @@ domain=$(cat /etc/xray/domain)
 
 uuid=$(cat /proc/sys/kernel/random/uuid)
 tgrpc="$(cat ~/log-install.txt | grep -w "TROJAN GRPC" | cut -d: -f2|sed 's/ //g')"
-txtls="$(cat ~/log-install.txt | grep -w "TROJAN TCP" | cut -d: -f2|sed 's/ //g')"
+txtls="$(cat ~/log-install.txt | grep -w "TROJAN XTLS" | cut -d: -f2|sed 's/ //g')"
 thdua="$(cat ~/log-install.txt | grep -w "TROJAN H2C" | cut -d: -f2|sed 's/ //g')"
 thttp="$(cat ~/log-install.txt | grep -w "TROJAN HTTP" | cut -d: -f2|sed 's/ //g')"
 ttls="$(cat ~/log-install.txt | grep -w "TROJAN WS TLS" | cut -d: -f2|sed 's/ //g')"
