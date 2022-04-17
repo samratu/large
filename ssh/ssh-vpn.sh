@@ -303,6 +303,15 @@ connect = 127.0.0.1:1194
 
 END
 
+#detail nama perusahaan
+country=ID
+state=Jawa-Tengah
+locality=Sukoharjo
+organization=GANDRING
+organizationalunit=gandring
+commonname=GANDRING
+email=djarumpentol01@gmail.com
+
 # make a certificate
 openssl genrsa -out key.pem 2048
 openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
