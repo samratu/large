@@ -280,6 +280,8 @@ systemctl enable vnstat
 rm -f /root/vnstat-2.6.tar.gz
 rm -rf /root/vnstat-2.6
 
+path_crt="/root/.acme.sh/$domain/fullchain.cer"
+path_key="/root/.acme.sh/$domain/$domain.key"
 # install stunnel
 apt install stunnel4 -y
 cat > /etc/stunnel/stunnel.conf <<-END
