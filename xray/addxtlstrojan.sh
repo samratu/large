@@ -38,8 +38,8 @@ sed -i '/#trojan-xtls$/a\#&# '"$user $exp"'\
 trojanxtls="trojan://${uuid}@${domain}:$txtls?security=xtls&type=tcp&headerType=none&flow=xtls-rprx-direct#${user}"
 #trojanxtls="trojan://${uuid}@${domain}:$txtls?type=tcp&security=tls&headerType=none#${user}"
 service cron restart
-#systemctl restart xray.service
-#systemctl restart xtrojan.service
+systemctl restart xray.service
+systemctl restart xtrojan.service
 clear
 echo -e ""
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
