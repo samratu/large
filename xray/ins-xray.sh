@@ -91,6 +91,54 @@ cat > /etc/xray/config.json << END
   },
   "inbounds": [
     {
+      "port": 99,
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "${uuid}",
+            "flow": "xtls-rprx-direct"
+#vless-xtls
+          }
+        ],
+        "decryption": "none",
+        "fallbacks": [
+          {
+            "dest": 88
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "security": "xtls",
+        "tcpSettings": {},
+        "kcpSettings": {},
+        "wsSettings": {},
+        "httpSettings": {},
+        "quicSettings": {},
+        "grpcSettings": {},
+        "xtlsSettings": {
+          "certificates": [
+            {
+              "certificateFile": "/etc/xray/xray.crt",
+              "keyFile": "/etc/xray/xray.key"
+            }
+          ],
+          "alpn": [
+            "http/1.1"
+          ]
+        }
+      },
+      "domain": "${domain}",
+      "sniffing": {
+        "enabled": true,
+        "destOverride": [
+          "http",
+          "tls"
+        ]
+      }
+    },
+    {
       "port": 443,
       "protocol": "vmess",
       "settings": {
