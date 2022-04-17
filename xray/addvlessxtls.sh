@@ -16,7 +16,7 @@ MYIP=$(wget -qO- ipinfo.io/ip);
 clear
 domain=$(cat /etc/xray/domain)
 
-xtls="$(cat ~/log-install.txt | grep -w "VLESS TCP" | cut -d: -f2|sed 's/ //g')"
+vlxtls="$(cat ~/log-install.txt | grep -w "VLESS XTLS" | cut -d: -f2|sed 's/ //g')"
 #nontls="$(cat ~/log-install.txt | grep -w "VLESS NON TLS" | cut -d: -f2|sed 's/ //g')"
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 		read -rp "Username : " -e user
@@ -33,7 +33,7 @@ read -p "Expired (Days) : " masaaktif
 hariini=`date -d "0 days" +"%Y-%m-%d"`
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#vless-xtls$/a\#### '"$user $exp"'\
-},{"id": "'""$user""'","email": "'""$user""'"' /etc/xray/xvless.json
+},{"id": "'""$uuid""'","flow": "'""xtls-rprx-direct""'", "email": "'""$user""'"' /etc/xray/xvless.json
 
 vlessxtls="vless://${user}@${domain}:$vlxtls?type=tcp&security=xtls&headerType=none&flow=xtls-rprx-direct&encryption=none#${user}"
 #vlessxtls="vless://${uuid}@${domain}:$vlxtls?security=xtls&type=tcp&headerType=none&encryption=none#${user}"
@@ -47,11 +47,11 @@ echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━�
 echo -e "Remarks : ${user}"
 echo -e "IP/Host : ${MYIP}"
 echo -e "Address : ${domain}"
-echo -e "Port : ${xtls}"
+echo -e "Port : ${vlxtls}"
 echo -e "User ID : ${uuid}"
 echo -e "Encryption : none"
 echo -e "Network : tcp"
-echo -e "Security : tls"
+echo -e "Security : xtls"
 #echo -e "Flow : xtls-rprx-direct"
 #echo -e "serviceName : gandring"
 echo -e "Created : $hariini"
