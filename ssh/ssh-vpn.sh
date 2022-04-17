@@ -35,15 +35,6 @@ ver=$VERSION_ID
 
 domain=${cat /etc/xray/domain}
 
-#detail nama perusahaan
-country=ID
-state=Jawa-Tengah
-locality=Sukoharjo
-organization=GANDRING-VPN
-organizationalunit=www.zerossl.my.id
-commonname=$domain
-email=djarumpentol01@gmail.com
-
 # simple password minimal
 wget -O /etc/pam.d/common-password "https://${wisnuvpn}/password"
 chmod +x /etc/pam.d/common-password
@@ -331,9 +322,17 @@ accept = 990
 connect = 127.0.0.1:1194
 
 END
+#detail nama perusahaan
+country=ID
+state=Jawa-Tengah
+locality=Sukoharjo
+organization=GANDRING-VPN
+organizationalunit=GANDRING
+commonname=GANDRING-VPN
+email=djarumpentol01@gmail.com
 
 # make a certificate
-openssl genrsa -out cert.pem -b 1024
+openssl genrsa -out cert.pem 1024
 openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
 -subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
 cat cert.pem key.pem >> /etc/stunnel5/stunnel5.pem
@@ -355,7 +354,7 @@ WantedBy=multi-user.target
 END
 
 # Service Stunnel5 /etc/init.d/stunnel5
-#wget -q -O /etc/init.d/stunnel5 "https://${wisnuvpnnnn}/stunnel5.init"
+wget -q -O /etc/init.d/stunnel5 "https://${wisnuvpnnnn}/stunnel5.init"
 
 # Ubah Izin Akses
 chmod 600 /etc/stunnel5/stunnel5.pem
