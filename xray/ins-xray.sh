@@ -838,7 +838,7 @@ cat > /etc/xray/xtrojan.json << END
     },
     {
       "port": 2096,
-      "listen": "127.0.0.1",
+      "listen": "0.0.0.0",
       "protocol": "trojan",
       "tag": "TROJAN-WSTLS-in",
       "settings": {
