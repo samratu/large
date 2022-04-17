@@ -332,10 +332,10 @@ commonname=GANDRING-VPN
 email=djarumpentol01@gmail.com
 
 # make a certificate
-openssl genrsa -out cert.pem 1024
-openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
--subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
-cat cert.pem key.pem >> /etc/stunnel5/stunnel5.pem
+#openssl genrsa -out cert.pem 1024
+#openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
+#-subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
+#cat cert.pem key.pem >> /etc/stunnel5/stunnel5.pem
 
 # Service Stunnel5 systemctl restart stunnel5
 cat > /etc/systemd/system/stunnel5.service << END
