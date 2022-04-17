@@ -81,8 +81,8 @@ bash acme.sh --installcert -d $domain --fullchainpath /etc/xray/xray.crt --keypa
 uuid=$(cat /proc/sys/kernel/random/uuid)
 
 # // Certificate File
-path_crt="/etc/xray/xray.crt"
-path_key="/etc/xray/xray.key"
+path_crt1="/etc/xray/xray.crt"
+path_key2="/etc/xray/xray.key"
 path_crt="/root/.acme.sh/$domain/fullchain.cer"
 path_key="/root/.acme.sh/$domain/$domain.key"
 # Buat Config Xray
