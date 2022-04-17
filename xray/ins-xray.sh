@@ -397,7 +397,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 2053,
+      "port": 2089,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -442,7 +442,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 2052,
+      "port": 2085,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -543,7 +543,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 2083,
+      "port": 2054,
       "protocol": "vless",
       "settings": {
         "clients": [
@@ -587,7 +587,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 2082,
+      "port": 2051,
       "protocol": "vless",
       "settings": {
         "clients": [
@@ -802,7 +802,7 @@ cat > /etc/xray/xtrojan.json << END
     },
     {
       "port": 443,
-      "listen": "127.0.0.1",
+      "listen": "0.0.0.0",
       "protocol": "trojan",
       "tag": "TROJAN-gRPC-in",
       "settings": {
@@ -1014,7 +1014,7 @@ cat > /etc/xray/xvless.json << END
   },
   "inbounds": [
     {
-      "port": 888,
+      "port": 8088,
       "listen": "0.0.0.0",
       "tag": "vless-http-tls-in",
       "protocol": "vless",
@@ -1070,7 +1070,7 @@ cat > /etc/xray/xvless.json << END
       }
     },
     {
-      "port": 443,
+      "port": 5443,
       "listen": "127.0.0.1",
       "tag":  "vless-http/2-in",
       "protocol": "vless",
@@ -1292,6 +1292,12 @@ iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 808 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 808 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 4443 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 4443 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 8088 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 8088 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 5443 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 5443 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 3443 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 3443 -j ACCEPT
 iptables-save > /etc/iptables.up.rules
 iptables-restore -t < /etc/iptables.up.rules
 netfilter-persistent save
