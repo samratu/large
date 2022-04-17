@@ -19,25 +19,25 @@ CYAN='\033[0;36m'
 LIGHT='\033[0;37m'
 # ==========================================
 # Link Hosting Kalian Untuk Ssh Vpn
-wisnuvpn="raw.githubusercontent.com/wisnucokrosatrio/shanum/main/ssh"
+wisnuvpn="raw.githubusercontent.com/samratu/large/file/ssh"
 # Link Hosting Kalian Untuk Sstp
-wisnuvpnn="raw.githubusercontent.com/wisnucokrosatrio/shanum/main/sstp"
+wisnuvpnn="raw.githubusercontent.com/samratu/large/file/sstp"
 # Link Hosting Kalian Untuk Ssr
-wisnuvpnnn="raw.githubusercontent.com/wisnucokrosatrio/shanum/main/ssr"
+wisnuvpnnn="raw.githubusercontent.com/samratu/large/file/ssr"
 # Link Hosting Kalian Untuk Shadowsocks
-wisnuvpnnnn="raw.githubusercontent.com/wisnucokrosatrio/shanum/main/shadowsocks"
+wisnuvpnnnn="raw.githubusercontent.com/samratu/large/file/shadowsocks"
 # Link Hosting Kalian Untuk Wireguard
-wisnuvpnnnnn="raw.githubusercontent.com/wisnucokrosatrio/shanum/main/wireguard"
+wisnuvpnnnnn="raw.githubusercontent.com/samratu/large/file/wireguard"
 # Link Hosting Kalian Untuk Xray
-wisnuvpnnnnnn="raw.githubusercontent.com/wisnucokrosatrio/shanum/main/xray"
+wisnuvpnnnnnn="raw.githubusercontent.com/samratu/large/file/xray"
 # Link Hosting Kalian Untuk Ipsec
-wisnuvpnnnnnnn="raw.githubusercontent.com/wisnucokrosatrio/shanum/main/ipsec"
+wisnuvpnnnnnnn="raw.githubusercontent.com/samratu/large/file/ipsec"
 # Link Hosting Kalian Untuk Backup
-wisnuvpnnnnnnnn="raw.githubusercontent.com/wisnucokrosatrio/shanum/main/backup"
+wisnuvpnnnnnnnn="raw.githubusercontent.com/samratu/large/file/backup"
 # Link Hosting Kalian Untuk Websocket
-wisnuvpnnnnnnnnn="raw.githubusercontent.com/wisnucokrosatrio/shanum/main/websocket"
+wisnuvpnnnnnnnnn="raw.githubusercontent.com/samratu/large/file/websocket"
 # Link Hosting Kalian Untuk Ohp
-wisnuvpnnnnnnnnnn="raw.githubusercontent.com/wisnucokrosatrio/shanum/main/ohp"
+wisnuvpnnnnnnnnnn="raw.githubusercontent.com/samratu/large/file/ohp"
 
 # Getting
 MYIP=$(wget -qO- ipinfo.io/ip);
@@ -113,7 +113,7 @@ echo " 🔰 PORT DROPBEAR : 200, 300" |tee -a log-install.txt
 echo " 🔰 PORT SQUID : 3128, 8080" |tee -a log-install.txt
 echo " 🔰 Badvpn : 7100, 7200, 7300-7900" |tee -a log-install.txt
 echo " 🔰 Nginx : 88" |tee -a log-install.txt
-echo " 🔰 Wireguard : 591" |tee -a log-install.txt
+echo " 🔰 Wireguard : 8080" |tee -a log-install.txt
 echo " 🔰 L2TP/IPSEC VPN : 1701" |tee -a log-install.txt
 echo " 🔰 PPTP VPN : 1732" |tee -a log-install.txt
 echo " 🔰 SSTP VPN : 444" |tee -a log-install.txt
@@ -130,18 +130,18 @@ echo " 🔰 OHP Dropbear : 8282" |tee -a log-install.txt
 echo " 🔰 OHP OpenVPN : 8383" |tee -a log-install.txt
 echo " 🔰 VMESS WS TLS : 2053" |tee -a log-install.txt
 echo " 🔰 VMESS WS NON TLS : 2052" |tee -a log-install.txt
-echo " 🔰 VMESS GRPC TLS: 8880" |tee -a log-install.txt
-echo " 🔰 VMESS GRPC NON TLS: 8880" |tee -a log-install.txt
+echo " 🔰 VMESS GRPC TLS: 2053" |tee -a log-install.txt
+echo " 🔰 VMESS GRPC NON TLS: 2052" |tee -a log-install.txt
 echo " 🔰 VMESS H2C : 443" |tee -a log-install.txt
-echo " 🔰 VMESS HTTP TLS : 443" |tee -a log-install.txt
+echo " 🔰 VMESS HTTP TLS : 8808" |tee -a log-install.txt
 echo " 🔰 VMESS HTTP NON TLS : 808" |tee -a log-install.txt
 echo " 🔰 VLESS TCP : 99" |tee -a log-install.txt
 echo " 🔰 VLESS WS TLS : 2083" |tee -a log-install.txt
 echo " 🔰 VLESS WS NON TLS : 2082" |tee -a log-install.txt
-echo " 🔰 VLESS GRPC TLS : 8443" |tee -a log-install.txt
-echo " 🔰 VLESS GRPC NON TLS: 8880" |tee -a log-install.txt
-echo " 🔰 VLESS H2C : 443" |tee -a log-install.txt
-echo " 🔰 VLESS HTTP TLS : 888" |tee -a log-install.txt
+echo " 🔰 VLESS GRPC TLS : 2083" |tee -a log-install.txt
+echo " 🔰 VLESS GRPC NON TLS: 2082" |tee -a log-install.txt
+echo " 🔰 VLESS H2C : 3443" |tee -a log-install.txt
+echo " 🔰 VLESS HTTP TLS : 8088" |tee -a log-install.txt
 echo " 🔰 VLESS HTTP NON TLS : 888" |tee -a log-install.txt
 echo " 🔰 TROJAN GO : 2087" |tee -a log-install.txt
 echo " 🔰 TROJAN GRPC : 443" |tee -a log-install.txt
