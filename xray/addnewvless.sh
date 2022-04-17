@@ -18,7 +18,7 @@ domain=$(cat /etc/xray/domain)
 
 vlgrpc="$(cat ~/log-install.txt | grep -w "VLESS GRPC TLS" | cut -d: -f2|sed 's/ //g')"
 vlgrpcnon="$(cat ~/log-install.txt | grep -w "VLESS GRPC NON TLS" | cut -d: -f2|sed 's/ //g')"
-vlxtls="$(cat ~/log-install.txt | grep -w "VLESS TCP" | cut -d: -f2|sed 's/ //g')"
+vlxtls="$(cat ~/log-install.txt | grep -w "VLESS XTLS" | cut -d: -f2|sed 's/ //g')"
 nontls="$(cat ~/log-install.txt | grep -w "VLESS WS NON TLS" | cut -d: -f2|sed 's/ //g')"
 tls="$(cat ~/log-install.txt | grep -w "VLESS WS TLS" | cut -d: -f2|sed 's/ //g')"
 vlhdua="$(cat ~/log-install.txt | grep -w "VLESS H2C" | cut -d: -f2|sed 's/ //g')"
@@ -42,10 +42,10 @@ sed -i '/#vless-grpc-tls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
 sed -i '/#vless-grpc-nontls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
-sed -i '/#vless-xtls$/a\#### '"$user $exp"'\
-},{"id": "'""$user""'","email": "'""$user""'"' /etc/xray/xtrojan.json
+sed -i '/#trojan-xtls$/a\#&# '"$user $exp"'\
+},{"id": "'""$uuid""'","flow": "'""xtls-rprx-direct""'", "email": "'""$user""'"' /etc/xray/config.json
 sed -i '/#vless-hdua$/a\#### '"$user $exp"'\
-},{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
+},{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvless.json
 sed -i '/#vless-tls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
 sed -i '/#vless-nontls$/a\#### '"$user $exp"'\
@@ -61,7 +61,7 @@ vlessnontls="vless://${uuid}@${domain}:$nontls?path=gandring&encryption=none&typ
 vlessgrpc="vless://${uuid}@${domain}:$vlgrpc?mode=multi&security=tls&encryption=none&type=grpc&serviceName=gandring&sni=${domain}#${user}"
 vlessgrpcnon="vless://${uuid}@${domain}:$vlgrpcnon?mode=multi&security=none&encryption=none&type=grpc&serviceName=gandring&sni=${domain}#${user}"
 vlesshdua="vless://${uuid}@${domain}:$vlhdua?type=http&security=tls&path=gandring&encryption=none#${user}"
-vlessxtls="vless://${uuid}@${domain}:$vlxtls?security=tls&encryption=none&flow=xtls-rprx-direct#${user}"
+vlessxtls="vless://${uuid}@${domain}:$vlxtls?security=xtls&encryption=none&flow=xtls-rprx-direct#${user}"
 systemctl restart xvless.service
 systemctl restart xray.service
 systemctl restart xtrojan.service
@@ -76,12 +76,12 @@ echo -e "Address : ${domain}"
 echo -e "Port GRPC : $vlgrpc"
 echo -e "Port HTTP : $vlhttp"
 echo -e "Port H2C : $vlhdua"
-echo -e "Port TCP : $vlxtls"
+echo -e "Port XTLS : $vlxtls"
 echo -e "Port WS TLS : $tls"
-echo -e "Port WS NONTLS : $nontls"
+echo -e "Port WS NON TLS : $nontls"
 echo -e "User ID : ${uuid}"
 echo -e "Encryption : none"
-echo -e "Network : grpc,http,h2c,tcp,ws"
+echo -e "Network : GRPC,HTTP,H2C,TCP/XTLS,WS"
 echo -e "Security : tls"
 echo -e "serviceName : gandring"
 echo -e "Path WS : gandring"
@@ -93,15 +93,15 @@ echo -e "gRPC TLS : ${vlessgrpc}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "gRPC NON TLS : ${vlessgrpcnon}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "HTTP : ${vlesshttp}"
+echo -e "HTTP TLS: ${vlesshttp}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "HTTP NON TLS : ${vlesshttpnon}"
+echo -e "HTTP NON TLS: ${vlesshttpnon}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "TCP : ${vlessxtls}"
+echo -e "TCP/XTLS : ${vlessxtls}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "WS TLS : ${vlesstls}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "WS NONTLS : ${vlessnontls}"
+echo -e "WS NON TLS : ${vlessnontls}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "H2C : ${vlesshdua}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
