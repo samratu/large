@@ -309,6 +309,8 @@ chmod 644 /etc/stunnel5
 
 # Download Config Stunnel5
 cat > /etc/stunnel5/stunnel5.conf <<-END
+#cert = /etc/xray/xray.crt
+#key = /etc/xray/xray.key
 cert = /etc/stunnel5/stunnel5.pem
 client = no
 socket = a:SO_REUSEADDR=1
@@ -320,8 +322,12 @@ accept = 600
 connect = 127.0.0.1:300
 
 [openssh]
-accept = 500
+accept = 700
 connect = 127.0.0.1:22
+
+[openssh]
+accept = 500
+connect = 127.0.0.1:8443
 
 [openvpn]
 accept = 990
@@ -330,17 +336,17 @@ connect = 127.0.0.1:1194
 END
 
 # make a certificate
-openssl genrsa -out key.pem -b 1024
+openssl genrsa -out cert.pem -b 1024
 openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
 -subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
-cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
+cat cert.pem key.pem >> /etc/stunnel5/stunnel5.pem
 
 # Service Stunnel5 systemctl restart stunnel5
 cat > /etc/systemd/system/stunnel5.service << END
 [Unit]
-Description=Stunnel5 Service
+Description=STUNNEL5 ROUTING GAJAH DEMAK BY ZEROSSL
 Documentation=https://stunnel.org
-Documentation=https://github.com/wisnucokrosatrio
+Documentation=https://t.me/zerossl
 After=syslog.target network-online.target
 
 [Service]
@@ -352,7 +358,7 @@ WantedBy=multi-user.target
 END
 
 # Service Stunnel5 /etc/init.d/stunnel5
-wget -q -O /etc/init.d/stunnel5 "https://${wisnuvpnnnn}/stunnel5.init"
+#wget -q -O /etc/init.d/stunnel5 "https://${wisnuvpnnnn}/stunnel5.init"
 
 # Ubah Izin Akses
 chmod 600 /etc/stunnel5/stunnel5.pem
