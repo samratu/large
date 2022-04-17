@@ -297,9 +297,9 @@ chmod 644 /etc/stunnel5
 
 # Download Config Stunnel5
 cat > /etc/stunnel5/stunnel5.conf <<-END
-#cert = /etc/xray/xray.crt
-#key = /etc/xray/xray.key
-cert = /etc/stunnel5/stunnel5.pem
+cert = /etc/xray/xray.crt
+key = /etc/xray/xray.key
+#cert = /etc/stunnel5/stunnel5.pem
 client = no
 socket = a:SO_REUSEADDR=1
 socket = l:TCP_NODELAY=1
@@ -313,7 +313,7 @@ connect = 127.0.0.1:300
 accept = 700
 connect = 127.0.0.1:22
 
-[ws-tls]
+[openssh]
 accept = 500
 connect = 127.0.0.1:443
 
