@@ -1,5 +1,5 @@
 #!/bin/bash
-# My Telegram : https://t.me/zerossl
+# SL
 # ==========================================
 # Color
 RED='\033[0;31m'
@@ -13,10 +13,19 @@ LIGHT='\033[0;37m'
 # ==========================================
 # Getting
 MYIP=$(wget -qO- ipinfo.io/ip);
-
+echo "Checking VPS"
+IZIN=$( curl ipinfo.io/ip | grep $MYIP )
+if [ $MYIP = $MYIP ]; then
+echo -e "${NC}${GREEN}Permission Accepted...${NC}"
+else
+echo -e "${NC}${RED}Permission Denied!${NC}";
+echo -e "${NC}${LIGHT}Fuck You!!"
+exit 0
+fi
+# Mod By SL
 # ==================================================
 # Link Hosting Kalian
-wisnuvpn="raw.githubusercontent.com/samratu/large/file/ssh"
+akbarvpn="raw.githubusercontent.com/senowahyu62/scriptvps/main/ssh"
 
 # initialisasi var
 export DEBIAN_FRONTEND=noninteractive
@@ -30,7 +39,7 @@ apt install openvpn easy-rsa unzip -y
 apt install openssl iptables iptables-persistent -y
 mkdir -p /etc/openvpn/server/easy-rsa/
 cd /etc/openvpn/
-wget https://${wisnuvpn}/vpn.zip
+wget https://${akbarvpn}/vpn.zip
 unzip vpn.zip
 rm -f vpn.zip
 chown -R root:root /etc/openvpn/server/easy-rsa/
@@ -70,12 +79,12 @@ END
 
 sed -i $MYIP2 /etc/openvpn/tcp.ovpn;
 
-# Buat config client UDP 1195
+# Buat config client UDP 2200
 cat > /etc/openvpn/udp.ovpn <<-END
 client
 dev tun
 proto udp
-remote xxxxxxxxx 1195
+remote xxxxxxxxx 2200
 resolv-retry infinite
 route-method exe
 nobind
@@ -118,12 +127,12 @@ echo '</ca>' >> /etc/openvpn/tcp.ovpn
 # Copy config OpenVPN client ke home directory root agar mudah didownload ( TCP 1194 )
 cp /etc/openvpn/tcp.ovpn /home/vps/public_html/tcp.ovpn
 
-# masukkan certificatenya ke dalam config client UDP 1195
+# masukkan certificatenya ke dalam config client UDP 2200
 echo '<ca>' >> /etc/openvpn/udp.ovpn
 cat /etc/openvpn/server/ca.crt >> /etc/openvpn/udp.ovpn
 echo '</ca>' >> /etc/openvpn/udp.ovpn
 
-# Copy config OpenVPN client ke home directory root agar mudah didownload ( UDP 1195 )
+# Copy config OpenVPN client ke home directory root agar mudah didownload ( UDP 2200 )
 cp /etc/openvpn/udp.ovpn /home/vps/public_html/udp.ovpn
 
 # masukkan certificatenya ke dalam config client SSL
