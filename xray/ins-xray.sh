@@ -48,9 +48,7 @@ mkdir -p /var/log/xray/
 uuid=$(cat /proc/sys/kernel/random/uuid)
 
 cd /root/
-#wget https://raw.githubusercontent.com/acmesh-official/acme.sh/master/acme.sh
-#bash acme.sh --install
-rm
+wget https://raw.githubusercontent.com/acmesh-official/acme.sh/master/acme.sh
 
 sudo lsof -t -i tcp:80 -s tcp:listen | sudo xargs kill
 ##Generate acme certificate
@@ -58,7 +56,7 @@ curl https://get.acme.sh | sh
 alias acme.sh=~/.acme.sh/acme.sh
 /root/.acme.sh/acme.sh --upgrade --auto-upgrade
 /root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
-/root/.acme.sh/acme.sh --issue -d "$domain" --standalone --keylength ec-256
+/root/.acme.sh/acme.sh --issue -d "${domain}" --standalone --keylength ec-384
 /root/.acme.sh/acme.sh --install-cert -d "${domain}" --ecc \
 --fullchain-file /etc/xray/xray.crt \
 --key-file /etc/xray/xray.key
@@ -70,10 +68,10 @@ chmod 644 /etc/xray/xray.key
 #bash acme.sh --issue --standalone -d $domain --force
 #bash acme.sh --installcert -d $domain --fullchainpath /etc/xray/xray.crt --keypath /etc/xray/xray.key
 mkdir /root/.acme.sh
-curl https://acme-install.netlify.app/acme.sh -o /root/.acme.sh/acme.sh
-chmod +x /root/.acme.sh/acme.sh
-/root/.acme.sh/acme.sh --issue -d $domain --standalone -k ec-256
-~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath /etc/xray/xray.crt --keypath /etc/xray/xray.key --ecc
+#curl https://acme-install.netlify.app/acme.sh -o /root/.acme.sh/acme.sh
+#chmod +x /root/.acme.sh/acme.sh
+#/root/.acme.sh/acme.sh --issue -d $domain --standalone -k ec-256
+#~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath /etc/xray/xray.crt --keypath /etc/xray/xray.key --ecc
 
 uuid=$(cat /proc/sys/kernel/random/uuid)
 
