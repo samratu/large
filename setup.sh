@@ -150,7 +150,7 @@ echo " 🔰 TROJAN H2C : 443" |tee -a log-install.txt
 echo " 🔰 TROJAN XTLS : 4443" |tee -a log-install.txt
 echo " 🔰 TROJAN WS TLS : 2096" |tee -a log-install.txt
 echo " 🔰 TROJAN WS NON TLS : 2095" |tee -a log-install.txt
-echo " 🔰 SOCKS5 WEBSOCKET : 1080" |tee -a log-install.txt
+echo " 🔰 SOCKS5 WEBSOCKET : 108" |tee -a log-install.txt
 echo " 🔰 XRAY SHADOWSOCKS : 333" |tee -a log-install.txt
 echo " 🔰 XRAY MT PROTO : 111" |tee -a log-install.txt
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
