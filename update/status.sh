@@ -618,7 +618,7 @@ cname=$( awk -F: '/model name/ {name=$2} END {print name}' /proc/cpuinfo )
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\E[43;1;46m            🔰 SPESIFIKASI LINUX SERVER 🔰              \E[0m"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "HOSTNAME : $typevps $Tipe $VERSION $$basedong $HOSTNAME"                                                                                                                                                                                              
+echo -e "HOSTNAME : $typevps $Tipe $VERSION $HOSTNAME"                                                                                                                                                                                              
 echo -e "CORE     : $totalcore @$freq MHz CPU TERPAKAI $cpu_usage"                                                                                                                                                                                
 echo -e "PROSSESOR: $tipeprosesor"
 echo -e "Total RAM: ${totalram}MB  SISA RAM : ${MEMORY}MB"                                                                                                                                                                                   
