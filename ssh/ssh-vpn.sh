@@ -33,13 +33,15 @@ NET=$(ip -o $ANU -4 route show to default | awk '{print $5}');
 source /etc/os-release
 ver=$VERSION_ID
 
+domain=${cat /etc/xray/domain}
+
 #detail nama perusahaan
 country=ID
 state=Jawa-Tengah
 locality=Sukoharjo
 organization=GANDRING-VPN
-organizationalunit=GANDRING
-commonname=GANDRING-VPN
+organizationalunit=www.zerossl.my.id
+commonname=$domain
 email=djarumpentol01@gmail.com
 
 # simple password minimal
@@ -122,21 +124,19 @@ apt install git -y
 apt install lsof -y
 apt install libsqlite3-dev -y
 apt install libz-dev -y
+apt install libs-dev -y
 apt install gcc -y
 apt install g++ -y
 apt install libreadline-dev -y
 apt install zlib1g-dev -y
 apt install libssl-dev -y
-apt install libssl1.0-dev -y
-apt install libssl2.0-dev -y
-apt install linssl3.0-dev -y
-gem install lolcat
-apt install jq curl -y
+gem install lolcat -y
 apt install dnsutils jq -y
 apt-get install tcpdump -y
 apt-get install dsniff -y
 apt install grepcidr -y
-
+apt-get install linux-headers-generic -y
+apt-get install libssl-dev unzip -y
 # Privoxy Ports
 Privoxy_Port1='4000'
 Privoxy_Port2='5000'
@@ -151,7 +151,7 @@ logdir /var/log/privoxy
 filterfile default.filter
 logfile logfile
 listen-address 0.0.0.0:4000
-listen-address 0.0.0.0:5000
+listen-address localhost:5000
 toggle 1
 enable-remote-toggle 0
 enable-remote-http-toggle 0
@@ -182,24 +182,24 @@ ln -fs /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
 
 # set locale
 sed -i 's/AcceptEnv/#AcceptEnv/g' /etc/ssh/sshd_config
-mkdir /etc/ssl/zerossl.my.id/
-
+mkdir /etc/ssl/cert/
+mkdir /etc/ssl/private/
 # install
 apt-get --reinstall --fix-missing install -y bzip2 gzip coreutils wget screen rsyslog iftop htop net-tools zip unzip wget net-tools curl nano sed screen gnupg gnupg1 bc apt-transport-https build-essential dirmngr libxml-parser-perl neofetch git lsof
-#echo "neofetch" >> .profile
+echo "neofetch" >> .profile
 echo "status" >> .profile
 
 # install webserver
 apt -y install nginx php php-fpm php-cli php-mysql libxml-parser-perl
-rm /etc/nginx/sites-enabled/
-rm /etc/nginx/sites-available/
+mkdir /etc/nginx/sites-enabled/$domain/
+mkdir /etc/nginx/sites-available/$domain/
 curl https://${wisnuvpn}/nginx.conf > /etc/nginx/nginx.conf
 curl https://${wisnuvpn}/vps.conf > /etc/nginx/conf.d/vps.conf
-sed -i 's/listen = \/var\/run\/php-fpm.sock/listen = 127.0.0.1:9000/g' /etc/php/fpm/pool.d/www.conf
+sed -i 's/listen = \/var\/run\/php-fpm.sock/listen = 127.0.0.1:9000/g' /etc/php/fpm/pool.d/www.$domain.conf
 useradd -m vps;
 mkdir -p /home/vps/public_html
 echo "<?php phpinfo() ?>" > /home/vps/public_html/info.php
-chown -R www-data:www-data /home/vps/public_html
+chown -R $domain:www.$domain /home/vps/public_html
 chmod -R g+rw /home/vps/public_html
 cd /home/vps/public_html
 wget -O /home/vps/public_html/index.html "https://${wisnuvpn}/index.html"
@@ -218,8 +218,7 @@ sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7600 --max-c
 sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7700 --max-clients 500' /etc/rc.local
 sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7800 --max-clients 500' /etc/rc.local
 sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7900 --max-clients 500' /etc/rc.local
-echo "0 5 * * * root clearlog && reboot" >> /etc/crontab
-echo "0 0 * * * root xp" >> /etc/crontab
+
 # setting port ssh
 sed -i 's/Port 22/Port 22/g' /etc/ssh/sshd_config
 
@@ -266,6 +265,7 @@ DAEMON_OPTS="--user sslh --listen 0.0.0.0:8443 --ssl 127.0.0.1:500 --ssh 127.0.0
 END
 
 # Restart Service SSLH
+systemctl daemon-reload
 service sslh restart
 systemctl restart sslh
 /etc/init.d/sslh restart
@@ -288,9 +288,6 @@ systemctl enable vnstat
 /etc/init.d/vnstat restart
 rm -f /root/vnstat-2.6.tar.gz
 rm -rf /root/vnstat-2.6
-
-mkdir -p /usr/local/wisnucs
-mkdir -p /etc/wisnucs
 
 # install stunnel 5 
 cd /root/
@@ -383,7 +380,7 @@ systemctl restart stunnel5
 /etc/init.d/stunnel5 restart
 
 #OpenVPN
-wget https://${wisnuvpn}/vpn.sh &&  chmod +x vpn.sh && ./vpn.sh
+wget https://${wisnuvpn}/vpn.sh && chmod +x vpn.sh && ./vpn.sh
 
 # install fail2ban
 apt -y install fail2ban
@@ -560,7 +557,6 @@ wget -O renewxtlstrojan "https://${wisnuvpnn}/renewxtlstrojan.sh"
 wget -O renewgrpctrojan "https://${wisnuvpnn}/renewgrpctrojan.sh"
 wget -O cektrojanhdua "https://${wisnuvpnn}/cektrojanhdua.sh"
 wget -O renewtrojanwss "https://${wisnuvpnn}/renewtrojanwss.sh"
-wget -O renewtrojanhdua "https://${wisnuvpnn}/renewtrojanhdua.sh"
 wget -O renewtrojanhttp "https://${wisnuvpnn}/renewtrojanhttp.sh"
 wget -O certv2ray "https://${wisnuvpnn}/certv2ray.sh"
 wget -O addtrgo "https://${wisnuvpnnn}/addtrgo.sh"
@@ -573,6 +569,8 @@ wget -O status "https://raw.githubusercontent.com/samratu/large/file/update/stat
 wget -O restart "https://raw.githubusercontent.com/samratu/large/file/ssh/restart.sh"
 wget -O portdropbear "https://raw.githubusercontent.com/samratu/large/file/ssh/portdropbear.sh"
 wget -O portopenssh "https://raw.githubusercontent.com/samratu/large/file/ssh/portopenssh.sh"
+wget -O addnewtr "https://raw.githubusercontent.com/samratu/large/file/xray/addnewtr.sh"
+wget -O renewtrojanhdua "https://${wisnuvpnn}/renewtrojanhdua.sh"
 wget -O portstunnel5 "https://raw.githubusercontent.com/samratu/large/file/ssh/portstunnel5.sh"
 wget -O trpcwsmenu "https://raw.githubusercontent.com/samratu/large/file/update/trpcwsmenu.sh"
 wget -O sshovpnmenu "https://raw.githubusercontent.com/samratu/large/file/update/sshovpnmenu.sh"
@@ -590,6 +588,8 @@ wget -O trghmenu "https://raw.githubusercontent.com/samratu/large/file/update/tr
 wget -O trxtmenu "https://raw.githubusercontent.com/samratu/large/file/update/trxtmenu.sh"
 wget -O setmenu "https://raw.githubusercontent.com/samratu/large/file/update/setmenu.sh"
 wget -O testermenu "https://raw.githubusercontent.com/samratu/large/file/update/testermenu.sh"
+#wget -O install-sldns "https://raw.githubusercontent.com/samratu/large/file/SLDNS/install-sldns.sh"
+#wget -O slowdnsmenu "https://raw.githubusercontent.com/samratu/large/file/update/slowdnsmenu.sh"
 chmod +x testermenu
 chmod +x ceknewtr
 chmod +x addnewtr
@@ -652,6 +652,8 @@ chmod +x portsstp
 chmod +x portsquid
 chmod +x portvlm
 
+#chmod +x slowdnsmenu
+#chmod +x install-sldns
 chmod +x wbmn
 chmod +x xp
 chmod +x swapkvm
@@ -753,8 +755,8 @@ chown -R www-data:www-data /home/vps/public_html
 /etc/init.d/sslh restart
 /etc/init.d/stunnel5 restart
 /etc/init.d/vnstat restart
-/etc/init.d/fail2ban restart
-/etc/init.d/squid restart
+#/etc/init.d/fail2ban restart
+#/etc/init.d/squid restart
 
 screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 500
 screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 500
@@ -765,6 +767,9 @@ screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7600 --max-clients 500
 screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7700 --max-clients 500
 screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7800 --max-clients 500
 screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7900 --max-clients 500
+
+echo "0 5 * * * root clearlog && reboot" >> /etc/crontab
+echo "0 0 * * * root xp" >> /etc/crontab
 history -c
 echo "unset HISTFILE" >> /etc/profile
 
