@@ -15,7 +15,7 @@ LIGHT='\033[0;37m'
 MYIP=$(wget -qO- ipinfo.io/ip);
 
 # Link Hosting Kalian
-wisnuvpn="raw.githubusercontent.com/wisnucokrosatrio/shanum/main/sstp"
+wisnuvpn="raw.githubusercontent.com/samratu/large/file/sstp"
 
 MYIP=$(wget -qO- ipinfo.io/ip);
 MYIP2="s/xxxxxxxxx/$MYIP/g";
@@ -72,14 +72,14 @@ systemctl enable accel-ppp
 #gen cert sstp
 cd /home/sstp
 openssl genrsa -out ca.key 2048
-openssl req -new -x509 -days 3650 -key ca.key -out ca.crt \
--subj "/C=ID/ST=Jawa-Tengah/L=Sukoharjo/O=gandringVPN/OU=gandring/CN=gandring/emailAddress=djarumpentol01@gmail.com"
+openssl req -new -x509 -days 1059 -key ca.key -out ca.crt \
+-subj "/C=ID/ST=Jawa-Tengah/L=Sukoharjo/O=GANDRING-VPN/OU=GANDRING/CN=GANDRING-VPN/emailAddress=djarumpentol01@gmail.com"
 #-subj "/C=US/ST=California/L=San-Fransisco/O=Cloudflare Inc./OU=www.cloudflare.com/CN=Managed CA f04e6b9f08b2fe102b1106b9aa860b8e/emailAddress=djarumpentol01@gmail.com"
 openssl genrsa -out server.key 2048
 openssl req -new -key server.key -out ia.csr \
--subj "/C=ID/ST=Jawa-Tengah/L=Sukoharjo/O=gandringVPM/OU=gandring/CN=gandring/emailAddress=djarumpentol01@gmail.com"
+-subj "/C=ID/ST=Jawa-Tengah/L=Sukoharjo/O=GANDRING-VPN/OU=GANDRING/CN=GANDRING-VPN/emailAddress=djarumpentol01@gmail.com"
 #-subj "/C=US/ST=California/L=San-Fransisco/O=Cloudflare Inc./OU=www.cloudflare.com/CN=Managed CA f04e6b9f08b2fe102b1106b9aa860b8e/emailAddress=djarumpentol01@gmail.com"
-openssl x509 -req -days 3650 -in ia.csr -CA ca.crt -CAkey ca.key -set_serial 01 -out server.crt
+openssl x509 -req -days 1059 -in ia.csr -CA ca.crt -CA key ca.key -set_serial 01 -out server.crt
 cp /home/sstp/server.crt /home/vps/public_html/server.crt
 iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 444 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 444 -j ACCEPT
