@@ -8,25 +8,25 @@ bl='\e[36;1m'
 gl='\e[32;1m'
 #cat /usr/bin/bannerku | lolcat
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "\E[44;1;46m             🔰 PRESTIGE SERVER ZEROSSL 🔰              \E[0m"
+echo -e "\E[43;1;46m             🔰 PRESTIGE SERVER ZEROSSL 🔰              \E[0m"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" 
 echo -e "01\e[0;33m) MENU LAYANAN SSH DAN OPENVPN \e[m"
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "02\e[0;33m) MENU LAYANAN TROJAN H2C DAN XTLS \e[m"
+echo -e "02\e[0;33m) MENU LAYANAN TROJAN GO DAN HTTP \e[m"
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "03\e[0;33m) MENU LAYANAN TROJAN GO DAN HTTP \e[m"
+echo -e "03\e[0;33m) MENU LAYANAN TROJAN XTLS DAN H2C  \e[m"
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "04\e[0;33m) MENU LAYANAN TROJAN GRPC DAN WEBSOCKET \e[m"
+echo -e "04\e[0;33m) MENU TESTER SERVER VLESS TROJAN VMESS \e[m"
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "05\e[0;33m) MENU LAYANAN VLESS XTLS WEBSOCKET DAN GRPC \e[m"
+echo -e "05\e[0;33m) MENU LAYANAN TROJAN GRPC DAN WEBSOCKET \e[m"
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "06\e[0;33m) MENU LAYANAN VMESS WEBSOCKET GRPC DAN H2C  \e[m"
+echo -e "06\e[0;33m) MENU LAYANAN L2TP PPTP SSTP DAN WIREGUARD \e[m"
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "07\e[0;33m) MENU TESTER SERVER VLESS TROJAN VMESS \e[m"
+echo -e "07\e[0;33m) MENU LAYANAN VLESS XTLS WEBSOCKET DAN GRPC \e[m"
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "08\e[0;33m) MENU LAYANAN SHADOWSOCKS OBFS HTTP DAN SSR  \e[m"
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "09\e[0;33m) MENU LAYANAN L2TP PPTP SSTP DAN WIREGUARD \e[m"
+echo -e "09\e[0;33m) MENU LAYANAN VMESS WEBSOCKET GRPC HTTP DAN H2C  \e[m"
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "10\e[0;33m) MENU LAYANAN KONFIGURASI SERVER ANDA \e[m"
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
@@ -45,27 +45,27 @@ sshovpnmenu
 ;;
 2)
 clear
-trxtmenu
+trghmenu
 ;;
 3)
 clear
-trghmenu
+trxtmenu
 ;;
 4)
 clear
-trpcwsmenu
+testermenu
 ;;
 5)
 clear
-vlessmenu
+trpcwsmenu
 ;;
 6)
 clear
-vmessmenu
+l2tppmenu
 ;;
 7)
 clear
-testermenu
+vlessmenu
 ;;
 8)
 clear
@@ -73,7 +73,7 @@ ssmenu
 ;;
 9)
 clear
-l2tppmenu
+vmessmenu
 ;;
 10)
 clear
