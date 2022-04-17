@@ -139,7 +139,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 443,
+      "port": 8808,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -397,7 +397,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 8880,
+      "port": 2053,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -442,7 +442,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 8880,
+      "port": 2052,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -543,7 +543,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 8443,
+      "port": 2083,
       "protocol": "vless",
       "settings": {
         "clients": [
@@ -587,7 +587,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 8880,
+      "port": 2082,
       "protocol": "vless",
       "settings": {
         "clients": [
@@ -1014,45 +1014,6 @@ cat > /etc/xray/xvless.json << END
   },
   "inbounds": [
     {
-      "port": 99,
-      "listen": "0.0.0.0",
-      "tag": "vless-xtls-in",
-      "protocol": "vless",
-      "settings": {
-        "clients": [
-          {
-            "id": "${uuid}"
-#vless-xtls
-          }
-        ],
-        "decryption": "none",
-        "fallbacks": [
-          {
-            "dest": 88,
-            "alpn": "",
-            "xver": 1
-          }
-        ]
-      },
-      "streamSettings": {
-        "network": "tcp",
-        "security": "xtls",
-        "xtlsSettings": {
-          "minVersion": "1.2",
-          "alpn": [
-            "http/1.1",
-            "h2"
-          ],
-          "certificates": [
-            {
-              "certificateFile": "/etc/xray/xray.crt",
-              "keyFile": "/etc/xray/xray.key"
-            }
-          ]
-        }
-      }
-    },
-    {
       "port": 888,
       "listen": "0.0.0.0",
       "tag": "vless-http-tls-in",
@@ -1228,213 +1189,6 @@ cat > /etc/xray/xvless.json << END
         "protocol": [
         "bittorent"
       ]
-    }
-  }
-}
-END
-
-# / / Installation Xray Service
-cat > /etc/systemd/system/xray.service << END
-[Unit]
-Description=XRAY GAJAH DEMAK BY ZEROSSL
-Documentation=https://t.me/zerossl
-After=network.target nss-lookup.target
-
-[Service]
-User=root
-CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-NoNewPrivileges=true
-ExecStart=/usr/local/bin/xray -config /etc/xray/config.json
-Restart=on-failure
-RestartPreventExitStatus=23
-
-[Install]
-WantedBy=multi-user.target
-END
-
-# / / Installation Xray Service
-cat > /etc/systemd/system/xtrojan.service << END
-[Unit]
-Description=XTROJAN ROUTING DAM COLO PENGKOL BY GANDRING
-Documentation=https://t.me/zerossl
-After=network.target nss-lookup.target
-
-[Service]
-User=root
-CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-NoNewPrivileges=true
-ExecStart=/usr/local/bin/xray -config /etc/xray/xtrojan.json
-Restart=on-failure
-RestartPreventExitStatus=23
-
-[Install]
-WantedBy=multi-user.target
-END
-
-# / / Installation Xray Service
-cat > /etc/systemd/system/xvless.service << END
-[Unit]
-Description=XTROJAN ROUTING DAM COLO PENGKOL BY ZEROSSL
-Documentation=https://t.me/zerossl
-After=network.target nss-lookup.target
-
-[Service]
-User=root
-CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-NoNewPrivileges=true
-ExecStart=/usr/local/bin/xray -config /etc/xray/xvless.json
-Restart=on-failure
-RestartPreventExitStatus=23
-
-[Install]
-WantedBy=multi-user.target
-END
-
-# // Enable & Start Service
-# Accept port Xray
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 443 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 443 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 8443 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 8443 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2053 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2052 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2052 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 1080 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 1080 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2053 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 8880 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 8880 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 99 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 99 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2083 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2083 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2096 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2095 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2095 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2096 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 999 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 999 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 808 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 808 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 111 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 111 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 333 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 333 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 880 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 880 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 888 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 888 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 3443 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 3443 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2443 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2443 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 5443 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 888 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 888 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2083 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 4443 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 4443 -j ACCEPT
-iptables-save > /etc/iptables.up.rules
-iptables-restore -t < /etc/iptables.up.rules
-netfilter-persistent save
-netfilter-persistent reload
-
-systemctl daemon-reload
-systemctl stop xray.service
-systemctl start xray.service
-systemctl enable xray.service
-systemctl restart xray.service
-
-##restart&start service
-systemctl daemon-reload
-systemctl stop xtrojan.service
-systemctl start xtrojan.service
-systemctl enable xtrojan.service
-systemctl restart xtrojan.service
-
-systemctl daemon-reload
-systemctl stop xvless.service
-systemctl start xvless.service
-systemctl enable xvless.service
-systemctl restart xvless.service
-
-# Install Trojan Go
-latest_version="$(curl -s "https://api.github.com/repos/p4gefau1t/trojan-go/releases" | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
-trojango_link="https://github.com/p4gefau1t/trojan-go/releases/download/v${latest_version}/trojan-go-linux-amd64.zip"
-mkdir -p "/usr/bin/trojan-go"
-mkdir -p "/etc/trojan-go"
-cd `mktemp -d`
-curl -sL "${trojango_link}" -o trojan-go.zip
-unzip -q trojan-go.zip && rm -rf trojan-go.zip
-mv trojan-go /usr/local/bin/trojan-go
-chmod +x /usr/local/bin/trojan-go
-mkdir /var/log/trojan-go/
-touch /etc/trojan-go/akun.conf
-touch /var/log/trojan-go/trojan-go.log
-
-# Buat Config Trojan Go
-cat > /etc/trojan-go/config.json << END
-{
-  "run_type": "server",
-  "local_addr": "0.0.0.0",
-  "local_port": 2087,
-  "remote_addr": "127.0.0.1",
-  "remote_port": 88,
-  "log_level": 1,
-  "log_file": "/var/log/trojan-go/trojan-go.log",
-  "password": [
-      "$uuid"
-  ],
-  "disable_http_check": true,
-  "udp_timeout": 60,
-  "ssl": {
-    "verify": false,
-    "verify_hostname": false,
-    "cert": "/etc/xray/xray.crt",
-    "key": "/etc/xray/xray.key",
-    "key_password": "",
-    "cipher": "",
-    "curves": "",
-    "prefer_server_cipher": false,
-    "sni": "$domain",
-    "alpn": [
-      "http/1.1"
-    ],
-    "session_ticket": true,
-    "reuse_session": true,
-    "plain_http_response": "",
-    "fallback_addr": "127.0.0.1",
-    "fallback_port": 0,
-    "fingerprint": "firefox"
-  },
-  "tcp": {
-    "no_delay": true,
-    "keep_alive": true,
-    "prefer_ipv4": true
-  },
-  "mux": {
-    "enabled": false,
-    "concurrency": 8,
-    "idle_timeout": 60
-  },
-  "websocket": {
-    "enabled": true,
-    "path": "/gandring",
-    "host": "$domain"
-  },
-    "api": {
-    "enabled": false,
-    "api_addr": "",
-    "api_port": 0,
-    "ssl": {
-      "enabled": false,
-      "key": "",
-      "cert": "",
-      "verify_client": false,
-      "client_cert": []
     }
   }
 }
