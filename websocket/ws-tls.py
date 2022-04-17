@@ -6,7 +6,7 @@ LISTENING_ADDR = '0.0.0.0'
 if sys.argv[1:]:
 	LISTENING_PORT = sys.argv[1]
 else:
-	LISTENING_PORT = 500
+	LISTENING_PORT = 443
 
 # Pass
 PASS = ''
@@ -173,14 +173,6 @@ class ConnectionHandler(threading.Thread):
             if self.method=='CONNECT':
                 port = 443
             else:
-                port = 2053
-                port = 2083
-                port = 2096
-                port = 3128
-                port = 636
-                port = 8080
-                port = 3000
-                port = 3268
                 port = sys.argv[1]
 
         (soc_family, soc_type, proto, _, address) = socket.getaddrinfo(host, port)[0]
