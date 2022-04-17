@@ -58,7 +58,7 @@ curl https://get.acme.sh | sh
 alias acme.sh=~/.acme.sh/acme.sh
 /root/.acme.sh/acme.sh --upgrade --auto-upgrade
 /root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
-/root/.acme.sh/acme.sh --issue -d "${domain}" --standalone --keylength ec-384
+/root/.acme.sh/acme.sh --issue -d "${domain}" --standalone --keylength ec-256
 /root/.acme.sh/acme.sh --install-cert -d "${domain}" --ecc \
 --fullchain-file /etc/xray/xray.crt \
 --key-file /etc/xray/xray.key
@@ -1071,7 +1071,7 @@ cat > /etc/xray/xvless.json << END
     },
     {
       "port": 5443,
-      "listen": "127.0.0.1",
+      "listen": "0.0.0.0",
       "tag":  "vless-http/2-in",
       "protocol": "vless",
       "settings": {
