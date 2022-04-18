@@ -192,7 +192,7 @@ sed -i 's/listen = \/var\/run\/php-fpm.sock/listen = 127.0.0.1:9000/g' /etc/php/
 useradd -m vps;
 mkdir -p /home/vps/public_html
 echo "<?php phpinfo() ?>" > /home/vps/public_html/info.php
-chown -R $domain:www.$domain /home/vps/public_html
+chown -R $domain :www.$domain /home/vps/public_html
 chmod -R g+rw /home/vps/public_html
 cd /home/vps/public_html
 wget -O /home/vps/public_html/index.html "https://${wisnuvpn}/index.html"
@@ -313,6 +313,10 @@ connect = 127.0.0.1:300
 
 [openssh]
 accept = 500
+connect = 127.0.0.1:443
+
+[openssh]
+accept = 600
 connect = 127.0.0.1:22
 
 [openvpn]
@@ -326,7 +330,9 @@ END
 #openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
 #-subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
 #cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
-cat $path_crt $path_key >> /etc/stunnel5/stunnel5.pem
+
+cat $path_crt >> /etc/stunnel5/stunnel5.pem
+
 # Service Stunnel5 systemctl restart stunnel5
 cat > /etc/systemd/system/stunnel5.service << END
 [Unit]
@@ -369,7 +375,8 @@ systemctl restart stunnel5
 /etc/init.d/stunnel5 restart
 
 #OpenVPN
-wget https://${wisnuvpn}/vpn.sh &&  chmod +x vpn.sh && ./vpn.sh
+wget https://${wisnuvpn}/vpn.sh &&
+0 chmod +x vpn.sh && ./vpn.sh
 
 # install fail2ban
 apt -y install fail2ban
