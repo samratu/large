@@ -104,9 +104,11 @@ apt install sed -y
 apt install gnupg -y
 apt install gnupg1 -y
 apt install gnupg2 -y
+apt install gnupg3 -y
 apt install bc -y
 apt install jq -y
 apt install apt-transport-https -y
+apt install apt-transport-http -y
 apt install build-essential -y
 apt install dirmngr -y
 apt install libxml-parser-perl -y
