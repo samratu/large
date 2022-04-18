@@ -23,7 +23,7 @@ wisnuvpnn="raw.githubusercontent.com/samratu/large/file/xray"
 wisnuvpnnn="raw.githubusercontent.com/samratu/large/file/trojango"
 
 # Link Hosting Kalian Untuk Stunnel5
-#wisnuvpnnnn="raw.githubusercontent.com/samratu/large/file/stunnel5"
+wisnuvpnnnn="raw.githubusercontent.com/samratu/large/file/stunnel5"
 
 # initializing var
 export DEBIAN_FRONTEND=noninteractive
@@ -345,7 +345,7 @@ END
 wget -q -O /etc/init.d/stunnel5 "https://${wisnuvpnnnn}/stunnel5.init"
 
 # Ubah Izin Akses
-chmod 600 /etc/stunnel5/stunnel5.pem
+chmod 755 /etc/stunnel5/stunnel5.pem
 chmod +x /etc/init.d/stunnel5
 cp /usr/local/bin/stunnel /usr/local/bin/stunnel5
 
