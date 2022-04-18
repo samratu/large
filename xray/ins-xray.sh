@@ -748,8 +748,8 @@ END
 uuid=$(cat /proc/sys/kernel/random/uuid)
 
 # // Certificate File
-path_crt="/etc/xray/xray.crt"
-path_key="/etc/xray/xray.key"
+path_crt="$path_crt"
+path_key="$path_key"
 
 # Buat Config Xray
 cat > /etc/xray/xtrojan.json << END
@@ -1007,8 +1007,8 @@ END
 uuid=$(cat /proc/sys/kernel/random/uuid)
 
 # // Certificate File
-path_crt="/etc/xray/xray.crt"
-path_key="/etc/xray/xray.key"
+path_crt="$path_crt"
+path_key="$path_key"
 cat > /etc/xray/xvless.json << END
 {
   "log": {
