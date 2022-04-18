@@ -34,7 +34,7 @@ exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#trojan-http$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
 
-trojanhttp="trojan://${uuid}@${domain}:$thttp?security=none&headerType=tcp&type=tcp&host=$domain&path=%2fgandring#${user}"
+trojanhttp="trojan://${uuid}@${domain}:$thttp?security=none&headerType=http&type=tcp&host=$domain&path=%2fgandring#${user}"
 systemctl restart xray.service
 systemctl restart xtrojan.service
 service cron restart
