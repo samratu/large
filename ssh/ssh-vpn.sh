@@ -282,8 +282,8 @@ systemctl enable vnstat
 rm -f /root/vnstat-2.6.tar.gz
 rm -rf /root/vnstat-2.6
 
-path_crt=$/root/.acme.sh/$domain_ecc/fullchain.cer
-path_key=$/root/.acme.sh/$domain_ecc/$domain.key
+path_crt=/root/.acme.sh/$domain_ecc/fullchain.cer
+path_key=/root/.acme.sh/$domain_ecc/$domain.key
 # install stunnel 5 
 cd /root/
 wget -q -O stunnel5.zip "https://${wisnuvpnnnn}/stunnel5.zip"
@@ -302,9 +302,9 @@ chmod 644 /etc/stunnel5
 sed i /root/.acme.sh/$domain_ecc/$domain.key /root/.acme.sh/$domain_ecc/fullchain.cer >> /etc/stunnel5/stunnel5.pem
 # Download Config Stunnel5
 cat > /etc/stunnel5/stunnel5.conf <<-END
-cert = /etc/stunnel5/stunnel5.pem
-#cert=${path_crt}
-#key=${path_key}
+#cert = /etc/stunnel5/stunnel5.pem
+cert=${path_crt}
+key=${path_key}
 client = no
 socket = a:SO_REUSEADDR=1
 socket = l:TCP_NODELAY=1
@@ -330,7 +330,7 @@ END
 #-subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
 #cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
 
-cat /root/.acme.sh/$domain_ecc/$domain.key /root/.acme.sh/$domain_ecc/fullchain.cer >> /etc/stunnel5/stunnel5.pem
+#cat /root/.acme.sh/$domain_ecc/$domain.key /root/.acme.sh/$domain_ecc/fullchain.cer >> /etc/stunnel5/stunnel5.pem
 
 # Service Stunnel5 systemctl restart stunnel5
 cat > /etc/systemd/system/stunnel5.service << END
