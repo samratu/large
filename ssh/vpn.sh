@@ -55,6 +55,8 @@ sed -i 's/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/g' /etc/sysctl.conf
 domain_ecc=/root/.acme.sh/
 fullchain.cer=/root/.acme.sh/$domain_ecc/fullchain.cer
 domain.key=/root/.acme.sh/$domain_ecc/$domain.key
+<ca>=/root/.acme.sh/$domain_ecc/fullchain.cer
+<key>=/root/.acme.sh/$domain_ecc/$domain.key
 # Buat config client TCP 1194
 cat > /etc/openvpn/tcp.ovpn <<-END
 client
@@ -70,10 +72,10 @@ auth-user-pass
 comp-lzo
 verb 3
 <ca>
-cat /root/.acme.sh/$domain_ecc/fullchain.cer
+$<ca>
 </ca>
 <key>
-cat /root/.acme.sh/$domain_ecc/$domain.key
+$<key>
 </key>
 END
 
@@ -94,10 +96,10 @@ auth-user-pass
 comp-lzo
 verb 3
 <ca>
-cat /root/.acme.sh/$domain_ecc/fullchain.cer
+$<ca>
 </ca>
 <key>
-cat /root/.acme.sh/$domain_ecc/$domain.key
+$<key>
 </key>
 END
 
@@ -118,10 +120,10 @@ auth-user-pass
 comp-lzo
 verb 3
 <ca>
-cat /root/.acme.sh/$domain_ecc/fullchain.cer
+$<ca>
 </ca>
 <key>
-cat /root/.acme.sh/$domain_ecc/$domain.key
+$<key>
 </key>
 END
 
