@@ -52,6 +52,9 @@ systemctl enable --now openvpn-server@server-udp
 echo 1 > /proc/sys/net/ipv4/ip_forward
 sed -i 's/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/g' /etc/sysctl.conf
 
+domain_ecc=/root/.acme.sh/
+fullchain.cer=/root/.acme.sh/$domain_ecc/fullchain.cer
+domain.key=/root/.acme.sh/$domain_ecc/$domain.key
 # Buat config client TCP 1194
 cat > /etc/openvpn/tcp.ovpn <<-END
 client
@@ -66,6 +69,12 @@ persist-tun
 auth-user-pass
 comp-lzo
 verb 3
+<ca>
+cat /root/.acme.sh/$domain_ecc/fullchain.cer
+</ca>
+<key>
+cat /root/.acme.sh/$domain_ecc/$domain.key
+</key>
 END
 
 sed -i $MYIP2 /etc/openvpn/tcp.ovpn;
@@ -84,6 +93,12 @@ persist-tun
 auth-user-pass
 comp-lzo
 verb 3
+<ca>
+cat /root/.acme.sh/$domain_ecc/fullchain.cer
+</ca>
+<key>
+cat /root/.acme.sh/$domain_ecc/$domain.key
+</key>
 END
 
 sed -i $MYIP2 /etc/openvpn/udp.ovpn;
@@ -102,6 +117,12 @@ persist-tun
 auth-user-pass
 comp-lzo
 verb 3
+<ca>
+cat /root/.acme.sh/$domain_ecc/fullchain.cer
+</ca>
+<key>
+cat /root/.acme.sh/$domain_ecc/$domain.key
+</key>
 END
 
 sed -i $MYIP2 /etc/openvpn/ssl.ovpn;
@@ -111,9 +132,9 @@ cd
 /etc/init.d/openvpn restart
 
 # masukkan certificatenya ke dalam config client TCP 1194
-echo '<ca>' >> /etc/openvpn/tcp.ovpn
-cat /etc/openvpn/server/ca.crt >> /etc/openvpn/tcp.ovpn
-echo '</ca>' >> /etc/openvpn/tcp.ovpn
+#echo '<ca>' >> /etc/openvpn/tcp.ovpn
+#cat /etc/openvpn/server/ca.crt >> /etc/openvpn/tcp.ovpn
+#echo '</ca>' >> /etc/openvpn/tcp.ovpn
 #echo '<ca>' >> /etc/openvpn/tcp.ovpn
 #cat /root/.acme.sh/$domain/fullchain.cer >> /etc/openvpn/tcp.ovpn
 #echo '</ca>' >> /etc/openvpn/tcp.ovpn
@@ -121,9 +142,9 @@ echo '</ca>' >> /etc/openvpn/tcp.ovpn
 cp /etc/openvpn/tcp.ovpn /home/vps/public_html/tcp.ovpn
 
 # masukkan certificatenya ke dalam config client UDP 2200
-echo '<ca>' >> /etc/openvpn/udp.ovpn
-cat /etc/openvpn/server/ca.crt >> /etc/openvpn/udp.ovpn
-echo '</ca>' >> /etc/openvpn/udp.ovpn
+#echo '<ca>' >> /etc/openvpn/udp.ovpn
+#cat /etc/openvpn/server/ca.crt >> /etc/openvpn/udp.ovpn
+#echo '</ca>' >> /etc/openvpn/udp.ovpn
 #echo '<ca>' >> /etc/openvpn/udp.ovpn
 #cat /root/.acme.sh/$domain/fullchain.cer >> /etc/openvpn/udp.ovpn
 #echo '</ca>' >> /etc/openvpn/udp.ovpn
@@ -131,9 +152,9 @@ echo '</ca>' >> /etc/openvpn/udp.ovpn
 cp /etc/openvpn/udp.ovpn /home/vps/public_html/udp.ovpn
 
 # masukkan certificatenya ke dalam config client SSL
-echo '<ca>' >> /etc/openvpn/ssl.ovpn
-cat /etc/openvpn/server/ca.crt >> /etc/openvpn/ssl.ovpn
-echo '</ca>' >> /etc/openvpn/ssl.ovpn
+#echo '<ca>' >> /etc/openvpn/ssl.ovpn
+#cat /etc/openvpn/server/ca.crt >> /etc/openvpn/ssl.ovpn
+#echo '</ca>' >> /etc/openvpn/ssl.ovpn
 #echo '<ca>' >> /etc/openvpn/ssl.ovpn
 #cat /root/.acme.sh/$domain/fullchain.cer >> /etc/openvpn/ssl.ovpn
 #echo '</ca>' >> /etc/openvpn/ssl.ovpn
