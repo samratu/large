@@ -282,8 +282,8 @@ systemctl enable vnstat
 rm -f /root/vnstat-2.6.tar.gz
 rm -rf /root/vnstat-2.6
 
-path_crt="/root/.acme.sh/$domain/fullchain.cer"
-path_key="/root/.acme.sh/$domain/$domain.key"
+path_crt=/root/.acme.sh/$domain/fullchain.cer
+path_key=/root/.acme.sh/$domain/$domain.key
 # install stunnel 5 
 cd /root/
 wget -q -O stunnel5.zip "https://${wisnuvpnnnn}/stunnel5.zip"
