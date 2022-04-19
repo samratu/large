@@ -48,29 +48,34 @@ mkdir -p /var/log/xray/
 uuid=$(cat /proc/sys/kernel/random/uuid)
 
 cd /root/
-wget https://raw.githubusercontent.com/acmesh-official/acme.sh/master/acme.sh
+#wget https://raw.githubusercontent.com/acmesh-official/acme.sh/master/acme.sh
 
 sudo lsof -t -i tcp:80 -s tcp:listen | sudo xargs kill
 ##Generate acme certificate
-#curl https://get.acme.sh | sh
-#alias acme.sh=~/.acme.sh/acme.sh
-#/root/.acme.sh/acme.sh --upgrade --auto-upgrade
-#/root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
-#/root/.acme.sh/acme.sh --issue -d "${domain}" --standalone --keylength ec-384
-#/root/.acme.sh/acme.sh --install-cert -d "${domain}" --ecc \
-#--fullchain-file /etc/xray/xray.crt \
+curl https://get.acme.sh | sh
+alias acme.sh=~/.acme.sh/acme.sh
+/root/.acme.sh/acme.sh --upgrade --auto-upgrade
+/root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
+/root/.acme.sh/acme.sh --issue -d "${domain}" --standalone --keylength ec-384
+/root/.acme.sh/acme.sh --install-cert -d "${domain}" --ecc \
+#--fullchain.cert /etc/xray/xray.crt \
 #--key-file /etc/xray/xray.key
 #chown -R nobody:nogroup /etc/xray
 #chmod 644 /etc/xray/xray.crt
 #chmod 644 /etc/xray/xray.key
+--fullchain.cert /root/.acme.sh/$domain/fullchain.cer \
+--key-file /root/.acme.sh/$domain/$domain.key
+chown -R nobody:nogroup /etc/xray
+chmod 644 /root/.acme.sh/$domain/fullchain.cer
+chmod 644 /root/.acme.sh/$domain/$domain.key
 
-sudo lsof -t -i tcp:80 -s tcp:listen | sudo xargs kill
-cd /root/
-wget https://raw.githubusercontent.com/acmesh-official/acme.sh/master/acme.sh
-bash acme.sh --install
-bash acme.sh --register-account -m inoyaksorojawi@gmail.com
-bash acme.sh --issue --standalone -d $domain --force
-bash acme.sh --installcert -d $domain --fullchainpath /etc/xray/xray.crt --keypath /etc/xray/xray.keymkdir /root/.acme.sh
+#sudo lsof -t -i tcp:80 -s tcp:listen | sudo xargs kill
+#cd /root/
+#wget https://raw.githubusercontent.com/acmesh-official/acme.sh/master/acme.sh
+#bash acme.sh --install
+#bash acme.sh --register-account -m inoyaksorojawi@gmail.com
+#bash acme.sh --issue --standalone -d $domain --force
+#bash acme.sh --installcert -d $domain --fullchainpath /etc/xray/xray.crt --keypath /etc/xray/xray.keymkdir /root/.acme.sh
 #curl https://acme-install.netlify.app/acme.sh -o /root/.acme.sh/acme.sh
 #chmod +x /root/.acme.sh/acme.sh
 #/root/.acme.sh/acme.sh --issue -d $domain --standalone -k ec-256
@@ -81,8 +86,8 @@ uuid=$(cat /proc/sys/kernel/random/uuid)
 # // Certificate File
 path_crt1="/etc/xray/xray.crt"
 path_key2="/etc/xray/xray.key"
-path_crt="/root/.acme.sh/$domain/fullchain.cer"
-path_key="/root/.acme.sh/$domain/$domain.key"
+path_crt=/root/.acme.sh/$domain/fullchain.cer
+path_key=/root/.acme.sh/$domain/$domain.key
 # Buat Config Xray
 cat > /etc/xray/config.json << END
 {
@@ -359,7 +364,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 2088,
+      "port": 443,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -399,7 +404,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 2089,
+      "port": 2053,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -444,7 +449,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 2085,
+      "port": 2052,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -545,7 +550,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 2054,
+      "port": 2083,
       "protocol": "vless",
       "settings": {
         "clients": [
@@ -589,7 +594,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 2051,
+      "port": 2082,
       "protocol": "vless",
       "settings": {
         "clients": [
@@ -746,8 +751,8 @@ END
 uuid=$(cat /proc/sys/kernel/random/uuid)
 
 # // Certificate File
-path_crt="$path_crt"
-path_key="$path_key"
+path_crt=/root/.acme.sh/$domain/fullchain.cer
+path_key=/root/.acme.sh/$domain/$domain.key
 
 # Buat Config Xray
 cat > /etc/xray/xtrojan.json << END
@@ -803,7 +808,7 @@ cat > /etc/xray/xtrojan.json << END
       }
     },
     {
-      "port": 8443,
+      "port": 443,
       "listen": "0.0.0.0",
       "protocol": "trojan",
       "tag": "TROJAN-gRPC-in",
@@ -897,7 +902,7 @@ cat > /etc/xray/xtrojan.json << END
       }
     },
     {
-      "port": 2443,
+      "port": 443,
       "listen": "0.0.0.0",
       "protocol": "trojan",
       "tag": "TROJAN-HTTP/2-in",
@@ -1005,8 +1010,8 @@ END
 uuid=$(cat /proc/sys/kernel/random/uuid)
 
 # // Certificate File
-path_crt="$path_crt"
-path_key="$path_key"
+path_crt=/root/.acme.sh/$domain/fullchain.cer
+path_key=/root/.acme.sh/$domain/$domain.key
 cat > /etc/xray/xvless.json << END
 {
   "log": {
