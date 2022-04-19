@@ -301,7 +301,9 @@ chmod 644 /etc/stunnel5
 
 # Download Config Stunnel5
 cat > /etc/stunnel5/stunnel5.conf <<-END
-cert = /etc/stunnel5/stunnel5.pem
+#cert = /etc/stunnel5/stunnel5.pem
+cert=${path_crt}
+key=${path_key}
 client = no
 socket = a:SO_REUSEADDR=1
 socket = l:TCP_NODELAY=1
@@ -331,7 +333,7 @@ END
 #-subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
 #cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
 
-cat $path_crt >> /etc/stunnel5/stunnel5.pem
+cat ${path_crt} ${path_key} >> /etc/stunnel5/stunnel5.pem
 
 # Service Stunnel5 systemctl restart stunnel5
 cat > /etc/systemd/system/stunnel5.service << END
