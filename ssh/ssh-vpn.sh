@@ -303,8 +303,8 @@ chmod 644 /etc/stunnel5
 # Download Config Stunnel5
 cat > /etc/stunnel5/stunnel5.conf <<-END
 cert = /etc/stunnel5/stunnel5.pem
-cert.pem = /root/.acme.sh/$domain_ecc/fullchain.cer
-key.pem = /root/.acme.sh/$domain_ecc/$domain.key
+#cert.pem = /root/.acme.sh/$domain_ecc/fullchain.cer
+#key.pem = /root/.acme.sh/$domain_ecc/$domain.key
 client = no
 socket = a:SO_REUSEADDR=1
 socket = l:TCP_NODELAY=1
@@ -333,7 +333,7 @@ cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
 domain_ecc=/root/.acme.sh/
 fullchain.cer=/root/.acme.sh/$domain_ecc/fullchain.cer
 domain.key=/root/.acme.sh/$domain_ecc/$domain.key
-cat /root/.acme.sh/$domain_ecc/$domain.key /root/.acme.sh/$domain_ecc/fullchain.cer >> /etc/stunnel5/stunnel5.pem
+#cat /root/.acme.sh/$domain_ecc/$domain.key /root/.acme.sh/$domain_ecc/fullchain.cer >> /etc/stunnel5/stunnel5.pem
 
 # Service Stunnel5 systemctl restart stunnel5
 cat > /etc/systemd/system/stunnel5.service << END
