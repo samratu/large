@@ -302,7 +302,7 @@ chmod 644 /etc/stunnel5
 #cat /root/.acme.sh/$domain_ecc/$domain.key /root/.acme.sh/$domain_ecc/fullchain.cer >> /etc/stunnel5/stunnel5.pem
 # Download Config Stunnel5
 cat > /etc/stunnel5/stunnel5.conf <<-END
-#cert = /etc/stunnel5/stunnel5.pem
+cert = /etc/stunnel5/stunnel5.pem
 cert.pem = /root/.acme.sh/$domain_ecc/fullchain.cer
 key.pem = /root/.acme.sh/$domain_ecc/$domain.key
 client = no
@@ -325,10 +325,10 @@ connect = 127.0.0.1:1194
 END
 
 # make a certificate
-#openssl genrsa -out key.pem -b 1024
-#openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
-#-subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
-#cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
+openssl genrsa -out key.pem 1024
+openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
+-subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
+cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
 
 #cat /root/.acme.sh/$domain_ecc/$domain.key /root/.acme.sh/$domain_ecc/fullchain.cer >> /etc/stunnel5/stunnel5.pem
 
@@ -352,7 +352,7 @@ END
 wget -q -O /etc/init.d/stunnel5 "https://${wisnuvpnnnn}/stunnel5.init"
 
 # Ubah Izin Akses
-#chmod 600 /etc/stunnel5/stunnel5.pem
+chmod 600 /etc/stunnel5/stunnel5.pem
 chmod +x /etc/init.d/stunnel5
 cp /usr/local/bin/stunnel /usr/local/bin/stunnel5
 
@@ -374,7 +374,7 @@ systemctl restart stunnel5
 /etc/init.d/stunnel5 restart
 
 #OpenVPN
-wget https://${wisnuvpn}/vpn.sh &&  chmod +x vpn.sh && ./vpn.sh
+wget https://${wisnuvpn}/vpn.sh && chmod +x vpn.sh && ./vpn.sh
 
 # install fail2ban
 apt -y install fail2ban
