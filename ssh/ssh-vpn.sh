@@ -330,8 +330,8 @@ openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
 -subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
 cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
 
-domain_ecc=/root/.acme.sh/
-fullchain.cer=/root/.acme.sh/$domain_ecc/fullchain.cer
+#domain_ecc=/root/.acme.sh/
+#fullchain.cer=/root/.acme.sh/$domain_ecc/fullchain.cer
 domain.key=/root/.acme.sh/$domain_ecc/$domain.key
 #cat /root/.acme.sh/$domain_ecc/$domain.key /root/.acme.sh/$domain_ecc/fullchain.cer >> /etc/stunnel5/stunnel5.pem
 
