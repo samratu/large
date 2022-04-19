@@ -63,11 +63,19 @@ alias acme.sh=~/.acme.sh/acme.sh
 #chown -R nobody:nogroup /etc/xray
 #chmod 644 /etc/xray/xray.crt
 #chmod 644 /etc/xray/xray.key
+#zerossl
 --fullchain.cert /root/.acme.sh/$domain/fullchain.cer \
 --key-file /root/.acme.sh/$domain/$domain.key
 chown -R nobody:nogroup /etc/xray
 chmod 644 /root/.acme.sh/$domain/fullchain.cer
 chmod 644 /root/.acme.sh/$domain/$domain.key
+
+#letsencrypt
+--fullchain.cert /root/.acme.sh/$domain_ecc/fullchain.cer \
+--key-file /root/.acme.sh/$domain_ecc/$domain.key
+chown -R nobody:nogroup /etc/xray
+chmod 644 /root/.acme.sh/$domain_ecc/fullchain.cer
+chmod 644 /root/.acme.sh/$domain_ecc/$domain.key
 
 #sudo lsof -t -i tcp:80 -s tcp:listen | sudo xargs kill
 #cd /root/
@@ -75,7 +83,8 @@ chmod 644 /root/.acme.sh/$domain/$domain.key
 #bash acme.sh --install
 #bash acme.sh --register-account -m inoyaksorojawi@gmail.com
 #bash acme.sh --issue --standalone -d $domain --force
-#bash acme.sh --installcert -d $domain --fullchainpath /etc/xray/xray.crt --keypath /etc/xray/xray.keymkdir /root/.acme.sh
+#bash acme.sh --installcert -d $domain --fullchainpath /etc/xray/xray.crt --keypath /etc/xray/xray.key
+
 #curl https://acme-install.netlify.app/acme.sh -o /root/.acme.sh/acme.sh
 #chmod +x /root/.acme.sh/acme.sh
 #/root/.acme.sh/acme.sh --issue -d $domain --standalone -k ec-256
@@ -86,8 +95,10 @@ uuid=$(cat /proc/sys/kernel/random/uuid)
 # // Certificate File
 path_crt1="/etc/xray/xray.crt"
 path_key2="/etc/xray/xray.key"
-path_crt=/root/.acme.sh/$domain/fullchain.cer
-path_key=/root/.acme.sh/$domain/$domain.key
+#path_crt=/root/.acme.sh/$domain/fullchain.cer
+#path_key=/root/.acme.sh/$domain/$domain.key
+path_crt=/root/.acme.sh/$domain_ecc/fullchain.cer
+path_key=/root/.acme.sh/$domain_ecc/$domain.key
 # Buat Config Xray
 cat > /etc/xray/config.json << END
 {
@@ -749,11 +760,12 @@ cat > /etc/xray/config.json << END
 END
 
 uuid=$(cat /proc/sys/kernel/random/uuid)
-
+domain=$(cat /etc/xray/domain)
 # // Certificate File
-path_crt=/root/.acme.sh/$domain/fullchain.cer
-path_key=/root/.acme.sh/$domain/$domain.key
-
+#path_crt=/root/.acme.sh/$domain/fullchain.cer
+#path_key=/root/.acme.sh/$domain/$domain.key
+path_crt=/root/.acme.sh/$domain_ecc/fullchain.cer
+path_key=/root/.acme.sh/$domain_ecc/$domain.key
 # Buat Config Xray
 cat > /etc/xray/xtrojan.json << END
 {
@@ -1007,11 +1019,14 @@ cat > /etc/xray/xtrojan.json << END
   }
 }
 END
-uuid=$(cat /proc/sys/kernel/random/uuid)
 
+uuid=$(cat /proc/sys/kernel/random/uuid)
+domain=$(cat /etc/xray/domain)
 # // Certificate File
-path_crt=/root/.acme.sh/$domain/fullchain.cer
-path_key=/root/.acme.sh/$domain/$domain.key
+#path_crt=/root/.acme.sh/$domain/fullchain.cer
+#path_key=/root/.acme.sh/$domain/$domain.key
+path_crt=/root/.acme.sh/$domain_ecc/fullchain.cer
+path_key=/root/.acme.sh/$domain_ecc/$domain.key
 cat > /etc/xray/xvless.json << END
 {
   "log": {
