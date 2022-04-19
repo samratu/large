@@ -91,7 +91,7 @@ chmod 644 /root/.acme.sh/$domain_ecc/$domain.key
 #~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath /etc/xray/xray.crt --keypath /etc/xray/xray.key --ecc
 
 uuid=$(cat /proc/sys/kernel/random/uuid)
-domain=$(cat /root/domain)
+domain=$(cat /etc/xray/domain)
 # // Certificate File
 path_crt1="/etc/xray/xray.crt"
 path_key2="/etc/xray/xray.key"
@@ -1363,6 +1363,12 @@ mkdir /var/log/trojan-go/
 touch /etc/trojan-go/akun.conf
 touch /var/log/trojan-go/trojan-go.log
 
+domain=$(cat /etc/xray/domain)
+# // Certificate File
+#path_crt=/root/.acme.sh/$domain/fullchain.cer
+#path_key=/root/.acme.sh/$domain/$domain.key
+path_crt=/root/.acme.sh/$domain_ecc/fullchain.cer
+path_key=/root/.acme.sh/$domain_ecc/$domain.key
 # Buat Config Trojan Go
 cat > /etc/trojan-go/config.json << END
 {
