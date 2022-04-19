@@ -64,11 +64,11 @@ alias acme.sh=~/.acme.sh/acme.sh
 #chmod 644 /etc/xray/xray.crt
 #chmod 644 /etc/xray/xray.key
 #zerossl
---fullchain.cert /root/.acme.sh/$domain/fullchain.cer \
---key-file /root/.acme.sh/$domain/$domain.key
-chown -R nobody:nogroup /etc/xray
-chmod 644 /root/.acme.sh/$domain/fullchain.cer
-chmod 644 /root/.acme.sh/$domain/$domain.key
+#--fullchain.cert /root/.acme.sh/$domain/fullchain.cer \
+#--key-file /root/.acme.sh/$domain/$domain.key
+#chown -R nobody:nogroup /etc/xray
+#chmod 644 /root/.acme.sh/$domain/fullchain.cer
+#chmod 644 /root/.acme.sh/$domain/$domain.key
 
 #letsencrypt
 --fullchain.cert /root/.acme.sh/$domain_ecc/fullchain.cer \
