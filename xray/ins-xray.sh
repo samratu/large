@@ -91,7 +91,7 @@ chmod 644 /root/.acme.sh/$domain_ecc/$domain.key
 #~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath /etc/xray/xray.crt --keypath /etc/xray/xray.key --ecc
 
 uuid=$(cat /proc/sys/kernel/random/uuid)
-
+domain=$(cat /root/domain)
 # // Certificate File
 path_crt1="/etc/xray/xray.crt"
 path_key2="/etc/xray/xray.key"
