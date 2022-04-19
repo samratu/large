@@ -299,12 +299,12 @@ rm -f stunnel5.zip
 mkdir -p /etc/stunnel5
 chmod 644 /etc/stunnel5
 
-cat /root/.acme.sh/$domain_ecc/$domain.key /root/.acme.sh/$domain_ecc/fullchain.cer >> /etc/stunnel5/stunnel5.pem
+#cat /root/.acme.sh/$domain_ecc/$domain.key /root/.acme.sh/$domain_ecc/fullchain.cer >> /etc/stunnel5/stunnel5.pem
 # Download Config Stunnel5
 cat > /etc/stunnel5/stunnel5.conf <<-END
 #cert = /etc/stunnel5/stunnel5.pem
-cert=${path_crt}
-key=${path_key}
+cert.pem = /root/.acme.sh/$domain_ecc/fullchain.cer
+key.pem = /root/.acme.sh/$domain_ecc/$domain.key
 client = no
 socket = a:SO_REUSEADDR=1
 socket = l:TCP_NODELAY=1
@@ -352,7 +352,7 @@ END
 wget -q -O /etc/init.d/stunnel5 "https://${wisnuvpnnnn}/stunnel5.init"
 
 # Ubah Izin Akses
-chmod 600 /etc/stunnel5/stunnel5.pem
+#chmod 600 /etc/stunnel5/stunnel5.pem
 chmod +x /etc/init.d/stunnel5
 cp /usr/local/bin/stunnel /usr/local/bin/stunnel5
 
