@@ -296,12 +296,10 @@ rm -r -f stunnel
 rm -f stunnel5.zip
 mkdir -p /etc/stunnel5
 chmod 644 /etc/stunnel5
-
 #cat /root/.acme.sh/$domain_ecc/$domain.key /root/.acme.sh/$domain_ecc/fullchain.cer >> /etc/stunnel5/stunnel5.pem
 # Download Config Stunnel5
 cat > /etc/stunnel5/stunnel5.conf <<-END
 cert = /etc/stunnel5/stunnel5.pem
-
 client = no
 socket = a:SO_REUSEADDR=1
 socket = l:TCP_NODELAY=1
@@ -311,9 +309,18 @@ socket = r:TCP_NODELAY=1
 accept = 600
 connect = 127.0.0.1:300
 
+[dropbear]
+accept = 700
+connect = 127.0.0.1:200
+
+
+[openssh]
+accept = 8443
+connect = 127.0.0.1:22
+
 [openssh]
 accept = 500
-connect = 127.0.0.1:8443
+connect = 127.0.0.1:443
 
 [openvpn]
 accept = 990
