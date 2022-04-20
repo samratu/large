@@ -52,9 +52,10 @@ systemctl enable --now openvpn-server@server-udp
 echo 1 > /proc/sys/net/ipv4/ip_forward
 sed -i 's/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/g' /etc/sysctl.conf
 
-domain_ecc=/root/.acme.sh/
-fullchain.cer=/root/.acme.sh/$domain_ecc/fullchain.cer
-domain.key=/root/.acme.sh/$domain_ecc/$domain.key
+domain=$(cat /root/domain)
+domain_ecc=$(cat /root/.acme.sh)
+fullchain=$(cat /root/.acme.sh/$domain_ecc/fullchain.cer)
+domainkey=$(cat /root/.acme.sh/$domain_ecc/$domain.key)
 <ca>=/root/.acme.sh/$domain_ecc/fullchain.cer
 <key>=/root/.acme.sh/$domain_ecc/$domain.key
 # Buat config client TCP 1194
@@ -116,41 +117,41 @@ cd
 /etc/init.d/openvpn restart
 
 # masukkan certificatenya ke dalam config client TCP 1194
-echo '<ca>' >> /etc/openvpn/tcp.ovpn
-cat /etc/openvpn/server/ca.crt >> /etc/openvpn/tcp.ovpn
-echo '</ca>' >> /etc/openvpn/tcp.ovpn
 #echo '<ca>' >> /etc/openvpn/tcp.ovpn
-#cat /root/.acme.sh/$domain_ecc/fullchain.cer >> /etc/openvpn/tcp.ovpn
+#cat /etc/openvpn/server/ca.crt >> /etc/openvpn/tcp.ovpn
 #echo '</ca>' >> /etc/openvpn/tcp.ovpn
-#echo '<key>' >> /etc/openvpn/tcp.ovpn
-#cat /root/.acme.sh/$domain_ecc/$domain.key >> /etc/openvpn/tcp.ovpn
-#echo '</key>' >> /etc/openvpn/tcp.ovpn
+echo '<ca>' >> /etc/openvpn/tcp.ovpn
+cat /root/.acme.sh/$domain_ecc/fullchain.cer >> /etc/openvpn/tcp.ovpn
+echo '</ca>' >> /etc/openvpn/tcp.ovpn
+echo '<key>' >> /etc/openvpn/tcp.ovpn
+cat /root/.acme.sh/$domain_ecc/$domain.key >> /etc/openvpn/tcp.ovpn
+echo '</key>' >> /etc/openvpn/tcp.ovpn
 # Copy config OpenVPN client ke home directory root agar mudah didownload ( TCP 1194 )
 cp /etc/openvpn/tcp.ovpn /home/vps/public_html/tcp.ovpn
 
 # masukkan certificatenya ke dalam config client UDP 2200
-echo '<ca>' >> /etc/openvpn/udp.ovpn
-cat /etc/openvpn/server/ca.crt >> /etc/openvpn/udp.ovpn
-echo '</ca>' >> /etc/openvpn/udp.ovpn
 #echo '<ca>' >> /etc/openvpn/udp.ovpn
-#cat /root/.acme.sh/$domain/fullchain.cer >> /etc/openvpn/udp.ovpn
+#cat /etc/openvpn/server/ca.crt >> /etc/openvpn/udp.ovpn
 #echo '</ca>' >> /etc/openvpn/udp.ovpn
-#echo '<key>' >> /etc/openvpn/udp.ovpn
-#cat /root/.acme.sh/$domain_ecc/$domain.key >> /etc/openvpn/udp.ovpn
-#echo '</key>' >> /etc/openvpn/udp.ovpn
+echo '<ca>' >> /etc/openvpn/udp.ovpn
+cat /root/.acme.sh/$domain/fullchain.cer >> /etc/openvpn/udp.ovpn
+echo '</ca>' >> /etc/openvpn/udp.ovpn
+echo '<key>' >> /etc/openvpn/udp.ovpn
+cat /root/.acme.sh/$domain_ecc/$domain.key >> /etc/openvpn/udp.ovpn
+echo '</key>' >> /etc/openvpn/udp.ovpn
 # Copy config OpenVPN client ke home directory root agar mudah didownload ( UDP 2200 )
 cp /etc/openvpn/udp.ovpn /home/vps/public_html/udp.ovpn
 
 # masukkan certificatenya ke dalam config client SSL
-echo '<ca>' >> /etc/openvpn/ssl.ovpn
-cat /etc/openvpn/server/ca.crt >> /etc/openvpn/ssl.ovpn
-echo '</ca>' >> /etc/openvpn/ssl.ovpn
 #echo '<ca>' >> /etc/openvpn/ssl.ovpn
-#cat /root/.acme.sh/$domain_ecc/fullchain.cer >> /etc/openvpn/ssl.ovpn
+#cat /etc/openvpn/server/ca.crt >> /etc/openvpn/ssl.ovpn
 #echo '</ca>' >> /etc/openvpn/ssl.ovpn
-#echo '<key>' >> /etc/openvpn/ssl.ovpn
-#cat /root/.acme.sh/$domain_ecc/$domain.key >> /etc/openvpn/ssl.ovpn
-#echo '</key>' >> /etc/openvpn/ssl.ovpn
+echo '<ca>' >> /etc/openvpn/ssl.ovpn
+cat /root/.acme.sh/$domain_ecc/fullchain.cer >> /etc/openvpn/ssl.ovpn
+echo '</ca>' >> /etc/openvpn/ssl.ovpn
+echo '<key>' >> /etc/openvpn/ssl.ovpn
+cat /root/.acme.sh/$domain_ecc/$domain.key >> /etc/openvpn/ssl.ovpn
+echo '</key>' >> /etc/openvpn/ssl.ovpn
 # Copy config OpenVPN client ke home directory root agar mudah didownload ( SSL )
 cp /etc/openvpn/ssl.ovpn /home/vps/public_html/ssl.ovpn
 
