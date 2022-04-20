@@ -14,16 +14,16 @@ LIGHT='\033[0;37m'
 MYIP=$(wget -qO- https://ipv4.icanhazip.com);
 MYIP6=$(wget -qO- https://ipv6.icanhazip.com);
 # Link Hosting Kalian
-wisnuvpn="raw.githubusercontent.com/wisnucokrosatrio/shanum/main/ssh"
+wisnuvpn="raw.githubusercontent.com/samratu/large/file/ssh"
 
 # Link Hosting Kalian Untuk Xray
-wisnuvpnn="raw.githubusercontent.com/wisnucokrosatrio/shanum/main/xray"
+wisnuvpnn="raw.githubusercontent.com/samratu/large/file/xray"
 
 # Link Hosting Kalian Untuk Trojan Go
-wisnuvpnnn="raw.githubusercontent.com/wisnucokrosatrio/shanum/main/trojango"
+wisnuvpnnn="raw.githubusercontent.com/samratu/large/file/trojango"
 
 # Link Hosting Kalian Untuk Stunnel5
-wisnuvpnnnn="raw.githubusercontent.com/wisnucokrosatrio/shanum/main/stunnel5"
+wisnuvpnnnn="raw.githubusercontent.com/samratu/large/file/stunnel5"
 
 # initializing var
 export DEBIAN_FRONTEND=noninteractive
@@ -448,7 +448,7 @@ netfilter-persistent reload
 cd /usr/bin
 wget -O addhost "https://${wisnuvpn}/addhost.sh"
 wget -O about "https://${wisnuvpn}/about.sh"
-wget -O menu "https://raw.githubusercontent.com/wisnucokrosatrio/shanum/main/update/menu.sh"
+wget -O menu "https://raw.githubusercontent.com/samratu/large/file/update/menu.sh"
 wget -O addssh "https://${wisnuvpn}/addssh.sh"
 wget -O trialssh "https://${wisnuvpn}/trialssh.sh"
 wget -O menuu "https://${wisnuvpn}/menuu.sh"
@@ -559,31 +559,31 @@ wget -O addtrgo "https://${wisnuvpnnn}/addtrgo.sh"
 wget -O deltrgo "https://${wisnuvpnnn}/deltrgo.sh"
 wget -O renewtrgo "https://${wisnuvpnnn}/renewtrgo.sh"
 wget -O cektrgo "https://${wisnuvpnnn}/cektrgo.sh"
-wget -O portsshnontls "https://raw.githubusercontent.com/wisnucokrosatrio/shanum/main/ssh/portsshnontls.sh"
-wget -O portsshwstls "https://raw.githubusercontent.com/wisnucokrosatrio/shanum/main/ssh/portsshwstls.sh"
-wget -O status "https://raw.githubusercontent.com/wisnucokrosatrio/shanum/main/update/status.sh"
-wget -O restart "https://raw.githubusercontent.com/wisnucokrosatrio/shanum/main/ssh/restart.sh"
-wget -O portdropbear "https://raw.githubusercontent.com/wisnucokrosatrio/shanum/main/ssh/portdropbear.sh"
-wget -O portopenssh "https://raw.githubusercontent.com/wisnucokrosatrio/shanum/main/ssh/portopenssh.sh"
-wget -O addnewtr "https://raw.githubusercontent.com/wisnucokrosatrio/shanum/main/xray/addnewtr.sh"
+wget -O portsshnontls "https://raw.githubusercontent.com/samratu/large/file/ssh/portsshnontls.sh"
+wget -O portsshwstls "https://raw.githubusercontent.com/samratu/large/file/ssh/portsshwstls.sh"
+wget -O status "https://raw.githubusercontent.com/samratu/large/file/update/status.sh"
+wget -O restart "https://raw.githubusercontent.com/samratu/large/file/ssh/restart.sh"
+wget -O portdropbear "https://raw.githubusercontent.com/samratu/large/file/ssh/portdropbear.sh"
+wget -O portopenssh "https://raw.githubusercontent.com/samratu/large/file/ssh/portopenssh.sh"
+wget -O addnewtr "https://raw.githubusercontent.com/samratu/large/file/xray/addnewtr.sh"
 wget -O renewtrojanhdua "https://${wisnuvpnn}/renewtrojanhdua.sh"
-wget -O portstunnel5 "https://raw.githubusercontent.com/wisnucokrosatrio/shanum/main/ssh/portstunnel5.sh"
-wget -O trpcwsmenu "https://raw.githubusercontent.com/wisnucokrosatrio/shanum/main/update/trpcwsmenu.sh"
-wget -O sshovpnmenu "https://raw.githubusercontent.com/wisnucokrosatrio/shanum/main/update/sshovpnmenu.sh"
-#wget -O l2tpmenu "https://raw.githubusercontent.com/wisnucokrosatrio/shanum/main/update/l2tpmenu.sh"
-wget -O l2tppmenu "https://raw.githubusercontent.com/wisnucokrosatrio/shanum/main/update/l2tppmenu.sh"
-#wget -O pptpmenu "https://raw.githubusercontent.com/wisnucokrosatrio/shanum/main/update/pptpmenu.sh"
-#wget -O sstpmenu "https://raw.githubusercontent.com/wisnucokrosatrio/shanum/main/update/sstpmenu.sh"
-wget -O wgmenu "https://raw.githubusercontent.com/wisnucokrosatrio/shanum/main/update/wgmenu.sh"
-wget -O ssmenu "https://raw.githubusercontent.com/wisnucokrosatrio/shanum/main/update/ssmenu.sh"
-#wget -O ssrmenu "https://raw.githubusercontent.com/wisnucokrosatrio/shanum/main/update/ssrmenu.sh"
-wget -O vmessmenu "https://raw.githubusercontent.com/wisnucokrosatrio/shanum/main/update/vmessmenu.sh"
-wget -O vlessmenu "https://raw.githubusercontent.com/wisnucokrosatrio/shanum/main/update/vlessmenu.sh"
-#wget -O grpcmenu "https://raw.githubusercontent.com/wisnucokrosatrio/shanum/main/update/grpcmenu.sh"
-wget -O trghmenu "https://raw.githubusercontent.com/wisnucokrosatrio/shanum/main/update/trghmenu.sh"
-wget -O trxtmenu "https://raw.githubusercontent.com/wisnucokrosatrio/shanum/main/update/trxtmenu.sh"
-wget -O setmenu "https://raw.githubusercontent.com/wisnucokrosatrio/shanum/main/update/setmenu.sh"
-wget -O testermenu "https://raw.githubusercontent.com/wisnucokrosatrio/shanum/main/update/testermenu.sh"
+wget -O portstunnel5 "https://raw.githubusercontent.com/samratu/large/file/ssh/portstunnel5.sh"
+wget -O trpcwsmenu "https://raw.githubusercontent.com/samratu/large/file/update/trpcwsmenu.sh"
+wget -O sshovpnmenu "https://raw.githubusercontent.com/samratu/large/file/update/sshovpnmenu.sh"
+#wget -O l2tpmenu "https://raw.githubusercontent.com/samratu/large/file/update/l2tpmenu.sh"
+wget -O l2tppmenu "https://raw.githubusercontent.com/samratu/large/file/update/l2tppmenu.sh"
+#wget -O pptpmenu "https://raw.githubusercontent.com/samratu/large/file/update/pptpmenu.sh"
+#wget -O sstpmenu "https://raw.githubusercontent.com/samratu/large/file/update/sstpmenu.sh"
+wget -O wgmenu "https://raw.githubusercontent.com/samratu/large/file/update/wgmenu.sh"
+wget -O ssmenu "https://raw.githubusercontent.com/samratu/large/file/update/ssmenu.sh"
+#wget -O ssrmenu "https://raw.githubusercontent.com/samratu/large/file/update/ssrmenu.sh"
+wget -O vmessmenu "https://raw.githubusercontent.com/samratu/large/file/update/vmessmenu.sh"
+wget -O vlessmenu "https://raw.githubusercontent.com/samratu/large/file/update/vlessmenu.sh"
+#wget -O grpcmenu "https://raw.githubusercontent.com/samratu/large/file/update/grpcmenu.sh"
+wget -O trghmenu "https://raw.githubusercontent.com/samratu/large/file/update/trghmenu.sh"
+wget -O trxtmenu "https://raw.githubusercontent.com/samratu/large/file/update/trxtmenu.sh"
+wget -O setmenu "https://raw.githubusercontent.com/samratu/large/file/update/setmenu.sh"
+wget -O testermenu "https://raw.githubusercontent.com/samratu/large/file/update/testermenu.sh"
 chmod +x testermenu
 chmod +x ceknewtr
 chmod +x addnewtr
