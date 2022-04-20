@@ -345,7 +345,7 @@ Documentation=https://github.com/wisnucokrosatrio
 After=syslog.target network-online.target
 
 [Service]
-ExecStart=/usr/local/bin/stunnel5 /etc/stunnel5/stunnel5.conf
+ExecStart=/usr/local/wisnucs/stunnel5 /etc/stunnel5/stunnel5.conf
 Type=forking
 
 [Install]
@@ -358,7 +358,7 @@ wget -q -O /etc/init.d/stunnel5 "https://${wisnuvpnnnn}/stunnel5.init"
 # Ubah Izin Akses
 #chmod 600 /etc/stunnel5/stunnel5.pem
 chmod +x /etc/init.d/stunnel5
-cp /usr/local/bin/stunnel /usr/local/bin/stunnel5
+cp /usr/local/wisnucs/stunnel /usr/local/wisnucs/stunnel5
 
 # Remove File
 rm -r -f /usr/local/share/doc/stunnel/
