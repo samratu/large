@@ -296,7 +296,16 @@ rm -r -f stunnel
 rm -f stunnel5.zip
 mkdir -p /etc/stunnel5
 chmod 644 /etc/stunnel5
-#cat /root/.acme.sh/$domain_ecc/$domain.key /root/.acme.sh/$domain_ecc/fullchain.cer >> /etc/stunnel5/stunnel5.pem
+
+domain=$(cat /root/domain)
+# // Certificate File
+path_crt1="/etc/xray/xray.crt"
+path_key2="/etc/xray/xray.key"
+domain_ecc=$(cat /root/.acme.sh)
+domain.key=$(cat /root/.acme.sh/$domain_ecc)
+path_crt=/root/.acme.sh/$domain_ecc/fullchain.cer
+path_key=/root/.acme.sh/$domain_ecc/$domain.key
+cat /root/.acme.sh/$domain_ecc/$domain.key /root/.acme.sh/$domain_ecc/fullchain.cer >> /etc/stunnel5/stunnel5.pem
 # Download Config Stunnel5
 cat > /etc/stunnel5/stunnel5.conf <<-END
 cert = /etc/stunnel5/stunnel5.pem
@@ -324,10 +333,10 @@ connect = 127.0.0.1:1194
 END
 
 # make a certificate
-openssl genrsa -out key.pem 1024
-openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
--subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
-cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
+#openssl genrsa -out key.pem 1024
+#openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
+#-subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
+#cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
 
 # Service Stunnel5 systemctl restart stunnel5
 cat > /etc/systemd/system/stunnel5.service << END
