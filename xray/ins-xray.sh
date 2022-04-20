@@ -89,12 +89,12 @@ chmod 644 /root/.acme.sh/$domain_ecc/$domain.key
 #~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath /etc/xray/xray.crt --keypath /etc/xray/xray.key --ecc
 
 uuid=$(cat /proc/sys/kernel/random/uuid)
-domain=$(cat /etc/xray/domain)
+domain=$(cat /root/domain)
 # // Certificate File
 path_crt1="/etc/xray/xray.crt"
 path_key2="/etc/xray/xray.key"
-#path_crt=/root/.acme.sh/$domain/fullchain.cer
-#path_key=/root/.acme.sh/$domain/$domain.key
+domain_ecc=$(cat /root/.acme.sh)
+domain.key=$(cat /root/.acme.sh/$domain_ecc)
 path_crt="/root/.acme.sh/$domain_ecc/fullchain.cer"
 path_key="/root/.acme.sh/$domain_ecc/$domain.key"
 # Buat Config Xray
@@ -758,12 +758,14 @@ cat > /etc/xray/config.json << END
 END
 
 uuid=$(cat /proc/sys/kernel/random/uuid)
-domain=$(cat /etc/xray/domain)
+domain=$(cat /root/domain)
 # // Certificate File
-#path_crt=/root/.acme.sh/$domain/fullchain.cer
-#path_key=/root/.acme.sh/$domain/$domain.key
+path_crt1="/etc/xray/xray.crt"
+path_key2="/etc/xray/xray.key"
+domain_ecc=$(cat /root/.acme.sh)
+domain.key=$(cat /root/.acme.sh/$domain_ecc)
 path_crt="/root/.acme.sh/$domain_ecc/fullchain.cer"
-path_key="/root/.acme.sh/$domain_ecc/$domain.key"
+path_key="/root/.acme.sh/$domain_ecc/$domain.key")0
 # Buat Config Xray
 cat > /etc/xray/xtrojan.json << END
 {
@@ -1019,10 +1021,12 @@ cat > /etc/xray/xtrojan.json << END
 END
 
 uuid=$(cat /proc/sys/kernel/random/uuid)
-domain=$(cat /etc/xray/domain)
+domain=$(cat /root/domain)
 # // Certificate File
-#path_crt=/root/.acme.sh/$domain/fullchain.cer
-#path_key=/root/.acme.sh/$domain/$domain.key
+path_crt1="/etc/xray/xray.crt"
+path_key2="/etc/xray/xray.key"
+domain_ecc=$(cat /root/.acme.sh)
+domain.key=$(cat /root/.acme.sh/$domain_ecc)
 path_crt="/root/.acme.sh/$domain_ecc/fullchain.cer"
 path_key="/root/.acme.sh/$domain_ecc/$domain.key"
 cat > /etc/xray/xvless.json << END
@@ -1361,10 +1365,12 @@ mkdir /var/log/trojan-go/
 touch /etc/trojan-go/akun.conf
 touch /var/log/trojan-go/trojan-go.log
 
-domain=$(cat /etc/xray/domain)
+domain=$(cat /root/domain)
 # // Certificate File
-#path_crt=/root/.acme.sh/$domain/fullchain.cer
-#path_key=/root/.acme.sh/$domain/$domain.key
+path_crt1="/etc/xray/xray.crt"
+path_key2="/etc/xray/xray.key"
+domain_ecc=$(cat /root/.acme.sh)
+domain.key=$(cat /root/.acme.sh/$domain_ecc)
 path_crt="/root/.acme.sh/$domain_ecc/fullchain.cer"
 path_key="/root/.acme.sh/$domain_ecc/$domain.key"
 # Buat Config Trojan Go
