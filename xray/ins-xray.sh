@@ -58,7 +58,7 @@ alias acme.sh=~/.acme.sh/acme.sh
 /root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
 /root/.acme.sh/acme.sh --issue -d "${domain}" --standalone --keylength ec-256
 /root/.acme.sh/acme.sh --install-cert -d "${domain}" --ecc \
---fullchain.cer /etc/xray/xray.cer \
+--fullchain-file /etc/xray/xray.cer \
 --key-file /etc/xray/xray.key
 chown -R nobody:nogroup /etc/xray
 chmod 644 /etc/xray/xray.cer
