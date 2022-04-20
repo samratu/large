@@ -58,22 +58,11 @@ alias acme.sh=~/.acme.sh/acme.sh
 /root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
 /root/.acme.sh/acme.sh --issue -d "${domain}" --standalone --keylength ec-256
 /root/.acme.sh/acme.sh --install-cert -d "${domain}" --ecc \
---fullchain.cert /root/.acme.sh/$domain_ecc/fullchain.cer \
---key-file /root/.acme.sh/$domain_ecc/$domain.key
+--fullchain.cer /etc/xray/xray.cer \
+--key-file /etc/xray/xray.key
 chown -R nobody:nogroup /etc/xray
-chmod 644 /root/.acme.sh/$domain_ecc/fullchain.cer
-chmod 644 /root/.acme.sh/$domain_ecc/$domain.key
-#--fullchain.cert /etc/xray/xray.crt \
-#--key-file /etc/xray/xray.key
-#chown -R nobody:nogroup /etc/xray
-#chmod 644 /etc/xray/xray.crt
-#chmod 644 /etc/xray/xray.key
-#zerossl
-#--fullchain.cert /root/.acme.sh/$domain/fullchain.cer \
-#--key-file /root/.acme.sh/$domain/$domain.key
-#chown -R nobody:nogroup /etc/xray
-#chmod 644 /root/.acme.sh/$domain/fullchain.cer
-#chmod 644 /root/.acme.sh/$domain/$domain.key
+chmod 644 /etc/xray/xray.cer
+chmod 644 /etc/xray/xray.key
 
 #sudo lsof -t -i tcp:80 -s tcp:listen | sudo xargs kill
 #cd /root/
@@ -91,12 +80,12 @@ chmod 644 /root/.acme.sh/$domain_ecc/$domain.key
 uuid=$(cat /proc/sys/kernel/random/uuid)
 domain=$(cat /root/domain)
 # // Certificate File
-path_crt1="/etc/xray/xray.crt"
-path_key2="/etc/xray/xray.key"
-domain_ecc=$(cat /root/.acme.sh)
-domain.key=$(cat /root/.acme.sh/$domain_ecc)
-path_crt="/root/.acme.sh/$domain_ecc/fullchain.cer"
-path_key="/root/.acme.sh/$domain_ecc/$domain.key"
+path_crt="/etc/xray/xray.cer"
+path_key="/etc/xray/xray.key"
+#domain_ecc=$(cat /root/.acme.sh)
+#domain.key=$(cat /root/.acme.sh/$domain_ecc)
+#path_crt="/root/.acme.sh/$domain_ecc/fullchain.cer"
+#path_key="/root/.acme.sh/$domain_ecc/$domain.key"
 # Buat Config Xray
 cat > /etc/xray/config.json << END
 {
@@ -760,12 +749,12 @@ END
 uuid=$(cat /proc/sys/kernel/random/uuid)
 domain=$(cat /root/domain)
 # // Certificate File
-path_crt1="/etc/xray/xray.crt"
-path_key2="/etc/xray/xray.key"
-domain_ecc=$(cat /root/.acme.sh)
-domain.key=$(cat /root/.acme.sh/$domain_ecc)
-path_crt="/root/.acme.sh/$domain_ecc/fullchain.cer"
-path_key="/root/.acme.sh/$domain_ecc/$domain.key")0
+path_crt="/etc/xray/xray.cer"
+path_key="/etc/xray/xray.key"
+#domain_ecc=$(cat /root/.acme.sh)
+#domain.key=$(cat /root/.acme.sh/$domain_ecc)
+#path_crt="/root/.acme.sh/$domain_ecc/fullchain.cer"
+#path_key="/root/.acme.sh/$domain_ecc/$domain.key")0
 # Buat Config Xray
 cat > /etc/xray/xtrojan.json << END
 {
@@ -1023,12 +1012,12 @@ END
 uuid=$(cat /proc/sys/kernel/random/uuid)
 domain=$(cat /root/domain)
 # // Certificate File
-path_crt1="/etc/xray/xray.crt"
-path_key2="/etc/xray/xray.key"
-domain_ecc=$(cat /root/.acme.sh)
-domain.key=$(cat /root/.acme.sh/$domain_ecc)
-path_crt="/root/.acme.sh/$domain_ecc/fullchain.cer"
-path_key="/root/.acme.sh/$domain_ecc/$domain.key"
+path_crt="/etc/xray/xray.cer"
+path_key="/etc/xray/xray.key"
+#domain_ecc=$(cat /root/.acme.sh)
+#domain.key=$(cat /root/.acme.sh/$domain_ecc)
+#path_crt="/root/.acme.sh/$domain_ecc/fullchain.cer"
+#path_key="/root/.acme.sh/$domain_ecc/$domain.key"
 cat > /etc/xray/xvless.json << END
 {
   "log": {
@@ -1367,12 +1356,12 @@ touch /var/log/trojan-go/trojan-go.log
 
 domain=$(cat /root/domain)
 # // Certificate File
-path_crt1="/etc/xray/xray.crt"
-path_key2="/etc/xray/xray.key"
-domain_ecc=$(cat /root/.acme.sh)
-domain.key=$(cat /root/.acme.sh/$domain_ecc)
-path_crt="/root/.acme.sh/$domain_ecc/fullchain.cer"
-path_key="/root/.acme.sh/$domain_ecc/$domain.key"
+path_crt="/etc/xray/xray.cer"
+path_key="/etc/xray/xray.key"
+#domain_ecc=$(cat /root/.acme.sh)
+#domain.key=$(cat /root/.acme.sh/$domain_ecc)
+#path_crt="/root/.acme.sh/$domain_ecc/fullchain.cer"
+#path_key="/root/.acme.sh/$domain_ecc/$domain.key"
 # Buat Config Trojan Go
 cat > /etc/trojan-go/config.json << END
 {
