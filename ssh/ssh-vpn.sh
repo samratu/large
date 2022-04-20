@@ -34,10 +34,10 @@ source /etc/os-release
 ver=$VERSION_ID
 
 #detail nama perusahaan
-country=US
-state=California
-locality=San-Fransisco
-organization=Cloudflare
+country=ID
+state=Jawa-Tengah
+locality=Sukoharjo
+organization=Gandring
 organizationalunit=www.cloudflare.com
 commonname=Cloudflare-Inc.
 email=djarumpentol01@gmail.com
@@ -260,7 +260,7 @@ RUN=yes
 # systemd users: don't forget to modify /lib/systemd/system/sslh.service
 DAEMON=/usr/sbin/sslh
 
-DAEMON_OPTS="--user sslh --listen 0.0.0.0:8443 --ssl 127.0.0.1:500 --ssh 127.0.0.1:300 --openvpn 127.0.0.1:1194 --http 127.0.0.1:80 --pidfile /var/run/sslh/sslh.pid"
+DAEMON_OPTS="--user sslh --listen 0.0.0.0:1443 --ssl 127.0.0.1:8443 --ssh 127.0.0.1:300 --openvpn 127.0.0.1:1194 --http 127.0.0.1:80 --pidfile /var/run/sslh/sslh.pid"
 
 END
 
@@ -315,11 +315,11 @@ socket = l:TCP_NODELAY=1
 socket = r:TCP_NODELAY=1
 
 [dropbear]
-accept = 500
+accept = 600
 connect = 127.0.0.1:300
 
 [dropbear]
-accept = 600
+accept = 700
 connect = 127.0.0.1:22
 
 [openssh]
