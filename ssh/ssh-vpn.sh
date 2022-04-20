@@ -356,9 +356,9 @@ END
 wget -q -O /etc/init.d/stunnel5 "https://${wisnuvpnnnn}/stunnel5.init"
 
 # Ubah Izin Akses
-#chmod 600 /etc/stunnel5/stunnel5.pem
+chmod 600 /etc/stunnel5/stunnel5.pem
 chmod +x /etc/init.d/stunnel5
-cp /usr/local/wisnucs/stunnel /usr/local/wisnucs/stunnel5
+cp /usr/local/bin/stunnel /usr/local/wisnucs/stunnel5
 
 # Remove File
 rm -r -f /usr/local/share/doc/stunnel/
@@ -376,7 +376,6 @@ systemctl restart stunnel5
 /etc/init.d/stunnel5 restart
 /etc/init.d/stunnel5 status
 /etc/init.d/stunnel5 restart
-
 #OpenVPN
 wget https://${wisnuvpn}/vpn.sh &&  chmod +x vpn.sh && ./vpn.sh
 
