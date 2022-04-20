@@ -26,7 +26,7 @@ ver=$VERSION_ID
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo "Install Paket..."
 apt-get install --no-install-recommends build-essential autoconf libtool libssl-dev libpcre3-dev libev-dev asciidoc xmlto automake -y
-echo "\e[1;31m Install Paket Selesai BUILD UP BY WISNU COKRO SATRIO \e[m"
+echo "Install Paket Selesai BUILD UP BY WISNU COKRO SATRIO"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 
 
@@ -50,7 +50,7 @@ apt -t buster-backports install shadowsocks-libev -y
 apt -t buster-backports install simple-obfs -y
 fi
 fi
-echo "\e[1;31m Install Shadowsocks-libev Selesai.\e[m"
+echo "Install Shadowsocks-libev Selesai"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 
 #Server konfigurasi
