@@ -306,11 +306,6 @@ rm -f stunnel5.zip
 mkdir -p /etc/stunnel5
 chmod 644 /etc/stunnel5
 
-domain_ecc=$(cat /root/.acme.sh)
-domain=$(cat /root/domain)
-fullchain=$(cat /root/.acme.sh/$domain_ecc/fullchain.cer)
-domainkey=$(cat /root/.acme.sh/$domain_ecc/$domain.key)
-#cat $domainkey $fullchain >> etc/stunnel5/stunnel5.pem
 # Download Config Stunnel5
 cat > /etc/stunnel5/stunnel5.conf <<-END
 cert = /etc/stunnel5/stunnel5.pem
@@ -344,7 +339,7 @@ cat > /etc/systemd/system/stunnel5.service << END
 [Unit]
 Description=Stunnel5 Service
 Documentation=https://stunnel.org
-Documentation=https://t.me/zerossl
+Documentation=https://github.com/wisnucokrosatrio
 After=syslog.target network-online.target
 
 [Service]
@@ -359,9 +354,9 @@ END
 wget -q -O /etc/init.d/stunnel5 "https://${wisnuvpnnnn}/stunnel5.init"
 
 # Ubah Izin Akses
-chmod 755 /etc/stunnel5/stunnel5.pem
+chmod 600 /etc/stunnel5/stunnel5.pem
 chmod +x /etc/init.d/stunnel5
-cp /usr/local/bin/stunnel /usr/local/bin/stunnel5
+cp /usr/local/bin/stunnel /usr/local/wisnucs/stunnel5
 
 # Remove File
 rm -r -f /usr/local/share/doc/stunnel/
@@ -370,15 +365,6 @@ rm -f /usr/local/bin/stunnel
 rm -f /usr/local/bin/stunnel3
 rm -f /usr/local/bin/stunnel4
 rm -f /usr/local/bin/stunnel5
-
-# Restart Stunnel 5
-systemctl stop stunnel5
-systemctl enable stunnel5
-systemctl start stunnel5
-systemctl restart stunnel5
-/etc/init.d/stunnel5 restart
-/etc/init.d/stunnel5 status
-/etc/init.d/stunnel5 restart
 
 # Restart Stunnel 5
 systemctl stop stunnel5
