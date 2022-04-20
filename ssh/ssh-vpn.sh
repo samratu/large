@@ -127,9 +127,6 @@ apt install g++ -y
 apt install libreadline-dev -y
 apt install zlib1g-dev -y
 apt install libssl-dev -y
-apt install libssl1.0-dev -y
-apt install libssl2.0-dev -y
-apt install linssl3.0-dev -y
 gem install lolcat
 apt install jq curl -y
 apt install dnsutils jq -y
@@ -348,7 +345,7 @@ Documentation=https://t.me/zerossl
 After=syslog.target network-online.target
 
 [Service]
-ExecStart=/usr/local/bin/stunnel5 /etc/stunnel5/stunnel5.conf
+ExecStart=/usr/local/wisnucs/stunnel5 /etc/stunnel5/stunnel5.conf
 Type=forking
 
 [Install]
@@ -361,7 +358,7 @@ wget -q -O /etc/init.d/stunnel5 "https://${wisnuvpnnnn}/stunnel5.init"
 # Ubah Izin Akses
 chmod 755 /etc/stunnel5/stunnel5.pem
 chmod +x /etc/init.d/stunnel5
-cp /usr/local/bin/stunnel /usr/local/bin/stunnel5
+cp /usr/local/bin/stunnel /usr/local/wisnucs/stunnel5
 
 # Remove File
 rm -r -f /usr/local/share/doc/stunnel/
