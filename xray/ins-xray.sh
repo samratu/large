@@ -762,8 +762,8 @@ domain=$(cat /etc/xray/domain)
 # // Certificate File
 #path_crt=/root/.acme.sh/$domain/fullchain.cer
 #path_key=/root/.acme.sh/$domain/$domain.key
-path_crt=/root/.acme.sh/$domain_ecc/fullchain.cer
-path_key=/root/.acme.sh/$domain_ecc/$domain.key
+path_crt="/root/.acme.sh/$domain_ecc/fullchain.cer"
+path_key="/root/.acme.sh/$domain_ecc/$domain.key"
 # Buat Config Xray
 cat > /etc/xray/xtrojan.json << END
 {
@@ -1023,8 +1023,8 @@ domain=$(cat /etc/xray/domain)
 # // Certificate File
 #path_crt=/root/.acme.sh/$domain/fullchain.cer
 #path_key=/root/.acme.sh/$domain/$domain.key
-path_crt=/root/.acme.sh/$domain_ecc/fullchain.cer
-path_key=/root/.acme.sh/$domain_ecc/$domain.key
+path_crt="/root/.acme.sh/$domain_ecc/fullchain.cer"
+path_key="/root/.acme.sh/$domain_ecc/$domain.key"
 cat > /etc/xray/xvless.json << END
 {
   "log": {
@@ -1365,8 +1365,8 @@ domain=$(cat /etc/xray/domain)
 # // Certificate File
 #path_crt=/root/.acme.sh/$domain/fullchain.cer
 #path_key=/root/.acme.sh/$domain/$domain.key
-path_crt=/root/.acme.sh/$domain_ecc/fullchain.cer
-path_key=/root/.acme.sh/$domain_ecc/$domain.key
+path_crt="/root/.acme.sh/$domain_ecc/fullchain.cer"
+path_key="/root/.acme.sh/$domain_ecc/$domain.key"
 # Buat Config Trojan Go
 cat > /etc/trojan-go/config.json << END
 {
