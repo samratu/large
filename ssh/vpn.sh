@@ -75,12 +75,12 @@ END
 
 sed -i $MYIP2 /etc/openvpn/tcp.ovpn;
 
-# Buat config client UDP 2200
+# Buat config client UDP 1195
 cat > /etc/openvpn/udp.ovpn <<-END
 client
 dev tun
 proto udp
-remote xxxxxxxxx 2200
+remote xxxxxxxxx 1195
 resolv-retry infinite
 route-method exe
 nobind
