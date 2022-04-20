@@ -362,7 +362,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 443,
+      "port": 1443,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -655,7 +655,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 108,
+      "port": 1080,
       "protocol": "socks",
       "settings": {
         "auth": "password",
@@ -809,7 +809,7 @@ cat > /etc/xray/xtrojan.json << END
       }
     },
     {
-      "port": 443,
+      "port": 2443,
       "listen": "0.0.0.0",
       "protocol": "trojan",
       "tag": "TROJAN-gRPC-in",
@@ -903,7 +903,7 @@ cat > /etc/xray/xtrojan.json << END
       }
     },
     {
-      "port": 443,
+      "port": 3443,
       "listen": "0.0.0.0",
       "protocol": "trojan",
       "tag": "TROJAN-HTTP/2-in",
@@ -1380,7 +1380,7 @@ cat > /etc/trojan-go/config.json << END
   "ssl": {
     "verify": false,
     "verify_hostname": false,
-    "cert": "$path_crt",
+    "cert": "$path_cer",
     "key": "$path_key",
     "key_password": "",
     "cipher": "",
