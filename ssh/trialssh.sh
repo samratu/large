@@ -15,6 +15,8 @@ LIGHT='\033[0;37m'
 MYIP=$(wget -qO- ipinfo.io/ip);
 clear
 domain=$(cat /etc/xray/domain)
+MYIP4=$(wget -qO- https://ipv4.icanhazip.com);
+MYIP6=$(wget -qO- https://ipv6.icanhazip.com);
 ssl="$(cat ~/log-install.txt | grep -w "PORT STUNNEL5" | cut -d: -f2)"
 sqd="$(cat ~/log-install.txt | grep -w "PORT SQUID" | cut -d: -f2)"
 ws="$(cat ~/log-install.txt | grep -w "WEBSOCKET TLS" | cut -d: -f2|sed 's/ //g')"
@@ -46,6 +48,7 @@ echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━�
 echo -e "\033[1;46m🔰 TRIAL SSH DAN OVPN 🔰  \e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "IP : $MYIP/ ${domain}"
+echo -e "IPV6 : $MYIP6"
 echo -e "Username : $Login"
 echo -e "Password : $Pass"
 echo -e "Dropbear :${dropbearport}"
