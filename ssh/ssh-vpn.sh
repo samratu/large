@@ -127,9 +127,6 @@ apt install g++ -y
 apt install libreadline-dev -y
 apt install zlib1g-dev -y
 apt install libssl-dev -y
-apt install libssl1.0-dev -y
-apt install libssl2.0-dev -y
-apt install linssl3.0-dev -y
 gem install lolcat
 apt install jq curl -y
 apt install dnsutils jq -y
@@ -309,8 +306,8 @@ chmod 644 /etc/stunnel5
 # Download Config Stunnel5
 cat > /etc/stunnel5/stunnel5.conf <<-END
 cert = /etc/stunnel5/stunnel5.pem
-key = /etc/xray/xray.key
-cert = /etc/xray/xray.cer
+#key = /etc/xray/xray.key
+#cert = /etc/xray/xray.cer
 client = no
 socket = a:SO_REUSEADDR=1
 socket = l:TCP_NODELAY=1
