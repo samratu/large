@@ -326,7 +326,7 @@ connect = 127.0.0.1:1194
 END
 
 # make a certificate
-openssl genrsa -out key.pem 2048
+openssl genrsa -out key.pem 1024
 openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
 -subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
 cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
@@ -361,7 +361,7 @@ rm -r -f /usr/local/etc/stunnel/
 rm -f /usr/local/bin/stunnel
 rm -f /usr/local/bin/stunnel3
 rm -f /usr/local/bin/stunnel4
-rm -f /usr/local/bin/stunnel5
+#rm -f /usr/local/bin/stunnel5
 
 # Restart Stunnel 5
 systemctl stop stunnel5
