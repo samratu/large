@@ -10,7 +10,7 @@ PASS = ''
 # CONST
 BUFLEN = 4096 * 4
 TIMEOUT = 60
-DEFAULT_HOST = '127.0.0.1:300'
+DEFAULT_HOST = '127.0.0.1:200'
 RESPONSE = 'HTTP/1.1 101 <b><h1><h><font color="blue"> Wisnu Switching Protocols</font></b>\r\n\r\nContent-Length: 104857600000\r\n\r\n'
 
 class Server(threading.Thread):
@@ -169,16 +169,6 @@ class ConnectionHandler(threading.Thread):
             if self.method=='CONNECT':
                 port = 443
             else:
-                port = 2096
-                port = 8443
-                port = 2053
-                port = 2083
-                port = 2087
-                port = 3128
-                port = 8080
-                port = 3000
-                port = 389
-                port = 3269
                 port = sys.argv[1]
 
         (soc_family, soc_type, proto, _, address) = socket.getaddrinfo(host, port)[0]
