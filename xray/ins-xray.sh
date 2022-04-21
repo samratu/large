@@ -1360,7 +1360,7 @@ touch /var/log/trojan-go/trojan-go.log
 
 domain=$(cat /root/domain)
 # // Certificate File
-path_crt="/etc/xray/xray.cer"
+path_cer="/etc/xray/xray.cer"
 path_key="/etc/xray/xray.key"
 #domain_ecc=$(cat /root/.acme.sh)
 #domain.key=$(cat /root/.acme.sh/$domain_ecc)
