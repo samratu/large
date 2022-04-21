@@ -34,12 +34,12 @@ source /etc/os-release
 ver=$VERSION_ID
 
 #detail nama perusahaan
-country=US
-state=California
-locality=San-Fransisco
-organization=Cloudflare
-organizationalunit=www.cloudflare.com
-commonname=Cloudflare-Inc.
+country=ID
+state=Jawa-Tengah
+locality=Sukoharjo
+organization=GANDRING-VPN
+organizationalunit=GANDRING
+commonname=GANDRING-VPN
 email=djarumpentol01@gmail.com
 
 # simple password minimal
