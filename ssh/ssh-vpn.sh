@@ -235,27 +235,30 @@ apt -y install squid3
 wget -O /etc/squid/squid.conf "https://${wisnuvpn}/squid3.conf"
 sed -i $MYIP2 /etc/squid/squid.conf
 
-# install sslh
-cd /root/
-wget -q -O sslh.zip "https://${wisnuvpnnnn}/sslh.zip"
-unzip -o sslh.zip
-cd /root/sslh
-chmod +x configure
-./configure
-make
-make install
-cd /root
-rm -r -f stunnel
-rm -f sslh.zip
-mkdir -p /etc/sslh
-chmod 644 /etc/sslh
+# Install SSLH
+apt -y install sslh
+rm -f /etc/default/sslh
+make docker
+
+# Settings SSLH
+cat > /etc/default/sslh <<-END
+# Default options for sslh initscript
+# sourced by /etc/init.d/sslh
+
+# Disabled by default, to force yourself
+# to read the configuration:
+# - /usr/share/doc/sslh/README.Debian (quick start)
+# - /usr/share/doc/sslh/README, at "Configuration" section
+# - sslh(8) via "man sslh" for more configuration details.
+# Once configuration ready, you *must* set RUN to yes here
+# and try to start sslh (standalone mode only)
 
 docker run \ 
 --rm \ -it \ 
 sslh:latest \ 
 --listen=0.0.0.0:443 \ 
---ssh=hostname:22 \ 
---tls=hostname:443
+--ssh=127.0.0.1:22 \ 
+--tls=127.0.0.1:443
 # Settings SSLH
 cat > /etc/default/sslh <<-END
 # Default options for sslh initscript
