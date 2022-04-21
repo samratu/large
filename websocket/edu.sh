@@ -47,63 +47,6 @@ systemctl enable ws-nontls
 systemctl restart ws-nontls
 
 # Getting Proxy Template
-wget -q -O /usr/local/bin/ws-dropbear https://${wisnuvpn}/ws-dropbear.py
-chmod +x /usr/local/bin/ws-dropbear
-
-# Installing Service
-cd
-cat > /etc/systemd/system/ws-dropbear.service << END
-[Unit]
-Description=SSHWS BENDUNG COLO PENGKOL BY GANDRING
-Documentation=https://t.me/zerossl
-After=network.target nss-lookup.target
-
-[Service]
-Type=simple
-User=root
-CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-NoNewPrivileges=true
-ExecStart=/usr/bin/python -O /usr/local/bin/ws-dropbear 300
-Restart=on-failure
-
-[Install]
-WantedBy=multi-user.target
-END
-
-systemctl daemon-dropbear
-systemctl enable ws-dropbear
-systemctl restart ws-dropbear
-
-# Getting Proxy Template
-wget -q -O /usr/local/bin/ws-openssh https://${wisnuvpn}/ws-openssh.py
-chmod +x /usr/local/bin/ws-openssh
-
-# Installing Service
-cd
-cat > /etc/systemd/system/ws-openssh.service << END
-[Unit]
-Description=SSHWS BENDUNG COLO PENGKOL BY GANDRING
-Documentation=https://t.me/zerossl
-After=network.target nss-lookup.target
-
-[Service]
-Type=simple
-User=root
-CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-NoNewPrivileges=true
-ExecStart=/usr/bin/python -O /usr/local/bin/ws-openssh 22
-Restart=on-failure
-
-[Install]
-WantedBy=multi-user.target
-END
-
-systemctl daemon-reload
-systemctl enable ws-openssh
-systemctl restart ws-openssh
-# Getting Proxy Template
 wget -q -O /usr/local/bin/ovpnws https://${wisnuvpn}/ovpnws.py
 chmod +x /usr/local/bin/ovpnws
 
