@@ -20,6 +20,8 @@ read -p "Password : " Pass
 read -p "Expired (Days): " masaaktif
 
 MYIP=$(wget -qO- ipinfo.io/ip);
+MYIP4=$(wget -qO- https://ipv4.icanhazip.com);
+MYIP6=$(wget -qO- https://ipv6.icanhazip.com);
 ws="$(cat ~/log-install.txt | grep -w "WEBSOCKET TLS" | cut -d: -f2|sed 's/ //g')"
 otcp="$(cat ~/log-install.txt | grep -w "PORT OPENVPN TCP" | cut -d: -f2|sed 's/ //g')"
 oudp="$(cat ~/log-install.txt | grep -w "PORT OPENVPN UDP" | cut -d: -f2|sed 's/ //g')"
@@ -50,6 +52,7 @@ echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━�
 echo -e "\033[1;46m 🔰 AKUN SSH DAN OVPN 🔰  \e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "IP : $MYIP/ ${domain}"
+echo -e "IPV6: $MYIP6)"
 echo -e "Username : $Login"
 echo -e "Password : $Pass"
 echo -e "Dropbear :${dropbearport}"
