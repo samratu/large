@@ -402,7 +402,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 2053,
+      "port": 8880,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -809,7 +809,7 @@ cat > /etc/xray/xtrojan.json << END
       }
     },
     {
-      "port": 2443,
+      "port": 8443,
       "listen": "0.0.0.0",
       "protocol": "trojan",
       "tag": "TROJAN-gRPC-in",
