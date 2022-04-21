@@ -360,7 +360,7 @@ connect = 127.0.0.1:200
 accept = 700
 connect = 127.0.0.1:22
 
-[openssh]
+[dropbear]
 accept = 500
 connect = 127.0.0.1:443
 
