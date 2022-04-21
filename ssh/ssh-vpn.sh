@@ -308,9 +308,9 @@ chmod 644 /etc/stunnel5
 
 # Download Config Stunnel5
 cat > /etc/stunnel5/stunnel5.conf <<-END
-#cert = /etc/stunnel5/stunnel5.pem
-key = /etc/xray/xray.key
-cert = /etc/xray/xray.cer
+cert = /etc/stunnel5/stunnel5.pem
+#key = /etc/xray/xray.key
+#cert = /etc/xray/xray.cer
 client = no
 socket = a:SO_REUSEADDR=1
 socket = l:TCP_NODELAY=1
