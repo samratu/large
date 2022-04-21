@@ -235,9 +235,21 @@ apt -y install squid3
 wget -O /etc/squid/squid.conf "https://${wisnuvpn}/squid3.conf"
 sed -i $MYIP2 /etc/squid/squid.conf
 
-# Install SSLH
-apt -y install sslh
-rm -f /etc/default/sslh
+# install sslh
+cd /root/
+wget -q -O sslh.zip "https://${wisnuvpnnnn}/sslh.zip"
+unzip -o sslh.zip
+cd /root/sslh
+chmod +x configure
+./configure
+make
+make install
+cd /root
+rm -r -f stunnel
+rm -f sslh.zip
+mkdir -p /etc/sslh
+chmod 644 /etc/sslh
+
 docker run \ 
 --rm \ -it \ 
 sslh:latest \ 
