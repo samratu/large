@@ -110,7 +110,7 @@ echo " 🔰 PORT OPENVPN UDP : 1195" |tee -a log-install.txt
 echo " 🔰 PORT OPENVPN SSL : 990" |tee -a log-install.txt
 echo " 🔰 PORT STUNNEL5 : 8443, 600, 700" |tee -a log-install.txt
 echo " 🔰 PORT DROPBEAR : 200, 300" |tee -a log-install.txt
-echo " 🔰 PORT SQUID : 3128, 8080" |tee -a log-install.txt
+echo " 🔰 PORT SQUID : 3128, 3228" |tee -a log-install.txt
 echo " 🔰 Badvpn : 7100, 7200, 7300-7900" |tee -a log-install.txt
 echo " 🔰 Nginx : 80" |tee -a log-install.txt
 echo " 🔰 Wireguard : 8080" |tee -a log-install.txt
@@ -130,7 +130,7 @@ echo " 🔰 OHP Dropbear : 8282" |tee -a log-install.txt
 echo " 🔰 OHP OpenVPN : 8383" |tee -a log-install.txt
 echo " 🔰 VMESS WS TLS : 2053" |tee -a log-install.txt
 echo " 🔰 VMESS WS NON TLS : 2052" |tee -a log-install.txt
-echo " 🔰 VMESS GRPC TLS: 2053" |tee -a log-install.txt
+echo " 🔰 VMESS GRPC TLS: 8880" |tee -a log-install.txt
 echo " 🔰 VMESS GRPC NON TLS: 2052" |tee -a log-install.txt
 echo " 🔰 VMESS H2C : 1443" |tee -a log-install.txt
 echo " 🔰 VMESS HTTP TLS : 8808" |tee -a log-install.txt
@@ -144,7 +144,7 @@ echo " 🔰 VLESS H2C : 1443" |tee -a log-install.txt
 echo " 🔰 VLESS HTTP TLS : 8088" |tee -a log-install.txt
 echo " 🔰 VLESS HTTP NON TLS : 888" |tee -a log-install.txt
 echo " 🔰 TROJAN GO : 2087" |tee -a log-install.txt
-echo " 🔰 TROJAN GRPC : 2443" |tee -a log-install.txt
+echo " 🔰 TROJAN GRPC : 8443" |tee -a log-install.txt
 echo " 🔰 TROJAN HTTP : 880" |tee -a log-install.txt
 echo " 🔰 TROJAN H2C : 3443" |tee -a log-install.txt
 echo " 🔰 TROJAN XTLS : 4443" |tee -a log-install.txt
