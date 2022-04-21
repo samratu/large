@@ -26,6 +26,8 @@ systemctl restart ipsec
 systemctl restart accel-ppp
 systemctl restart ovpnws
 systemctl restart wg-quick@wg0
+systemctl restart xtrojan
+systemctl restart xvless
 systemctl restart ssh-ohp
 systemctl restart dropbear-ohp
 systemctl restart openvpn-ohp
