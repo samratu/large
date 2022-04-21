@@ -99,10 +99,9 @@ nameserver 8.8.8.8
 nameserver 8.8.7.7
 nameserver 127.0.0.53
 END
+systemctl daemon-reload
 systemctl enable resolvconf
 systemctl start resolvconf
-systemctl status resolvconf
-
 resolvconf -u
 
 # install wget and curl
