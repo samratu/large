@@ -5,6 +5,8 @@ import socket, threading, thread, select, signal, sys, time, getopt
 LISTENING_ADDR = '0.0.0.0'
 if sys.argv[1:]:
 	LISTENING_PORT = sys.argv[1]
+else:
+	LISTENING_PORT = 8443
 
 # Pass
 PASS = ''
@@ -80,6 +82,7 @@ class Server(threading.Thread):
                 c.close()
         finally:
             self.threadsLock.release()
+
 
 class ConnectionHandler(threading.Thread):
     def __init__(self, socClient, server, addr):
@@ -221,6 +224,7 @@ class ConnectionHandler(threading.Thread):
             if error:
                 break
 
+
 def print_usage():
     print 'Usage: proxy.py -p <port>'
     print '       proxy.py -b <bindAddr> -p <port>'
@@ -243,6 +247,7 @@ def parse_args(argv):
             LISTENING_ADDR = arg
         elif opt in ("-p", "--port"):
             LISTENING_PORT = int(arg)
+
 
 def main(host=LISTENING_ADDR, port=LISTENING_PORT):
     print "\n:-------PythonProxy-------:\n"
