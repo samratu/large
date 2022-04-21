@@ -34,12 +34,12 @@ source /etc/os-release
 ver=$VERSION_ID
 
 #detail nama perusahaan
-country=US
-state=California
-locality=San-Fransisco
-organization=Cloudflare
-organizationalunit=www.cloudflare.com
-commonname=Cloudflare-Inc.
+country=ID
+state=Jawa-Tengah
+locality=Sukoharjo
+organization=GANDRING-VPN
+organizationalunit=GANDRING
+commonname=GANDRING-VPN
 email=djarumpentol01@gmail.com
 
 # simple password minimal
@@ -215,7 +215,8 @@ sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7600 --max-c
 sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7700 --max-clients 500' /etc/rc.local
 sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7800 --max-clients 500' /etc/rc.local
 sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7900 --max-clients 500' /etc/rc.local
-
+echo "10 4 * * * root clearlog && sslh-fix-reboot" >> /etc/crontab
+echo "10 5 * * * root clearlog && sslh-fix-reboot" >> /etc/crontab
 # setting port ssh
 sed -i 's/Port 22/Port 22/g' /etc/ssh/sshd_config
 
@@ -262,6 +263,10 @@ DAEMON_OPTS="--user sslh --listen 0.0.0.0:443 --ssl 127.0.0.1:500 --ssh 127.0.0.
 END
 
 # Restart Service SSLH
+systemctl daemon-reload
+systemctl enable sslh
+systemctl start sslh
+systemctl restart sslh
 service sslh restart
 systemctl restart sslh
 /etc/init.d/sslh restart
@@ -313,7 +318,7 @@ socket = r:TCP_NODELAY=1
 
 [dropbear]
 accept = 600
-connect = 127.0.0.1:300
+connect = 127.0.0.1:200
 
 [openssh]
 accept = 500
@@ -326,7 +331,7 @@ connect = 127.0.0.1:1194
 END
 
 # make a certificate
-openssl genrsa -out key.pem 2048
+openssl genrsa -out key.pem -b 1024
 openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
 -subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
 cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
