@@ -253,12 +253,6 @@ cat > /etc/default/sslh <<-END
 # Once configuration ready, you *must* set RUN to yes here
 # and try to start sslh (standalone mode only)
 
-docker run \ 
---rm \ -it \ 
-sslh:latest \ 
---listen=0.0.0.0:443 \ 
---ssh=127.0.0.1:22 \ 
---tls=127.0.0.1:443
 # Settings SSLH
 cat > /etc/default/sslh <<-END
 # Default options for sslh initscript
@@ -313,6 +307,11 @@ rm -rf /root/vnstat-2.6
 mkdir -p /usr/local/wisnucs
 mkdir -p /etc/wisnucs
 
+# make a certificate
+openssl genrsa -out key.pem 2048
+openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
+-subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
+cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
 # install stunnel 5 
 cd /root/
 wget -q -O stunnel5.zip "https://${wisnuvpnnnn}/stunnel5.zip"
@@ -349,12 +348,6 @@ accept = 990
 connect = 127.0.0.1:1194
 
 END
-
-# make a certificate
-openssl genrsa -out key.pem 2048
-openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
--subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
-cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
 
 # Service Stunnel5 systemctl restart stunnel5
 cat > /etc/systemd/system/stunnel5.service << END
