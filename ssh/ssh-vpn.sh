@@ -87,6 +87,8 @@ apt-get remove --purge exim4 -y
 apt-get purge apache2* -y
 rm -rf /etc/apache2
 
+apt install resolvconf
+
 # install wget and curl
 apt -y install wget curl
 apt install ssl-cert -y
