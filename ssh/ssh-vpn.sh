@@ -90,7 +90,7 @@ rm -rf /etc/apache2
 # install wget and curl
 apt -y install wget curl
 apt install ssl-cert -y
-apt install ca-certificate-y
+apt install ca-certificate -y
 # Install Requirements Tools
 apt install ruby -y
 apt install python -y
@@ -238,12 +238,17 @@ sed -i $MYIP2 /etc/squid/squid.conf
 # Install SSLH
 apt -y install sslh
 rm -f /etc/default/sslh
-
+docker run \ 
+--rm \ -it \ 
+sslh:latest \ 
+--listen=0.0.0.0:443 \ 
+--ssh=hostname:22 \ 
+--tls=hostname:443
 # Settings SSLH
 cat > /etc/default/sslh <<-END
 # Default options for sslh initscript
-# sourced by /etc/init.d/sslh
-
+cp scripts/etc.init.d.sslh /etc/init.d/sslh
+update-rc.d sslh defaults
 # Disabled by default, to force yourself
 # to read the configuration:
 # - /usr/share/doc/sslh/README.Debian (quick start)
@@ -366,7 +371,7 @@ rm -r -f /usr/local/etc/stunnel/
 rm -f /usr/local/bin/stunnel
 rm -f /usr/local/bin/stunnel3
 rm -f /usr/local/bin/stunnel4
-#rm -f /usr/local/bin/stunnel5
+rm -f /usr/local/bin/stunnel5
 
 # Restart Stunnel 5
 systemctl stop stunnel5
