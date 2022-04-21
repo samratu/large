@@ -80,7 +80,7 @@ chmod 644 /etc/xray/xray.key
 uuid=$(cat /proc/sys/kernel/random/uuid)
 domain=$(cat /root/domain)
 # // Certificate File
-path_crt="/etc/xray/xray.cer"
+path_cer="/etc/xray/xray.cer"
 path_key="/etc/xray/xray.key"
 #domain_ecc=$(cat /root/.acme.sh)
 #domain.key=$(cat /root/.acme.sh/$domain_ecc)
@@ -125,7 +125,7 @@ cat > /etc/xray/config.json << END
         "xtlsSettings": {
           "certificates": [
             {
-              "certificateFile": "$path_crt",
+              "certificateFile": "$path_cer",
               "keyFile": "$path_key"
             }
           ],
@@ -161,7 +161,7 @@ cat > /etc/xray/config.json << END
         "tlsSettings": {
           "certificates": [
             {
-              "certificateFile": "$path_crt",
+              "certificateFile": "$path_cer",
               "keyFile": "$path_key"
             }
           ]
@@ -308,7 +308,7 @@ cat > /etc/xray/config.json << END
         "tlsSettings": {
           "certificates": [
             {
-              "certificateFile": "$path_crt",
+              "certificateFile": "$path_cer",
               "keyFile": "$path_key"
             }
           ]
@@ -362,7 +362,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 1443,
+      "port": 443,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -379,7 +379,7 @@ cat > /etc/xray/config.json << END
         "tlsSettings": {
           "certificates": [
             {
-              "certificateFile": "$path_crt",
+              "certificateFile": "$path_cer",
               "keyFile": "$path_key"
             }
           ]
@@ -419,7 +419,7 @@ cat > /etc/xray/config.json << END
         "tlsSettings": {
           "certificates": [
             {
-              "certificateFile": "$path_crt",
+              "certificateFile": "$path_cer",
               "keyFile": "$path_key"
             }
           ],
@@ -491,7 +491,7 @@ cat > /etc/xray/config.json << END
         "tlsSettings": {
           "certificates": [
             {
-              "certificateFile": "$path_crt",
+              "certificateFile": "$path_cer",
               "keyFile": "$path_key"
             }
           ],
@@ -565,7 +565,7 @@ cat > /etc/xray/config.json << END
         "tlsSettings": {
           "certificates": [
             {
-              "certificateFile": "$path_crt",
+              "certificateFile": "$path_cer",
               "keyFile": "$path_key"
             }
           ],
@@ -674,7 +674,7 @@ cat > /etc/xray/config.json << END
         "tlsSettings": {
           "certificates": [
             {
-              "certificateFile": "$path_crt",
+              "certificateFile": "$path_cer",
               "keyFile": "$path_key"
             }
           ]
@@ -749,7 +749,7 @@ END
 uuid=$(cat /proc/sys/kernel/random/uuid)
 domain=$(cat /root/domain)
 # // Certificate File
-path_crt="/etc/xray/xray.cer"
+path_cer="/etc/xray/xray.cer"
 path_key="/etc/xray/xray.key"
 #domain_ecc=$(cat /root/.acme.sh)
 #domain.key=$(cat /root/.acme.sh/$domain_ecc)
@@ -773,7 +773,7 @@ cat > /etc/xray/xtrojan.json << END
           {
             "password": "gandring",
             "flow": "xtls-rprx-direct",
-            "email": "gandring@p0x.smule.my.id",
+            "email": "gandring@smule.my.id",
             "level": 1
 #trojan-xtls
           }
@@ -801,7 +801,7 @@ cat > /etc/xray/xtrojan.json << END
           ],
           "certificates": [
             {
-              "certificateFile": "$path_crt",
+              "certificateFile": "$path_cer",
               "keyFile": "$path_key"
             }
           ]
@@ -809,7 +809,7 @@ cat > /etc/xray/xtrojan.json << END
       }
     },
     {
-      "port": 8443,
+      "port": 443,
       "listen": "0.0.0.0",
       "protocol": "trojan",
       "tag": "TROJAN-gRPC-in",
@@ -817,7 +817,7 @@ cat > /etc/xray/xtrojan.json << END
         "clients": [
           {
             "password": "gandring",
-            "email": "gandring@p0x.smule.my.id"
+            "email": "gandring@smule.my.id"
 #trojan-grpc
           }
         ],
@@ -834,7 +834,7 @@ cat > /etc/xray/xtrojan.json << END
           ],
           "certificates": [
             {
-              "certificateFile": "$path_crt",
+              "certificateFile": "$path_cer",
               "keyFile": "$path_key"
             }
           ]
@@ -853,7 +853,7 @@ cat > /etc/xray/xtrojan.json << END
         "clients": [
           {
             "password": "gandring",
-            "email": "gandring@p0x.smule.my.id"
+            "email": "gandring@smule.my.id"
 #trojan-tls
           }
         ],
@@ -872,7 +872,7 @@ cat > /etc/xray/xtrojan.json << END
           ],
           "certificates": [
             {
-              "certificateFile": "$path_crt",
+              "certificateFile": "$path_cer",
               "keyFile": "$path_key"
             }
           ]
@@ -888,7 +888,7 @@ cat > /etc/xray/xtrojan.json << END
         "clients": [
           {
             "password": "gandring",
-            "email": "gandring@p0x.smule.my.id"
+            "email": "gandring@smule.my.id"
 #trojan-nontls
           }
         ],
@@ -903,7 +903,7 @@ cat > /etc/xray/xtrojan.json << END
       }
     },
     {
-      "port": 3443,
+      "port": 443,
       "listen": "0.0.0.0",
       "protocol": "trojan",
       "tag": "TROJAN-HTTP/2-in",
@@ -911,7 +911,7 @@ cat > /etc/xray/xtrojan.json << END
         "clients": [
           {
             "password": "gandring",
-            "email": "gandring@p0x.smule.my.id"
+            "email": "gandring@smule.my.id"
 #trojan-hdua
           }
         ],
@@ -930,7 +930,7 @@ cat > /etc/xray/xtrojan.json << END
           ],
           "certificates": [
             {
-              "certificateFile": "$path_crt",
+              "certificateFile": "$path_cer",
               "keyFile": "$path_key"
             }
           ]
@@ -946,7 +946,7 @@ cat > /etc/xray/xtrojan.json << END
         "clients": [
           {
             "password": "gandring",
-            "email": "gandring@p0x.smule.my.id"
+            "email": "gandring@smule.my.id"
 #trojan-http
           }
         ],
@@ -1012,7 +1012,7 @@ END
 uuid=$(cat /proc/sys/kernel/random/uuid)
 domain=$(cat /root/domain)
 # // Certificate File
-path_crt="/etc/xray/xray.cer"
+path_cer="/etc/xray/xray.cer"
 path_key="/etc/xray/xray.key"
 #domain_ecc=$(cat /root/.acme.sh)
 #domain.key=$(cat /root/.acme.sh/$domain_ecc)
@@ -1075,7 +1075,7 @@ cat > /etc/xray/xvless.json << END
           ],
           "certificates": [
             {
-              "certificateFile": "$path_crt",
+              "certificateFile": "$path_cer",
               "keyFile": "$path_key"
             }
           ]
@@ -1109,7 +1109,7 @@ cat > /etc/xray/xvless.json << END
           ],
           "certificates": [
             {
-              "certificateFile": "$path_crt",
+              "certificateFile": "$path_cer",
               "keyFile": "$path_key"
             }
           ]
@@ -1407,7 +1407,7 @@ cat > /etc/trojan-go/config.json << END
     "prefer_ipv4": true
   },
   "mux": {
-    "enabled": false,
+    "enabled": true,
     "concurrency": 8,
     "idle_timeout": 60
   },
