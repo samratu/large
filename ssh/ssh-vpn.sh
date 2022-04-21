@@ -559,7 +559,7 @@ wget -O portsshnontls "https://raw.githubusercontent.com/samratu/large/ sae/ssh/
 wget -O portsshwstls "https://raw.githubusercontent.com/samratu/large/ sae/ssh/portsshwstls.sh"
 wget -O status "https://raw.githubusercontent.com/samratu/large/ sae/update/status.sh"
 wget -O restart "https://raw.githubusercontent.com/samratu/large/ sae/ssh/restart.sh"
-wget -O portdropbear "https://raw.githubusercontent.com/samratu/large/ saw/ssh/portdropbear.sh"
+wget -O portdropbear "https://raw.githubusercontent.com/samratu/large/ sae/ssh/portdropbear.sh"
 wget -O portopenssh "https://raw.githubusercontent.com/samratu/large/ sae/ssh/portopenssh.sh"
 wget -O addnewtr "https://raw.githubusercontent.com/samratu/large/ sae/xray/addnewtr.sh"
 wget -O renewtrojanhdua "https://${wisnuvpnn}/renewtrojanhdua.sh"
