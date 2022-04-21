@@ -14,17 +14,18 @@ LIGHT='\033[0;37m'
 MYIP=$(wget -qO- https://ipv4.icanhazip.com);
 MYIP6=$(wget -qO- https://ipv6.icanhazip.com);
 # Link Hosting Kalian
-wisnuvpn="raw.githubusercontent.com/samratu/large/ sae/ssh"
+wisnuvpn="raw.githubusercontent.com/samratu/large/sae/ssh"
 
 # Link Hosting Kalian Untuk Xray
-wisnuvpnn="raw.githubusercontent.com/samratu/large/ sae/xray"
+wisnuvpnn="raw.githubusercontent.com/samratu/large/sae/xray"
 
 # Link Hosting Kalian Untuk Trojan Go
-wisnuvpnnn="raw.githubusercontent.com/samratu/large/ sae/trojango"
+wisnuvpnnn="raw.githubusercontent.com/samratu/large/sae/trojango"
 
 # Link Hosting Kalian Untuk Stunnel5
-wisnuvpnnnn="raw.githubusercontent.com/samratu/large/ sae/stunnel5"
+wisnuvpnnnn="raw.githubusercontent.com/samratu/large/sae/stunnel5"
 
+wisnuvpnnnnn="raw.githubusercontent.com/samratu/large/sae/update"
 # initializing var
 export DEBIAN_FRONTEND=noninteractive
 MYIP=$(wget -qO- ipinfo.io/ip);
@@ -51,6 +52,7 @@ cat > /etc/systemd/system/rc-local.service <<-END
 [Unit]
 Description=/etc/rc.local
 ConditionPathExists=/etc/rc.local
+
 [Service]
 Type=forking
 ExecStart=/etc/rc.local start
@@ -58,8 +60,10 @@ TimeoutSec=0
 StandardOutput=tty
 RemainAfterExit=yes
 SysVStartPriority=99
+
 [Install]
 WantedBy=multi-user.target
+
 END
 
 # nano /etc/rc.local
@@ -90,7 +94,7 @@ rm -rf /etc/apache2
 # install wget and curl
 apt -y install wget curl
 apt install ssl-cert -y
-apt install ca-certificate-y
+apt install ca-certificate -y
 # Install Requirements Tools
 apt install ruby -y
 apt install python -y
@@ -442,9 +446,9 @@ netfilter-persistent reload
 
 # download script
 cd /usr/bin
+wget -O restart "https://${wisnuvpn}/restart.sh"
 wget -O addhost "https://${wisnuvpn}/addhost.sh"
 wget -O about "https://${wisnuvpn}/about.sh"
-wget -O menu "https://raw.githubusercontent.com/samratu/large/ sae/update/menu.sh"
 wget -O addssh "https://${wisnuvpn}/addssh.sh"
 wget -O trialssh "https://${wisnuvpn}/trialssh.sh"
 wget -O menuu "https://${wisnuvpn}/menuu.sh"
@@ -462,6 +466,10 @@ wget -O ceklim "https://${wisnuvpn}/ceklim.sh"
 wget -O tendang "https://${wisnuvpn}/tendang.sh"
 wget -O clearlog "https://${wisnuvpn}/clearlog.sh"
 wget -O changeport "https://${wisnuvpn}/changeport.sh"
+wget -O wbmn "https://${wisnuvpn}/webmin.sh"
+wget -O xp "https://${wisnuvpn}/xp.sh"
+wget -O swapkvm "https://${wisnuvpn}/swapkvm.sh"
+
 wget -O portovpn "https://${wisnuvpn}/portovpn.sh"
 wget -O portwg "https://${wisnuvpn}/portwg.sh"
 wget -O porttrojan "https://${wisnuvpn}/porttrojan.sh"
@@ -470,12 +478,13 @@ wget -O portgrpc "https://${wisnuvpn}/portgrpc.sh"
 wget -O portsstp "https://${wisnuvpn}/portsstp.sh"
 wget -O portsquid "https://${wisnuvpn}/portsquid.sh"
 wget -O portvlm "https://${wisnuvpn}/portvlm.sh"
-wget -O wbmn "https://${wisnuvpn}/webmin.sh"
-wget -O xp "https://${wisnuvpn}/xp.sh"
-wget -O swapkvm "https://${wisnuvpn}/swapkvm.sh"
+wget -O portstunnel5 "https://${wisnuvpn}/portstunnel5.sh"
+wget -O portdropbear "https://${wisnuvpn}/portdropbear.sh"
+wget -O portopenssh "https://${wisnuvpn}/portopenssh.sh"
+wget -O portsshnontls "https://${wisnuvpn}/portsshnontls.sh"
+wget -O portsshwstls "https://${wisnuvpn}/portsshwstls.sh"
+
 wget -O addvmess "https://${wisnuvpnn}/addvmess.sh"
-wget -O addnewvmess "https://${wisnuvpnn}/addnewvmess.sh"
-wget -O addnewvless "https://${wisnuvpnn}/addnewvless.sh"
 wget -O addnewtr "https://${wisnuvpnn}/addnewtr.sh"
 wget -O addvmessgrpc "https://${wisnuvpnn}/addvmessgrpc.sh"
 wget -O addvmesshdua "https://${wisnuvpnn}/addvmesshdua.sh"
@@ -493,6 +502,9 @@ wget -O addtrojanwss "https://${wisnuvpnn}/addtrojanwss.sh"
 wget -O addtrojanhttp "https://${wisnuvpnn}/addtrojanhttp.sh"
 wget -O addtrojanhdua "https://${wisnuvpnn}/addtrojanhdua.sh"
 wget -O addxrayss "https://${wisnuvpnn}/addxrayss.sh"
+wget -O addnewtr "https://${wisnuvpnn}/addnewtr.sh"
+wget -O addnewvmess "https://${wisnuvpnn}/addnewvmess.sh"
+wget -O addnewvless "https://${wisnuvpnn}/addnewvless.sh"
 
 wget -O delxrayss "https://${wisnuvpnn}/delxrayss.sh"
 wget -O delvmess "https://${wisnuvpnn}/delvmess.sh"
@@ -513,8 +525,8 @@ wget -O delxtlstrojan "https://${wisnuvpnn}/delxtlstrojan.sh"
 wget -O delgrpctrojan "https://${wisnuvpnn}/delgrpctrojan.sh"
 wget -O deltrojanwss "https://${wisnuvpnn}/deltrojanwss.sh"
 wget -O deltrojanhdua "https://${wisnuvpnn}/deltrojanhdua.sh"
-
 wget -O deltrojanhttp "https://${wisnuvpnn}/deltrojanhttp.sh"
+
 wget -O cekvmess "https://${wisnuvpnn}/cekvmess.sh"
 wget -O cekvmessgrpc "https://${wisnuvpnn}/cekvmessgrpc.sh"
 wget -O cekvmesshdua "https://${wisnuvpnn}/cekvmesshdua.sh"
@@ -532,6 +544,7 @@ wget -O cektrojanwss "https://${wisnuvpnn}/cektrojanwss.sh"
 wget -O cektrojanhttp "https://${wisnuvpnn}/cektrojanhttp.sh"
 wget -O ceknewtr "https://${wisnuvpnn}/ceknewtr.sh"
 wget -O cekxrayss "https://${wisnuvpnn}/cekxrayss.sh"
+wget -O cektrojanhdua "https://${wisnuvpnn}/cektrojanhdua.sh"
 
 wget -O renewxrayss "https://${wisnuvpnn}/renewxrayss.sh"
 wget -O renewvmess "https://${wisnuvpnn}/renewvmess.sh"
@@ -547,39 +560,34 @@ wget -O renewvlessgrpc "https://${wisnuvpnn}/renewvlessgrpc.sh"
 wget -O renewtrojan "https://${wisnuvpnn}/renewtrojan.sh"
 wget -O renewxtlstrojan "https://${wisnuvpnn}/renewxtlstrojan.sh"
 wget -O renewgrpctrojan "https://${wisnuvpnn}/renewgrpctrojan.sh"
-wget -O cektrojanhdua "https://${wisnuvpnn}/cektrojanhdua.sh"
 wget -O renewtrojanwss "https://${wisnuvpnn}/renewtrojanwss.sh"
+wget -O renewtrojanhdua "https://${wisnuvpnn}/renewtrojanhdua.sh"
 wget -O renewtrojanhttp "https://${wisnuvpnn}/renewtrojanhttp.sh"
 wget -O certv2ray "https://${wisnuvpnn}/certv2ray.sh"
+
 wget -O addtrgo "https://${wisnuvpnnn}/addtrgo.sh"
 wget -O deltrgo "https://${wisnuvpnnn}/deltrgo.sh"
 wget -O renewtrgo "https://${wisnuvpnnn}/renewtrgo.sh"
 wget -O cektrgo "https://${wisnuvpnnn}/cektrgo.sh"
-wget -O portsshnontls "https://raw.githubusercontent.com/samratu/large/ sae/ssh/portsshnontls.sh"
-wget -O portsshwstls "https://raw.githubusercontent.com/samratu/large/ sae/ssh/portsshwstls.sh"
-wget -O status "https://raw.githubusercontent.com/samratu/large/ sae/update/status.sh"
-wget -O restart "https://raw.githubusercontent.com/samratu/large/ sae/ssh/restart.sh"
-wget -O portdropbear "https://raw.githubusercontent.com/samratu/large/ sae/ssh/portdropbear.sh"
-wget -O portopenssh "https://raw.githubusercontent.com/samratu/large/ sae/ssh/portopenssh.sh"
-wget -O addnewtr "https://raw.githubusercontent.com/samratu/large/ sae/xray/addnewtr.sh"
-wget -O renewtrojanhdua "https://${wisnuvpnn}/renewtrojanhdua.sh"
-wget -O portstunnel5 "https://raw.githubusercontent.com/samratu/large/ sae/ssh/portstunnel5.sh"
-wget -O trpcwsmenu "https://raw.githubusercontent.com/samratu/large/ sae/update/trpcwsmenu.sh"
-wget -O sshovpnmenu "https://raw.githubusercontent.com/samratu/large/ sae/update/sshovpnmenu.sh"
-#wget -O l2tpmenu "https://raw.githubusercontent.com/samratu/large/ sae/update/l2tpmenu.sh"
-wget -O l2tppmenu "https://raw.githubusercontent.com/samratu/large/ sae/update/l2tppmenu.sh"
-#wget -O pptpmenu "https://raw.githubusercontent.com/samratu/large/ sae/update/pptpmenu.sh"
-#wget -O sstpmenu "https://raw.githubusercontent.com/samratu/large/ sae/update/sstpmenu.sh"
-wget -O wgmenu "https://raw.githubusercontent.com/samratu/large/ sae/update/wgmenu.sh"
-wget -O ssmenu "https://raw.githubusercontent.com/samratu/large/ sae/update/ssmenu.sh"
-#wget -O ssrmenu "https://raw.githubusercontent.com/samratu/large/ sae/update/ssrmenu.sh"
-wget -O vmessmenu "https://raw.githubusercontent.com/samratu/large/ sae/update/vmessmenu.sh"
-wget -O vlessmenu "https://raw.githubusercontent.com/samratu/large/ sae/update/vlessmenu.sh"
-#wget -O grpcmenu "https://raw.githubusercontent.com/samratu/large/ sae/update/grpcmenu.sh"
-wget -O trghmenu "https://raw.githubusercontent.com/samratu/large/ sae/update/trghmenu.sh"
-wget -O trxtmenu "https://raw.githubusercontent.com/samratu/large/ sae/update/trxtmenu.sh"
-wget -O setmenu "https://raw.githubusercontent.com/samratu/large/ sae/update/setmenu.sh"
-wget -O testermenu "https://raw.githubusercontent.com/samratu/large/ sae/update/testermenu.sh"
+
+wget -O trpcwsmenu "https://${wisnuvpnnnnn}/trpcwsmenu.sh"
+wget -O sshovpnmenu "https://${wisnuvpnnnnn}/sshovpnmenu.sh"
+#wget -O l2tpmenu "https://${wisnuvpnnnnn}/l2tpmenu.sh"
+wget -O l2tppmenu "https://${wisnuvpnnnnn}/l2tppmenu.sh"
+#wget -O pptpmenu "https://${wisnuvpnnnnn}/pptpmenu.sh"
+#wget -O sstpmenu "https://${wisnuvpnnnnn}/sstpmenu.sh"
+wget -O wgmenu "https://${wisnuvpnnnnn}/wgmenu.sh"
+wget -O ssmenu "https://${wisnuvpnnnnn}/ssmenu.sh"
+#wget -O ssrmenu "https://${wisnuvpnnnnn}/ssrmenu.sh"
+wget -O vmessmenu "https://${wisnuvpnnnnn}/vmessmenu.sh"
+wget -O vlessmenu "https://${wisnuvpnnnnn}/vlessmenu.sh"
+#wget -O grpcmenu "https://${wisnuvpnnnnn}/grpcmenu.sh"
+wget -O trghmenu "https://${wisnuvpnnnnn}/trghmenu.sh"
+wget -O trxtmenu "https://${wisnuvpnnnnn}/trxtmenu.sh"
+wget -O setmenu "https://${wisnuvpnnnnn}/setmenu.sh"
+wget -O testermenu "https://${wisnuvpnnnnn}/testermenu.sh"
+wget -O menu "https://${wisnuvpnnnnn}/menu.sh"
+wget -O status "https://${wisnuvpnnnnn}/status.sh"
 chmod +x testermenu
 chmod +x ceknewtr
 chmod +x addnewtr
