@@ -19,25 +19,25 @@ CYAN='\033[0;36m'
 LIGHT='\033[0;37m'
 # ==========================================
 # Link Hosting Kalian Untuk Ssh Vpn
-wisnuvpn="raw.githubusercontent.com/samratu/large/file/ssh"
+wisnuvpn="raw.githubusercontent.com/samratu/large/ sae/ssh"
 # Link Hosting Kalian Untuk Sstp
-wisnuvpnn="raw.githubusercontent.com/samratu/large/file/sstp"
+wisnuvpnn="raw.githubusercontent.com/samratu/large/ sae/sstp"
 # Link Hosting Kalian Untuk Ssr
-wisnuvpnnn="raw.githubusercontent.com/samratu/large/file/ssr"
+wisnuvpnnn="raw.githubusercontent.com/samratu/large/ sae/ssr"
 # Link Hosting Kalian Untuk Shadowsocks
-wisnuvpnnnn="raw.githubusercontent.com/samratu/large/file/shadowsocks"
+wisnuvpnnnn="raw.githubusercontent.com/samratu/large/ sae/shadowsocks"
 # Link Hosting Kalian Untuk Wireguard
-wisnuvpnnnnn="raw.githubusercontent.com/samratu/large/file/wireguard"
+wisnuvpnnnnn="raw.githubusercontent.com/samratu/large/ sae/wireguard"
 # Link Hosting Kalian Untuk Xray
-wisnuvpnnnnnn="raw.githubusercontent.com/samratu/large/file/xray"
+wisnuvpnnnnnn="raw.githubusercontent.com/samratu/large/ sae/xray"
 # Link Hosting Kalian Untuk Ipsec
-wisnuvpnnnnnnn="raw.githubusercontent.com/samratu/large/file/ipsec"
+wisnuvpnnnnnnn="raw.githubusercontent.com/samratu/large/ sae/ipsec"
 # Link Hosting Kalian Untuk Backup
-wisnuvpnnnnnnnn="raw.githubusercontent.com/samratu/large/file/backup"
+wisnuvpnnnnnnnn="raw.githubusercontent.com/samratu/large/ sae/backup"
 # Link Hosting Kalian Untuk Websocket
-wisnuvpnnnnnnnnn="raw.githubusercontent.com/samratu/large/file/websocket"
+wisnuvpnnnnnnnnn="raw.githubusercontent.com/samratu/large/ sae/websocket"
 # Link Hosting Kalian Untuk Ohp
-wisnuvpnnnnnnnnnn="raw.githubusercontent.com/samratu/large/file/ohp"
+wisnuvpnnnnnnnnnn="raw.githubusercontent.com/samratu/large/ sae/ohp"
 
 # Getting
 MYIP=$(wget -qO- ipinfo.io/ip);
@@ -108,7 +108,7 @@ echo " 🔰 PORT OPENSSH : 2525, 22" |tee -a log-install.txt
 echo " 🔰 PORT OPENVPN TCP : 1194" |tee -a log-install.txt
 echo " 🔰 PORT OPENVPN UDP : 1195" |tee -a log-install.txt
 echo " 🔰 PORT OPENVPN SSL : 990" |tee -a log-install.txt
-echo " 🔰 PORT STUNNEL5 : 8443, 600, 700" |tee -a log-install.txt
+echo " 🔰 PORT STUNNEL5 : 500, 600, 700" |tee -a log-install.txt
 echo " 🔰 PORT DROPBEAR : 200, 300" |tee -a log-install.txt
 echo " 🔰 PORT SQUID : 3128, 3228" |tee -a log-install.txt
 echo " 🔰 Badvpn : 7100, 7200, 7300-7900" |tee -a log-install.txt
@@ -122,8 +122,8 @@ echo " 🔰 SS-OBFS TLS : 2444-2943" |tee -a log-install.txt
 echo " 🔰 SS-OBFS HTTP : 2944-3442" |tee -a log-install.txt
 echo " 🔰 XRAY SHADOWSOCKS : 333" |tee -a log-install.txt
 echo " 🔰 XRAY MTPROTO : 111" |tee -a log-install.txt
-echo " 🔰 WEBSOCKET TLS : 443" |tee -a log-install.txt
-echo " 🔰 WEBSOCKET NON TLS : 8880" |tee -a log-install.txt
+echo " 🔰 WEBSOCKET TLS : 8443" |tee -a log-install.txt
+echo " 🔰 WEBSOCKET NON TLS : 80" |tee -a log-install.txt
 echo " 🔰 PORT OVPNWS : 2086" |tee -a log-install.txt
 echo " 🔰 OHP SSH : 8181" |tee -a log-install.txt
 echo " 🔰 OHP Dropbear : 8282" |tee -a log-install.txt
@@ -132,7 +132,7 @@ echo " 🔰 VMESS WS TLS : 2053" |tee -a log-install.txt
 echo " 🔰 VMESS WS NON TLS : 2052" |tee -a log-install.txt
 echo " 🔰 VMESS GRPC TLS: 8880" |tee -a log-install.txt
 echo " 🔰 VMESS GRPC NON TLS: 2052" |tee -a log-install.txt
-echo " 🔰 VMESS H2C : 1443" |tee -a log-install.txt
+echo " 🔰 VMESS H2C : 443" |tee -a log-install.txt
 echo " 🔰 VMESS HTTP TLS : 8808" |tee -a log-install.txt
 echo " 🔰 VMESS HTTP NON TLS : 808" |tee -a log-install.txt
 echo " 🔰 VLESS XTLS : 99" |tee -a log-install.txt
@@ -144,9 +144,9 @@ echo " 🔰 VLESS H2C : 1443" |tee -a log-install.txt
 echo " 🔰 VLESS HTTP TLS : 8088" |tee -a log-install.txt
 echo " 🔰 VLESS HTTP NON TLS : 888" |tee -a log-install.txt
 echo " 🔰 TROJAN GO : 2087" |tee -a log-install.txt
-echo " 🔰 TROJAN GRPC : 8443" |tee -a log-install.txt
+echo " 🔰 TROJAN GRPC : 443" |tee -a log-install.txt
 echo " 🔰 TROJAN HTTP : 880" |tee -a log-install.txt
-echo " 🔰 TROJAN H2C : 3443" |tee -a log-install.txt
+echo " 🔰 TROJAN H2C : 443" |tee -a log-install.txt
 echo " 🔰 TROJAN XTLS : 4443" |tee -a log-install.txt
 echo " 🔰 TROJAN WS TLS : 2096" |tee -a log-install.txt
 echo " 🔰 TROJAN WS NON TLS : 2095" |tee -a log-install.txt
