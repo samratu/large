@@ -261,7 +261,7 @@ RUN=yes
 # systemd users: don't forget to modify /lib/systemd/system/sslh.service
 DAEMON=/usr/sbin/sslh
 
-DAEMON_OPTS="--user sslh --listen 0.0.0.0:443 --ssl 127.0.0.1:8443 --ssh 127.0.0.1:300 --openvpn 127.0.0.1:1194 --http 127.0.0.1:8880 --pidfile /var/run/sslh/sslh.pid"
+DAEMON_OPTS="--user sslh --listen 0.0.0.0:443 --ssl 127.0.0.1:500 --ssh 127.0.0.1:300 --openvpn 127.0.0.1:1194 --http 127.0.0.1:70 --pidfile /var/run/sslh/sslh.pid"
 
 END
 
@@ -323,7 +323,7 @@ socket = l:TCP_NODELAY=1
 socket = r:TCP_NODELAY=1
 
 [dropbear]
-accept = 600
+accept = 800
 connect = 127.0.0.1:300
 
 [dropbear]
@@ -331,11 +331,11 @@ accept = 700
 connect = 127.0.0.1:200
 
 [openssh]
-accept = 500
+accept = 600
 connect = 127.0.0.1:22
 
 [openssh]
-accept = 8443
+accept = 500
 connect = 127.0.0.1:443
 
 [openvpn]
@@ -366,7 +366,7 @@ wget -q -O /etc/init.d/stunnel5 "https://${wisnuvpnnnn}/stunnel5.init"
 # Ubah Izin Akses
 chmod 600 /etc/stunnel5/stunnel5.pem
 chmod +x /etc/init.d/stunnel5
-cp /usr/local/bin/stunnel /usr/local/wisnucs/stunnel5
+cp /usr/local/bin/stunnel /usr/local/bin/stunnel5
 
 # Remove File
 rm -r -f /usr/local/share/doc/stunnel/
