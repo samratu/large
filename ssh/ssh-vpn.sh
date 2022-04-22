@@ -23,7 +23,7 @@ wisnuvpnn="raw.githubusercontent.com/samratu/large/file/xray"
 wisnuvpnnn="raw.githubusercontent.com/samratu/large/file/trojango"
 
 # Link Hosting Kalian Untuk Stunnel5
-wisnuvpnnnn="raw.githubusercontent.com/samratu/large/filestunnel5"
+wisnuvpnnnn="raw.githubusercontent.com/samratu/large/file/stunnel5"
 
 wisnuvpnnnnn="raw.githubusercontent.com/samratu/large/file/update"
 # initializing var
