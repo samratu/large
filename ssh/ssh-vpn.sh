@@ -331,10 +331,6 @@ accept = 700
 connect = 127.0.0.1:200
 
 [openssh]
-accept = 600
-connect = 127.0.0.1:22
-
-[openssh]
 accept = 500
 connect = 127.0.0.1:443
 
@@ -353,7 +349,7 @@ Documentation=https://github.com/wisnucokrosatrio
 After=syslog.target network-online.target
 
 [Service]
-ExecStart=/usr/local/wisnucs/stunnel5 /etc/stunnel5/stunnel5.conf
+ExecStart=/usr/local/bin/stunnel5 /etc/stunnel5/stunnel5.conf
 Type=forking
 
 [Install]
