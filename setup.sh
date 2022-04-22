@@ -123,16 +123,16 @@ echo " 🔰 SS-OBFS HTTP : 2944-3442" |tee -a log-install.txt
 echo " 🔰 XRAY SHADOWSOCKS : 333" |tee -a log-install.txt
 echo " 🔰 XRAY MTPROTO : 111" |tee -a log-install.txt
 echo " 🔰 WEBSOCKET TLS : 443" |tee -a log-install.txt
-echo " 🔰 WEBSOCKET NON TLS : 80" |tee -a log-install.txt
+echo " 🔰 WEBSOCKET NON TLS : 8880" |tee -a log-install.txt
 echo " 🔰 PORT OVPNWS : 2086" |tee -a log-install.txt
 echo " 🔰 OHP SSH : 8181" |tee -a log-install.txt
 echo " 🔰 OHP Dropbear : 8282" |tee -a log-install.txt
 echo " 🔰 OHP OpenVPN : 8383" |tee -a log-install.txt
 echo " 🔰 VMESS WS TLS : 2053" |tee -a log-install.txt
 echo " 🔰 VMESS WS NON TLS : 2052" |tee -a log-install.txt
-echo " 🔰 VMESS GRPC TLS: 8880" |tee -a log-install.txt
-echo " 🔰 VMESS GRPC NON TLS: 8880" |tee -a log-install.txt
-echo " 🔰 VMESS H2C : 8443" |tee -a log-install.txt
+echo " 🔰 VMESS GRPC TLS: 2053" |tee -a log-install.txt
+echo " 🔰 VMESS GRPC NON TLS: 2052" |tee -a log-install.txt
+echo " 🔰 VMESS H2C : 1443" |tee -a log-install.txt
 echo " 🔰 VMESS HTTP TLS : 8808" |tee -a log-install.txt
 echo " 🔰 VMESS HTTP NON TLS : 808" |tee -a log-install.txt
 echo " 🔰 VLESS XTLS : 99" |tee -a log-install.txt
@@ -144,9 +144,9 @@ echo " 🔰 VLESS H2C : 1443" |tee -a log-install.txt
 echo " 🔰 VLESS HTTP TLS : 8088" |tee -a log-install.txt
 echo " 🔰 VLESS HTTP NON TLS : 888" |tee -a log-install.txt
 echo " 🔰 TROJAN GO : 2087" |tee -a log-install.txt
-echo " 🔰 TROJAN GRPC : 2095" |tee -a log-install.txt
+echo " 🔰 TROJAN GRPC : 2443" |tee -a log-install.txt
 echo " 🔰 TROJAN HTTP : 880" |tee -a log-install.txt
-echo " 🔰 TROJAN H2C : 8443" |tee -a log-install.txt
+echo " 🔰 TROJAN H2C : 3443" |tee -a log-install.txt
 echo " 🔰 TROJAN XTLS : 4443" |tee -a log-install.txt
 echo " 🔰 TROJAN WS TLS : 2096" |tee -a log-install.txt
 echo " 🔰 TROJAN WS NON TLS : 2095" |tee -a log-install.txt
