@@ -93,8 +93,8 @@ rm -rf /etc/apache2
 
 # install wget and curl
 apt -y install wget curl
-apt install ssl-cert -y
-apt install ca-certificate -y
+#apt install ssl-cert -y
+#apt install ca-certificate -y
 # Install Requirements Tools
 apt install ruby -y
 apt install python -y
@@ -314,7 +314,9 @@ openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
 cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
 # Download Config Stunnel5
 cat > /etc/stunnel5/stunnel5.conf <<-END
-cert = /etc/stunnel5/stunnel5.pem
+#cert = /etc/stunnel5/stunnel5.pem
+cert = /etc/xray/xray.cer
+key = /etc/xray/xray.key
 client = no
 socket = a:SO_REUSEADDR=1
 socket = l:TCP_NODELAY=1
