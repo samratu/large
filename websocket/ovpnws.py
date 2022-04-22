@@ -3,17 +3,21 @@ import socket, threading, thread, select, signal, sys, time, getopt
 
 # Listen
 LISTENING_ADDR = '0.0.0.0'
-LISTENING_PORT = sys.argv[1]
-LISTENING_PORT = 2086
+if sys.argv[1:]:
+	LISTENING_PORT = sys.argv[1]
+else:
+	LISTENING_PORT = 80
+
 # Pass
 PASS = ''
 
 # CONST
-BUFLEN = 8192 * 4
-TIMEOUT = 15
-DEFAULT_HOST = '127.0.0.1:1194'
-RESPONSE = 'HTTP/1.1 101 Switching Protocols\r\n\r\nContent-Length: 104857600000\r\n\r\n'
-RESPONSE = 'HTTP/1.1 504 <b><font color="red">SUN AMATAK AJIKU SI JARAN GOYANG TAK GOYANG ING TENGAH LATAR CEMETHIKU SODHO LANANG SAKING SWARGO TAK SABETAKE GUNUNG JUGRUG TAK SABETAKE SEGORO ASAT TAK SABETAKE MARANG ATINE SI JABANG BAYI PET SIDHO EDAN ORA EDAN SIDHO GENDENG ORA GENDENG ORA MARI MARI YEN ORA INGSUN SING NAMBANI </font></b>\r\n\r\nContent-Length: 104857600000\r\n\r\n'
+BUFLEN = 4096 * 4
+TIMEOUT = 60
+DEFAULT_HOST = '127.0.0.1:8443'
+#RESPONSE = 'HTTP/1.1 101 <b><font color="blue"> GANDRING BAGUS SATRIO </font></b>\r\n\r\nContent-Length: 1048576000000\r\n\r\n'
+RESPONSE = 'HTTP/1.1 501 <b><font color="red">SUN AMATAK AJIKU SI JARAN GOYANG TAK GOYANG ING TENGAH LATAR CEMETHIKU SODHO LANANG SAKING SWARGO TAK SABETAKE GUNUNG JUGRUG TAK SABETAKE SEGORO ASAT TAK SABETAKE MARANG ATINE SI JABANG BAYI PET SIDHO EDAN ORA EDAN SIDHO GENDENG ORA GENDENG ORA MARI MARI YEN ORA INGSUN SING NAMBANI </font></b>\r\n\r\nContent-Length: 104857600000\r\n\r\n'
+
 class Server(threading.Thread):
     def __init__(self, host, port):
         threading.Thread.__init__(self)
@@ -78,6 +82,8 @@ class Server(threading.Thread):
                 c.close()
         finally:
             self.threadsLock.release()
+
+
 class ConnectionHandler(threading.Thread):
     def __init__(self, socClient, server, addr):
         threading.Thread.__init__(self)
@@ -217,6 +223,8 @@ class ConnectionHandler(threading.Thread):
                 error = True
             if error:
                 break
+
+
 def print_usage():
     print 'Usage: proxy.py -p <port>'
     print '       proxy.py -b <bindAddr> -p <port>'
@@ -239,6 +247,8 @@ def parse_args(argv):
             LISTENING_ADDR = arg
         elif opt in ("-p", "--port"):
             LISTENING_PORT = int(arg)
+
+
 def main(host=LISTENING_ADDR, port=LISTENING_PORT):
     print "\n:-------PythonProxy-------:\n"
     print "Listening addr: " + LISTENING_ADDR
