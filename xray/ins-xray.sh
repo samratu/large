@@ -11,6 +11,7 @@ CYAN='\033[0;36m'
 LIGHT='\033[0;37m'
 
 MYIP=$(wget -qO- ipinfo.io/ip);
+MYIP6=$(wget -qO- https://ipv6.icanhazip.com);
 clear
 domain=$(cat /root/domain)
 apt install iptables iptables-persistent -y
