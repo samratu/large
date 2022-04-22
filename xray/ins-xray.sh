@@ -126,8 +126,8 @@ cat > /etc/xray/config.json << END
         "xtlsSettings": {
           "certificates": [
             {
-              "certificateFile": "$path_cer",
-              "keyFile": "$path_key"
+              "certificateFile": "/etc/xray/xray.cer",
+              "keyFile": "/etc/xray/xray.key"
             }
           ],
           "alpn": [
@@ -162,8 +162,8 @@ cat > /etc/xray/config.json << END
         "tlsSettings": {
           "certificates": [
             {
-              "certificateFile": "$path_cer",
-              "keyFile": "$path_key"
+              "certificateFile": "/etc/xray/xray.cer",
+              "keyFile": "/etc/xray/xray.key"
             }
           ]
         },
@@ -309,8 +309,8 @@ cat > /etc/xray/config.json << END
         "tlsSettings": {
           "certificates": [
             {
-              "certificateFile": "$path_cer",
-              "keyFile": "$path_key"
+              "certificateFile": "/etc/xray/xray.cer",
+              "keyFile": "/etc/xray/xray.key"
             }
           ]
         },
@@ -380,8 +380,8 @@ cat > /etc/xray/config.json << END
         "tlsSettings": {
           "certificates": [
             {
-              "certificateFile": "$path_cer",
-              "keyFile": "$path_key"
+              "certificateFile": "/etc/xray/xray.cer",
+              "keyFile": "/etc/xray/xray.key"
             }
           ]
         },
@@ -420,8 +420,8 @@ cat > /etc/xray/config.json << END
         "tlsSettings": {
           "certificates": [
             {
-              "certificateFile": "$path_cer",
-              "keyFile": "$path_key"
+              "certificateFile": "/etc/xray/xray.cer",
+              "keyFile": "/etc/xray/xray.key"
             }
           ],
           "alpn": [
@@ -492,8 +492,8 @@ cat > /etc/xray/config.json << END
         "tlsSettings": {
           "certificates": [
             {
-              "certificateFile": "$path_cer",
-              "keyFile": "$path_key"
+              "certificateFile": "/etc/xray/xray.cer",
+              "keyFile": "/etc/xray/xray.key"
             }
           ],
           "alpn": [
@@ -566,8 +566,8 @@ cat > /etc/xray/config.json << END
         "tlsSettings": {
           "certificates": [
             {
-              "certificateFile": "$path_cer",
-              "keyFile": "$path_key"
+              "certificateFile": "/etc/xray/xray.cer",
+              "keyFile": "/etc/xray/xray.key"
             }
           ],
           "alpn": [
@@ -675,8 +675,8 @@ cat > /etc/xray/config.json << END
         "tlsSettings": {
           "certificates": [
             {
-              "certificateFile": "$path_cer",
-              "keyFile": "$path_key"
+              "certificateFile": "/etc/xray/xray.cer",
+              "keyFile": "/etc/xray/xray.key"
             }
           ]
         },
@@ -802,8 +802,8 @@ cat > /etc/xray/xtrojan.json << END
           ],
           "certificates": [
             {
-              "certificateFile": "$path_cer",
-              "keyFile": "$path_key"
+              "certificateFile": "/etc/xray/xray.cer",
+              "keyFile": "/etc/xray/xray.key"
             }
           ]
         }
@@ -835,8 +835,8 @@ cat > /etc/xray/xtrojan.json << END
           ],
           "certificates": [
             {
-              "certificateFile": "$path_cer",
-              "keyFile": "$path_key"
+              "certificateFile": "/etc/xray/xray.cer",
+              "keyFile": "/etc/xray/xray.key"
             }
           ]
         },
@@ -873,8 +873,8 @@ cat > /etc/xray/xtrojan.json << END
           ],
           "certificates": [
             {
-              "certificateFile": "$path_cer",
-              "keyFile": "$path_key"
+              "certificateFile": "/etc/xray/xray.cer",
+              "keyFile": "/etc/xray/xray.key"
             }
           ]
         }
@@ -931,8 +931,8 @@ cat > /etc/xray/xtrojan.json << END
           ],
           "certificates": [
             {
-              "certificateFile": "$path_cer",
-              "keyFile": "$path_key"
+              "certificateFile": "/etc/xray/xray.cer",
+              "keyFile": "/etc/xray/xray.key"
             }
           ]
         }
@@ -1076,8 +1076,8 @@ cat > /etc/xray/xvless.json << END
           ],
           "certificates": [
             {
-              "certificateFile": "$path_cer",
-              "keyFile": "$path_key"
+              "certificateFile": "/etc/xray/xray.cer",
+              "keyFile": "/etc/xray/xray.key"
             }
           ]
         }
@@ -1110,8 +1110,8 @@ cat > /etc/xray/xvless.json << END
           ],
           "certificates": [
             {
-              "certificateFile": "$path_cer",
-              "keyFile": "$path_key"
+              "certificateFile": "/etc/xray/xray.cer",
+              "keyFile": "/etc/xray/xray.key"
             }
           ]
         }
@@ -1385,8 +1385,8 @@ cat > /etc/trojan-go/config.json << END
   "ssl": {
     "verify": false,
     "verify_hostname": false,
-    "cert": "$path_cer",
-    "key": "$path_key",
+    "cert": "/etc/xray/xray.cer",
+    "key": "/etc/xray/xray.key",
     "key_password": "",
     "cipher": "",
     "curves": "",
