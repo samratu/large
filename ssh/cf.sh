@@ -17,9 +17,9 @@ MYIP=$(wget -qO- https://ipv4.icanhazip.com);
 MYIP6=$(wget -qO- https://ipv6.icanhazip.com);
 clear
 apt install jq curl -y
-DOMAIN=smule.my.id
+DOMAIN=zerossl.my.id
 sub=$(</dev/urandom tr -dc a-z0-9 | head -c2)
-SUB_DOMAIN=${sub}.smule.my.id
+SUB_DOMAIN=${sub}.zerossl.my.id
 #SUB_DOMAIN=xxx.smule.my.id
 CF_ID=djarumpentol01@gmail.com
 CF_KEY=d50aff2305f86e8f90907cfc4833ab091c375
