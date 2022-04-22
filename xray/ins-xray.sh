@@ -28,10 +28,11 @@ chronyc tracking -v
 date
 
 # / / Ambil Xray Core Version Terbaru
-latest_version="$(curl -s https://api.github.com/repos/XTLS/Xray-core/releases | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
+#latest_version="$(curl -s https://api.github.com/repos/XTLS/Xray-core/releases | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
 
+bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u root
 # / / Installation Xray Core
-xraycore_link="https://github.com/XTLS/Xray-core/releases/download/v$latest_version/xray-linux-64.zip"
+#xraycore_link="https://github.com/XTLS/Xray-core/releases/download/v$latest_version/xray-linux-64.zip"
 
 # / / Make Main Directory
 mkdir -p /usr/bin/xray
@@ -75,7 +76,8 @@ chmod 644 /etc/xray/xray.key
 
 #curl https://acme-install.netlify.app/acme.sh -o /root/.acme.sh/acme.sh
 #chmod +x /root/.acme.sh/acme.sh
-#/root/.acme.sh/acme.sh --issue -d $domain --standalone -k ec-256
+#/root/.acme.sh/acme.sh --issue -d $domain --standalone -k ec-384
+
 #~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath /etc/xray/xray.crt --keypath /etc/xray/xray.key --ecc
 
 uuid=$(cat /proc/sys/kernel/random/uuid)
@@ -145,7 +147,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 8808,
+      "port": 4430,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -363,7 +365,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 1443,
+      "port": 443,
       "protocol": "vmess",
       "settings": {
         "clients": [
