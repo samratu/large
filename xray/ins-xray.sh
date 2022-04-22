@@ -46,7 +46,7 @@ chmod +x /usr/local/bin/xray
 # Make Folder XRay
 mkdir -p /var/log/xray/
 uuid=$(cat /proc/sys/kernel/random/uuid)
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u root
+#bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u root
 cd /root/
 #wget https://raw.githubusercontent.com/acmesh-official/acme.sh/master/acme.sh
 
@@ -56,7 +56,7 @@ curl https://get.acme.sh | sh
 alias acme.sh=~/.acme.sh/acme.sh
 /root/.acme.sh/acme.sh --upgrade --auto-upgrade
 /root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
-/root/.acme.sh/acme.sh --issue -d "${domain}" --standalone --keylength ec-256
+/root/.acme.sh/acme.sh --issue -d "${domain}" --standalone --keylength ec-384
 /root/.acme.sh/acme.sh --install-cert -d "${domain}" --ecc \
 --fullchain-file /etc/xray/xray.cer \
 --key-file /etc/xray/xray.key
@@ -97,7 +97,6 @@ cat > /etc/xray/config.json << END
   "inbounds": [
     {
       "port": 99,
-      "listen": "127.0.0.1",
       "protocol": "vless",
       "settings": {
         "clients": [
@@ -146,7 +145,6 @@ cat > /etc/xray/config.json << END
     },
     {
       "port": 8808,
-      "listen": "127.0.0.1",
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -228,7 +226,6 @@ cat > /etc/xray/config.json << END
     },
     {
       "port": 808,
-      "listen": "127.0.0.1",
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -295,7 +292,6 @@ cat > /etc/xray/config.json << END
     },
     {
       "port": 2053,
-      "listen": "127.0.0.1",
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -332,7 +328,6 @@ cat > /etc/xray/config.json << END
     },
     {
       "port": 2052,
-      "listen": "127.0.0.1",
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -368,7 +363,6 @@ cat > /etc/xray/config.json << END
     },
     {
       "port": 2443,
-      "listen": "127.0.0.1",
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -409,7 +403,6 @@ cat > /etc/xray/config.json << END
     },
     {
       "port": 2053,
-      "listen": "127.0.0.1",
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -431,7 +424,7 @@ cat > /etc/xray/config.json << END
             }
           ],
           "alpn": [
-            "h2"
+            "http/1.1"
           ]
         },
         "tcpSettings": {},
@@ -455,7 +448,6 @@ cat > /etc/xray/config.json << END
     },
     {
       "port": 2052,
-      "listen": "127.0.0.1",
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -483,7 +475,6 @@ cat > /etc/xray/config.json << END
     },
     {
       "port": 2083,
-      "listen": "127.0.0.1",
       "protocol": "vless",
       "settings": {
         "clients": [
@@ -530,7 +521,6 @@ cat > /etc/xray/config.json << END
     },
     {
       "port": 2082,
-      "listen": "127.0.0.1",
       "protocol": "vless",
       "settings": {
         "clients": [
@@ -559,7 +549,6 @@ cat > /etc/xray/config.json << END
     },
     {
       "port": 2083,
-      "listen": "127.0.0.1",
       "protocol": "vless",
       "settings": {
         "clients": [
@@ -581,7 +570,7 @@ cat > /etc/xray/config.json << END
             }
           ],
           "alpn": [
-            "h2"
+            "http/1.1"
           ]
         },
         "tcpSettings": {},
@@ -604,7 +593,6 @@ cat > /etc/xray/config.json << END
     },
     {
       "port": 2082,
-      "listen": "127.0.0.1",
       "protocol": "vless",
       "settings": {
         "clients": [
@@ -631,7 +619,6 @@ cat > /etc/xray/config.json << END
     },
     {
       "port": 333,
-      "listen": "127.0.0.1",
       "protocol": "shadowsocks",
       "settings": {
         "method": "chacha20-poly1305",
@@ -650,7 +637,6 @@ cat > /etc/xray/config.json << END
     {
       "tag": "K",
       "port": 111,
-      "listen": "127.0.0.1",
       "protocol": "mtproto",
       "settings": {
         "users": [
@@ -669,8 +655,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 1080,
-      "listen": "127.0.0.1",
+      "port": 6443,
       "protocol": "socks",
       "settings": {
         "auth": "password",
@@ -781,7 +766,7 @@ cat > /etc/xray/xtrojan.json << END
   "inbounds": [
     {
       "port": 4443,
-      "listen": "127.0.0.1",
+      "listen": "0.0.0.0",
       "protocol": "trojan",
       "tag": "TROJAN-xtls-in",
       "settings": {
@@ -812,7 +797,6 @@ cat > /etc/xray/xtrojan.json << END
         "security": "xtls",
         "xtlsSettings": {
           "alpn": [
-            "h2",
             "http/1.1"
           ],
           "certificates": [
@@ -826,7 +810,7 @@ cat > /etc/xray/xtrojan.json << END
     },
     {
       "port": 1443,
-      "listen": "127.0.0.1",
+      "listen": "0.0.0.0",
       "protocol": "trojan",
       "tag": "TROJAN-gRPC-in",
       "settings": {
@@ -862,9 +846,9 @@ cat > /etc/xray/xtrojan.json << END
     },
     {
       "port": 2096,
-      "listen": "127.0.0.1",
+      "listen": "0.0.0.0",
       "protocol": "trojan",
-      "tag": "TROJAN-WSTLS-in",
+      "tag": "TROJAN-WS-TLS-in",
       "settings": {
         "clients": [
           {
@@ -883,7 +867,6 @@ cat > /etc/xray/xtrojan.json << END
          },
          "tlsSettings": {
           "alpn": [
-            "h2",
             "http/1.1"
           ],
           "certificates": [
@@ -897,7 +880,7 @@ cat > /etc/xray/xtrojan.json << END
     },
     {
       "port": 2095,
-      "listen": "127.0.0.1",
+      "listen": "0.0.0.0",
       "protocol": "trojan",
       "tag": "TROJAN-WS-in",
       "settings": {
@@ -920,7 +903,7 @@ cat > /etc/xray/xtrojan.json << END
     },
     {
       "port": 3443,
-      "listen": "127.0.0.1",
+      "listen": "0.0.0.0",
       "protocol": "trojan",
       "tag": "TROJAN-HTTP/2-in",
       "settings": {
@@ -941,7 +924,6 @@ cat > /etc/xray/xtrojan.json << END
          },
          "tlsSettings": {
           "alpn": [
-            "h2",
             "http/1.1"
           ],
           "certificates": [
@@ -955,7 +937,7 @@ cat > /etc/xray/xtrojan.json << END
     },
     {
       "port": 880,
-      "listen": "127.0.0.1",
+      "listen": "0.0.0.0",
       "protocol": "trojan",
       "tag": "TROJAN-HTTP-in",
       "settings": {
@@ -1012,15 +994,18 @@ cat > /etc/xray/xtrojan.json << END
       {
         "type": "field",
         "inboundTag": [
-          "TROJAN-XTLS-in",
+          "TROJAN-xtls-in",
           "TROJAN-gRPC-in",
-          "TROJAN-WSTLS-in",
+          "TROJAN-WS-TLS-in",
+          "TROJAN-HTTP/2-in",
           "TROJAN-WS-in",
           "TROJAN-HTTP-in"
         ],
-        "outboundTag": "direct"
-      }
-    ]
+        "outboundTag": "blocked"
+        "protocol": [
+        "bittorent"
+      ]
+    }
   }
 }
 END
@@ -1028,8 +1013,8 @@ END
 uuid=$(cat /proc/sys/kernel/random/uuid)
 domain=$(cat /root/domain)
 # // Certificate File
-path_crt="/etc/xray/xray.cer"
-path_key="/etc/xray/xray.key"
+certificateFile=$(cat /etc/xray/xray.cer)
+keyFile=$(cat /etc/xray/xray.key)
 #domain_ecc=$(cat /root/.acme.sh)
 #domain.key=$(cat /root/.acme.sh/$domain_ecc)
 #path_crt="/root/.acme.sh/$domain_ecc/fullchain.cer"
@@ -1044,7 +1029,7 @@ cat > /etc/xray/xvless.json << END
   "inbounds": [
     {
       "port": 8088,
-      "listen": "127.0.0.1",
+      "listen": "0.0.0.0",
       "tag": "vless-http-tls-in",
       "protocol": "vless",
       "settings": {
@@ -1086,7 +1071,6 @@ cat > /etc/xray/xvless.json << END
         "security": "tls"
          "tlsSettings": {
           "alpn": [
-            "h2",
             "http/1.1"
           ],
           "certificates": [
@@ -1100,7 +1084,7 @@ cat > /etc/xray/xvless.json << END
     },
     {
       "port": 6443,
-      "listen": "127.0.0.1",
+      "listen": "0.0.0.0",
       "tag":  "vless-http/2-in",
       "protocol": "vless",
       "settings": {
@@ -1120,7 +1104,6 @@ cat > /etc/xray/xvless.json << END
         "security": "tls",
          "tlsSettings": {
           "alpn": [
-            "h2",
             "http/1.1"
           ],
           "certificates": [
@@ -1134,7 +1117,7 @@ cat > /etc/xray/xvless.json << END
     },
     {
       "port": 888,
-      "listen": "127.0.0.1",
+      "listen": "0.0.0.0",
       "tag": "vless-http-in",
       "protocol": "vless",
       "settings": {
@@ -1204,15 +1187,9 @@ cat > /etc/xray/xvless.json << END
       {
         "type": "field",
         "inboundTag": [
-          "vless-xtls-in",
           "vless--http-tls-in",
           "vless-http-in",
           "vless-http/2-in",
-          "VMESS-gRPC-in",
-          "VMESS-WS-in",
-          "VMESS-HTTP-in",
-          "VLESS-WS-in",
-          "VLESS-gRPC-in"
         ],
         "outboundTag": "blocked"
         "protocol": [
@@ -1246,7 +1223,7 @@ END
 # / / Installation Xray Service
 cat > /etc/systemd/system/xtrojan.service << END
 [Unit]
-Description=XTROJAN ROUTING DAM COLO PENGKOL BY Z
+Description=XTROJAN ROUTING DAM COLO PENGKOL BY ZEROSSL
 Documentation=https://t.me/zerossl
 After=network.target nss-lookup.target
 
