@@ -96,7 +96,7 @@ cat > /etc/xray/config.json << END
   },
   "inbounds": [
     {
-      "port": 443,
+      "port": 99,
       "listen": "127.0.0.1",
       "protocol": "vless",
       "settings": {
@@ -145,7 +145,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 443,
+      "port": 8808,
       "listen": "127.0.0.1",
       "protocol": "vmess",
       "settings": {
@@ -227,7 +227,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 80,
+      "port": 808,
       "listen": "127.0.0.1",
       "protocol": "vmess",
       "settings": {
@@ -294,7 +294,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 443,
+      "port": 2053,
       "listen": "127.0.0.1",
       "protocol": "vmess",
       "settings": {
@@ -367,7 +367,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 443,
+      "port": 8443,
       "listen": "127.0.0.1",
       "protocol": "vmess",
       "settings": {
@@ -408,7 +408,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 443,
+      "port": 8880,
       "listen": "127.0.0.1",
       "protocol": "vmess",
       "settings": {
@@ -482,7 +482,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 443,
+      "port": 2083,
       "listen": "127.0.0.1",
       "protocol": "vless",
       "settings": {
@@ -558,7 +558,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 443,
+      "port": 2083,
       "listen": "127.0.0.1",
       "protocol": "vless",
       "settings": {
@@ -780,7 +780,7 @@ cat > /etc/xray/xtrojan.json << END
   },
   "inbounds": [
     {
-      "port": 443,
+      "port": 4443,
       "listen": "127.0.0.1",
       "protocol": "trojan",
       "tag": "TROJAN-xtls-in",
@@ -797,7 +797,7 @@ cat > /etc/xray/xtrojan.json << END
         "decryption": "none",
         "fallbacks": [
           {
-            "dest": 443,
+            "dest": 2095,
             "xver": 0
           },
           {
@@ -825,7 +825,7 @@ cat > /etc/xray/xtrojan.json << END
       }
     },
     {
-      "port": 443,
+      "port": 2095,
       "listen": "127.0.0.1",
       "protocol": "trojan",
       "tag": "TROJAN-gRPC-in",
@@ -861,7 +861,7 @@ cat > /etc/xray/xtrojan.json << END
       }
     },
     {
-      "port": 443,
+      "port": 2096,
       "listen": "127.0.0.1",
       "protocol": "trojan",
       "tag": "TROJAN-WSTLS-in",
@@ -919,7 +919,7 @@ cat > /etc/xray/xtrojan.json << END
       }
     },
     {
-      "port": 443,
+      "port": 8443,
       "listen": "127.0.0.1",
       "protocol": "trojan",
       "tag": "TROJAN-HTTP/2-in",
@@ -954,7 +954,7 @@ cat > /etc/xray/xtrojan.json << END
       }
     },
     {
-      "port": 80,
+      "port": 880,
       "listen": "127.0.0.1",
       "protocol": "trojan",
       "tag": "TROJAN-HTTP-in",
