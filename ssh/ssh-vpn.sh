@@ -325,12 +325,12 @@ accept = 600
 connect = 127.0.0.1:300
 
 [dropbear]
-accept = 500
+accept = 700
 connect = 127.0.0.1:200
 
 [openssh]
-accept = 600
-connect = 127.0.0.1:300
+accept = 500
+connect = 127.0.0.1:22
 
 [openssh]
 accept = 8443
