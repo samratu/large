@@ -97,7 +97,6 @@ cat > /etc/xray/config.json << END
   "inbounds": [
     {
       "port": 99,
-      "listen": "127.0.0.1",
       "protocol": "vless",
       "settings": {
         "clients": [
@@ -146,7 +145,6 @@ cat > /etc/xray/config.json << END
     },
     {
       "port": 8808,
-      "listen": "127.0.0.1",
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -228,7 +226,6 @@ cat > /etc/xray/config.json << END
     },
     {
       "port": 808,
-      "listen": "127.0.0.1",
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -295,7 +292,6 @@ cat > /etc/xray/config.json << END
     },
     {
       "port": 2053,
-      "listen": "127.0.0.1",
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -331,7 +327,7 @@ cat > /etc/xray/config.json << END
       "domain": "${domain}"
     },
     {
-      ""port": 2052,
+      "port": 2052,
       "listen": "127.0.0.1",
       "protocol": "vmess",
       "settings": {
