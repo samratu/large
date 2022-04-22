@@ -28,9 +28,9 @@ chronyc tracking -v
 date
 
 # / / Ambil Xray Core Version Terbaru
-#latest_version="$(curl -s https://api.github.com/repos/XTLS/Xray-core/releases | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
+latest_version="$(curl -s https://api.github.com/repos/XTLS/Xray-core/releases | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
 
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u root
+#bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u root
 # / / Installation Xray Core
 #xraycore_link="https://github.com/XTLS/Xray-core/releases/download/v$latest_version/xray-linux-64.zip"
 
@@ -48,7 +48,7 @@ chmod +x /usr/local/bin/xray
 # Make Folder XRay
 mkdir -p /var/log/xray/
 uuid=$(cat /proc/sys/kernel/random/uuid)
-
+bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install-geodata
 cd /root/
 #wget https://raw.githubusercontent.com/acmesh-official/acme.sh/master/acme.sh
 
@@ -427,7 +427,7 @@ cat > /etc/xray/config.json << END
             }
           ],
           "alpn": [
-            "h2"
+            "http/1.1"
           ]
         },
         "tcpSettings": {},
@@ -573,7 +573,7 @@ cat > /etc/xray/config.json << END
             }
           ],
           "alpn": [
-            "h2"
+            "http/1.1"
           ]
         },
         "tcpSettings": {},
@@ -799,7 +799,6 @@ cat > /etc/xray/xtrojan.json << END
         "security": "xtls",
         "xtlsSettings": {
           "alpn": [
-            "h2",
             "http/1.1"
           ],
           "certificates": [
@@ -870,7 +869,6 @@ cat > /etc/xray/xtrojan.json << END
          },
          "tlsSettings": {
           "alpn": [
-            "h2",
             "http/1.1"
           ],
           "certificates": [
@@ -928,7 +926,6 @@ cat > /etc/xray/xtrojan.json << END
          },
          "tlsSettings": {
           "alpn": [
-            "h2",
             "http/1.1"
           ],
           "certificates": [
@@ -1107,7 +1104,6 @@ cat > /etc/xray/xvless.json << END
         "security": "tls",
          "tlsSettings": {
           "alpn": [
-            "h2",
             "http/1.1"
           ],
           "certificates": [
@@ -1253,7 +1249,7 @@ END
 # / / Installation Xray Service
 cat > /etc/systemd/system/xvless.service << END
 [Unit]
-Description=XTROJAN ROUTING DAM COLO PENGKOL BY Z
+Description=XTROJAN ROUTING DAM COLO PENGKOL BY ZEROSSL
 Documentation=https://t.me/zerossl
 After=network.target nss-lookup.target
 
