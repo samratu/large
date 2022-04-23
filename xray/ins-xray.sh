@@ -11,7 +11,6 @@ CYAN='\033[0;36m'
 LIGHT='\033[0;37m'
 
 MYIP=$(wget -qO- ipinfo.io/ip);
-MYIP6=$(wget -qO- https://ipv6.icanhazip.com);
 clear
 domain=$(cat /root/domain)
 apt install iptables iptables-persistent -y
@@ -30,7 +29,6 @@ date
 # / / Ambil Xray Core Version Terbaru
 latest_version="$(curl -s https://api.github.com/repos/XTLS/Xray-core/releases | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
 
-#bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u root
 # / / Installation Xray Core
 xraycore_link="https://github.com/XTLS/Xray-core/releases/download/v$latest_version/xray-linux-64.zip"
 
@@ -48,7 +46,7 @@ chmod +x /usr/local/bin/xray
 # Make Folder XRay
 mkdir -p /var/log/xray/
 uuid=$(cat /proc/sys/kernel/random/uuid)
-#bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install-geodata
+#bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u root
 cd /root/
 #wget https://raw.githubusercontent.com/acmesh-official/acme.sh/master/acme.sh
 
@@ -58,7 +56,7 @@ curl https://get.acme.sh | sh
 alias acme.sh=~/.acme.sh/acme.sh
 /root/.acme.sh/acme.sh --upgrade --auto-upgrade
 /root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
-/root/.acme.sh/acme.sh --issue -d "${domain}" --standalone --keylength ec-256
+/root/.acme.sh/acme.sh --issue -d "${domain}" --standalone --keylength ec-384
 /root/.acme.sh/acme.sh --install-cert -d "${domain}" --ecc \
 --fullchain-file /etc/xray/xray.cer \
 --key-file /etc/xray/xray.key
@@ -76,14 +74,13 @@ chmod 644 /etc/xray/xray.key
 
 #curl https://acme-install.netlify.app/acme.sh -o /root/.acme.sh/acme.sh
 #chmod +x /root/.acme.sh/acme.sh
-#/root/.acme.sh/acme.sh --issue -d $domain --standalone -k ec-384
-
+#/root/.acme.sh/acme.sh --issue -d $domain --standalone -k ec-256
 #~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath /etc/xray/xray.crt --keypath /etc/xray/xray.key --ecc
 
 uuid=$(cat /proc/sys/kernel/random/uuid)
 domain=$(cat /root/domain)
 # // Certificate File
-path_cer="/etc/xray/xray.cer"
+path_crt="/etc/xray/xray.cer"
 path_key="/etc/xray/xray.key"
 #domain_ecc=$(cat /root/.acme.sh)
 #domain.key=$(cat /root/.acme.sh/$domain_ecc)
@@ -99,7 +96,7 @@ cat > /etc/xray/config.json << END
   },
   "inbounds": [
     {
-      "port": 2443,
+      "port": 99,
       "protocol": "vless",
       "settings": {
         "clients": [
@@ -365,7 +362,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 443,
+      "port": 2443,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -405,7 +402,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 443,
+      "port": 2053,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -658,7 +655,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 1080,
+      "port": 6443,
       "protocol": "socks",
       "settings": {
         "auth": "password",
@@ -752,7 +749,7 @@ END
 uuid=$(cat /proc/sys/kernel/random/uuid)
 domain=$(cat /root/domain)
 # // Certificate File
-path_cer="/etc/xray/xray.cer"
+path_crt="/etc/xray/xray.cer"
 path_key="/etc/xray/xray.key"
 #domain_ecc=$(cat /root/.acme.sh)
 #domain.key=$(cat /root/.acme.sh/$domain_ecc)
@@ -769,6 +766,7 @@ cat > /etc/xray/xtrojan.json << END
   "inbounds": [
     {
       "port": 4443,
+      "listen": "0.0.0.0",
       "protocol": "trojan",
       "tag": "TROJAN-xtls-in",
       "settings": {
@@ -776,7 +774,7 @@ cat > /etc/xray/xtrojan.json << END
           {
             "password": "gandring",
             "flow": "xtls-rprx-direct",
-            "email": "gandring@smule.my.id",
+            "email": "gandring@p0x.smule.my.id",
             "level": 1
 #trojan-xtls
           }
@@ -784,7 +782,7 @@ cat > /etc/xray/xtrojan.json << END
         "decryption": "none",
         "fallbacks": [
           {
-            "dest": 443,
+            "dest": 2095,
             "xver": 0
           },
           {
@@ -811,7 +809,7 @@ cat > /etc/xray/xtrojan.json << END
       }
     },
     {
-      "port": 2096,
+      "port": 443,
       "listen": "0.0.0.0",
       "protocol": "trojan",
       "tag": "TROJAN-gRPC-in",
@@ -819,7 +817,7 @@ cat > /etc/xray/xtrojan.json << END
         "clients": [
           {
             "password": "gandring",
-            "email": "gandring@smule.my.id"
+            "email": "gandring@p0x.smule.my.id"
 #trojan-grpc
           }
         ],
@@ -850,12 +848,12 @@ cat > /etc/xray/xtrojan.json << END
       "port": 443,
       "listen": "0.0.0.0",
       "protocol": "trojan",
-      "tag": "TROJAN-WSTLS-in",
+      "tag": "TROJAN-WS-TLS-in",
       "settings": {
         "clients": [
           {
             "password": "gandring",
-            "email": "gandring@smule.my.id"
+            "email": "gandring@p0x.smule.my.id"
 #trojan-tls
           }
         ],
@@ -889,7 +887,7 @@ cat > /etc/xray/xtrojan.json << END
         "clients": [
           {
             "password": "gandring",
-            "email": "gandring@smule.my.id"
+            "email": "gandring@p0x.smule.my.id"
 #trojan-nontls
           }
         ],
@@ -904,7 +902,7 @@ cat > /etc/xray/xtrojan.json << END
       }
     },
     {
-      "port": 443,
+      "port": 3443,
       "listen": "0.0.0.0",
       "protocol": "trojan",
       "tag": "TROJAN-HTTP/2-in",
@@ -912,7 +910,7 @@ cat > /etc/xray/xtrojan.json << END
         "clients": [
           {
             "password": "gandring",
-            "email": "gandring@smule.my.id"
+            "email": "gandring@p0x.smule.my.id"
 #trojan-hdua
           }
         ],
@@ -946,7 +944,7 @@ cat > /etc/xray/xtrojan.json << END
         "clients": [
           {
             "password": "gandring",
-            "email": "gandring@smule.my.id"
+            "email": "gandring@p0x.smule.my.id"
 #trojan-http
           }
         ],
@@ -996,15 +994,18 @@ cat > /etc/xray/xtrojan.json << END
       {
         "type": "field",
         "inboundTag": [
-          "TROJAN-XTLS-in",
+          "TROJAN-xtls-in",
           "TROJAN-gRPC-in",
-          "TROJAN-WSTLS-in",
+          "TROJAN-WS-TLS-in",
+          "TROJAN-HTTP/2-in",
           "TROJAN-WS-in",
           "TROJAN-HTTP-in"
         ],
-        "outboundTag": "direct"
-      }
-    ]
+        "outboundTag": "blocked"
+        "protocol": [
+        "bittorent"
+      ]
+    }
   }
 }
 END
@@ -1012,8 +1013,8 @@ END
 uuid=$(cat /proc/sys/kernel/random/uuid)
 domain=$(cat /root/domain)
 # // Certificate File
-path_cer="/etc/xray/xray.cer"
-path_key="/etc/xray/xray.key"
+certificateFile=$(cat /etc/xray/xray.cer)
+keyFile=$(cat /etc/xray/xray.key)
 #domain_ecc=$(cat /root/.acme.sh)
 #domain.key=$(cat /root/.acme.sh/$domain_ecc)
 #path_crt="/root/.acme.sh/$domain_ecc/fullchain.cer"
@@ -1070,7 +1071,6 @@ cat > /etc/xray/xvless.json << END
         "security": "tls"
          "tlsSettings": {
           "alpn": [
-            "h2",
             "http/1.1"
           ],
           "certificates": [
@@ -1083,7 +1083,7 @@ cat > /etc/xray/xvless.json << END
       }
     },
     {
-      "port": 5443,
+      "port": 6443,
       "listen": "0.0.0.0",
       "tag":  "vless-http/2-in",
       "protocol": "vless",
@@ -1109,7 +1109,7 @@ cat > /etc/xray/xvless.json << END
           "certificates": [
             {
               "certificateFile": "/etc/xray/xray.cer",
-              "keyFile": "/etc/xray/xray.key"
+              "keyFile": /etc/xray/xray.key"
             }
           ]
         }
@@ -1187,15 +1187,9 @@ cat > /etc/xray/xvless.json << END
       {
         "type": "field",
         "inboundTag": [
-          "vless-xtls-in",
           "vless--http-tls-in",
           "vless-http-in",
           "vless-http/2-in",
-          "VMESS-gRPC-in",
-          "VMESS-WS-in",
-          "VMESS-HTTP-in",
-          "VLESS-WS-in",
-          "VLESS-gRPC-in"
         ],
         "outboundTag": "blocked"
         "protocol": [
@@ -1229,7 +1223,7 @@ END
 # / / Installation Xray Service
 cat > /etc/systemd/system/xtrojan.service << END
 [Unit]
-Description=XTROJAN ROUTING DAM COLO PENGKOL BY Z
+Description=XTROJAN ROUTING DAM COLO PENGKOL BY ZEROSSL
 Documentation=https://t.me/zerossl
 After=network.target nss-lookup.target
 
@@ -1406,7 +1400,7 @@ cat > /etc/trojan-go/config.json << END
     "prefer_ipv4": true
   },
   "mux": {
-    "enabled": true,
+    "enabled": false,
     "concurrency": 8,
     "idle_timeout": 60
   },
