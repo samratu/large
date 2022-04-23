@@ -11,7 +11,8 @@ CYAN='\033[0;36m'
 LIGHT='\033[0;37m'
 
 # Getting
-MYIP=$(wget -qO- https://ipv4.icanhazip.com);
+MYIP=$(wget -qO- ipinfo.io/ip);
+#MYIP=$(wget -qO- https://ipv4.icanhazip.com);
 MYIP6=$(wget -qO- https://ipv6.icanhazip.com);
 # Link Hosting Kalian
 wisnuvpn="raw.githubusercontent.com/samratu/large/sae/ssh"
