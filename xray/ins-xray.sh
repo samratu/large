@@ -424,7 +424,7 @@ cat > /etc/xray/config.json << END
             }
           ],
           "alpn": [
-            "h2"
+            "http/1.1"
           ]
         },
         "tcpSettings": {},
@@ -570,7 +570,7 @@ cat > /etc/xray/config.json << END
             }
           ],
           "alpn": [
-            "h2"
+            "http/1.1"
           ]
         },
         "tcpSettings": {},
@@ -767,7 +767,7 @@ cat > /etc/xray/xtrojan.json << END
     {
       "port": 4443,
       "protocol": "trojan",
-      "tag": "TROJAN-xtls-in",
+      "tag": "TROJAN-XTLS-in",
       "settings": {
         "clients": [
           {
@@ -781,6 +781,7 @@ cat > /etc/xray/xtrojan.json << END
         "decryption": "none",
         "fallbacks": [
           {
+            "serviceName": "gandring",
             "dest": 443,
             "xver": 1
           },
@@ -809,7 +810,7 @@ cat > /etc/xray/xtrojan.json << END
       }
     },
     {
-      "port": 443,
+      "port": 2443,
       "listen": "0.0.0.0",
       "protocol": "trojan",
       "tag": "TROJAN-gRPC-in",
@@ -863,7 +864,7 @@ cat > /etc/xray/xtrojan.json << END
         "network": "ws",
         "security": "tls",
         "wsSettings": {
-          "path": "gandring"
+          "path": "/gandring"
          },
          "tlsSettings": {
           "alpn": [
@@ -903,7 +904,7 @@ cat > /etc/xray/xtrojan.json << END
       }
     },
     {
-      "port": 443,
+      "port": 3443,
       "listen": "0.0.0.0",
       "protocol": "trojan",
       "tag": "TROJAN-HTTP/2-in",
@@ -987,11 +988,19 @@ cat > /etc/xray/xtrojan.json << END
       "https+local://1.1.1.1/dns-query"
     ]
   },
-  "routing":{
-        "domainStrategy": "AsIs",
-        "rules": [
-          {
-            "type": "field",
+  "routing": {
+    "domainStrategy": "AsIs",
+    "rules": [
+      {
+        "type": "field",
+        "inboundTag": [
+          "TROJAN-XTLS-in",
+          "TROJAN-gRPC-in",
+          "TROJAN-WSTLS-in",
+          "TROJAN-HTTP/2-in",
+          "TROJAN-WS-in",
+          "TROJAN-HTTP-in"
+           ],
             "outboundTag": "blackhole-out",
             "protocol": [ "bittorrent" ]
           }
