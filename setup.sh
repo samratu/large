@@ -117,11 +117,9 @@ echo " 🔰 Wireguard : 8080" |tee -a log-install.txt
 echo " 🔰 L2TP/IPSEC VPN : 1701" |tee -a log-install.txt
 echo " 🔰 PPTP VPN : 1732" |tee -a log-install.txt
 echo " 🔰 SSTP VPN : 444" |tee -a log-install.txt
-echo " 🔰 Shadowsocks-R : 1444-1543" |tee -a log-install.txt
+echo " 🔰 Shadowsocks-R : 1444-1943" |tee -a log-install.txt
 echo " 🔰 SS-OBFS TLS : 2444-2943" |tee -a log-install.txt
 echo " 🔰 SS-OBFS HTTP : 2944-3442" |tee -a log-install.txt
-echo " 🔰 XRAY SHADOWSOCKS : 333" |tee -a log-install.txt
-echo " 🔰 XRAY MTPROTO : 111" |tee -a log-install.txt
 echo " 🔰 WEBSOCKET TLS : 8443" |tee -a log-install.txt
 echo " 🔰 WEBSOCKET NON TLS : 8880" |tee -a log-install.txt
 echo " 🔰 PORT OVPNWS : 2086" |tee -a log-install.txt
@@ -150,7 +148,7 @@ echo " 🔰 TROJAN H2C : 443" |tee -a log-install.txt
 echo " 🔰 TROJAN XTLS : 4443" |tee -a log-install.txt
 echo " 🔰 TROJAN WS TLS : 443" |tee -a log-install.txt
 echo " 🔰 TROJAN WS NON TLS : 2095" |tee -a log-install.txt
-echo " 🔰 SOCKS5 WEBSOCKET : 1080" |tee -a log-install.txt
+echo " 🔰 SOCKS5 WEBSOCKET : 6443" |tee -a log-install.txt
 echo " 🔰 XRAY SHADOWSOCKS : 333" |tee -a log-install.txt
 echo " 🔰 XRAY MT PROTO : 111" |tee -a log-install.txt
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
