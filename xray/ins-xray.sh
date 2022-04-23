@@ -96,54 +96,6 @@ cat > /etc/xray/config.json << END
   },
   "inbounds": [
     {
-      "port": 2443,
-      "protocol": "vless",
-      "settings": {
-        "clients": [
-          {
-            "id": "${uuid}",
-            "flow": "xtls-rprx-direct"
-#vless-xtls
-          }
-        ],
-        "decryption": "none",
-        "fallbacks": [
-          {
-            "dest": 88
-          }
-        ]
-      },
-      "streamSettings": {
-        "network": "tcp",
-        "security": "xtls",
-        "tcpSettings": {},
-        "kcpSettings": {},
-        "wsSettings": {},
-        "httpSettings": {},
-        "quicSettings": {},
-        "grpcSettings": {},
-        "xtlsSettings": {
-          "certificates": [
-            {
-              "certificateFile": "/etc/xray/xray.cer",
-              "keyFile": "/etc/xray/xray.key"
-            }
-          ],
-          "alpn": [
-            "http/1.1"
-          ]
-        }
-      },
-      "domain": "${domain}",
-      "sniffing": {
-        "enabled": true,
-        "destOverride": [
-          "http",
-          "tls"
-        ]
-      }
-    },
-    {
       "port": 8808,
       "protocol": "vmess",
       "settings": {
@@ -177,7 +129,7 @@ cat > /etc/xray/config.json << END
                 "/"
               ],
               "headers": {
-                "Host": "${domain}",
+                "Host": "v24.tiktokcdn.com",
                 "User-Agent": [
                   "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.75 Safari/537.36",
                   "Mozilla/5.0 (iPhone; CPU iPhone OS 10_0_2 like Mac OS X) AppleWebKit/601.1 (KHTML, like Gecko) CriOS/53.0.2785.109 Mobile/14A456 Safari/601.1.46"
@@ -225,7 +177,55 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 808,
+      "port": 44443,
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "${uuid}",
+            "flow": "xtls-rprx-direct"
+#vless-xtls
+          }
+        ],
+        "decryption": "none",
+        "fallbacks": [
+          {
+            "dest": 88
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "security": "xtls",
+        "tcpSettings": {},
+        "kcpSettings": {},
+        "wsSettings": {},
+        "httpSettings": {},
+        "quicSettings": {},
+        "grpcSettings": {},
+        "xtlsSettings": {
+          "certificates": [
+            {
+              "certificateFile": "/etc/xray/xray.cer",
+              "keyFile": "/etc/xray/xray.key"
+            }
+          ],
+          "alpn": [
+            "http/1.1"
+          ]
+        }
+      },
+      "domain": "${domain}",
+      "sniffing": {
+        "enabled": true,
+        "destOverride": [
+          "http",
+          "tls"
+        ]
+      }
+    },
+    {
+      "port": 80,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -251,7 +251,7 @@ cat > /etc/xray/config.json << END
                 "/"
               ],
               "headers": {
-                "Host": "${domain}",
+                "Host": "v24.tiktokcdn.com",
                 "User-Agent": [
                   "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.75 Safari/537.36",
                   "Mozilla/5.0 (iPhone; CPU iPhone OS 10_0_2 like Mac OS X) AppleWebKit/601.1 (KHTML, like Gecko) CriOS/53.0.2785.109 Mobile/14A456 Safari/601.1.46"
@@ -362,7 +362,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 1443,
+      "port": 443,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -402,7 +402,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 2053,
+      "port": 443,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -424,7 +424,7 @@ cat > /etc/xray/config.json << END
             }
           ],
           "alpn": [
-            "http/1.1"
+            "h2"
           ]
         },
         "tcpSettings": {},
@@ -435,7 +435,7 @@ cat > /etc/xray/config.json << END
         "grpcSettings": {
           "serviceName": "gandring",
           "multiMode": true
-        }
+        } 
       },
       "domain": "${domain}",
       "sniffing": {
@@ -447,7 +447,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 2052,
+      "port": 808,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -474,7 +474,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 443,
+      "port": 2083,
       "protocol": "vless",
       "settings": {
         "clients": [
@@ -570,7 +570,7 @@ cat > /etc/xray/config.json << END
             }
           ],
           "alpn": [
-            "http/1.1"
+            "h2"
           ]
         },
         "tcpSettings": {},
@@ -655,7 +655,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 6443,
+      "port": 1080,
       "protocol": "socks",
       "settings": {
         "auth": "password",
