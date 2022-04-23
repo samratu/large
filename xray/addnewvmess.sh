@@ -100,7 +100,7 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "grpc",
-      "serviceName": "gandring",
+      "path": "gandring",
       "type": "none",
       "host": "${domain}",
       "tls": "tls"
@@ -115,13 +115,13 @@ cat>/etc/xray/vmess-$user-nontls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "grpc",
-      "serviceName": "gandring",
+      "path": "gandring",
       "type": "none",
       "host": "${domain}",
       "tls": "none"
 }
 EOF
-vmess_base641=$( base64 -w 0 <<< $vmess_json1)
+vmess_base641=$( base64 -w 0 <<< vmess_json1)
 vmess_base642=$( base64 -w 0 <<< $vmess_json2)
 vmessgrpc="vmess://$(base64 -w 0 /etc/xray/vmess-$user-tls.json)"
 vmessgrpcnon="vmess://$(base64 -w 0 /etc/xray/vmess-$user-nontls.json)"
@@ -247,11 +247,11 @@ echo -e "WS TLS: ${vmess1}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "WS NON TLS: ${vmess2}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Link GRPC: ${vmessgrpc}"
+echo -e "GRPC TLS: ${vmessgrpc}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "GRPC NON TLS: ${vmessgrpcnon}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Link H2C : ${vmesshdua}"
+echo -e "H2C : ${vmesshdua}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "HTTP TLS : ${vmesshttp}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
