@@ -42,7 +42,7 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "add": "${domain}",
       "port": "${tls}",
       "id": "${uuid}",
-      "aid": "0",
+      "aid": "0", 
       "net": "ws",
       "path": "gandring",
       "type": "none",
@@ -100,7 +100,7 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "grpc",
-      "serviceName": "gandring",
+      "path": "gandring",
       "type": "none",
       "host": "${domain}",
       "tls": "tls"
@@ -115,13 +115,13 @@ cat>/etc/xray/vmess-$user-nontls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "grpc",
-      "serviceName": "gandring",
+      "path": "gandring",
       "type": "none",
       "host": "${domain}",
       "tls": "none"
 }
 EOF
-vmess_base641=$( base64 -w 0 <<< $vmess_json1)
+vmess_base641=$( base64 -w 0 <<< vmess_json1)
 vmess_base642=$( base64 -w 0 <<< $vmess_json2)
 vmessgrpc="vmess://$(base64 -w 0 /etc/xray/vmess-$user-tls.json)"
 vmessgrpcnon="vmess://$(base64 -w 0 /etc/xray/vmess-$user-nontls.json)"
@@ -161,7 +161,7 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "tls": "tls"
 }
 EOF
-vmesshdua_base641=$( base64 -w 0 <<< $vmess_json1)
+vmesshdua=$( base64 -w 0 <<< $vmess_json1)
 #vmess_base642=$( base64 -w 0 <<< $vmess_json2)
 vmesshdua="vmess://$(base64 -w 0 /etc/xray/vmess-$user-tls.json)"
 #vmessgrpclink2="vmess://$(base64 -w 0 /etc/xray/$user-none.json)"
