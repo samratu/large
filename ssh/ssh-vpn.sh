@@ -88,15 +88,20 @@ apt update -y
 apt upgrade -y
 apt dist-upgrade -y
 apt-get remove --purge ufw firewalld -y
+apt-get install gawk -y &>/dev/null
 apt-get remove --purge exim4 -y
 apt-get purge apache2* -y
 rm -rf /etc/apache2
-
+dpkg --configure -a &>/dev/null
 # install wget and curl
 apt -y install wget curl
 apt install ssl-cert -y
 apt install ca-certificate -y
 # Install Requirements Tools
+apt-get install grep -y &>/dev/null
+apt install python3-pip -y
+apt-add-repository universe -y &>/dev/null
+apt-get install software-properties-common -y &>/dev/null
 apt install ruby -y
 apt install python -y
 apt install privoxy -y
@@ -373,7 +378,7 @@ rm -r -f /usr/local/etc/stunnel/
 rm -f /usr/local/bin/stunnel
 rm -f /usr/local/bin/stunnel3
 rm -f /usr/local/bin/stunnel4
-#rm -f /usr/local/bin/stunnel5
+rm -f /usr/local/bin/stunnel5
 
 # Restart Stunnel 5
 systemctl stop stunnel5
