@@ -32,7 +32,7 @@ latest_version="$(curl -s https://api.github.com/repos/XTLS/Xray-core/releases |
 
 #bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u root
 # / / Installation Xray Core
-#xraycore_link="https://github.com/XTLS/Xray-core/releases/download/v$latest_version/xray-linux-64.zip"
+xraycore_link="https://github.com/XTLS/Xray-core/releases/download/v$latest_version/xray-linux-64.zip"
 
 # / / Make Main Directory
 mkdir -p /usr/bin/xray
@@ -147,7 +147,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 4430,
+      "port": 8808,
       "protocol": "vmess",
       "settings": {
         "clients": [
