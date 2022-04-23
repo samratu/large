@@ -766,7 +766,6 @@ cat > /etc/xray/xtrojan.json << END
   "inbounds": [
     {
       "port": 4443,
-      "listen": "0.0.0.0",
       "protocol": "trojan",
       "tag": "TROJAN-xtls-in",
       "settings": {
@@ -775,20 +774,20 @@ cat > /etc/xray/xtrojan.json << END
             "password": "gandring",
             "flow": "xtls-rprx-direct",
             "email": "gandring@p0x.smule.my.id",
-            "level": 1
+            "level": 0
 #trojan-xtls
           }
         ],
         "decryption": "none",
         "fallbacks": [
           {
-            "dest": 2095,
-            "xver": 0
+            "dest": 443,
+            "xver": 1
           },
           {
             "path": "/gandring",
             "dest": 2096,
-            "xver": 0
+            "xver": 1
           }
         ]
       },
@@ -797,6 +796,7 @@ cat > /etc/xray/xtrojan.json << END
         "security": "xtls",
         "xtlsSettings": {
           "alpn": [
+            "h2",
             "http/1.1"
           ],
           "certificates": [
@@ -809,7 +809,7 @@ cat > /etc/xray/xtrojan.json << END
       }
     },
     {
-      "port": 1443,
+      "port": 2443,
       "listen": "0.0.0.0",
       "protocol": "trojan",
       "tag": "TROJAN-gRPC-in",
@@ -848,7 +848,7 @@ cat > /etc/xray/xtrojan.json << END
       "port": 2096,
       "listen": "0.0.0.0",
       "protocol": "trojan",
-      "tag": "TROJAN-WS-TLS-in",
+      "tag": "TROJAN-WSTLS-in",
       "settings": {
         "clients": [
           {
@@ -867,6 +867,7 @@ cat > /etc/xray/xtrojan.json << END
          },
          "tlsSettings": {
           "alpn": [
+            "h2",
             "http/1.1"
           ],
           "certificates": [
@@ -924,6 +925,7 @@ cat > /etc/xray/xtrojan.json << END
          },
          "tlsSettings": {
           "alpn": [
+            "h2",
             "http/1.1"
           ],
           "certificates": [
@@ -979,224 +981,22 @@ cat > /etc/xray/xtrojan.json << END
   ],
   "dns": {
     "servers": [
-      "8.8.8.8",
-      "8.8.4.4",
       "1.1.1.1",
       "1.0.0.1",
       "localhost",
-      "https+local://dns.google/dns-query",
       "https+local://1.1.1.1/dns-query"
     ]
   },
-  "routing": {
-    "domainStrategy": "AsIs",
-    "rules": [
-      {
-        "type": "field",
-        "inboundTag": [
-          "TROJAN-xtls-in",
-          "TROJAN-gRPC-in",
-          "TROJAN-WS-TLS-in",
-          "TROJAN-HTTP/2-in",
-          "TROJAN-WS-in",
-          "TROJAN-HTTP-in"
-        ],
-        "outboundTag": "blocked"
-        "protocol": [
-        "bittorent"
+  "routing":{
+        "domainStrategy": "AsIs",
+        "rules": [
+          {
+            "type": "field",
+            "outboundTag": "blackhole-out",
+            "protocol": [ "bittorrent" ]
+          }
       ]
-    }
-  }
-}
-END
-
-uuid=$(cat /proc/sys/kernel/random/uuid)
-domain=$(cat /root/domain)
-# // Certificate File
-certificateFile=$(cat /etc/xray/xray.cer)
-keyFile=$(cat /etc/xray/xray.key)
-#domain_ecc=$(cat /root/.acme.sh)
-#domain.key=$(cat /root/.acme.sh/$domain_ecc)
-#path_crt="/root/.acme.sh/$domain_ecc/fullchain.cer"
-#path_key="/root/.acme.sh/$domain_ecc/$domain.key"
-cat > /etc/xray/xvless.json << END
-{
-  "log": {
-    "access": "/var/log/xray/access.log",
-    "error": "/var/log/xray/error.log",
-    "loglevel": "warning"
-  },
-  "inbounds": [
-    {
-      "port": 8088,
-      "listen": "0.0.0.0",
-      "tag": "vless-http-tls-in",
-      "protocol": "vless",
-      "settings": {
-        "clients": [
-          {
-            "id": "gandring"
-#vless-http-tls
-          }
-        ]
-      },
-      "streamSettings": {
-        "network": "tcp",
-        "tcpSettings": {
-          "header": {
-            "type": "http",
-            "response": {
-              "version": "1.1",
-              "status": "200",
-              "reason": "OK",
-              "headers": {
-                "Content-Type": [
-                  "application/octet-stream",
-                  "video/mpeg",
-                  "application/x-msdownload",
-                  "text/html",
-                  "application/x-shockwave-flash"
-                ],
-                "Transfer-Encoding": [
-                  "chunked"
-                ],
-                "Connection": [
-                  "keep-alive"
-                ],
-                "Pragma": "no-cache"
-              }
-            }
-          }
-        },
-        "security": "tls"
-         "tlsSettings": {
-          "alpn": [
-            "http/1.1"
-          ],
-          "certificates": [
-            {
-              "certificateFile": "/etc/xray/xray.cer",
-              "keyFile": "/etc/xray/xray.key"
-            }
-          ]
-        }
-      }
-    },
-    {
-      "port": 6443,
-      "listen": "0.0.0.0",
-      "tag":  "vless-http/2-in",
-      "protocol": "vless",
-      "settings": {
-        "clients": [
-          {
-            "id": "${uuid}",
-#vless-hdua
-          }
-        ],
-        "decryption": "none"
-      },
-      "streamSettings": {
-        "network": "ws",
-        "wsSettings": {
-          "path": "gandring"
-        },
-        "security": "tls",
-         "tlsSettings": {
-          "alpn": [
-            "http/1.1"
-          ],
-          "certificates": [
-            {
-              "certificateFile": "/etc/xray/xray.cer",
-              "keyFile": /etc/xray/xray.key"
-            }
-          ]
-        }
-      }
-    },
-    {
-      "port": 888,
-      "listen": "0.0.0.0",
-      "tag": "vless-http-in",
-      "protocol": "vless",
-      "settings": {
-        "clients": [
-          {
-            "id": "${uuid}"
-#vless-http-nontls
-          }
-        ]
-      },
-      "streamSettings": {
-        "network": "tcp",
-        "tcpSettings": {
-          "header": {
-            "type": "http",
-            "response": {
-              "version": "1.1",
-              "status": "200",
-              "reason": "OK",
-              "headers": {
-                "Content-Type": [
-                  "application/octet-stream",
-                  "video/mpeg",
-                  "application/x-msdownload",
-                  "text/html",
-                  "application/x-shockwave-flash"
-                ],
-                "Transfer-Encoding": [
-                  "chunked"
-                ],
-                "Connection": [
-                  "keep-alive"
-                ],
-                "Pragma": "no-cache"
-              }
-            }
-          }
-        },
-        "security": "none"
-      }
-    },
-  ],
-  "outbounds": [
-    {
-      "protocol": "freedom",
-      "tag": "direct"
-    },
-    {
-      "protocol": "blackhole",
-      "tag": "blocked"
-    }
-  ],
-  "dns": {
-    "servers": [
-      "8.8.8.8",
-      "8.8.4.4",
-      "1.1.1.1",
-      "1.0.0.1",
-      "localhost",
-      "https+local://dns.google/dns-query",
-      "https+local://1.1.1.1/dns-query"
-    ]
-  },
-  "routing": {
-    "domainStrategy": "AsIs",
-    "rules": [
-      {
-        "type": "field",
-        "inboundTag": [
-          "vless--http-tls-in",
-          "vless-http-in",
-          "vless-http/2-in",
-        ],
-        "outboundTag": "blocked"
-        "protocol": [
-        "bittorent"
-      ]
-    }
-  }
+   }
 }
 END
 
