@@ -29,11 +29,11 @@ Check_And_Add_Line(){
 }
 
 Install_BBR(){
-echo "#############################################"
+echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo "Install TCP_BBR by wisnucokrosatrio..."
 if [ -n "$(lsmod | grep bbr)" ];then
 echo "TCP_BBR sudah diinstall."
-echo "#############################################"
+echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 return 1
 fi
 echo "Mulai menginstall TCP_BBR..."
@@ -47,11 +47,11 @@ if [ -n "$(sysctl net.ipv4.tcp_available_congestion_control | grep bbr)" ] && [ 
 else
 	echo "Gagal menginstall TCP_BBR."
 fi
-echo "#############################################"
+echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 }
 
 Optimize_Parameters(){
-echo "#############################################"
+echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo "Optimasi Parameters..."
 Check_And_Add_Line "/etc/security/limits.conf" "* soft nofile 65535"
 Check_And_Add_Line "/etc/security/limits.conf" "* hard nofile 65535"
@@ -76,7 +76,7 @@ Check_And_Add_Line "/etc/sysctl.conf" "net.ipv4.tcp_rmem = 16777216 33554432 671
 Check_And_Add_Line "/etc/sysctl.conf" "net.ipv4.tcp_wmem = 16777216 33554432 67108864"
 Check_And_Add_Line "/etc/sysctl.conf" "net.ipv4.tcp_mtu_probing = 1"
 echo "Optimasi Parameters Selesai."
-echo "#############################################"
+echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 }
 Install_BBR
 Optimize_Parameters
