@@ -308,6 +308,15 @@ mkdir -p /etc/stunnel5
 chmod 644 /etc/stunnel5
 
 # make a certificate
+wget https://www.openssl.org/source/openssl-3.0.0-alpha17.tar.gz
+tar -xvzf openssl-3.0.0-alpha17.tar.gz
+cd openssl-3.0.0-alpha17
+chmod +x ./config
+./configure
+make
+mske test
+make install
+ln -s /usr/local/bin/openssl /usr/bin/
 openssl genrsa -out key.pem 2048
 openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
 -subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
