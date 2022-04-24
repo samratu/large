@@ -104,7 +104,7 @@ echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━�
 echo -e "\E[44;1;41m           🔰 SETUP SERVER BY ZEROSSL 🔰            \E[0m"
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" 
 echo " 🔰 >>> Service & Port" |tee -a log-install.txt
-echo " 🔰 PORT OPENSSH : 2525, 22" |tee -a log-install.txt
+echo " 🔰 PORT OPENSSH : 22" |tee -a log-install.txt
 echo " 🔰 PORT OPENVPN TCP : 1194" |tee -a log-install.txt
 echo " 🔰 PORT OPENVPN UDP : 1195" |tee -a log-install.txt
 echo " 🔰 PORT OPENVPN SSL : 990" |tee -a log-install.txt
@@ -136,19 +136,19 @@ echo " 🔰 VMESS HTTP NON TLS : 808" |tee -a log-install.txt
 echo " 🔰 VLESS XTLS : 44443" |tee -a log-install.txt
 echo " 🔰 VLESS WS TLS : 2083" |tee -a log-install.txt
 echo " 🔰 VLESS WS NON TLS : 2082" |tee -a log-install.txt
-echo " 🔰 VLESS GRPC TLS : 443" |tee -a log-install.txt
+echo " 🔰 VLESS GRPC TLS : 2083" |tee -a log-install.txt
 echo " 🔰 VLESS GRPC NON TLS: 2082" |tee -a log-install.txt
 echo " 🔰 VLESS H2C : 1443" |tee -a log-install.txt
 echo " 🔰 VLESS HTTP TLS : 8088" |tee -a log-install.txt
 echo " 🔰 VLESS HTTP NON TLS : 888" |tee -a log-install.txt
 echo " 🔰 TROJAN GO : 2087" |tee -a log-install.txt
-echo " 🔰 TROJAN GRPC : 443" |tee -a log-install.txt
+echo " 🔰 TROJAN GRPC : 2095" |tee -a log-install.txt
 echo " 🔰 TROJAN HTTP : 880" |tee -a log-install.txt
 echo " 🔰 TROJAN H2C : 443" |tee -a log-install.txt
 echo " 🔰 TROJAN XTLS : 4443" |tee -a log-install.txt
 echo " 🔰 TROJAN WS TLS : 2096" |tee -a log-install.txt
 echo " 🔰 TROJAN WS NON TLS : 2095" |tee -a log-install.txt
-echo " 🔰 SOCKS5 WEBSOCKET : 10808" |tee -a log-install.txt
+echo " 🔰 SOCKS5 WEBSOCKET : 1080" |tee -a log-install.txt
 echo " 🔰 XRAY SHADOWSOCKS : 333" |tee -a log-install.txt
 echo " 🔰 XRAY MT PROTO : 111" |tee -a log-install.txt
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
