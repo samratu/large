@@ -64,6 +64,12 @@ chown -R nobody:nogroup /etc/xray
 chmod 644 /etc/xray/xray.cer
 chmod 644 /etc/xray/xray.key
 
+acme.sh --install-cert -d $domain \
+--key-file /etc/nginx/ssl/$domain/$domain.key \
+--fullchain-file /etc/nginx/ssl/$domain/$domain.cer \
+--reloadcmd 'systemctl reload nginx'
+
+acme.sh --issue -w /var/www/html -d $domain -d www.$domain
 #sudo lsof -t -i tcp:80 -s tcp:listen | sudo xargs kill
 #cd /root/
 #wget https://raw.githubusercontent.com/acmesh-official/acme.sh/master/acme.sh
