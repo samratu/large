@@ -35,7 +35,7 @@ xraycore_link="https://github.com/XTLS/Xray-core/releases/download/v$latest_vers
 # / / Make Main Directory
 mkdir -p /usr/bin/xray
 mkdir -p /etc/xray
-
+mkdir -p /etc/nginx/ssl
 # / / Unzip Xray Linux 64
 cd `mktemp -d`
 curl -sL "$xraycore_link" -o xray.zip
@@ -69,6 +69,9 @@ alias acme.sh=~/.acme.sh/acme.sh
 acme.sh --install-cert -d $domain \
 --key-file /etc/nginx/ssl/$domain/$domain.key \
 --fullchain-file /etc/nginx/ssl/$domain/$domain.cer \
+chown -R nobody:nogroup /etc/nginx/ssl
+chmod 644 /etc/nginx/ssl/$domain/$domain.key
+chmod 644 /etc/nginx/ssl/$domain/$domain.cer
 --reloadcmd 'systemctl reload nginx'
 
 curl https://get.acme.sh | sh
