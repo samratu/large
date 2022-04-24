@@ -261,7 +261,7 @@ RUN=yes
 # systemd users: don't forget to modify /lib/systemd/system/sslh.service
 DAEMON=/usr/sbin/sslh
 
-DAEMON_OPTS="--user sslh --listen 0.0.0.0:443 --ssl 127.0.0.1:500 --ssh 127.0.0.1:22 --ssh 127.0.0.1:300 --openvpn 127.0.0.1:1194 --http 127.0.0.1:70 --pidfile /var/run/sslh/sslh.pid -n"
+DAEMON_OPTS="--user sslh --listen 0.0.0.0:443 --ssl 127.0.0.1:500 --ssh 127.0.0.1:22 --ssh 127.0.0.1:300 --openvpn 127.0.0.1:1194 --http 127.0.0.1:8880 --pidfile /var/run/sslh/sslh.pid -n"
 
 END
 
@@ -308,16 +308,8 @@ mkdir -p /etc/stunnel5
 chmod 644 /etc/stunnel5
 
 # make a certificate
-wget https://www.openssl.org/source/openssl-3.0.0-alpha17.tar.gz
-tar -xvzf openssl-3.0.0-alpha17.tar.gz
-cd openssl-3.0.0-alpha17
-chmod +x ./config
-./configure
-make
-mske test
-make install
-ln -s /usr/local/bin/openssl /usr/bin/
-openssl genrsa -out key.pem 2048
+
+openssl genrsa -out key.pem 1024
 openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
 -subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
 cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
