@@ -87,8 +87,8 @@ systemctl start rc-local.service
 apt update -y
 apt upgrade -y
 apt dist-upgrade -y
-apt install ssl-cert -y
-apt install ca-certificate -y
+#apt install ssl-cert -y
+#apt install ca-certificate -y
 apt-get remove --purge ufw firewalld -y
 apt-get install gawk -y &>/dev/null
 apt-get remove --purge exim4 -y
@@ -199,8 +199,8 @@ echo "status" >> .profile
 
 # install webserver
 apt -y install nginx php php-fpm php-cli php-mysql libxml-parser-perl
-rm /etc/nginx/sites-enabled/
-rm /etc/nginx/sites-available/
+rm /etc/nginx/sites-enabled
+rm /etc/nginx/sites-available
 curl https://${wisnuvpn}/nginx.conf > /etc/nginx/nginx.conf
 curl https://${wisnuvpn}/vps.conf > /etc/nginx/conf.d/vps.conf
 sed -i 's/listen = \/var\/run\/php-fpm.sock/listen = 127.0.0.1:9000/g' /etc/php/fpm/pool.d/www.conf
