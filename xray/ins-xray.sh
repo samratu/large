@@ -362,7 +362,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 443,
+      "port": 1443,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -655,7 +655,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 1080,
+      "port": 777,
       "protocol": "socks",
       "settings": {
         "auth": "password",
@@ -782,12 +782,12 @@ cat > /etc/xray/xtrojan.json << END
         "fallbacks": [
           {
             "dest": 443,
-            "xver": 1
+            "xver": 0
           },
           {
             "path": "/gandring",
             "dest": 2096,
-            "xver": 1
+            "xver": 0
           }
         ]
       },
@@ -829,8 +829,8 @@ cat > /etc/xray/xtrojan.json << END
         "tlsSettings": {
           "serverName": "",
           "alpn": [
-            "http",
-            "tls"
+            "h2",
+            "http/1.1"
           ],
           "certificates": [
             {
@@ -1191,7 +1191,7 @@ cat > /etc/trojan-go/config.json << END
     "reuse_session": true,
     "plain_http_response": "",
     "fallback_addr": "127.0.0.1",
-    "fallback_port": 443,
+    "fallback_port": 0,
     "fingerprint": "firefox"
   },
   "tcp": {
