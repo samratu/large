@@ -705,6 +705,17 @@ cat > /etc/xray/config.json << END
       "settings": {}
     }
   ],
+  "outbounds": [
+    {
+      "protocol": "freedom",
+      "settings": {}
+    },
+    {
+      "protocol": "blackhole",
+      "settings": {},
+      "tag": "blocked"
+    }
+  ],
   "routing": {
     "rules": [
       {
@@ -728,11 +739,11 @@ cat > /etc/xray/config.json << END
         "outboundTag": "blocked"
       },
       {
-        "type": "field",
         "inboundTag": [
-          "K"
+          "api"
         ],
-        "outboundTag": "tg-out"
+        "outboundTag": "api",
+        "type": "field"
       },
       {
         "type": "field",
@@ -742,6 +753,25 @@ cat > /etc/xray/config.json << END
         ]
       }
     ]
+  },
+  "stats": {},
+  "api": {
+    "services": [
+      "StatsService"
+    ],
+    "tag": "api"
+  },
+  "policy": {
+    "levels": {
+      "0": {
+        "statsUserDownlink": true,
+        "statsUserUplink": true
+      }
+    },
+    "system": {
+      "statsInboundUplink": true,
+      "statsInboundDownlink": true
+    }
   }
 }
 END
