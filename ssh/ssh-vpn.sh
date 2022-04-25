@@ -267,7 +267,7 @@ RUN=yes
 # systemd users: don't forget to modify /lib/systemd/system/sslh.service
 DAEMON=/usr/sbin/sslh
 
-DAEMON_OPTS="--user sslh --listen 0.0.0.0:8443 --ssl 127.0.0.1:500 --ssh 127.0.0.1:300 --ssh 127.0.0.1:22 --openvpn 127.0.0.1:1194 --http 127.0.0.1:8880 --pidfile /var/run/sslh/sslh.pid -n"
+DAEMON_OPTS="--user sslh --listen 0.0.0.0:8443 --ssl 127.0.0.1:500 --ssh 127.0.0.1:300 --openvpn 127.0.0.1:1194 --http 127.0.0.1:8880 --pidfile /var/run/sslh/sslh.pid"
 
 END
 
@@ -355,7 +355,7 @@ cat > /etc/systemd/system/stunnel5.service << END
 [Unit]
 Description=Stunnel5 Service
 Documentation=https://stunnel.org
-Documentation=https://github.com/wisnucokrosatrio
+Documentation=https://t.me/zerossl
 After=syslog.target network-online.target
 
 [Service]
@@ -372,7 +372,7 @@ wget -q -O /etc/init.d/stunnel5 "https://${wisnuvpnnnn}/stunnel5.init"
 # Ubah Izin Akses
 chmod 600 /etc/stunnel5/stunnel5.pem
 chmod +x /etc/init.d/stunnel5
-cp /usr/local/bin/stunnel /usr/local/wisnucs/stunnel5
+cp /usr/local/bin/stunnel5 /usr/local/wisnucs/stunnel5
 
 # Remove File
 rm -r -f /usr/local/share/doc/stunnel/
@@ -380,7 +380,7 @@ rm -r -f /usr/local/etc/stunnel/
 rm -f /usr/local/bin/stunnel
 rm -f /usr/local/bin/stunnel3
 rm -f /usr/local/bin/stunnel4
-#rm -f /usr/local/bin/stunnel5
+rm -f /usr/local/bin/stunnel5
 
 # Restart Stunnel 5
 systemctl stop stunnel5
