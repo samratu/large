@@ -273,6 +273,8 @@ DAEMON_OPTS="--user sslh --listen 0.0.0.0:2443 --ssl 127.0.0.1:500 --ssh 127.0.0
 END
 
 # Restart Service SSLH
+systemctl daemon-reload
+systemctl enable sslh
 service sslh restart
 systemctl restart sslh
 /etc/init.d/sslh restart
@@ -300,22 +302,22 @@ mkdir -p /usr/local/wisnucs
 mkdir -p /etc/wisnucs
 
 # install stunnel 5 
-#cd /root/
-#wget -q -O stunnel5.zip "https://${wisnuvpnnnn}/stunnel5.zip"
-#unzip -o stunnel5.zip
-#cd /root/stunnel
-#chmod +x configure
-#./configure
-#make
-#make install
-#cd /root
-#rm -r -f stunnel
-#rm -f stunnel5.zip
-#mkdir -p /etc/stunnel5
-#chmod 644 /etc/stunnel5
+cd /root/
+wget -q -O stunnel5.zip "https://${wisnuvpnnnn}/stunnel5.zip"
+unzip -o stunnel5.zip
+cd /root/stunnel
+chmod +x configure
+./configure
+make
+make install
+cd /root
+rm -r -f stunnel
+rm -f stunnel5.zip
+mkdir -p /etc/stunnel5
+chmod 644 /etc/stunnel5
 
 # install stunnel
-apt install stunnel4 -y
+#apt install stunnel4 -y
 # make a certificate
 openssl genrsa -out key.pem 2048
 openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
@@ -323,14 +325,14 @@ openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
 key.pem=$(cat /etc/xray/xray.key)
 cert.pem=$(cat /etc/xray/xray.cer)
 #cat $key.pem $cert.pem >> /etc/stunnel5/stunnel5.pem
-cat key.pem cert.pem >> /etc/stunnel4/stunnel4.pem
+cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
 # Ubah Izin Akses
-#chmod 600 /etc/stunnel5/stunnel5.pem
-#chmod +x /etc/init.d/stunnel5
+chmod 600 /etc/stunnel5/stunnel5.pem
+chmod +x /etc/init.d/stunnel5
 cp /usr/local/bin/stunnel /usr/local/wisnucs/stunnel4
 # Download Config Stunnel5
-cat > /etc/stunnel4/stunnel4.conf <<-END
-cert = /etc/stunnel4/stunnel4.pem
+cat > /etc/stunnel5/stunnel5.conf <<-END
+cert=$(cat /etc/xray/xray.key /etc/xray/xray.cer)
 client = no
 socket = a:SO_REUSEADDR=1
 socket = l:TCP_NODELAY=1
@@ -359,15 +361,15 @@ connect = 127.0.0.1:1194
 END
 
 # Service Stunnel5 systemctl restart stunnel5
-cat > /etc/systemd/system/stunnel4.service << END
+cat > /etc/systemd/system/stunnel5.service << END
 [Unit]
-Description=Stunnel4 Service
+Description=Stunnel5 Service
 Documentation=https://stunnel.org
 Documentation=https://t.me/zerossl
 After=syslog.target network-online.target
 
 [Service]
-ExecStart=/usr/local/wisnucs/stunnel4 /etc/stunnel4/stunnel4.conf
+ExecStart=/usr/local/wisnucs/stunnel5 /etc/stunnel5/stunnel5.conf
 Type=forking
 
 [Install]
@@ -375,7 +377,7 @@ WantedBy=multi-user.target
 END
 
 # Service Stunnel5 /etc/init.d/stunnel5
-wget -q -O /etc/init.d/stunnel4 "https://${wisnuvpnnnn}/stunnel5.init"
+wget -q -O /etc/init.d/stunnel5 "https://${wisnuvpnnnn}/stunnel5.init"
 
 # Remove File
 rm -r -f /usr/local/share/doc/stunnel/
@@ -386,13 +388,13 @@ rm -f /usr/local/bin/stunnel4
 rm -f /usr/local/bin/stunnel5
 
 # Restart Stunnel 5
-systemctl stop stunnel4
-systemctl enable stunnel4
-systemctl start stunnel4
-systemctl restart stunnel4
-/etc/init.d/stunnel4 restart
-/etc/init.d/stunnel4 status
-/etc/init.d/stunnel4 restart
+systemctl daemon-reload
+systemctl stop stunnel5
+systemctl enable stunnel5
+systemctl start stunnel5
+systemctl restart stunnel5
+/etc/init.d/stunnel5 status
+/etc/init.d/stunnel5 restart
 #OpenVPN
 wget https://${wisnuvpn}/vpn.sh &&  chmod +x vpn.sh && ./vpn.sh
 
@@ -767,7 +769,7 @@ chown -R www-data:www-data /home/vps/public_html
 /etc/init.d/dropbear restart
 /etc/init.d/fail2ban restart
 /etc/init.d/sslh restart
-/etc/init.d/stunnel4 restart
+/etc/init.d/stunnel5 restart
 /etc/init.d/vnstat restart
 #/etc/init.d/fail2ban restart
 #/etc/init.d/squid restart
