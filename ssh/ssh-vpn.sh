@@ -375,7 +375,7 @@ WantedBy=multi-user.target
 END
 
 # Service Stunnel5 /etc/init.d/stunnel5
-#wget -q -O /etc/init.d/stunnel5 "https://${wisnuvpnnnn}/stunnel5.init"
+wget -q -O /etc/init.d/stunnel4 "https://${wisnuvpnnnn}/stunnel5.init"
 
 # Remove File
 rm -r -f /usr/local/share/doc/stunnel/
