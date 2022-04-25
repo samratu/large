@@ -321,6 +321,7 @@ openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
 key.pem=$(cat /etc/xray/xray.key)
 cert.pem=$(cat /etc/xray/xray.cer)
 #cat $key.pem $cert.pem >> /etc/stunnel5/stunnel5.pem
+cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
 # Ubah Izin Akses
 chmod 600 /etc/stunnel5/stunnel5.pem
 chmod +x /etc/init.d/stunnel5
