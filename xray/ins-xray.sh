@@ -64,7 +64,7 @@ chown -R nobody:nogroup /etc/xray
 chmod 644 /etc/xray/xray.cer
 chmod 644 /etc/xray/xray.key
 
-#sudo lsof -t -i tcp:80 -s tcp:listen | sudo xargs kill
+sudo lsof -t -i tcp:80 -s tcp:listen | sudo xargs kill
 #cd /root/
 #wget https://raw.githubusercontent.com/acmesh-official/acme.sh/master/acme.sh
 #bash acme.sh --install
@@ -812,12 +812,12 @@ cat > /etc/xray/xtrojan.json << END
         "fallbacks": [
           {
             "dest": 443,
-            "xver": 0
+            "xver": 1
           },
           {
             "path": "/gandring",
             "dest": 2096,
-            "xver": 0
+            "xver": 1
           }
         ]
       },
