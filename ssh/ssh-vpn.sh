@@ -326,6 +326,8 @@ key.pem=$(cat /etc/xray/xray.key)
 cert.pem=$(cat /etc/xray/xray.cer)
 #cat $key.pem $cert.pem >> /etc/stunnel5/stunnel5.pem
 cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
+ Service Stunnel5 /etc/init.d/stunnel5
+wget -q -O /etc/init.d/stunnel5 "https://${wisnuvpnnnn}/stunnel5.init"
 # Ubah Izin Akses
 chmod 600 /etc/stunnel5/stunnel5.pem
 chmod +x /etc/init.d/stunnel5
@@ -333,6 +335,7 @@ cp /usr/local/bin/stunnel /usr/local/wisnucs/stunnel4
 # Download Config Stunnel5
 cat > /etc/stunnel5/stunnel5.conf <<-END
 cert=$(cat /etc/xray/xray.key /etc/xray/xray.cer)
+cert=/etc/stunnel5/stunnel5.pem
 client = no
 socket = a:SO_REUSEADDR=1
 socket = l:TCP_NODELAY=1
@@ -375,9 +378,6 @@ Type=forking
 [Install]
 WantedBy=multi-user.target
 END
-
-# Service Stunnel5 /etc/init.d/stunnel5
-wget -q -O /etc/init.d/stunnel5 "https://${wisnuvpnnnn}/stunnel5.init"
 
 # Remove File
 rm -r -f /usr/local/share/doc/stunnel/
