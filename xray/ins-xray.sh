@@ -548,7 +548,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 20830,
+      "port": 2082,
       "protocol": "vless",
       "settings": {
         "clients": [
@@ -1062,7 +1062,7 @@ cat > /etc/xray/xvless.json << END
                 "decryption": "none"
             },
             "streamSettings": {
-                "network": "gun",
+                "network": "grpc",
                 "security": "tls",
                 "tlsSettings": {
                     "serverName": "${domain}",
@@ -1096,7 +1096,7 @@ cat > /etc/xray/xvless.json << END
                 "decryption": "none"
             },
             "streamSettings": {
-                "network": "gun",
+                "network": "grpc",
                 "security": "none",
                 "tlsSettings": {
                     "serverName": "${domain}",
@@ -1109,7 +1109,7 @@ cat > /etc/xray/xvless.json << END
                             "certificateFile": "/etc/xray/xray.cer",
                             "keyFile": "/etc/xray/xray.key"
                         }
-                    ]
+                    ],
                 },
                 "grpcSettings": {
                     "serviceName": "gandring"
@@ -1197,7 +1197,7 @@ cat > /etc/xray/xvless.json << END
                 "decryption": "none"
             },
             "streamSettings": {
-                "network": "gun",
+                "network": "grpc",
                 "security": "tls",
                 "tlsSettings": {
                     "serverName": "${domain}",
@@ -1411,8 +1411,8 @@ iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 8088 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2053 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 8880 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 8880 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 99 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 99 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 777 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 777 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2083 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2083 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2096 -j ACCEPT
@@ -1435,20 +1435,22 @@ iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 808 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 808 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 4443 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 4443 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 6443 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 6443 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 8888 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 8888 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 5443 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 5443 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 3443 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 3443 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2443 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2443 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 1080 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 1080 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 888 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 888 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 3443 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 3443 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 1443 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 1443 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 3444 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 3444 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2082 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2082 -j ACCEPT
 iptables-save > /etc/iptables.up.rules
 iptables-restore -t < /etc/iptables.up.rules
 netfilter-persistent save
