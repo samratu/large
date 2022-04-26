@@ -73,8 +73,8 @@ vlesstls="vless://${uuid}@${domain}:$tls?path=gandring&security=tls&encryption=n
 vlessnontls="vless://${uuid}@${domain}:$nontls?path=gandring&encryption=none&type=ws#${user}"
 vlessgrpc="vless://${uuid}@${domain}:$vlgrpc?mode=multi&security=tls&encryption=none&type=grpc&serviceName=gandring&sni=${domain}#${user}"
 vlessgrpcnon="vless://${uuid}@${domain}:$vlgrpcnon?mode=multi&security=none&encryption=none&type=grpc&serviceName=gandring&sni=${domain}#${user}"
-vlesshdua="vless://${uuid}@${domain}:$vlhdua?type=http&security=tls&path=gandring&encryption=none#${user}"
-vlesshduanon="vless://${uuid}@${domain}:$vlhduanon?type=http&security=none&path=gandring&encryption=none#${user}"
+#vlesshdua="vless://${uuid}@${domain}:$vlhdua?type=http&security=tls&path=gandring&encryption=none#${user}"
+#vlesshduanon="vless://${uuid}@${domain}:$vlhduanon?type=http&security=none&path=gandring&encryption=none#${user}"
 vlessxtls="vless://${uuid}@${domain}:$vlxtls?security=xtls&encryption=none&flow=xtls-rprx-direct#${user}"
 systemctl restart xvless.service
 systemctl restart xray.service
