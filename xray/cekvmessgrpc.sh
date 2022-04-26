@@ -16,6 +16,7 @@ MYIP=$(wget -qO- ipinfo.io/ip);
 clear
 echo -n > /tmp/other.txt
 data=( `cat /etc/xray/xvless.json | grep '^###' | cut -d ' ' -f 2`);
+data2=( `cat /etc/xray/config.json | grep '^###' | cut -d ' ' -f 2`);
 echo "----------------------------------------";
 echo "---------=[ Vmess User Login ]=---------";
 echo "----------------------------------------";
