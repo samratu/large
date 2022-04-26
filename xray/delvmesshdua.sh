@@ -40,6 +40,7 @@ exp=$(grep -E "^### " "/etc/xray/config.json" | cut -d ' ' -f 3 | sed -n "${CLIE
 sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
 
 rm -f /etc/xray/vmess-$user-tls.json /etc/xray/vmess-$user-tls.json
+systemctl restart xvless.service
 systemctl restart xray.service
 clear
 echo ""
