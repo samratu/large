@@ -323,10 +323,11 @@ openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
 -subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
 cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
 # Download Config Stunnel5
-cat > /etc/stunnel5/stunnel5.conf <<-END
+#cat > /etc/stunnel5/stunnel5.conf <<-END
 cert = /etc/stunnel5/stunnel5.pem
-#cert = /etc/xray/xray.cer
-#key = /etc/xray/xray.key
+key = /etc/xray/xray.key
+cert = /etc/xray/xray.cer
+
 client = no
 socket = a:SO_REUSEADDR=1
 socket = l:TCP_NODELAY=1
