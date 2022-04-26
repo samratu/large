@@ -35,7 +35,7 @@ xraycore_link="https://github.com/XTLS/Xray-core/releases/download/v$latest_vers
 # / / Make Main Directory
 mkdir -p /usr/bin/xray
 mkdir -p /etc/xray
-mkdir -p /etc/nginx/ssl
+
 # / / Unzip Xray Linux 64
 cd `mktemp -d`
 curl -sL "$xraycore_link" -o xray.zip
@@ -56,7 +56,7 @@ curl https://get.acme.sh | sh
 alias acme.sh=~/.acme.sh/acme.sh
 /root/.acme.sh/acme.sh --upgrade --auto-upgrade
 /root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
-/root/.acme.sh/acme.sh --issue -d "${domain}" --standalone --keylength ec-384
+/root/.acme.sh/acme.sh --issue -d "${domain}" --standalone --keylength ec-256
 /root/.acme.sh/acme.sh --install-cert -d "${domain}" --ecc \
 --fullchain-file /etc/xray/xray.cer \
 --key-file /etc/xray/xray.key
@@ -64,20 +64,7 @@ chown -R nobody:nogroup /etc/xray
 chmod 644 /etc/xray/xray.cer
 chmod 644 /etc/xray/xray.key
 
-curl https://get.acme.sh | sh
-alias acme.sh=~/.acme.sh/acme.sh
-acme.sh --install-cert -d $domain \
---key-file /etc/nginx/ssl/$domain/$domain.key \
---fullchain-file /etc/nginx/ssl/$domain/$domain.cer \
-chown -R nobody:nogroup /etc/nginx/ssl
-chmod 644 /etc/nginx/ssl/$domain/$domain.key
-chmod 644 /etc/nginx/ssl/$domain/$domain.cer
---reloadcmd 'systemctl reload nginx'
-
-curl https://get.acme.sh | sh
-alias acme.sh=~/.acme.sh/acme.sh
-acme.sh --issue -w /var/www/html -d $domain -d www.$domain
-#sudo lsof -t -i tcp:80 -s tcp:listen | sudo xargs kill
+sudo lsof -t -i tcp:80 -s tcp:listen | sudo xargs kill
 #cd /root/
 #wget https://raw.githubusercontent.com/acmesh-official/acme.sh/master/acme.sh
 #bash acme.sh --install
@@ -109,55 +96,7 @@ cat > /etc/xray/config.json << END
   },
   "inbounds": [
     {
-      "port": 44443,
-      "protocol": "vless",
-      "settings": {
-        "clients": [
-          {
-            "id": "${uuid}",
-            "flow": "xtls-rprx-direct"
-#vless-xtls
-          }
-        ],
-        "decryption": "none",
-        "fallbacks": [
-          {
-            "dest": 88
-          }
-        ]
-      },
-      "streamSettings": {
-        "network": "tcp",
-        "security": "xtls",
-        "tcpSettings": {},
-        "kcpSettings": {},
-        "wsSettings": {},
-        "httpSettings": {},
-        "quicSettings": {},
-        "grpcSettings": {},
-        "xtlsSettings": {
-          "certificates": [
-            {
-              "certificateFile": "/etc/xray/xray.cer",
-              "keyFile": "/etc/xray/xray.key"
-            }
-          ],
-          "alpn": [
-            "http/1.1"
-          ]
-        }
-      },
-      "domain": "${domain}",
-      "sniffing": {
-        "enabled": true,
-        "destOverride": [
-          "http",
-          "tls"
-        ]
-      }
-    },
-    {
-      "port": 8088,
+      "port": 8808,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -227,6 +166,54 @@ cat > /etc/xray/config.json << END
         "kcpSettings": {},
         "wsSettings": {},
         "quicSettings": {}
+      },
+      "domain": "${domain}",
+      "sniffing": {
+        "enabled": true,
+        "destOverride": [
+          "http",
+          "tls"
+        ]
+      }
+    },
+    {
+      "port": 44443,
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "${uuid}",
+            "flow": "xtls-rprx-direct"
+#vless-xtls
+          }
+        ],
+        "decryption": "none",
+        "fallbacks": [
+          {
+            "dest": 88
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "security": "xtls",
+        "tcpSettings": {},
+        "kcpSettings": {},
+        "wsSettings": {},
+        "httpSettings": {},
+        "quicSettings": {},
+        "grpcSettings": {},
+        "xtlsSettings": {
+          "certificates": [
+            {
+              "certificateFile": "/etc/xray/xray.cer",
+              "keyFile": "/etc/xray/xray.key"
+            }
+          ],
+          "alpn": [
+            "http/1.1"
+          ]
+        }
       },
       "domain": "${domain}",
       "sniffing": {
@@ -340,7 +327,7 @@ cat > /etc/xray/config.json << END
       "domain": "${domain}"
     },
     {
-      "port": 2052,
+      "port": 2053,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -375,7 +362,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 8808,
+      "port": 8088,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -415,7 +402,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 2053,
+      "port": 20530,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -448,7 +435,7 @@ cat > /etc/xray/config.json << END
         "grpcSettings": {
           "serviceName": "gandring",
           "multiMode": true
-        }
+        } 
       },
       "domain": "${domain}",
       "sniffing": {
@@ -533,7 +520,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 2082,
+      "port": 2083,
       "protocol": "vless",
       "settings": {
         "clients": [
@@ -561,7 +548,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 8880,
+      "port": 2082,
       "protocol": "vless",
       "settings": {
         "clients": [
@@ -668,7 +655,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 6443,
+      "port": 777,
       "protocol": "socks",
       "settings": {
         "auth": "password",
@@ -718,6 +705,17 @@ cat > /etc/xray/config.json << END
       "settings": {}
     }
   ],
+  "outbounds": [
+    {
+      "protocol": "freedom",
+      "settings": {}
+    },
+    {
+      "protocol": "blackhole",
+      "settings": {},
+      "tag": "blocked"
+    }
+  ],
   "routing": {
     "rules": [
       {
@@ -741,11 +739,11 @@ cat > /etc/xray/config.json << END
         "outboundTag": "blocked"
       },
       {
-        "type": "field",
         "inboundTag": [
-          "K"
+          "api"
         ],
-        "outboundTag": "tg-out"
+        "outboundTag": "api",
+        "type": "field"
       },
       {
         "type": "field",
@@ -755,6 +753,25 @@ cat > /etc/xray/config.json << END
         ]
       }
     ]
+  },
+  "stats": {},
+  "api": {
+    "services": [
+      "StatsService"
+    ],
+    "tag": "api"
+  },
+  "policy": {
+    "levels": {
+      "0": {
+        "statsUserDownlink": true,
+        "statsUserUplink": true
+      }
+    },
+    "system": {
+      "statsInboundUplink": true,
+      "statsInboundDownlink": true
+    }
   }
 }
 END
@@ -767,7 +784,7 @@ path_key="/etc/xray/xray.key"
 #domain_ecc=$(cat /root/.acme.sh)
 #domain.key=$(cat /root/.acme.sh/$domain_ecc)
 #path_crt="/root/.acme.sh/$domain_ecc/fullchain.cer"
-#path_key="/root/.acme.sh/$domain_ecc/$domain.key")0
+#path_key="/root/.acme.sh/$domain_ecc/$domain.key"
 # Buat Config Xray
 cat > /etc/xray/xtrojan.json << END
 {
@@ -794,7 +811,7 @@ cat > /etc/xray/xtrojan.json << END
         "decryption": "none",
         "fallbacks": [
           {
-            "dest": 2095,
+            "dest": 443,
             "xver": 1
           },
           {
@@ -822,7 +839,7 @@ cat > /etc/xray/xtrojan.json << END
       }
     },
     {
-      "port": 8443,
+      "port": 443,
       "listen": "0.0.0.0",
       "protocol": "trojan",
       "tag": "TROJAN-gRPC-in",
@@ -842,8 +859,8 @@ cat > /etc/xray/xtrojan.json << END
         "tlsSettings": {
           "serverName": "",
           "alpn": [
-            "http",
-            "tls"
+            "h2",
+            "http/1.1"
           ],
           "certificates": [
             {
@@ -916,7 +933,7 @@ cat > /etc/xray/xtrojan.json << END
       }
     },
     {
-      "port": 8808,
+      "port": 443,
       "listen": "0.0.0.0",
       "protocol": "trojan",
       "tag": "TROJAN-HTTP/2-in",
@@ -1013,6 +1030,363 @@ cat > /etc/xray/xtrojan.json << END
 }
 END
 
+uuid=$(cat /proc/sys/kernel/random/uuid)
+domain=$(cat /root/domain)
+# // Certificate File
+path_crt="/etc/xray/xray.cer"
+path_key="/etc/xray/xray.key"
+#domain_ecc=$(cat /root/.acme.sh)
+#domain.key=$(cat /root/.acme.sh/$domain_ecc)
+#path_crt="/root/.acme.sh/$domain_ecc/fullchain.cer"
+#path_key="/root/.acme.sh/$domain_ecc/$domain.key"
+# Buat Config Xray
+cat > /etc/xray/xvless.json << END
+{
+    "log": {
+            "access": "/var/log/xray/access.log",
+        "error": "/var/log/xray/error.log",
+        "loglevel": "info"
+    },
+    "inbounds": [
+        {
+            "port": 2052,
+            "protocol": "vmess",
+            "settings": {
+                "clients": [
+                    {
+                        "id": "${uuid}",
+                        "alterid": 0
+#vmess-grpc-tls
+                    }
+                ],
+                "decryption": "none"
+            },
+            "streamSettings": {
+                "network": "grpc",
+                "security": "tls",
+                "tlsSettings": {
+                    "serverName": "${domain}",
+                    "alpn": [
+                        "http/1.1",
+                        "h2"
+                    ],
+                    "certificates": [
+                        {
+                            "certificateFile": "/etc/xray/xray.cer",
+                            "keyFile": "/etc/xray/xray.key"
+                        }
+                    ]
+                },
+                "grpcSettings": {
+                    "serviceName": "gandring"
+                }
+            }
+        },
+        {
+            "port": 2052,
+            "protocol": "vmess",
+            "settings": {
+                "clients": [
+                    {
+                        "id": "${uuid}",
+                        "alterid": 0
+#vmess-grpc-nontls
+                    }
+                ],
+                "decryption": "none"
+            },
+            "streamSettings": {
+                "network": "grpc",
+                "security": "none",
+                "tlsSettings": {
+                    "serverName": "${domain}",
+                    "alpn": [
+                        "http/1.1",
+                        "h2"
+                    ],
+                    "certificates": [
+                        {
+                            "certificateFile": "/etc/xray/xray.cer",
+                            "keyFile": "/etc/xray/xray.key"
+                        }
+                    ],
+                },
+                "grpcSettings": {
+                    "serviceName": "gandring"
+                }
+            }
+        },
+        {
+            "port": 8080,
+            "protocol": "vmess",
+            "settings": {
+                "clients": [
+                    {
+                        "id": "${uuid}",
+                        "alterid": 0
+#vmess-hdua-tls
+                    }
+                ],
+                "decryption": "none"
+            },
+            "streamSettings": {
+                "network": "h2",
+                "security": "tls",
+                "tlsSettings": {
+                    "serverName": "${domain}",
+                    "alpn": [
+                        "http/1.1",
+                        "h2"
+                    ],
+                    "certificates": [
+                        {
+                            "certificateFile": "/etc/xray/xray.cer",
+                            "keyFile": "/etc/xray/xray.key"
+                        }
+                    ]
+                },
+                "httpSettings": {
+                    "path": "gandring"
+                }
+            }
+        },
+        {
+            "port": 8080,
+            "protocol": "vmess",
+            "settings": {
+                "clients": [
+                    {
+                        "id": "${uuid}",
+                        "alterid": 0
+#vmess-hdua-nontls
+                    }
+                ],
+                "decryption": "none"
+            },
+            "streamSettings": {
+                "network": "h2",
+                "security": "none",
+                "tlsSettings": {
+                    "serverName": "${domain}",
+                    "alpn": [
+                        "http/1.1",
+                        "h2"
+                    ],
+                    "certificates": [
+                        {
+                            "certificateFile": "/etc/xray/xray.cer",
+                            "keyFile": "/etc/xray/xray.key"
+                        }
+                    ]
+                },
+                "httpSettings": {
+                    "path": "gandring"
+                }
+            }
+        },
+        {
+            "port": 2083,
+            "protocol": "vless",
+            "settings": {
+                "clients": [
+                    {
+                        "id": "${uuid}"
+#vless-grpc-tls
+                    }
+                ],
+                "decryption": "none"
+            },
+            "streamSettings": {
+                "network": "grpc",
+                "security": "tls",
+                "tlsSettings": {
+                    "serverName": "${domain}",
+                    "alpn": [
+                        "http/1.1",
+                        "h2"
+                    ],
+                    "certificates": [
+                        {
+                            "certificateFile": "/etc/xray/xray.cer",
+                            "keyFile": "/etc/xray/xray.key"
+                        }
+                    ]
+                },
+                "grpcSettings": {
+                    "serviceName": "gandring"
+                }
+            }
+        },
+        {
+            "port": 2082,
+            "protocol": "vless",
+            "settings": {
+                "clients": [
+                    {
+                        "id": "${uuid}"
+#vless-grpc-nontls
+                    }
+                ],
+                "decryption": "none"
+            },
+            "streamSettings": {
+                "network": "grpc",
+                "security": "none",
+                "tlsSettings": {
+                    "serverName": "${domain}",
+                    "alpn": [
+                        "http/1.1",
+                        "h2"
+                    ],
+                    "certificates": [
+                        {
+                            "certificateFile": "/etc/xray/xray.cer",
+                            "keyFile": "/etc/xray/xray.key"
+                        }
+                    ],
+                },
+                "grpcSettings": {
+                    "serviceName": "gandring"
+                }
+            }
+        },
+        {
+            "port": 8888,
+            "protocol": "vless",
+            "settings": {
+                "clients": [
+                    {
+                        "id": "${uuid}"
+#vless-hdua-tls
+                    }
+                ],
+                "decryption": "none"
+            },
+            "streamSettings": {
+                "network": "h2",
+                "security": "tls",
+                "tlsSettings": {
+                    "serverName": "${domain}",
+                    "alpn": [
+                        "http/1.1",
+                        "h2"
+                    ],
+                    "certificates": [
+                        {
+                            "certificateFile": "/etc/xray/xray.cer",
+                            "keyFile": "/etc/xray/xray.key"
+                        }
+                    ]
+                },
+                "httpSettings": {
+                    "path": "gandring"
+                }
+            }
+        },
+        {
+            "port": 888,
+            "protocol": "vless",
+            "settings": {
+                "clients": [
+                    {
+                        "id": "${uuid}"
+#vless-hdua-nontls
+                    }
+                ],
+                "decryption": "none"
+            },
+            "streamSettings": {
+                "network": "h2",
+                "security": "none",
+                "tlsSettings": {
+                    "serverName": "${domain}",
+                    "alpn": [
+                        "http/1.1",
+                        "h2"
+                    ],
+                    "certificates": [
+                        {
+                            "certificateFile": "/etc/xray/xray.cer",
+                            "keyFile": "/etc/xray/xray.key"
+                        }
+                    ]
+                },
+                "httpSettings": {
+                    "path": "gandring"
+                }
+            }
+        }
+    ],
+    "outbounds": [
+    {
+      "protocol": "freedom",
+      "settings": {}
+    },
+    {
+      "protocol": "blackhole",
+      "settings": {},
+      "tag": "blocked"
+    }
+  ],
+  "routing": {
+    "rules": [
+      {
+        "type": "field",
+        "ip": [
+          "0.0.0.0/8",
+          "10.0.0.0/8",
+          "100.64.0.0/10",
+          "169.254.0.0/16",
+          "172.16.0.0/12",
+          "192.0.0.0/24",
+          "192.0.2.0/24",
+          "192.168.0.0/16",
+          "198.18.0.0/15",
+          "198.51.100.0/24",
+          "203.0.113.0/24",
+          "::1/128",
+          "fc00::/7",
+          "fe80::/10"
+        ],
+        "outboundTag": "blocked"
+      },
+      {
+        "inboundTag": [
+          "api"
+        ],
+        "outboundTag": "api",
+        "type": "field"
+      },
+      {
+        "type": "field",
+        "outboundTag": "blocked",
+        "protocol": [
+          "bittorrent"
+        ]
+      }
+    ]
+  },
+  "stats": {},
+  "api": {
+    "services": [
+      "StatsService"
+    ],
+    "tag": "api"
+  },
+  "policy": {
+    "levels": {
+      "0": {
+        "statsUserDownlink": true,
+        "statsUserUplink": true
+      }
+    },
+    "system": {
+      "statsInboundUplink": true,
+      "statsInboundDownlink": true
+    }
+  }
+}
+END
 # / / Installation Xray Service
 cat > /etc/systemd/system/xray.service << END
 [Unit]
@@ -1073,6 +1447,7 @@ RestartPreventExitStatus=23
 WantedBy=multi-user.target
 END
 
+
 # // Enable & Start Service
 # Accept port Xray
 iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 443 -j ACCEPT
@@ -1087,8 +1462,8 @@ iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 8088 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2053 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 8880 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 8880 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 99 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 99 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 777 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 777 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2083 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2083 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2096 -j ACCEPT
@@ -1111,44 +1486,46 @@ iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 808 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 808 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 4443 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 4443 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 6443 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 6443 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 8888 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 8888 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 5443 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 5443 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 3443 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 3443 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2443 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2443 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 1080 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 1080 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 888 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 888 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 3443 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 3443 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 1443 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 1443 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 3444 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 3444 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2082 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2082 -j ACCEPT
 iptables-save > /etc/iptables.up.rules
 iptables-restore -t < /etc/iptables.up.rules
 netfilter-persistent save
 netfilter-persistent reload
 
 systemctl daemon-reload
-systemctl stop xray.service
-systemctl start xray.service
-systemctl enable xray.service
-systemctl restart xray.service
+systemctl stop xray
+systemctl enable xray
+systemctl start xray
+systemctl restart xray
 
 ##restart&start service
 systemctl daemon-reload
-systemctl stop xtrojan.service
-systemctl start xtrojan.service
-systemctl enable xtrojan.service
-systemctl restart xtrojan.service
+systemctl enable xtrojan
+systemctl stop xtrojan
+systemctl start xtrojan
+systemctl restart xtrojan
 
 ##restart&start service
 systemctl daemon-reload
-systemctl stop xvless.service
-systemctl start xvless.service
-systemctl enable xvless.service
-systemctl restart xvless.service
+systemctl enable xvless
+systemctl stop xvless
+systemctl start xvless
+systemctl restart xvless
 
 # Install Trojan Go
 latest_version="$(curl -s "https://api.github.com/repos/p4gefau1t/trojan-go/releases" | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
@@ -1213,7 +1590,7 @@ cat > /etc/trojan-go/config.json << END
     "prefer_ipv4": true
   },
   "mux": {
-    "enabled": false,
+    "enabled": true,
     "concurrency": 8,
     "idle_timeout": 60
   },
