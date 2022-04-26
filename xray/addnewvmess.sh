@@ -173,7 +173,7 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
 }
 EOF
 
-cat>/etc/xray/vmess-$user-nontls.json<<EOF
+#cat>/etc/xray/vmess-$user-nontls.json<<EOF
       {
       "v": "0",
       "ps": "${user}",
@@ -186,16 +186,16 @@ cat>/etc/xray/vmess-$user-nontls.json<<EOF
       #"type": "multi",
       "host": "",
       "tls": "none"
-}
-EOF
+#}
+#EOF
 vmesshdua_base641=$( base64 -w 0 <<< $vmess_json1)
-vmesshduanon_base642=$( base64 -w 0 <<< $vmess_json2)
+#vmesshduanon_base642=$( base64 -w 0 <<< $vmess_json2)
 vmesshdua="vmess://$(base64 -w 0 /etc/xray/vmess-$user-tls.json)"
-vmesshduanon="vmess://$(base64 -w 0 /etc/xray/vmess-$user-nontls.json)"
+#vmesshduanon="vmess://$(base64 -w 0 /etc/xray/vmess-$user-nontls.json)"
 
 domain=$(cat /etc/xray/domain)
 vmhttp="$(cat ~/log-install.txt | grep -w "VMESS HTTP TLS" | cut -d: -f2|sed 's/ //g')"
-vmhttpnon="$(cat ~/log-install.txt | grep -w "VMESS HTTP NON TLS" | cut -d: -f2|sed 's/ //g')"
+#vmhttpnon="$(cat ~/log-install.txt | grep -w "VMESS HTTP NON TLS" | cut -d: -f2|sed 's/ //g')"
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 		read -rp "User: " -e user
 		CLIENT_EXISTS=$(grep -w $user /etc/xray/config.json | wc -l)
@@ -211,8 +211,8 @@ read -p "Expired (Days): " masaaktif
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#vmess-http-tls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
-sed -i '/#vmess-http-nontls$/a\### '"$user $exp"'\
-},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
+#sed -i '/#vmess-http-nontls$/a\### '"$user $exp"'\
+#},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
 cat>/etc/xray/vmess-$user-tls.json<<EOF
       {
       "v": "2",
@@ -228,7 +228,7 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "tls": "tls"
 }
 EOF
-cat>/etc/xray/vmess-$user-nontls.json<<EOF
+#cat>/etc/xray/vmess-$user-nontls.json<<EOF
       {
       "v": "2",
       "ps": "${user}",
@@ -241,12 +241,12 @@ cat>/etc/xray/vmess-$user-nontls.json<<EOF
       "type": "http",
       "host": "${domain}",
       "tls": "none"
-}
-EOF
+#}
+#EOF
 vmesshttp_base641=$( base64 -w 0 <<< $vmess_json1)
-vmesshttp_base642=$( base64 -w 0 <<< $vmess_json2)
+#vmesshttp_base642=$( base64 -w 0 <<< $vmess_json2)
 vmesshttp="vmess://$(base64 -w 0 /etc/xray/vmess-$user-tls.json)"
-vmesshttpnon="vmess://$(base64 -w 0 /etc/xray/vmess-$user-nontls.json)"
+#vmesshttpnon="vmess://$(base64 -w 0 /etc/xray/vmess-$user-nontls.json)"
 
 systemctl restart xray.service
 service cron restart
@@ -280,8 +280,8 @@ echo -e "GRPC NONTLS: ${vmessgrpcnon}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "H2C TLS : ${vmesshdua}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "H2C NONTLS : ${vmesshduanon}"
-echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+#echo -e "H2C NONTLS : ${vmesshduanon}"
+#echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "HTTP TLS : ${vmesshttp}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "HTTP NONTLS: ${vmesshttpnon}"
