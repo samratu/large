@@ -14,7 +14,7 @@ vmhduanon="$(cat ~/log-install.txt | grep -w "VMESS H2C NON TLS" | cut -d: -f2|s
 #none="$(cat ~/log-install.txt | grep -w "Vmess None TLS" | cut -d: -f2|sed 's/ //g')"
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 		read -rp "User: " -e user
-		CLIENT_EXISTS=$(grep -w $user /etc/xray/xvless.json | wc -l)
+		CLIENT_EXISTS=$(grep -w $user /etc/xray/config.json | wc -l)
 
 		if [[ ${CLIENT_EXISTS} == '1' ]]; then
 			echo ""
@@ -26,9 +26,9 @@ uuid=$(cat /proc/sys/kernel/random/uuid)
 read -p "Expired (Days): " masaaktif
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#vmess-hdua-tls$/a\### '"$user $exp"'\
-},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/xvless.json
+},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
 sed -i '/#vmess-hdua-nontls$/a\### '"$user $exp"'\
-},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/xvless.json
+},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
 cat>/etc/xray/vmess-$user-tls.json<<EOF
       {
       "v": "0",
