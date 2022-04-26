@@ -1030,6 +1030,364 @@ cat > /etc/xray/xtrojan.json << END
 }
 END
 
+uuid=$(cat /proc/sys/kernel/random/uuid)
+domain=$(cat /root/domain)
+# // Certificate File
+path_crt="/etc/xray/xray.cer"
+path_key="/etc/xray/xray.key"
+#domain_ecc=$(cat /root/.acme.sh)
+#domain.key=$(cat /root/.acme.sh/$domain_ecc)
+#path_crt="/root/.acme.sh/$domain_ecc/fullchain.cer"
+#path_key="/root/.acme.sh/$domain_ecc/$domain.key"
+# Buat Config Xray
+cat > /etc/xray/xvless.json << END
+{
+    "log": {
+            "access": "/var/log/xray/access.log",
+        "error": "/var/log/xray/error.log",
+        "loglevel": "info"
+    },
+    "inbounds": [
+        {
+            "port": 2053,
+            "protocol": "vmess",
+            "settings": {
+                "clients": [
+                    {
+                        "id": "${uuid}",
+                        "alterid": 0
+#vmess-grpc-tls
+                    }
+                ],
+                "decryption": "none"
+            },
+            "streamSettings": {
+                "network": "gun",
+                "security": "tls",
+                "tlsSettings": {
+                    "serverName": "${domain}",
+                    "alpn": [
+                        "http/1.1",
+                        "h2"
+                    ],
+                    "certificates": [
+                        {
+                            "certificateFile": "/etc/xray/xray.cer",
+                            "keyFile": "/etc/xray/xray.key"
+                        }
+                    ]
+                },
+                "grpcSettings": {
+                    "serviceName": "gandring"
+                }
+            }
+        },
+        {
+            "port": 2052,
+            "protocol": "vmess",
+            "settings": {
+                "clients": [
+                    {
+                        "id": "${uuid}",
+                        "alterid": 0
+#vmess-grpc-nontls
+                    }
+                ],
+                "decryption": "none"
+            },
+            "streamSettings": {
+                "network": "gun",
+                "security": "none",
+                "tlsSettings": {
+                    "serverName": "${domain}",
+                    "alpn": [
+                        "http/1.1",
+                        "h2"
+                    ],
+                    "certificates": [
+                        {
+                            "certificateFile": "/etc/xray/xray.cer",
+                            "keyFile": "/etc/xray/xray.key"
+                        }
+                    ]
+                },
+                "grpcSettings": {
+                    "serviceName": "gandring"
+                }
+            }
+        },
+        {
+            "port": 443,
+            "protocol": "vmess",
+            "settings": {
+                "clients": [
+                    {
+                        "id": "${uuid}",
+                        "alterid": 0
+#vmess-hdua-tls
+                    }
+                ],
+                "decryption": "none"
+            },
+            "streamSettings": {
+                "network": "h2",
+                "security": "tls",
+                "tlsSettings": {
+                    "serverName": "${domain}",
+                    "alpn": [
+                        "http/1.1",
+                        "h2"
+                    ],
+                    "certificates": [
+                        {
+                            "certificateFile": "/etc/xray/xray.cer",
+                            "keyFile": "/etc/xray/xray.key"
+                        }
+                    ]
+                },
+                "httpSettings": {
+                    "path": "gandring"
+                }
+            }
+        },
+        {
+            "port": 2052,
+            "protocol": "vmess",
+            "settings": {
+                "clients": [
+                    {
+                        "id": "${uuid}",
+                        "alterid": 0
+#vmess-hdua-nontls
+                    }
+                ],
+                "decryption": "none"
+            },
+            "streamSettings": {
+                "network": "h2",
+                "security": "none",
+                "tlsSettings": {
+                    "serverName": "${domain}",
+                    "alpn": [
+                        "http/1.1",
+                        "h2"
+                    ],
+                    "certificates": [
+                        {
+                            "certificateFile": "/etc/xray/xray.cer",
+                            "keyFile": "/etc/xray/xray.key"
+                        }
+                    ]
+                },
+                "httpSettings": {
+                    "path": "gandring"
+                }
+            }
+        },
+        {
+            "port": 2083,
+            "protocol": "vless",
+            "settings": {
+                "clients": [
+                    {
+                        "id": "${uuid}"
+#vless-grpc-tls
+                    }
+                ],
+                "decryption": "none"
+            },
+            "streamSettings": {
+                "network": "gun",
+                "security": "tls",
+                "tlsSettings": {
+                    "serverName": "${domain}",
+                    "alpn": [
+                        "http/1.1",
+                        "h2"
+                    ],
+                    "certificates": [
+                        {
+                            "certificateFile": "/etc/xray/xray.cer",
+                            "keyFile": "/etc/xray/xray.key"
+                        }
+                    ]
+                },
+                "grpcSettings": {
+                    "serviceName": "gandring"
+                }
+            }
+        },
+        {
+            "port": 2082,
+            "protocol": "vless",
+            "settings": {
+                "clients": [
+                    {
+                        "id": "${uuid}"
+#vless-grpc-nontls
+                    }
+                ],
+                "decryption": "none"
+            },
+            "streamSettings": {
+                "network": "gun",
+                "security": "none",
+                "tlsSettings": {
+                    "serverName": "${domain}",
+                    "alpn": [
+                        "http/1.1",
+                        "h2"
+                    ],
+                    "certificates": [
+                        {
+                            "certificateFile": "/etc/xray/xray.cer",
+                            "keyFile": "/etc/xray/xray.key"
+                        }
+                    ]
+                },
+                "grpcSettings": {
+                    "serviceName": "gandring"
+                }
+            }
+        },
+        {
+            "port": 443,
+            "protocol": "vless",
+            "settings": {
+                "clients": [
+                    {
+                        "id": "${uuid}"
+#vless-hdua-tls
+                    }
+                ],
+                "decryption": "none"
+            },
+            "streamSettings": {
+                "network": "h2",
+                "security": "tls",
+                "tlsSettings": {
+                    "serverName": "${domain}",
+                    "alpn": [
+                        "http/1.1",
+                        "h2"
+                    ],
+                    "certificates": [
+                        {
+                            "certificateFile": "/etc/xray/xray.cer",
+                            "keyFile": "/etc/xray/xray.key"
+                        }
+                    ]
+                },
+                "httpSettings": {
+                    "path": "gandring"
+                }
+            }
+        },
+        {
+            "port": 2082,
+            "protocol": "vless",
+            "settings": {
+                "clients": [
+                    {
+                        "id": "${uuid}"
+#vless-hdua-nontls
+                    }
+                ],
+                "decryption": "none"
+            },
+            "streamSettings": {
+                "network": "h2",
+                "security": "none",
+                "tlsSettings": {
+                    "serverName": "${domain}",
+                    "alpn": [
+                        "http/1.1",
+                        "h2"
+                    ],
+                    "certificates": [
+                        {
+                            "certificateFile": "/etc/xray/xray.cer",
+                            "keyFile": "/etc/xray/xray.key"
+                        }
+                    ]
+                },
+                "httpSettings": {
+                    "path": "gandring"
+                }
+            }
+        }
+    ],
+    "outbounds": [
+    {
+      "protocol": "freedom",
+      "settings": {}
+    },
+    {
+      "protocol": "blackhole",
+      "settings": {},
+      "tag": "blocked"
+    }
+  ],
+  "routing": {
+    "rules": [
+      {
+        "type": "field",
+        "ip": [
+          "0.0.0.0/8",
+          "10.0.0.0/8",
+          "100.64.0.0/10",
+          "169.254.0.0/16",
+          "172.16.0.0/12",
+          "192.0.0.0/24",
+          "192.0.2.0/24",
+          "192.168.0.0/16",
+          "198.18.0.0/15",
+          "198.51.100.0/24",
+          "203.0.113.0/24",
+          "::1/128",
+          "fc00::/7",
+          "fe80::/10"
+        ],
+        "outboundTag": "blocked"
+      },
+      {
+        "inboundTag": [
+          "api"
+        ],
+        "outboundTag": "api",
+        "type": "field"
+      },
+      {
+        "type": "field",
+        "outboundTag": "blocked",
+        "protocol": [
+          "bittorrent"
+        ]
+      }
+    ]
+  },
+  "stats": {},
+  "api": {
+    "services": [
+      "StatsService"
+    ],
+    "tag": "api"
+  },
+  "policy": {
+    "levels": {
+      "0": {
+        "statsUserDownlink": true,
+        "statsUserUplink": true
+      }
+    },
+    "system": {
+      "statsInboundUplink": true,
+      "statsInboundDownlink": true
+    }
+  }
+}
+END
+
 # / / Installation Xray Service
 cat > /etc/systemd/system/xray.service << END
 [Unit]
