@@ -362,7 +362,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": ,
+      "port": 8088,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -1083,7 +1083,7 @@ cat > /etc/xray/xvless.json << END
             }
         },
         {
-            "port": 20521,
+            "port": 2052,
             "protocol": "vmess",
             "settings": {
                 "clients": [
@@ -1117,7 +1117,7 @@ cat > /etc/xray/xvless.json << END
             }
         },
         {
-            "port": 4430,
+            "port": 8080,
             "protocol": "vmess",
             "settings": {
                 "clients": [
@@ -1151,7 +1151,7 @@ cat > /etc/xray/xvless.json << END
             }
         },
         {
-            "port": 2022,
+            "port": 8080,
             "protocol": "vmess",
             "settings": {
                 "clients": [
@@ -1185,7 +1185,7 @@ cat > /etc/xray/xvless.json << END
             }
         },
         {
-            "port": 8080,
+            "port": 2083,
             "protocol": "vless",
             "settings": {
                 "clients": [
@@ -1218,7 +1218,7 @@ cat > /etc/xray/xvless.json << END
             }
         },
         {
-            "port": 2021,
+            "port": 2082,
             "protocol": "vless",
             "settings": {
                 "clients": [
@@ -1230,7 +1230,7 @@ cat > /etc/xray/xvless.json << END
                 "decryption": "none"
             },
             "streamSettings": {
-                "network": "gun",
+                "network": "grpc",
                 "security": "none",
                 "tlsSettings": {
                     "serverName": "${domain}",
@@ -1243,7 +1243,7 @@ cat > /etc/xray/xvless.json << END
                             "certificateFile": "/etc/xray/xray.cer",
                             "keyFile": "/etc/xray/xray.key"
                         }
-                    ]
+                    ],
                 },
                 "grpcSettings": {
                     "serviceName": "gandring"
@@ -1251,7 +1251,7 @@ cat > /etc/xray/xvless.json << END
             }
         },
         {
-            "port": 443,
+            "port": 8888,
             "protocol": "vless",
             "settings": {
                 "clients": [
@@ -1284,7 +1284,7 @@ cat > /etc/xray/xvless.json << END
             }
         },
         {
-            "port": 2020,
+            "port": 888,
             "protocol": "vless",
             "settings": {
                 "clients": [
@@ -1387,58 +1387,7 @@ cat > /etc/xray/xvless.json << END
   }
 }
 END
-
-# / / Installation Xray Service
-cat > /etc/systemd/system/xray.service << END
-[Unit]
-Description=XRAY GAJAH DEMAK BY GANDRING
-Documentation=https://t.me/zerossl
-After=network.target nss-lookup.target
-
-[Service]
-User=root
-CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-NoNewPrivileges=true
-ExecStart=/usr/local/bin/xray -config /etc/xray/config.json
-Restart=on-failure
-RestartPreventExitStatus=23
-
-[Install]
-WantedBy=multi-user.target
-END
-
-# / / Installation Xray Service
-cat > /etc/systemd/system/xtrojan.service << END
-[Unit]
-Description=XTROJAN ROUTING DAM COLO PENGKOL BY ZEROSSL
-Documentation=https://t.me/zerossl
-After=network.target nss-lookup.target
-
-[Service]
-User=root
-CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-NoNewPrivileges=true
-ExecStart=/usr/local/bin/xray -config /etc/xray/xtrojan.json
-Restart=on-failure
-RestartPreventExitStatus=23
-
-[Install]
-WantedBy=multi-user.target
-END
-
-# / / Installation Xray Service
-cat > /etc/systemd/system/xvless.service << END
-[Unit]
-Description=XTROJAN ROUTING DAM COLO PENGKOL BY ZEROSSL
-Documentation=https://t.me/zerossl
-After=network.target nss-lookup.target
-
-[Service]
-User=root
-CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+N CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
 ExecStart=/usr/local/bin/xray -config /etc/xray/xvless.json
 Restart=on-failure
