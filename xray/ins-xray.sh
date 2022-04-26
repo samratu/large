@@ -1387,7 +1387,57 @@ cat > /etc/xray/xvless.json << END
   }
 }
 END
-N CAP_NET_BIND_SERVICE
+# / / Installation Xray Service
+cat > /etc/systemd/system/xray.service << END
+[Unit]
+Description=XRAY GAJAH DEMAK BY GANDRING
+Documentation=https://t.me/zerossl
+After=network.target nss-lookup.target
+
+[Service]
+User=root
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+NoNewPrivileges=true
+ExecStart=/usr/local/bin/xray -config /etc/xray/config.json
+Restart=on-failure
+RestartPreventExitStatus=23
+
+[Install]
+WantedBy=multi-user.target
+END
+
+# / / Installation Xray Service
+cat > /etc/systemd/system/xtrojan.service << END
+[Unit]
+Description=XTROJAN ROUTING DAM COLO PENGKOL BY ZEROSSL
+Documentation=https://t.me/zerossl
+After=network.target nss-lookup.target
+
+[Service]
+User=root
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+NoNewPrivileges=true
+ExecStart=/usr/local/bin/xray -config /etc/xray/xtrojan.json
+Restart=on-failure
+RestartPreventExitStatus=23
+
+[Install]
+WantedBy=multi-user.target
+END
+
+# / / Installation Xray Service
+cat > /etc/systemd/system/xvless.service << END
+[Unit]
+Description=XTROJAN ROUTING DAM COLO PENGKOL BY Z
+Documentation=https://t.me/zerossl
+After=network.target nss-lookup.target
+
+[Service]
+User=root
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
 ExecStart=/usr/local/bin/xray -config /etc/xray/xvless.json
 Restart=on-failure
@@ -1396,6 +1446,7 @@ RestartPreventExitStatus=23
 [Install]
 WantedBy=multi-user.target
 END
+
 
 # // Enable & Start Service
 # Accept port Xray
@@ -1457,24 +1508,24 @@ netfilter-persistent save
 netfilter-persistent reload
 
 systemctl daemon-reload
-systemctl stop xray.service
-systemctl start xray.service
-systemctl enable xray.service
-systemctl restart xray.service
+systemctl stop xray
+systemctl enable xray
+systemctl start xray
+systemctl restart xray
 
 ##restart&start service
 systemctl daemon-reload
-systemctl stop xtrojan.service
-systemctl start xtrojan.service
-systemctl enable xtrojan.service
-systemctl restart xtrojan.service
+systemctl enable xtrojan
+systemctl stop xtrojan
+systemctl start xtrojan
+systemctl restart xtrojan
 
 ##restart&start service
 systemctl daemon-reload
-systemctl stop xvless.service
-systemctl start xvless.service
-systemctl enable xvless.service
-systemctl restart xvless.service
+systemctl enable xvless
+systemctl stop xvless
+systemctl start xvless
+systemctl restart xvless
 
 # Install Trojan Go
 latest_version="$(curl -s "https://api.github.com/repos/p4gefau1t/trojan-go/releases" | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
