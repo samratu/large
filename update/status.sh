@@ -81,6 +81,8 @@ status46=$(systemctl status xray             | grep -i "active (running)")
 status47=$(systemctl status xray             | grep -i "active (running)")
 status48=$(systemctl status xray             | grep -i "active (running)")
 status49=$(systemctl status xray             | grep -i "active (running)")
+status50=$(systemctl status xray             | grep -i "active (running)")
+status51=$(systemctl status xray             | grep -i "active (running)")
 #======================================
 if [[ $status01 == "" ]]; then
       sstatus01=$ERROR
@@ -341,7 +343,7 @@ else
 fi
 if [[ $status31 == "" ]]; then
       sstatus31=$ERROR
-      ingfo+=("VMESS H2C")
+      ingfo+=("VMESS H2C TLS")
       dahlah+=("err33")
 else
       sstatus31=$AKTIF
@@ -405,7 +407,7 @@ else
 fi
 if [[ $status39 == "" ]]; then
       sstatus39=$ERROR
-      ingfo+=("VLESS H2C")
+      ingfo+=("VLESS H2C TLS")
       dahlah+=("err41")
 else
       sstatus39=$AKTIF
@@ -490,6 +492,22 @@ if [[ $status49 == "" ]]; then
 else
       sstatus49=$AKTIF
       mantap+=("hore51")
+fi
+if [[ $status50 == "" ]]; then
+      sstatus50=$ERROR
+      ingfo+=("VMESS H2C NON TLS")
+      dahlah+=("err52")
+else
+      sstatus50=$AKTIF
+      mantap+=("hore52")
+fi
+if [[ $status51 == "" ]]; then
+      sstatus51=$ERROR
+      ingfo+=("VLESS H2C NON TLS")
+      dahlah+=("err53")
+else
+      sstatus51=$AKTIF
+      mantap+=("hore53")
 fi
 jumlah1="${#mantap[@]}"
 jumlah2="${#dahlah[@]}"
@@ -619,6 +637,7 @@ echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━�
 echo -e "\E[43;1;46m            🔰 SPESIFIKASI LINUX SERVER 🔰              \E[0m"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "LINUX : $typevps $Tipe $VERSION"                                                                                                                                                                                              
+echo -e "KERNEL: $kernelku"
 echo -e "CORE  : $totalcore @$freq MHz CPU TERPAKAI $cpu_usage"                                                                                                                                                                                
 echo -e "CPU   : $tipeprosesor"
 echo -e "RAM   : ${totalram}MB  SISA RAM : ${MEMORY}MB"                                                                                                                                                                                   
@@ -661,7 +680,8 @@ echo -e "$bl🔰 $off $bl VMESS GRPC TLS              $off : $sstatus27🔰"
 echo -e "$bl🔰 $off $bl VMESS GRPC NON TLS          $off : $sstatus28🔰"
 echo -e "$bl🔰 $off $bl VMESS HTTP TLS              $off : $sstatus29🔰"
 echo -e "$bl🔰 $off $bl VMESS HTTP NON TLS          $off : $sstatus30🔰"
-echo -e "$bl🔰 $off $bl VMESS H2C                   $off : $sstatus31🔰"
+echo -e "$bl🔰 $off $bl VMESS H2C TLS               $off : $sstatus31🔰"
+echo -e "$bl🔰 $off $bl VMESS H2C NON TLS           $off : $sstatus50🔰"
 echo -e "$bl🔰 $off $bl VLESS WS TLS                $off : $sstatus32🔰"
 echo -e "$bl🔰 $off $bl VLESS WS NON TLS            $off : $sstatus33🔰"
 echo -e "$bl🔰 $off $bl VLESS GRPC TLS              $off : $sstatus34🔰"
@@ -669,7 +689,8 @@ echo -e "$bl🔰 $off $bl VLESS GRPC NON TLS          $off : $sstatus35🔰"
 echo -e "$bl🔰 $off $bl VLESS XTLS                  $off : $sstatus36🔰"
 echo -e "$bl🔰 $off $bl VLESS HTTP TLS              $off : $sstatus37🔰"
 echo -e "$bl🔰 $off $bl VLESS HTTP NON TLS          $off : $sstatus38🔰"
-echo -e "$bl🔰 $off $bl VLESS H2C                   $off : $sstatus39🔰"
+echo -e "$bl🔰 $off $bl VLESS H2C TLS               $off : $sstatus39🔰"
+echo -e "$bl🔰 $off $bl VLESS H2C NON TLS           $off : $sstatus51🔰"
 echo -e "$bl🔰 $off $bl TROJAN XTLS                 $off : $sstatus40🔰"
 echo -e "$bl🔰 $off $bl TROJAN GO                   $off : $sstatus41🔰"
 echo -e "$bl🔰 $off $bl TROJAN HTTP                 $off : $sstatus42🔰"
