@@ -607,7 +607,7 @@ chmod +x addnewvmess
 chmod +x addnewvless
 chmod +x delnewtr
 chmod +x delnewvmess
-chmod +x addnewvless
+chmod +x delnewvless
 chmod +x restart
 chmod +x portdropbear
 chmod +x portopenssh
