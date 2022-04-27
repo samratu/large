@@ -152,7 +152,7 @@ until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 uuid=$(cat /proc/sys/kernel/random/uuid)
 read -p "Expired (Days): " masaaktif
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
-sed -i '/#vmess-hdua-tls$/a\### '"$user $exp"'\
+sed -i '/#vmess-hdua$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
 #sed -i '/#vmess-hdua-nontls$/a\### '"$user $exp"'\
 #},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
@@ -172,21 +172,6 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
 }
 EOF
 
-#cat>/etc/xray/vmess-$user-nontls.json<<EOF
-      {
-      "v": "0",
-      "ps": "${user}",
-      "add": "${domain}",
-      "port": "${vmhduanon}",
-      "id": "${uuid}",
-      "aid": "0",
-      "net": "h2",
-      "path": "gandring",
-      #"type": "multi",
-      "host": "",
-      "tls": "none"
-#}
-#EOF
 vmesshdua_base641=$( base64 -w 0 <<< $vmess_json1)
 #vmesshduanon_base642=$( base64 -w 0 <<< $vmess_json2)
 vmesshdua="vmess://$(base64 -w 0 /etc/xray/vmess-$user-tls.json)"
