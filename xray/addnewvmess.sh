@@ -172,6 +172,21 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
 }
 EOF
 
+#cat>/etc/xray/vmess-$user-nontls.json<<EOF
+      {
+      "v": "0",
+      "ps": "${user}",
+      "add": "${domain}",
+      "port": "${vmhduanon}",
+      "id": "${uuid}",
+      "aid": "0",
+      "net": "h2",
+      "path": "gandring",
+      #"type": "multi",
+      "host": "",
+      "tls": "none"
+#}
+#EOF
 vmesshdua_base641=$( base64 -w 0 <<< $vmess_json1)
 #vmesshduanon_base642=$( base64 -w 0 <<< $vmess_json2)
 vmesshdua="vmess://$(base64 -w 0 /etc/xray/vmess-$user-tls.json)"
