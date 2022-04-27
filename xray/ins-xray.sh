@@ -362,7 +362,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 8088,
+      "port": 8080,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -402,19 +402,19 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 20530,
-      "protocol": "vmess",
+      "port": 2083,
+      "protocol": "vless",
       "settings": {
         "clients": [
           {
-            "id": "${uuid}",
-            "alterId": 0
-#vmess-grpc-tls
+            "id": "${uuid}"
+#vless-tls
           }
-        ]
+        ],
+        "decryption": "none"
       },
       "streamSettings": {
-        "network": "grpc",
+        "network": "ws",
         "security": "tls",
         "tlsSettings": {
           "certificates": [
@@ -429,13 +429,14 @@ cat > /etc/xray/config.json << END
         },
         "tcpSettings": {},
         "kcpSettings": {},
-        "wsSettings": {},
         "httpSettings": {},
-        "quicSettings": {},
-        "grpcSettings": {
-          "serviceName": "gandring",
-          "multiMode": true
-        } 
+        "wsSettings": {
+          "path": "gandring",
+          "headers": {
+            "Host": "${domain}"
+          }
+        },
+        "quicSettings": {}
       },
       "domain": "${domain}",
       "sniffing": {
@@ -447,40 +448,57 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 20520,
-      "protocol": "vmess",
-      "settings": {
-        "clients": [
-          {
-            "id": "${uuid}",
-            "alterId": 0
-#vmess-grpc-nontls
-          }
-        ]
-      },
-      "streamSettings": {
-        "network": "grpc",
-        "security": "none",
-        "tlsSettings": {},
-        "tcpSettings": {},
-        "kcpSettings": {},
-        "wsSettings": {},
-        "httpSettings": {},
-        "quicSettings": {},
-        "grpcSettings": {
-          "serviceName": "gandring",
-          "multiMode": true
-        }
-      }
-    },
-    {
-      "port": 2083,
+      "port": 8443,
       "protocol": "vless",
       "settings": {
         "clients": [
           {
             "id": "${uuid}"
-#vless-tls
+          }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "certificates": [
+            {
+              "certificateFile": "/etc/xray/xray.cer",
+              "keyFile": "/etc/xray/xray.key"
+            }
+          ],
+          "alpn": [
+            "http/1.1"
+          ]
+        },
+        "tcpSettings": {},
+        "kcpSettings": {},
+        "httpSettings": {},
+        "wsSettings": {
+          "path": "gandring",
+          "headers": {
+            "Host": "${domain}"
+          }
+        },
+        "quicSettings": {}
+      },
+      "domain": "${domain}",
+      "sniffing": {
+        "enabled": true,
+        "destOverride": [
+          "http",
+          "tls"
+        ]
+      }
+    },
+    {
+      "port": 2087,
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "${uuid}"
           }
         ],
         "decryption": "none"
@@ -545,76 +563,6 @@ cat > /etc/xray/config.json << END
           }
         },
         "quicSettings": {}
-      }
-    },
-    {
-      "port": 20820,
-      "protocol": "vless",
-      "settings": {
-        "clients": [
-          {
-            "id": "${uuid}"
-#vless-grpc-tls
-          }
-        ],
-        "decryption": "none"
-      },
-      "streamSettings": {
-        "network": "grpc",
-        "security": "tls",
-        "tlsSettings": {
-          "certificates": [
-            {
-              "certificateFile": "/etc/xray/xray.cer",
-              "keyFile": "/etc/xray/xray.key"
-            }
-          ],
-          "alpn": [
-            "http/1.1"
-          ]
-        },
-        "tcpSettings": {},
-        "kcpSettings": {},
-        "wsSettings": {},
-        "httpSettings": {},
-        "quicSettings": {},
-        "grpcSettings": {
-          "serviceName": "gandring"
-        }
-      },
-      "domain": "${domain}",
-      "sniffing": {
-        "enabled": true,
-        "destOverride": [
-          "http",
-          "tls"
-        ]
-      }
-    },
-    {
-      "port": 20820,
-      "protocol": "vless",
-      "settings": {
-        "clients": [
-          {
-            "id": "${uuid}"
-#vless-grpc-nontls
-          }
-        ],
-        "decryption": "none"
-      },
-      "streamSettings": {
-        "network": "grpc",
-        "security": "none",
-        "tlsSettings": {},
-        "tcpSettings": {},
-        "kcpSettings": {},
-        "wsSettings": {},
-        "httpSettings": {},
-        "quicSettings": {},
-        "grpcSettings": {
-          "serviceName": "gandring"
-        }
       }
     },
     {
@@ -797,7 +745,7 @@ cat > /etc/xray/xtrojan.json << END
     {
       "port": 4443,
       "protocol": "trojan",
-      "tag": "TROJAN-xtls-in",
+      "tag": "TROJAN-XTLS-in",
       "settings": {
         "clients": [
           {
@@ -811,7 +759,7 @@ cat > /etc/xray/xtrojan.json << END
         "decryption": "none",
         "fallbacks": [
           {
-            "dest": 443,
+            "dest": 2083,
             "xver": 1
           },
           {
@@ -893,7 +841,41 @@ cat > /etc/xray/xtrojan.json << END
         "network": "ws",
         "security": "tls",
         "wsSettings": {
-          "path": "gandring"
+          "path": "/gandring"
+         },
+         "tlsSettings": {
+          "alpn": [
+            "h2",
+            "http/1.1"
+          ],
+          "certificates": [
+            {
+              "certificateFile": "/etc/xray/xray.cer",
+              "keyFile": "/etc/xray/xray.key"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "port": 8443,
+      "listen": "0.0.0.0",
+      "protocol": "trojan",
+      "tag": "TROJAN-WSTLS-in",
+      "settings": {
+        "clients": [
+          {
+            "password": "gandring",
+            "email": "gandring@p0x.smule.my.id"
+          }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "wsSettings": {
+          "path": "/gandring"
          },
          "tlsSettings": {
           "alpn": [
@@ -933,10 +915,10 @@ cat > /etc/xray/xtrojan.json << END
       }
     },
     {
-      "port": 8880,
+      "port": 2096,
       "listen": "0.0.0.0",
       "protocol": "trojan",
-      "tag": "TROJAN-HTTP/2-in",
+      "tag": "TROJAN-H2C-in",
       "settings": {
         "clients": [
           {
@@ -1011,22 +993,33 @@ cat > /etc/xray/xtrojan.json << END
   ],
   "dns": {
     "servers": [
+      "8.8.8.8",
+      "8.8.4.4",
       "1.1.1.1",
       "1.0.0.1",
       "localhost",
+      "https+local://dns.google/dns-query",
       "https+local://1.1.1.1/dns-query"
     ]
   },
-  "routing":{
-        "domainStrategy": "AsIs",
-        "rules": [
-          {
-            "type": "field",
-            "outboundTag": "blackhole-out",
-            "protocol": [ "bittorrent" ]
-          }
-      ]
-   }
+  "routing": {
+    "domainStrategy": "AsIs",
+    "rules": [
+      {
+        "type": "field",
+        "inboundTag": [
+          "TROJAN-XTLS-in",
+          "TROJAN-gRPC-in",
+          "TROJAN-WSTLS-in",
+          "TROJAN-WS-in",
+          "TROJAN-H2C-in",
+          "TROJAN-HTTP-in"
+        ],
+        "outboundTag": "blackhole-out",
+        "protocol": [ "bittorrent" ]
+      }
+    ]
+  }
 }
 END
 
@@ -1157,7 +1150,7 @@ cat > /etc/xray/xvless.json << END
             }
         },
         {
-            "port": 8443,
+            "port": 2087,
             "protocol": "vless",
             "settings": {
                 "clients": [
@@ -1390,6 +1383,8 @@ iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 3444 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 3444 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2082 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2082 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2087 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2087 -j ACCEPT
 iptables-save > /etc/iptables.up.rules
 iptables-restore -t < /etc/iptables.up.rules
 netfilter-persistent save
@@ -1442,7 +1437,7 @@ cat > /etc/trojan-go/config.json << END
 {
   "run_type": "server",
   "local_addr": "0.0.0.0",
-  "local_port": 2087,
+  "local_port": 8880,
   "remote_addr": "127.0.0.1",
   "remote_port": 88,
   "log_level": 1,
@@ -1528,8 +1523,9 @@ $uuid
 END
 
 # restart
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2087 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2087 -j ACCEPT
+
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 8880 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 8880 -j ACCEPT
 iptables-save > /etc/iptables.up.rules
 iptables-restore -t < /etc/iptables.up.rules
 netfilter-persistent save
