@@ -1,3 +1,4 @@
+
 #!/bin/bash
 # My Telegram : https://t.me/zerossl
 # ==========================================
@@ -60,8 +61,8 @@ echo -e "Expired     : $exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "H2C TLS: ${vlesshdua}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "H2C NONTLS: ${vlesshduanon}"
-echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+#echo -e "H2C NONTLS: ${vlesshduanon}"
+#echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m🔰LUXURY EDITION ZEROSSL🔰\e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e ""
