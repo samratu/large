@@ -1083,7 +1083,7 @@ cat > /etc/xray/xvless.json << END
             }
         },
         {
-            "port": 20521,
+            "port": 2052,
             "protocol": "vmess",
             "settings": {
                 "clients": [
@@ -1098,89 +1098,8 @@ cat > /etc/xray/xvless.json << END
             "streamSettings": {
                 "network": "grpc",
                 "security": "none",
-                "tlsSettings": {
-                    "serverName": "${domain}",
-                    "alpn": [
-                        "http/1.1",
-                        "h2"
-                    ],
-                    "certificates": [
-                        {
-                            "certificateFile": "/etc/xray/xray.cer",
-                            "keyFile": "/etc/xray/xray.key"
-                        }
-                    ],
-                },
                 "grpcSettings": {
                     "serviceName": "gandring"
-                }
-            }
-        },
-        {
-            "port": 8778,
-            "protocol": "vmess",
-            "settings": {
-                "clients": [
-                    {
-                        "id": "${uuid}",
-                        "alterid": 0
-#vmess-hdua-tls
-                    }
-                ],
-                "decryption": "none"
-            },
-            "streamSettings": {
-                "network": "h2",
-                "security": "tls",
-                "tlsSettings": {
-                    "serverName": "${domain}",
-                    "alpn": [
-                        "http/1.1",
-                        "h2"
-                    ],
-                    "certificates": [
-                        {
-                            "certificateFile": "/etc/xray/xray.cer",
-                            "keyFile": "/etc/xray/xray.key"
-                        }
-                    ]
-                },
-                "httpSettings": {
-                    "path": "gandring"
-                }
-            }
-        },
-        {
-            "port": 8778,
-            "protocol": "vmess",
-            "settings": {
-                "clients": [
-                    {
-                        "id": "${uuid}",
-                        "alterid": 0
-#vmess-hdua-nontls
-                    }
-                ],
-                "decryption": "none"
-            },
-            "streamSettings": {
-                "network": "h2",
-                "security": "none",
-                "tlsSettings": {
-                    "serverName": "${domain}",
-                    "alpn": [
-                        "http/1.1",
-                        "h2"
-                    ],
-                    "certificates": [
-                        {
-                            "certificateFile": "/etc/xray/xray.cer",
-                            "keyFile": "/etc/xray/xray.key"
-                        }
-                    ]
-                },
-                "httpSettings": {
-                    "path": "gandring"
                 }
             }
         },
@@ -1218,7 +1137,7 @@ cat > /etc/xray/xvless.json << END
             }
         },
         {
-            "port": 20823,
+            "port": 2082,
             "protocol": "vless",
             "settings": {
                 "clients": [
@@ -1232,19 +1151,6 @@ cat > /etc/xray/xvless.json << END
             "streamSettings": {
                 "network": "grpc",
                 "security": "none",
-                "tlsSettings": {
-                    "serverName": "${domain}",
-                    "alpn": [
-                        "http/1.1",
-                        "h2"
-                    ],
-                    "certificates": [
-                        {
-                            "certificateFile": "/etc/xray/xray.cer",
-                            "keyFile": "/etc/xray/xray.key"
-                        }
-                    ],
-                },
                 "grpcSettings": {
                     "serviceName": "gandring"
                 }
@@ -1266,11 +1172,6 @@ cat > /etc/xray/xvless.json << END
                 "network": "h2",
                 "security": "tls",
                 "tlsSettings": {
-                    "serverName": "${domain}",
-                    "alpn": [
-                        "http/1.1",
-                        "h2"
-                    ],
                     "certificates": [
                         {
                             "certificateFile": "/etc/xray/xray.cer",
@@ -1298,19 +1199,6 @@ cat > /etc/xray/xvless.json << END
             "streamSettings": {
                 "network": "h2",
                 "security": "none",
-                "tlsSettings": {
-                    "serverName": "${domain}",
-                    "alpn": [
-                        "http/1.1",
-                        "h2"
-                    ],
-                    "certificates": [
-                        {
-                            "certificateFile": "/etc/xray/xray.cer",
-                            "keyFile": "/etc/xray/xray.key"
-                        }
-                    ]
-                },
                 "httpSettings": {
                     "path": "gandring"
                 }
