@@ -93,8 +93,8 @@ rm -rf /etc/apache2
 
 # install wget and curl
 apt -y install wget curl
-apt install ssl-cert -y
-apt install ca-certificate -y
+#apt install ssl-cert -y
+#apt install ca-certificate -y
 # Install Requirements Tools
 apt install ruby -y
 apt install python -y
@@ -192,8 +192,8 @@ echo "status" >> .profile
 
 # install webserver
 apt -y install nginx php php-fpm php-cli php-mysql libxml-parser-perl
-rm /etc/nginx/sites-enabled/
-rm /etc/nginx/sites-available/
+rm /etc/nginx/sites-enabled
+rm /etc/nginx/sites-available
 curl https://${wisnuvpn}/nginx.conf > /etc/nginx/nginx.conf
 curl https://${wisnuvpn}/vps.conf > /etc/nginx/conf.d/vps.conf
 sed -i 's/listen = \/var\/run\/php-fpm.sock/listen = 127.0.0.1:9000/g' /etc/php/fpm/pool.d/www.conf
@@ -261,7 +261,7 @@ RUN=yes
 # systemd users: don't forget to modify /lib/systemd/system/sslh.service
 DAEMON=/usr/sbin/sslh
 
-DAEMON_OPTS="--user sslh --listen 0.0.0.0:443 --ssl 127.0.0.1:500 --ssh 127.0.0.1:22 --ssh 127.0.0.1:300 --openvpn 127.0.0.1:1194 --http 127.0.0.1:8880 --pidfile /var/run/sslh/sslh.pid -n"
+DAEMON_OPTS="--user sslh --listen 0.0.0.0:443 --ssl 127.0.0.1:500 --ssh 127.0.0.1:22 --ssh 127.0.0.1:300 --openvpn 127.0.0.1:1194 --http 127.0.0.1:80 --pidfile /var/run/sslh/sslh.pid -n"
 
 END
 
@@ -309,15 +309,15 @@ chmod 644 /etc/stunnel5
 
 # make a certificate
 
-openssl genrsa -out key.pem 1024
-openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
--subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
-cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
+#openssl genrsa -out key.pem 1024
+#openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
+#-subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
+#cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
 # Download Config Stunnel5
 cat > /etc/stunnel5/stunnel5.conf <<-END
-cert = /etc/stunnel5/stunnel5.pem
-#cert = /etc/xray/xray.cer
-#key = /etc/xray/xray.key
+#cert = /etc/stunnel5/stunnel5.pem
+cert = /etc/xray/xray.cer
+key = /etc/xray/xray.key
 client = no
 socket = a:SO_REUSEADDR=1
 socket = l:TCP_NODELAY=1
