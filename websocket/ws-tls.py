@@ -177,6 +177,11 @@ class ConnectionHandler(threading.Thread):
                 port = 2087
                 port = 2096
                 port = 8443
+                port = 2052
+                port = 2082
+                port = 2086
+                port = 2095
+                port = 8880
                 port = 4000
                 port = 5000
                 port = 3128
