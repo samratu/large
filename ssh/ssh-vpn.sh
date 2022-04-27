@@ -93,8 +93,8 @@ rm -rf /etc/apache2
 
 # install wget and curl
 apt -y install wget curl
-#apt install ssl-cert -y
-#apt install ca-certificate -y
+apt install ssl-cert -y
+apt install ca-certificate -y
 # Install Requirements Tools
 apt install ruby -y
 apt install python -y
@@ -309,7 +309,7 @@ chmod 644 /etc/stunnel5
 
 # make a certificate
 
-#openssl genrsa -out key.pem 1024
+#openssl genrsa -out key.pem 2048
 #openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
 #-subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
 #cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
