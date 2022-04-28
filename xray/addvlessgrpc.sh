@@ -47,8 +47,8 @@ sed -i '/#vless-grpc-tls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvless.json
 sed -i '/#vless-grpc-nontls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvless.json
-vlessgrpc1="vless://${uuid}@${domain}:$vlgrpc?mode=multi&security=tls&encryption=none&type=grpc&serviceName=gandring&sni=${domain}#${user}"
-vlessgrpc2="vless://${uuid}@${domain}:$vlgrpcnon?mode=multi&security=none&encryption=none&type=grpc&serviceName=gandring&sni=${domain}#${user}"
+vlessgrpc1="vless://${uuid}@${domain}:$vlgrpc?serviceName=gandring&sni=${domain}&mode=multi&type=grpc&security=tls&encryption=none#${user}"
+vlessgrpc2="vless://${uuid}@${domain}:$vlgrpcnon?serviceName=gandring&sni=${domain}&mode=multi&type=grpc&security=none&encryption=none#${user}"
 systemctl restart xvless.service
 systemctl restart xray.service
 #systemctl restart v2ray@.service
