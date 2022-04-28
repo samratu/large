@@ -96,13 +96,6 @@ cat > /etc/xray/config.json << END
   },
   "inbounds": [
     {
-  "log": {
-    "access": "/var/log/xray/access.log",
-    "error": "/var/log/xray/error.log",
-    "loglevel": "info"
-  },
-  "inbounds": [
-    {
       "port": 8808,
       "protocol": "vmess",
       "settings": {
@@ -798,7 +791,7 @@ cat > /etc/xray/xtrojan.json << END
       }
     },
     {
-      "port": 2087,
+      "port": 8443,
       "listen": "0.0.0.0",
       "protocol": "trojan",
       "tag": "TROJAN-H2C-in",
@@ -981,7 +974,7 @@ cat > /etc/xray/xvless.json << END
             }
         },
         {
-            "port": 8443,
+            "port": 2087,
             "protocol": "vless",
             "settings": {
                 "clients": [
