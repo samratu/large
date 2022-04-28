@@ -32,6 +32,7 @@ uuid=$(cat /proc/sys/kernel/random/uuid)
 read -p "Expired (Days) : " masaaktif
 hariini=`date -d "0 days" +"%Y-%m-%d"`
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
+exp2=`date -d "$masaaktif seconds" +"%Y-%m-%s"`
 sed -i '/#trojan-grpc$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
 
@@ -53,6 +54,7 @@ echo -e "Port       : ${tgrpc}"
 echo -e "Password   : ${uuid}"
 echo -e "Created    : $hariini"
 echo -e "Expired    : $exp"
+echo -e "Expired    : $exp2"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "Link GRPC  : ${trojangrpc}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
