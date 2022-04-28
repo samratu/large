@@ -12,7 +12,9 @@ CYAN='\033[0;36m'
 LIGHT='\033[0;37m'
 # ==========================================
 # Getting
-MYIP=$(wget -qO- ipinfo.io/ip);
+#MYIP=$(wget -qO- ipinfo.io/ip);
+MYIP=$(wget -qO- https://ipv4.icanhazip.com);
+MYIP6=$(wget -qO- https://ipv6.icanhazip.com);
 clear
 domain=$(cat /etc/xray/domain)
 
@@ -44,18 +46,19 @@ clear
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m   🔰 AKUN VLESS TCP 🔰   \e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Remarks : ${user}"
-echo -e "IP/Host : ${MYIP}"
-echo -e "Address : ${domain}"
-echo -e "Port : ${vlxtls}"
-echo -e "User ID : ${uuid}"
-echo -e "Encryption : none"
-echo -e "Network : tcp"
-echo -e "Security : xtls"
-#echo -e "Flow : xtls-rprx-direct"
+echo -e "Remarks    :${user}"
+echo -e "IP/Host    :${MYIP}"
+echo -e "IPV6       :$MYIP6"
+echo -e "Address    :${domain}"
+echo -e "Port       :${vlxtls}"
+echo -e "User ID    :${uuid}"
+echo -e "Encryption :none"
+echo -e "Network    :tcp"
+echo -e "Security   :xtls"
+#echo -e "Flow      :xtls-rprx-direct"
 #echo -e "serviceName : gandring"
-echo -e "Created : $hariini"
-echo -e "Expired : $exp"
+echo -e "Created    :$hariini"
+echo -e "Expired    :$exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "Link TCP : ${vlessxtls}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
