@@ -49,7 +49,7 @@ uuid=$(cat /proc/sys/kernel/random/uuid)
 read -p "Expired (Days) : " masaaktif
 hariini=`date -d "0 days" +"%Y-%m-%d"`
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
-exp2=`date -d "$masaaktif seconds" +"%Y-%m-%s"`
+exp2=`date -d "$masaaktif seconds" +"%Y-%m-%d"`
 sed -i '/#vless-grpc-tls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvless.json
 sed -i '/#vless-grpc-nontls$/a\#### '"$user $exp"'\
@@ -89,7 +89,7 @@ echo -e "Remarks : ${user}"
 echo -e "IP/Host : ${MYIP}"
 echo -e "Address : ${domain}"
 echo -e "Port GRPC : $vlgrpc / $vlgrpcnon"
-echo -e "Port HTTP : $vlhttp"
+#echo -e "Port HTTP : $vlhttp"
 echo -e "Port H2C : $vlhdua / $vlhduanon"
 echo -e "Port XTLS : $vlxtls"
 echo -e "Port WS : $tls / $nontls "
