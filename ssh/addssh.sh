@@ -19,8 +19,7 @@ read -p "Username : " Login
 read -p "Password : " Pass
 read -p "Expired (Days): " masaaktif
 read -p "Expired (Seconds) :" masaaktif
-MYIP=$(wget -qO- ipinfo.io/ip);
-MYIP4=$(wget -qO- https://ipv4.icanhazip.com);
+MYIP=$(wget -qO- https://ipv4.icanhazip.com);
 MYIP6=$(wget -qO- https://ipv6.icanhazip.com);
 ws="$(cat ~/log-install.txt | grep -w "WEBSOCKET TLS" | cut -d: -f2|sed 's/ //g')"
 otcp="$(cat ~/log-install.txt | grep -w "PORT OPENVPN TCP" | cut -d: -f2|sed 's/ //g')"
@@ -42,7 +41,7 @@ exp="$(chage -l $Login | grep "Account expires" | awk -F": " '{print $2}')"
 echo -e "$Pass\n$Pass\n"|passwd $Login &> /dev/null
 hariini=`date -d "0 days" +"%Y-%m-%d"`
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
-exp2=`date -d "$masaaktif seconds" +"%Y-%m-%s"`
+exp2=`date -d "$masaaktif seconds" +"%Y-%m-%d"`
 systemctl restart ws-tls
 systemctl restart ws-nontls
 systemctl restart ssh-ohp
@@ -52,6 +51,7 @@ echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━�
 echo -e "\033[1;46m 🔰 AKUN SSH DAN OVPN 🔰  \e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "IP : $MYIP/ ${domain}"
+echo -e "IPV6 : $MYIP6
 echo -e "Username : $Login"
 echo -e "Password : $Pass"
 echo -e "Dropbear :${dropbearport}"
@@ -73,7 +73,7 @@ echo -e "Expired  :$exp"
 echo -e "Expired : $exp2"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "PAYLOAD SSH & OVPN WEBSOCKET"
-echo -e "gandring https://bugmu.com /http/1.1[crlf]Host: ${domain}[crlf]Upgrade: websocket[crlf][crlf]"
+echo -e "gandring https://bugmu.com/http/1.1[crlf]Host: ${domain}[crlf]Upgrade: websocket[crlf][crlf]"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m🔰LUXURY EDITION ZEROSSL🔰\e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
