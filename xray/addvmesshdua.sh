@@ -7,6 +7,8 @@ green='\e[0;32m'
 NC='\e[0m'
 
 MYIP=$(wget -qO- ipinfo.io/ip);
+MYIP=$(wget -qO- https://ipv4.icanhazip.com);
+MYIP6=$(wget -qO- https://ipv6.icanhazip.com);
 clear
 domain=$(cat /etc/xray/domain)
 vmhdua="$(cat ~/log-install.txt | grep -w "VMESS H2C TLS " | cut -d: -f2|sed 's/ //g')"
@@ -73,18 +75,19 @@ echo -e ""
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m  🔰 AKUN VMESS HTTP/2 🔰 \e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Remarks : ${user}"
-echo -e "Host : ${domain}"
-echo -e "IP : ${MYIP}"
-echo -e "Port TLS : ${vmhdua}"
+echo -e "Remarks        :${user}"
+echo -e "Host           :${domain}"
+echo -e "IP             :${MYIP}"
+echo -e "IPV6           :$MYIP6"
+echo -e "Port TLS       :${vmhdua}"
 #echo -e "Port none TLS : ${vmhduanon}"
-echo -e "Id : ${uuid}"
-echo -e "AlterId : 0"
-echo -e "Security : auto"
-echo -e "Network : h2"
-echo -e "Host : ${domain}"
-echo -e "Path : gandring"
-echo -e "Expired On : $exp"
+echo -e "Id             :${uuid}"
+echo -e "AlterId        :0"
+echo -e "Security       :auto"
+echo -e "Network        :h2"
+echo -e "Host           :${domain}"
+echo -e "Path           :gandring"
+echo -e "Expired On     :$exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "H2C TLS : ${vmesshdua}"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
