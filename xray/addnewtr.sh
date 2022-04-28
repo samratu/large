@@ -64,7 +64,6 @@ trojannontls="trojan://${uuid}@${domain}:$tnontls?type=ws&security=none&host=$do
 trojanhttp="trojan://${uuid}@${domain}:$thttp?sni=${domain}&type=tcp&security=none&host=${domain}&headerType=http#${user}"
 systemctl restart xray.service
 systemctl restart xtrojan.service
-systemctl restart trojan-go.service
 service cron restart
 clear
 echo -e ""
