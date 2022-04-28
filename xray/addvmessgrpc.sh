@@ -51,7 +51,7 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "net": "grpc",
       "serviceName": "gandring",
       "type": "none",
-      "host": "${domain}",
+      "serverName": "${domain}",
       "tls": "tls"
 }
 EOF
@@ -66,7 +66,7 @@ cat>/etc/xray/vmess-$user-nontls.json<<EOF
       "net": "grpc",
       "serviceName": "gandring",
       "type": "none",
-      "host": "${domain}",
+      "serverName": "${domain}",
       "tls": "none"
 }
 EOF
