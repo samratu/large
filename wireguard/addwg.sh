@@ -13,7 +13,7 @@ LIGHT='\033[0;37m'
 # ==========================================
 # Getting
 MYIP=$(wget -qO- http://ipv4.icanhazip.com);
-MYIP6=$(wget -qO- http://ipv4.icanhazip.com);
+MYIP6=$(wget -qO- http://ipv6.icanhazip.com);
 clear
 # Load params
 source /etc/wireguard/params
