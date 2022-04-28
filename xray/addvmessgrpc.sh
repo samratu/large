@@ -36,10 +36,10 @@ until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 uuid=$(cat /proc/sys/kernel/random/uuid)
 read -p "Expired (Days): " masaaktif
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
-sed -i '/#vmess-grpc$/a\### '"$user $exp"'\
+sed -i '/#vmess-grpc-tls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/xvless.json
 sed -i '/#vmess-grpc-nontls$/a\### '"$user $exp"'\
-},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
+},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/xvless.json
 cat>/etc/xray/vmess-$user-tls.json<<EOF
       {
       "v": "2",
@@ -49,9 +49,9 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "grpc",
-      "path": "gandring",
+      "serviceName": "gandring",
       "type": "none",
-      "host": "${domain}",
+      "serverName": "${domain}",
       "tls": "tls"
 }
 EOF
@@ -64,14 +64,14 @@ cat>/etc/xray/vmess-$user-nontls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "grpc",
-      "path": "gandring",
+      "serviceName": "gandring",
       "type": "none",
-      "host": "${domain}",
-      "tls": "tls"
+      "serverName": "${domain}",
+      "tls": "none"
 }
 EOF
-vmess_base641=$( base64 -w 0 <<< vmess_json1)
-vmess_base642=$( base64 -w 0 <<< $vmess_json2)
+vmessgrpc_base641=$( base64 -w 0 <<< vmess_json1)
+vmessgrpcnon_base642=$( base64 -w 0 <<< $vmess_json2)
 vmessgrpc="vmess://$(base64 -w 0 /etc/xray/vmess-$user-tls.json)"
 vmessgrpcnon="vmess://$(base64 -w 0 /etc/xray/vmess-$user-nontls.json)"
 systemctl restart xvless
@@ -91,7 +91,7 @@ echo -e "AlterId : 0"
 echo -e "Security : auto"
 echo -e "Network : grpc"
 echo -e "Host : ${domain}"
-echo -e "Path : gandring"
+echo -e "serviceName : gandring"
 echo -e "Expired On : $exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "GRPC TLS: ${vmessgrpc}"
