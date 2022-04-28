@@ -49,6 +49,7 @@ uuid=$(cat /proc/sys/kernel/random/uuid)
 read -p "Expired (Days) : " masaaktif
 hariini=`date -d "0 days" +"%Y-%m-%d"`
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
+exp2=`date -d "$masaaktif seconds" +"%Y-%m-%s"`
 sed -i '/#vless-grpc-tls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvless.json
 sed -i '/#vless-grpc-nontls$/a\#### '"$user $exp"'\
@@ -101,6 +102,7 @@ echo -e "Path WS : gandring"
 echo -e "Path H2C : gandring"
 echo -e "Created : $hariini"
 echo -e "Expired : $exp"
+echo -e "Expired : $exp2"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "gRPC TLS : ${vlessgrpc}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
