@@ -41,11 +41,11 @@ fi
 ssr_password="$ssr_user"
 ssr_method="aes-128-ctr"
 ssr_protocol="origin"
-ssr_obfs="plain"
+ssr_obfs="tls1.2_ticket_auth"
 ssr_protocol_param="2"
 ssr_speed_limit_per_con=0
 ssr_speed_limit_per_user=0
-ssr_transfer="838868"
+ssr_transfer="16777216"
 ssr_forbid="bittorrent"
 cd /usr/local/shadowsocksr
 match_add=$(python mujson_mgr.py -a -u "${ssr_user}" -p "${ssr_port}" -k "${ssr_password}" -m "${ssr_method}" -O "${ssr_protocol}" -G "${ssr_protocol_param}" -o "${ssr_obfs}" -s "${ssr_speed_limit_per_con}" -S "${ssr_speed_limit_per_user}" -t "${ssr_transfer}" -f "${ssr_forbid}"|grep -w "add user info")
@@ -55,7 +55,7 @@ echo -e "### $ssr_user $exp" >> /usr/local/shadowsocksr/akun.conf
 tmp1=$(echo -n "${ssr_password}" | base64 -w0 | sed 's/=//g;s/\//_/g;s/+/-/g')
 SSRobfs=$(echo ${ssr_obfs} | sed 's/_compatible//g')
 tmp2=$(echo -n "$domain:${ssr_port}:${ssr_protocol}:${ssr_method}:${SSRobfs}:${tmp1}/obfsparam=" | base64 -w0)
-ssr_link="ssr://${tmp2}"
+ssr_link="ssr://${tmp2}#$ssr_user"
 /etc/init.d/ssrmu restart
 systemctl restart ssrmu
 service cron restart
