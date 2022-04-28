@@ -28,12 +28,13 @@ until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 		fi
 	done
 uuid=$(cat /proc/sys/kernel/random/uuid)
-read -p "Expired (Days): " masaaktif
+read -p "Expired (Days) : " masaaktif
+hariini=`date -d "0 days" +"%Y-%m-%d"`
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#vmess-tls$/a\### '"$user $exp"'\
-},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
+},{"id": "'""$uuid""'"' /etc/xray/config.json
 sed -i '/#vmess-nontls$/a\### '"$user $exp"'\
-},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
+},{"id": "'""$uuid""'"' /etc/xray/config.json
 cat>/etc/xray/vmess-$user-tls.json<<EOF
       {
       "v": "2",
@@ -41,7 +42,7 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "add": "${domain}",
       "port": "${tls}",
       "id": "${uuid}",
-      "aid": "0", 
+      "aid": "0",
       "net": "ws",
       "path": "gandring",
       "type": "none",
@@ -72,21 +73,10 @@ rm -rf /etc/xray/vmess-$user-tls.json
 rm -rf /etc/xray/vmess-$user-nontls.json
 
 vmgrpc="$(cat ~/log-install.txt | grep -w "VMESS GRPC TLS" | cut -d: -f2|sed 's/ //g')"
-#vmgrpcnon="$(cat ~/log-install.txt | grep -w "VMESS GRPC NON TLS" | cut -d: -f2|sed 's/ //g')"
-until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
-		read -rp "User: " -e user
-		CLIENT_EXISTS=$(grep -w $user /etc/xray/xvless.json | wc -l)
-
-		if [[ ${CLIENT_EXISTS} == '1' ]]; then
-			echo ""
-			echo "A Client Username Was Already Created, Please Enter New Username"
-			exit 1
-		fi
-	done
 vmgrpcnon="$(cat ~/log-install.txt | grep -w "VMESS GRPC NON TLS" | cut -d: -f2|sed 's/ //g')"
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 		read -rp "User: " -e user
-		CLIENT_EXISTS=$(grep -w $user /etc/xray/xvless.json | wc -l)
+		CLIENT_EXISTS=$(grep -w $user /etc/xray/config.json | wc -l)
 
 		if [[ ${CLIENT_EXISTS} == '1' ]]; then
 			echo ""
@@ -138,7 +128,7 @@ vmessgrpcnon="vmess://$(base64 -w 0 /etc/xray/vmess-$user-nontls.json)"
 
 domain=$(cat /etc/xray/domain)
 vmhdua="$(cat ~/log-install.txt | grep -w "VMESS H2C TLS" | cut -d: -f2|sed 's/ //g')"
-#vmhduanon="$(cat ~/log-install.txt | grep -w "VMESS H2C NON TLS" | cut -d: -f2|sed 's/ //g')"
+#none="$(cat ~/log-install.txt | grep -w "Vmess None TLS" | cut -d: -f2|sed 's/ //g')"
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 		read -rp "User: " -e user
 		CLIENT_EXISTS=$(grep -w $user /etc/xray/config.json | wc -l)
@@ -154,7 +144,7 @@ read -p "Expired (Days): " masaaktif
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#vmess-hdua$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
-#sed -i '/#vmess-hdua-nontls$/a\### '"$user $exp"'\
+#sed -i '/#none$/a\### '"$user $exp"'\
 #},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
 cat>/etc/xray/vmess-$user-tls.json<<EOF
       {
@@ -171,26 +161,10 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "tls": "tls"
 }
 EOF
-
-#cat>/etc/xray/vmess-$user-nontls.json<<EOF
-      {
-      "v": "0",
-      "ps": "${user}",
-      "add": "${domain}",
-      "port": "${vmhduanon}",
-      "id": "${uuid}",
-      "aid": "0",
-      "net": "h2",
-      "path": "gandring",
-      #"type": "multi",
-      "host": "",
-      "tls": "none"
-#}
-#EOF
-vmesshdua_base641=$( base64 -w 0 <<< $vmess_json1)
-#vmesshduanon_base642=$( base64 -w 0 <<< $vmess_json2)
+vmesshdua=$( base64 -w 0 <<< $vmess_json1)
+#vmess_base642=$( base64 -w 0 <<< $vmess_json2)
 vmesshdua="vmess://$(base64 -w 0 /etc/xray/vmess-$user-tls.json)"
-#vmesshduanon="vmess://$(base64 -w 0 /etc/xray/vmess-$user-nontls.json)"
+#vmessgrpclink2="vmess://$(base64 -w 0 /etc/xray/$user-none.json)"
 
 domain=$(cat /etc/xray/domain)
 vmhttp="$(cat ~/log-install.txt | grep -w "VMESS HTTP TLS" | cut -d: -f2|sed 's/ //g')"
@@ -256,13 +230,13 @@ echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━�
 echo -e "Remarks : ${user}"
 echo -e "IP/Host : ${MYIP}"
 echo -e "Address : ${domain}"
-echo -e "Port WEBSOCKET :${tls}/ ${nontls}"
-echo -e "Port GRPC :${vmgrpc}/ ${vmgrpcnon}"
-echo -e "Port H2C :${vmhdua}/ ${vmhduanon}"
-echo -e "Port HTTP :${vmhttp}/ ${vmhttpnon}"
-echo -e "User ID :${uuid}"
-echo -e "Alter ID :0"
-echo -e "Security :auto"
+echo -e "Port WEBSOCKET : ${tls}/${nontls}"
+echo -e "Port GRPC : ${vmgrpc}/${vmgrpcnon}"
+echo -e "Port H2C : ${vmhdua}"
+echo -e "Port HTTP : ${vmhttp}/${vmhttpnon}"
+echo -e "User ID : ${uuid}"
+echo -e "Alter ID : 0"
+echo -e "Security : auto"
 echo -e "Network : WS,GRPC,H2C,HTTP"
 echo -e "Path : gandring"
 echo -e "ServiceName : gandring"
@@ -273,13 +247,11 @@ echo -e "WS TLS: ${vmess1}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "WS NONTLS: ${vmess2}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "GRPC TLS : ${vmessgrpc}"
+echo -e "GRPC: ${vmessgrpc}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "GRPC NONTLS: ${vmessgrpcnon}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "H2C TLS : ${vmesshdua}"
-echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "H2C NONTLS : ${vmesshduanon}"
+echo -e "H2C TLS: ${vmesshdua}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "HTTP TLS : ${vmesshttp}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
