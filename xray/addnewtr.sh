@@ -12,7 +12,8 @@ CYAN='\033[0;36m'
 LIGHT='\033[0;37m'
 # ==========================================
 # Getting
-MYIP=$(wget -qO- ipinfo.io/ip);
+MYIP=$(wget -qO- https://ipv4.icanhazip.com);
+MYIP6=$(wget -qO- https://ipv6.icanhazip.com);
 clear
 domain=$(cat /etc/xray/domain)
 
@@ -39,6 +40,7 @@ read -p "Expired (Days) : " masaaktif
 read -p "Expired (Seconds) : " masaaktif
 hariini=`date -d "0 days" +"%Y-%m-%d"`
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
+exp=`date -d "$masaaktif seconds" +"%Y-%m-%d"`
 sed -i '/#trojan-grpc$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
 sed -i '/#trojan-xtls$/a\#&# '"$user $exp"'\
@@ -72,24 +74,25 @@ echo -e ""
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m 🔰 AKUN TROJAN TESTER 🔰 \e[m"       
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Remarks : ${user}"
-echo -e "IP/Host : ${MYIP}"
-echo -e "Address : ${domain}"
-echo -e "Protocol : GRPC,H2C,TCP/XTLS,WS,HTTP,GO"
-echo -e "ServiceName : gandring"
-echo -e "Path WS : /gandring"
-echo -e "Path H2C : gandring"
-echo -e "Path Trojan-Go : /gandring"
-echo -e "Port GRPC : ${tgrpc}"
-echo -e "Port WSTLS : ${ttls}"
-echo -e "Port WS Non TLS : ${tnontls}"
-echo -e "Port H2C : ${thdua}"
-echo -e "Port HTTP : ${thttp}"
-echo -e "Port TCP : ${txtls}"    
-echo -e "Password : ${uuid}"
-echo -e "Created : $hariini"
-echo -e "Expired : $exp"
-echo -e "Expired : $exp2"
+echo -e "Remarks        :${user}"
+echo -e "IP/Host        :${MYIP}"
+echo -e "IP/Host        :${MYIP}"
+echo -e "Address        :${domain}"
+echo -e "Protocol       :GRPC,H2C,TCP/XTLS,WS,HTTP,GO"
+echo -e "ServiceName    :gandring"
+echo -e "Path WS        :/gandring"
+echo -e "Path H2C       :gandring"
+echo -e "Path Trojan-Go :/gandring"
+echo -e "Port GRPC      :${tgrpc}"
+echo -e "Port WSTLS     :${ttls}"
+echo -e "Port WS Non TLS:${tnontls}"
+echo -e "Port H2C       :${thdua}"
+echo -e "Port HTTP      :${thttp}"
+echo -e "Port TCP       :${txtls}"    
+echo -e "Password       :${uuid}"
+echo -e "Created        :$hariini"
+echo -e "Expired        :$exp"
+echo -e "Expired        :$exp2"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "GRPC: ${trojangrpc}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
