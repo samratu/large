@@ -6,7 +6,9 @@ red='\e[1;31m'
 green='\e[0;32m'
 NC='\e[0m'
 
-MYIP=$(wget -qO- ipinfo.io/ip);
+#MYIP=$(wget -qO- ipinfo.io/ip);
+MYIP=$(wget -qO- https://ipv4.icanhazip.com);
+MYIP6=$(wget -qO- https://ipv6.icanhazip.com);
 clear
 domain=$(cat /etc/xray/domain)
 
@@ -81,18 +83,19 @@ clear
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m  🔰 AKUN VMESS GRPC 🔰   \e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Remarks : ${user}"
-echo -e "Host : ${domain}"
-echo -e "IP : ${MYIP}"
-echo -e "Port TLS : ${vmgrpc}"
-echo -e "Port none TLS : ${vmgrpcnon}"
-echo -e "Id : ${uuid}"
-echo -e "AlterId : 0"
-echo -e "Security : auto"
-echo -e "Network : grpc"
-echo -e "Host : ${domain}"
-echo -e "serviceName : gandring"
-echo -e "Expired On : $exp"
+echo -e "Remarks     :${user}"
+echo -e "Host        :${domain}"
+echo -e "IP          :${MYIP}"
+echo -e "IPV6        :$MYIP6"
+echo -e "Port TLS    :${vmgrpc}"
+echo -e "Port no TLS :${vmgrpcnon}"
+echo -e "Id          :${uuid}"
+echo -e "AlterId     :0"
+echo -e "Security    :auto"
+echo -e "Network     :grpc"
+echo -e "Host        :${domain}"
+echo -e "serviceName :gandring"
+echo -e "Expired On  :$exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "GRPC TLS: ${vmessgrpc}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
