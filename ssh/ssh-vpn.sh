@@ -28,7 +28,8 @@ wisnuvpnnnn="raw.githubusercontent.com/samratu/large/file/stunnel5"
 wisnuvpnnnnn="raw.githubusercontent.com/samratu/large/file/update"
 # initializing var
 export DEBIAN_FRONTEND=noninteractive
-MYIP=$(wget -qO- ipinfo.io/ip);
+MYIP=$(wget -qO- https://ipv4.icanhazip.com);
+MYIP6=$(wget -qO- https://ipv6.icanhazip.com);
 MYIP2="s/xxxxxxxxx/$MYIP/g";
 NET=$(ip -o $ANU -4 route show to default | awk '{print $5}');
 source /etc/os-release
