@@ -13,7 +13,9 @@ CYAN='\033[0;36m'
 LIGHT='\033[0;37m'
 # ==========================================
 # Getting
-MYIP=$(wget -qO- ipinfo.io/ip);
+#MYIP=$(wget -qO- ipinfo.io/ip);
+MYIP=$(wget -qO- https://ipv4.icanhazip.com);
+MYIP6=$(wget -qO- https://ipv6.icanhazip.com);
 clear
 domain=$(cat /etc/xray/domain)
 
@@ -47,17 +49,18 @@ clear
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m 🔰 AKUN VLESS HTTP/2 🔰  \e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Remarks     : ${user}"
-echo -e "IP/Host     : ${MYIP}"
-echo -e "Address     : ${domain}"
-echo -e "Port        : $vlhdua"
-echo -e "User ID     : ${uuid}"
-echo -e "Encryption  : none"
-echo -e "Network     : H2"
-echo -e "Security    : tls"
-echo -e "Path        : gandring"
-echo -e "Created     : $hariini"
-echo -e "Expired     : $exp"
+echo -e "Remarks     :${user}"
+echo -e "IP/Host     :${MYIP}"
+echo -e "IPV6        :$MYIP6"
+echo -e "Address     :${domain}"
+echo -e "Port        :$vlhdua"
+echo -e "User ID     :${uuid}"
+echo -e "Encryption  :none"
+echo -e "Network     :H2"
+echo -e "Security    :tls"
+echo -e "Path        :gandring"
+echo -e "Created     :$hariini"
+echo -e "Expired     :$exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "H2C TLS: ${vlesshdua}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
