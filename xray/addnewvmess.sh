@@ -100,7 +100,7 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "grpc",
-      "serviceName": "gandring",
+      "path": "gandring",
       "type": "none",
       "serverName": "${domain}",
       "tls": "tls"
@@ -115,7 +115,7 @@ cat>/etc/xray/vmess-$user-nontls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "grpc",
-      "serviceName": "gandring",
+      "path": "gandring",
       "type": "none",
       "serverName": "${domain}",
       "tls": "none"
