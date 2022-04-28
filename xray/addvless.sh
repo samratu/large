@@ -36,8 +36,8 @@ sed -i '/#vless-tls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
 sed -i '/#vless-nontls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
-vlesstls="vless://${uuid}@${domain}:$vltls?path=gandring&security=tls&encryption=none&type=ws#${user}"
-vlessnontls="vless://${uuid}@${domain}:$vlnontls?path=gandring&encryption=none&type=ws#${user}"
+vlesstls="vless://${uuid}@${domain}:$vltls?sni=${domain}&host=${domain}&type=ws&security=tls&path=gandring&encryption=none#${user}"
+vlessnontls="vless://${uuid}@${domain}:$vlnontls?host=${domain}&security=none&type=ws&path=gandring&encryption=none#${user}"
 systemctl restart xray.service
 service cron restart
 clear
@@ -56,9 +56,9 @@ echo -e "Path        : gandring"
 echo -e "Created     : $hariini"
 echo -e "Expired     : $exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Link TLS    : ${vlesstls}"
+echo -e "WS TLS    : ${vlesstls}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Link NONTLS : ${vlessnontls}"
+echo -e "WS NONTLS : ${vlessnontls}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m🔰LUXURY EDITION ZEROSSL🔰\e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
