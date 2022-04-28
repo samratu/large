@@ -12,7 +12,8 @@ CYAN='\033[0;36m'
 LIGHT='\033[0;37m'
 # ==========================================
 # Getting
-MYIP=$(wget -qO- ipinfo.io/ip);
+MYIP=$(wget -qO- https://ipv4.icanhazip.com);
+MYIP6=$(wget -qO- https://ipv6.icanhazip.com);
 clear
 domain=$(cat /etc/xray/domain)
 
@@ -48,6 +49,7 @@ echo -e "\033[1;46m  🔰 AKUN TROJAN-GRPC 🔰  \e[m"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "Remarks    : ${user}"
 echo -e "IP/Host    : ${MYIP}"
+echo -e "IP/Host    : ${MYIP6}"
 echo -e "Address    : ${domain}"
 echo -e "Protocol   : grpc"
 echo -e "ServiceName: gandring"
