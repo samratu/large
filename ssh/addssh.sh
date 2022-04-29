@@ -18,7 +18,7 @@ clear
 read -p "Username : " Login
 read -p "Password : " Pass
 read -p "Expired (Days): " masaaktif
-MYIP=$(wget -qO- https://ipv4.icanhazip.com);
+MYIP=$(wget -qO- ipinfo.io/ip);
 MYIP6=$(wget -qO- https://ipv6.icanhazip.com);
 ws="$(cat ~/log-install.txt | grep -w "WEBSOCKET TLS" | cut -d: -f2|sed 's/ //g')"
 otcp="$(cat ~/log-install.txt | grep -w "PORT OPENVPN TCP" | cut -d: -f2|sed 's/ //g')"
