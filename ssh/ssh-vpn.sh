@@ -314,7 +314,7 @@ chmod 644 /etc/stunnel5
 openssl genrsa -out key.pem 2048
 openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
 -subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
-#cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
+cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
 key=$(cat /etc/xray/xray.key)
 cert=$(cat /etc/xray/xray.cer)
 cat $key $cert >> /etc/stunnel5/stunnel5.pem
