@@ -13,19 +13,15 @@ LIGHT='\033[0;37m'
 # ==========================================
 # Getting
 MYIP=$(wget -qO- ipinfo.io/ip);
-MYIP=$(wget -qO- https://ipv4.icanhazip.com);
-MYIP6=$(wget -qO- https://ipv6.icanhazip.com);
 clear
 apt install jq curl -y
-DOMAIN=smule.my.id
+DOMAIN=zerossl.my.id
 sub=$(</dev/urandom tr -dc a-z0-9 | head -c2)
-SUB_DOMAIN=${sub}.smule.my.id
-#SUB_DOMAIN=xxx.smule.my.id
+SUB_DOMAIN=${sub}.zerossl.my.id
 CF_ID=djarumpentol01@gmail.com
-CF_KEY=d50aff2305f86e8f90907cfc4833ab091c375
+CF_KEY=8e1ad283529b59f2632be2330103abda794ce
 set -euo pipefail
-IP=$(wget -qO- http://ipv4.icanhazip.com);
-IP6=$(wget -qO- http://ipv6.icanhazip.com);
+IP=$(wget -qO- ipinfo.io/ip);
 echo "Updating DNS for ${SUB_DOMAIN}..."
 ZONE=$(curl -sLX GET "https://api.cloudflare.com/client/v4/zones?name=${DOMAIN}&status=active" \
      -H "X-Auth-Email: ${CF_ID}" \
@@ -78,7 +74,6 @@ RESULT=$(curl -sLX PUT "https://api.cloudflare.com/client/v4/zones/${ZONE}/dns_r
      -H "X-Auth-Key: ${CF_KEY}" \
      -H "Content-Type: application/json" \
      --data '{"type":"A","name":"'${WILD_DOMAIN}'","content":"'${IP}'","ttl":300,"proxied":false}')
-
 echo "Host : $SUB_DOMAIN"
 echo $SUB_DOMAIN > /root/domain
 # / / Make Main Directory
