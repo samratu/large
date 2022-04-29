@@ -15,9 +15,9 @@ LIGHT='\033[0;37m'
 MYIP=$(wget -qO- ipinfo.io/ip);
 clear
 apt install jq curl -y
-DOMAIN=smule.my.id
+DOMAIN=gandring.my.id
 sub=$(</dev/urandom tr -dc a-z0-9 | head -c2)
-SUB_DOMAIN=${sub}.smule.my.id
+SUB_DOMAIN=${sub}.gandring.my.id
 CF_ID=djarumpentol01@gmail.com
 CF_KEY=d50aff2305f86e8f90907cfc4833ab091c375
 set -euo pipefail
