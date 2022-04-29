@@ -18,7 +18,6 @@ clear
 read -p "Username : " Login
 read -p "Password : " Pass
 read -p "Expired (Days): " masaaktif
-read -p "Expired (Seconds) :" masaaktif
 MYIP=$(wget -qO- https://ipv4.icanhazip.com);
 MYIP6=$(wget -qO- https://ipv6.icanhazip.com);
 ws="$(cat ~/log-install.txt | grep -w "WEBSOCKET TLS" | cut -d: -f2|sed 's/ //g')"
@@ -40,8 +39,7 @@ useradd -e `date -d "$masaaktif seconds" +"%Y-%m-%d"` -s /bin/false -M $Login
 exp="$(chage -l $Login | grep "Account expires" | awk -F": " '{print $2}')"
 echo -e "$Pass\n$Pass\n"|passwd $Login &> /dev/null
 hariini=`date -d "0 days" +"%Y-%m-%d"`
-exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
-exp2=`date -d "$masaaktif seconds" +"%Y-%m-%d"`
+exp=`date -d "$masaaktif days" +"%Y-%m-%d"``
 systemctl restart ws-tls
 systemctl restart ws-nontls
 systemctl restart ssh-ohp
@@ -70,7 +68,6 @@ echo -e "OVPN SSL  :http://$MYIP:88/ssl.ovpn"
 echo -e "BadVpn    :7100-7200-7900"
 echo -e "Created   :$hariini"
 echo -e "Expired   :$exp"
-echo -e "Expired   :$exp2"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "PAYLOAD SSH & OVPN WEBSOCKET"
 echo -e "gandring https://bugmu.com/http/1.1[crlf]Host: ${domain}[crlf]Upgrade: websocket[crlf][crlf]"
