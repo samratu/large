@@ -19,5 +19,5 @@ clear
 echo -e "Masukkan Domain Sekali Lagi"
 read -p "Hostname / Domain: " host
 echo "IP=$host" >> /var/lib/wisnucs/ipvps.conf
-echo "IP=$host" >> /var/lib/premium-script/ipvps.conf
+echo "IP=$host" >> /var/lib/wisnucs/ipvps.conf
 echo "$host" >> /etc/xray/domain
