@@ -96,7 +96,7 @@ rm -rf /etc/apache2
 apt -y install wget curl
 apt install ssl-cert -y
 apt install ca-certificate -y
-apt install apache2 -y
+#apt install apache2 -y
 # Install Requirements Tools
 apt install ruby -y
 apt install python -y
