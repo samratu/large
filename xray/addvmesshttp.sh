@@ -57,7 +57,7 @@ cat>/etc/xray/vmess-$user-nontls.json<<EOF
       #"path": "/",
       "type": "http",
       "host": "${domain}",
-      "tls": "tls"
+      "tls": "none"
 }
 EOF
 vmesshttp_base641=$( base64 -w 0 <<< $vmess_json1)
