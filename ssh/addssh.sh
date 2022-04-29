@@ -39,7 +39,7 @@ useradd -e `date -d "$masaaktif seconds" +"%Y-%m-%d"` -s /bin/false -M $Login
 exp="$(chage -l $Login | grep "Account expires" | awk -F": " '{print $2}')"
 echo -e "$Pass\n$Pass\n"|passwd $Login &> /dev/null
 hariini=`date -d "0 days" +"%Y-%m-%d"`
-exp=`date -d "$masaaktif days" +"%Y-%m-%d"``
+exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 systemctl restart ws-tls
 systemctl restart ws-nontls
 systemctl restart ssh-ohp
