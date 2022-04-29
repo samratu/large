@@ -12,7 +12,8 @@ CYAN='\033[0;36m'
 LIGHT='\033[0;37m'
 # ==========================================
 # Getting
-MYIP=$(wget -qO- ipinfo.io/ip);
+MYIP=$(wget -qO- https://ipv4.icanhazip.com);
+MYIP6=$(wget -qO- https://ipv6.icanhazip.com);
 clear
 domain=$(cat /etc/xray/domain)
 tls="$(cat ~/log-install.txt | grep -w "VMESS WS TLS" | cut -d: -f2|sed 's/ //g')"
@@ -29,9 +30,10 @@ until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 	done
 uuid=$(cat /proc/sys/kernel/random/uuid)
 read -p "Expired (Days) : " masaaktif
+#read -p "Expired (Seconds) : " masaaktif
 hariini=`date -d "0 days" +"%Y-%m-%d"`
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
-#exp2=`date -d "$masaaktif seconds" +"%Y-%m-%s"`
+#exp2=`date -d "$masaaktif seconds" +"%Y-%m-%d"`
 sed -i '/#vmess-tls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'"' /etc/xray/config.json
 sed -i '/#vmess-nontls$/a\### '"$user $exp"'\
@@ -87,8 +89,9 @@ until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 	done
 uuid=$(cat /proc/sys/kernel/random/uuid)
 read -p "Expired (Days): " masaaktif
+#read -p "Expired (Seconds) : " masaaktif
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
-#exp2=`date -d "$masaaktif seconds" +"%Y-%m-%s"`
+#exp2=`date -d "$masaaktif seconds" +"%Y-%m-%d"`
 sed -i '/#vmess-grpc-tls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/xvless.json
 sed -i '/#vmess-grpc-nontls$/a\### '"$user $exp"'\
@@ -143,8 +146,9 @@ until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 	done
 uuid=$(cat /proc/sys/kernel/random/uuid)
 read -p "Expired (Days): " masaaktif
+#read -p "Expired (Seconds) : " masaaktif
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
-#exp2=`date -d "$masaaktif seconds" +"%Y-%m-%s"`
+#exp2=`date -d "$masaaktif seconds" +"%Y-%m-%d"`
 sed -i '/#vmess-hdua$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
 #sed -i '/#none$/a\### '"$user $exp"'\
@@ -184,8 +188,9 @@ until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 	done
 uuid=$(cat /proc/sys/kernel/random/uuid)
 read -p "Expired (Days): " masaaktif
+#read -p "Expired (Seconds) : " masaaktif
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
-#exp2=`date -d "$masaaktif seconds" +"%Y-%m-%s"`
+#exp2=`date -d "$masaaktif seconds" +"%Y-%m-%d"`
 sed -i '/#vmess-http-tls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
 sed -i '/#vmess-http-nontls$/a\### '"$user $exp"'\
@@ -231,22 +236,23 @@ clear
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m  🔰AKUN VMESS TESTER🔰   \e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Remarks : ${user}"
-echo -e "IP/Host : ${MYIP}"
-echo -e "Address : ${domain}"
-echo -e "Port WEBSOCKET : ${tls}/${nontls}"
-echo -e "Port GRPC : ${vmgrpc}/${vmgrpcnon}"
-echo -e "Port H2C : ${vmhdua}"
-echo -e "Port HTTP : ${vmhttp}/${vmhttpnon}"
-echo -e "User ID : ${uuid}"
-echo -e "Alter ID : 0"
-echo -e "Security : auto"
-echo -e "Network : WS,GRPC,H2C,HTTP"
-echo -e "Path : gandring"
-echo -e "ServiceName : gandring"
-echo -e "Created : $hariini"
-#echo -e "Expired : $exp"
-echo -e "Expired : $exp2"
+echo -e "NAMA        :${user}"
+echo -e "IP/Host     :${MYIP}"
+#echo -e "IPV6        :$MYIP6"
+echo -e "Address     :${domain}"
+echo -e "Port WS     :${tls}/${nontls}"
+echo -e "Port GRPC   :${vmgrpc}/${vmgrpcnon}"
+echo -e "Port H2C    :${vmhdua}"
+echo -e "Port HTTP   :${vmhttp}/${vmhttpnon}"
+echo -e "User ID     :${uuid}"
+echo -e "Alter ID    :0"
+echo -e "Security    :auto"
+echo -e "Network     :WS,GRPC,H2C,HTTP"
+echo -e "Path        :gandring"
+echo -e "ServiceName :gandring"
+echo -e "Created     :$hariini"
+echo -e "Expired     :$exp"
+#echo -e "Expired     :$exp2"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "WS TLS: ${vmess1}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
