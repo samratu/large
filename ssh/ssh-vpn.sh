@@ -35,15 +35,6 @@ NET=$(ip -o $ANU -4 route show to default | awk '{print $5}');
 source /etc/os-release
 ver=$VERSION_ID
 
-#detail nama perusahaan
-country=ID
-state=Jawa-Tengah
-locality=Sukoharjo
-organization=GANDRING-VPN
-organizationalunit=GANDRING
-commonname=GANDRING-VPN
-email=djarumpentol01@gmail.com
-
 # simple password minimal
 wget -O /etc/pam.d/common-password "https://${wisnuvpn}/password"
 chmod +x /etc/pam.d/common-password
@@ -92,12 +83,12 @@ apt install ca-certificate -y
 apt-get remove --purge ufw firewalld -y
 apt-get install gawk -y &>/dev/null
 apt-get remove --purge exim4 -y
-#apt-get purge apache2* -y
+apt-get purge apache2* -y
 #rm -rf /etc/apache2
 dpkg --configure -a &>/dev/null
 # install wget and curl
 apt -y install wget curl
-apt install apache2 -y
+
 # Install Requirements Tools
 apt-get install grep -y &>/dev/null
 apt install python3-pip -y
@@ -268,7 +259,7 @@ RUN=yes
 # systemd users: don't forget to modify /lib/systemd/system/sslh.service
 DAEMON=/usr/sbin/sslh
 
-DAEMON_OPTS="--user sslh --listen 0.0.0.0:2443 --ssl 127.0.0.1:500 --ssh 127.0.0.1:300 --openvpn 127.0.0.1:1194 --http 127.0.0.1:8880 --pidfile /var/run/sslh/sslh.pid"
+DAEMON_OPTS="--user sslh --listen 0.0.0.0:2443 --ssl 127.0.0.1:500 --ssh 127.0.0.1:300 --openvpn 127.0.0.1:1194 --http 127.0.0.1:80 --pidfile /var/run/sslh/sslh.pid"
 
 END
 
@@ -316,8 +307,16 @@ rm -f stunnel5.zip
 mkdir -p /etc/stunnel5
 chmod 644 /etc/stunnel5
 
-# make a certificate
+#detail nama perusahaan
+country=ID
+state=Jawa-Tengah
+locality=Sukoharjo
+organization=GANDRING-VPN
+organizationalunit=GANDRING
+commonname=GANDRING-VPN
+email=djarumpentol01@gmail.com
 
+# make a certificate
 openssl genrsa -out key.pem 2048
 openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
 -subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
