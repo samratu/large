@@ -669,7 +669,7 @@ cat > /etc/xray/xtrojan.json << END
         "decryption": "none",
         "fallbacks": [
           {
-            "dest": 8443,
+            "dest": 443,
             "xver": 1
           },
           {
