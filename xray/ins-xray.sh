@@ -975,7 +975,7 @@ cat > /etc/xray/xvless.json << END
             }
         },
         {
-            "port": 443,
+            "port": 2083,
             "protocol": "vless",
             "settings": {
                 "clients": [
@@ -1029,7 +1029,7 @@ cat > /etc/xray/xvless.json << END
             }
         },
         {
-            "port": 443,
+            "port": 1443,
             "protocol": "vless",
             "settings": {
                 "clients": [
