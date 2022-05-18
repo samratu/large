@@ -78,8 +78,8 @@ systemctl start rc-local.service
 apt update -y
 apt upgrade -y
 apt dist-upgrade -y
-#apt install ssl-cert -y
-#apt install ca-certificate -y
+apt install ssl-cert -y
+apt install ca-certificate -y
 apt-get remove --purge ufw firewalld -y
 apt-get install gawk -y &>/dev/null
 apt-get remove --purge exim4 -y
