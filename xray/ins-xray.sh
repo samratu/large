@@ -362,7 +362,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 8080,
+      "port": 8088,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -1263,6 +1263,12 @@ iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2082 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2082 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2087 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2087 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 8080 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 8080 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 441 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 441 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 442 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 442 -j ACCEPT
 iptables-save > /etc/iptables.up.rules
 iptables-restore -t < /etc/iptables.up.rules
 netfilter-persistent save
