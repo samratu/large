@@ -321,7 +321,7 @@ cat $key $cert >> /etc/stunnel5/stunnel5.pem
 # Download Config Stunnel5
 cat > /etc/stunnel5/stunnel5.conf <<-END
 cert = /etc/stunnel5/stunnel5.pem
-cert = /etc/xray/xray.cer /etc/xray/xray.key
+#cert = /etc/xray/xray.cer /etc/xray/xray.key
 client = no
 socket = a:SO_REUSEADDR=1
 socket = l:TCP_NODELAY=1
