@@ -162,7 +162,7 @@ echo " 🔰 Fail2Ban                : [ON]"                         |tee -a log-
 echo " 🔰 Dflate                  : [ON]"                         |tee -a log-install.txt
 echo " 🔰 IPtables                : [ON]"                         |tee -a log-install.txt
 echo " 🔰 Auto-Reboot             : [ON]"                         |tee -a log-install.txt
-echo " 🔰 IPv6                    : [OFF]"                        |tee -a log-install.txt
+echo " 🔰 IPv6                    : [ON]"                        |tee -a log-install.txt
 echo " 🔰 Autoreboot On 04.04 GMT +7"                             |tee -a log-install.txt
 echo " 🔰 Autobackup Data"                                        |tee -a log-install.txt
 echo " 🔰 Restore Data"                                           |tee -a log-install.txt
