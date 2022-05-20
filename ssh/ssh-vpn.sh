@@ -377,7 +377,7 @@ cp /usr/local/bin/stunnel /usr/local/wisnucs/stunnel5
 # Remove File
 rm -r -f /usr/local/share/doc/stunnel/
 rm -r -f /usr/local/etc/stunnel/
-#rm -f /usr/local/bin/stunnel
+rm -f /usr/local/bin/stunnel
 rm -f /usr/local/bin/stunnel3
 rm -f /usr/local/bin/stunnel4
 #rm -f /usr/local/bin/stunnel5
