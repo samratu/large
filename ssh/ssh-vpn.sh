@@ -320,7 +320,7 @@ cert=$(cat /etc/xray/xray.cer)
 cat $key $cert >> /etc/stunnel5/stunnel5.pem
 # Download Config Stunnel5
 cat > /etc/stunnel5/stunnel5.conf <<-END
-#cert = /etc/stunnel5/stunnel5.pem
+cert = /etc/stunnel5/stunnel5.pem
 cert=$cert
 key=$key
 client = no
