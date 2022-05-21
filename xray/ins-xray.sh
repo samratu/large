@@ -19,7 +19,6 @@ apt install socat cron bash-completion ntpdate -y
 ntpdate pool.ntp.org
 apt -y install chrony
 timedatectl set-ntp true
-apt install chronyd -y
 systemctl enable chronyd && systemctl restart chronyd
 systemctl enable chrony && systemctl restart chrony
 timedatectl set-timezone Asia/Jakarta
@@ -670,7 +669,7 @@ cat > /etc/xray/xtrojan.json << END
         "decryption": "none",
         "fallbacks": [
           {
-            "dest": 443,
+            "dest": 8443,
             "xver": 1
           },
           {
@@ -716,7 +715,7 @@ cat > /etc/xray/xtrojan.json << END
         "network": "grpc",
         "security": "tls",
         "tlsSettings": {
-          "serverName": "${domain}",
+          "serverName": "",
           "alpn": [
             "h2",
             "http/1.1"
@@ -1029,7 +1028,7 @@ cat > /etc/xray/xvless.json << END
             }
         },
         {
-            "port": 1443,
+            "port": 3443,
             "protocol": "vless",
             "settings": {
                 "clients": [
@@ -1264,6 +1263,12 @@ iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2082 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2082 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2087 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2087 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 8080 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 8080 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 441 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 441 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 442 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 442 -j ACCEPT
 iptables-save > /etc/iptables.up.rules
 iptables-restore -t < /etc/iptables.up.rules
 netfilter-persistent save
