@@ -78,13 +78,13 @@ systemctl start rc-local.service
 apt update -y
 apt upgrade -y
 apt dist-upgrade -y
-apt install ssl-cert -y
-apt install ca-certificate -y
+#apt install ssl-cert -y
+#apt install ca-certificate -y
 apt-get remove --purge ufw firewalld -y
 apt-get install gawk -y &>/dev/null
 apt-get remove --purge exim4 -y
-#apt-get purge apache2* -y
-#rm -rf /etc/apache2
+apt-get purge apache2* -y
+rm -rf /etc/apache2
 dpkg --configure -a &>/dev/null
 # install wget and curl
 apt -y install wget curl
@@ -259,7 +259,7 @@ RUN=yes
 # systemd users: don't forget to modify /lib/systemd/system/sslh.service
 DAEMON=/usr/sbin/sslh
 
-DAEMON_OPTS="--user sslh --listen 0.0.0.0:443 --ssl 127.0.0.1:500 --ssh 127.0.0.1:300 --openvpn 127.0.0.1:1194 --http 127.0.0.1:8880 --pidfile /var/run/sslh/sslh.pid"
+DAEMON_OPTS="--user sslh --listen 0.0.0.0:9443 --ssl 127.0.0.1:500 --ssh 127.0.0.1:300 --openvpn 127.0.0.1:1194 --http 127.0.0.1:8280 --pidfile /var/run/sslh/sslh.pid"
 
 END
 
@@ -346,7 +346,7 @@ connect = 127.0.0.1:22
 
 [openssh]
 accept = 500
-connect = 127.0.0.1:2443
+connect = 127.0.0.1:9443
 
 [openvpn]
 accept = 990
@@ -381,7 +381,7 @@ cp /usr/local/bin/stunnel /usr/local/wisnucs/stunnel
 # Remove File
 rm -r -f /usr/local/share/doc/stunnel/
 rm -r -f /usr/local/etc/stunnel/
-#rm -f /usr/local/bin/stunnel
+rm -f /usr/local/bin/stunnel
 rm -f /usr/local/bin/stunnel3
 rm -f /usr/local/bin/stunnel4
 #rm -f /usr/local/bin/stunnel5
