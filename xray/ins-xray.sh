@@ -670,13 +670,13 @@ cat > /etc/xray/xtrojan.json << END
         "decryption": "none",
         "fallbacks": [
           {
-            "dest": 443,
-            "xver": 1
+            "dest": 2096,
+            "xver": 0
           },
           {
             "path": "/gandring",
-            "dest": 2096,
-            "xver": 1
+            "dest": 443,
+            "xver": 0
           }
         ]
       },
