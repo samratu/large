@@ -123,7 +123,7 @@ echo " 🔰 SS-OBFS HTTP : 2944-3442" |tee -a log-install.txt
 echo " 🔰 XRAY SHADOWSOCKS : 333" |tee -a log-install.txt
 echo " 🔰 XRAY MTPROTO : 111" |tee -a log-install.txt
 echo " 🔰 WEBSOCKET TLS : 9443" |tee -a log-install.txt
-echo " 🔰 WEBSOCKET NON TLS : 8080" |tee -a log-install.txt
+echo " 🔰 WEBSOCKET NON TLS : 8280" |tee -a log-install.txt
 echo " 🔰 PORT OVPNWS : 2087" |tee -a log-install.txt
 echo " 🔰 OHP SSH : 8181" |tee -a log-install.txt
 echo " 🔰 OHP Dropbear : 8282" |tee -a log-install.txt
