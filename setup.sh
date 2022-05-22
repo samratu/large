@@ -110,7 +110,7 @@ echo " 🔰 PORT OPENVPN UDP : 1195" |tee -a log-install.txt
 echo " 🔰 PORT OPENVPN SSL : 990" |tee -a log-install.txt
 echo " 🔰 PORT STUNNEL5 : 500, 600, 700" |tee -a log-install.txt
 echo " 🔰 PORT DROPBEAR : 200, 300" |tee -a log-install.txt
-echo " 🔰 PORT SQUID : 3128, 8080" |tee -a log-install.txt
+echo " 🔰 PORT SQUID : 3128, 3228" |tee -a log-install.txt
 echo " 🔰 Badvpn : 7100, 7200, 7300-7900" |tee -a log-install.txt
 echo " 🔰 Nginx : 80" |tee -a log-install.txt
 echo " 🔰 Wireguard : 591" |tee -a log-install.txt
@@ -135,7 +135,7 @@ echo " 🔰 VMESS GRPC NON TLS: 2052" |tee -a log-install.txt
 echo " 🔰 VMESS H2C : 2088" |tee -a log-install.txt
 echo " 🔰 VMESS HTTP TLS : 8808" |tee -a log-install.txt
 echo " 🔰 VMESS HTTP NON TLS : 808" |tee -a log-install.txt
-echo " 🔰 VLESS XTLS : 99" |tee -a log-install.txt
+echo " 🔰 VLESS XTLS : 44443" |tee -a log-install.txt
 echo " 🔰 VLESS WS TLS : 8443" |tee -a log-install.txt
 echo " 🔰 VLESS WS NON TLS : 8880" |tee -a log-install.txt
 echo " 🔰 VLESS GRPC TLS : 2083" |tee -a log-install.txt
