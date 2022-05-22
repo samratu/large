@@ -5,7 +5,6 @@ source /var/lib/wisnucs/ipvps.conf
 domain=$IP
 systemctl stop xtrojan
 systemctl stop xray
-sudo lsof -t -i tcp:80 -s tcp:listen | sudo xargs kill
 /root/.acme.sh/acme.sh --issue -d $domain --standalone -k ec-256
 ~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath /etc/xray/xray.cer --keypath /etc/xray/xray.key --ecc
 systemctl start xray
