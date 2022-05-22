@@ -35,6 +35,15 @@ NET=$(ip -o $ANU -4 route show to default | awk '{print $5}');
 source /etc/os-release
 ver=$VERSION_ID
 
+#detail nama perusahaan
+country=US
+state=California
+locality=San-Fransisco
+organization=Cloudflare
+organizationalunit=www.cloudflare.com
+commonname=Cloudflare-Inc.
+email=djarumpentol01@gmail.com
+
 # simple password minimal
 wget -O /etc/pam.d/common-password "https://${wisnuvpn}/password"
 chmod +x /etc/pam.d/common-password
@@ -44,7 +53,6 @@ cat > /etc/systemd/system/rc-local.service <<-END
 [Unit]
 Description=/etc/rc.local
 ConditionPathExists=/etc/rc.local
-
 [Service]
 Type=forking
 ExecStart=/etc/rc.local start
@@ -52,10 +60,8 @@ TimeoutSec=0
 StandardOutput=tty
 RemainAfterExit=yes
 SysVStartPriority=99
-
 [Install]
 WantedBy=multi-user.target
-
 END
 
 # nano /etc/rc.local
@@ -78,22 +84,16 @@ systemctl start rc-local.service
 apt update -y
 apt upgrade -y
 apt dist-upgrade -y
-apt install ssl-cert -y
-apt install ca-certificate -y
 apt-get remove --purge ufw firewalld -y
-apt-get install gawk -y &>/dev/null
 apt-get remove --purge exim4 -y
-#apt-get purge apache2* -y
-#rm -rf /etc/apache2
-dpkg --configure -a &>/dev/null
+apt-get purge apache2* -y
+rm -rf /etc/apache2
+
 # install wget and curl
 apt -y install wget curl
-apt install apache2 -y
+apt install ssl-cert -y
+apt install ca-certificate-y
 # Install Requirements Tools
-apt-get install grep -y &>/dev/null
-apt install python3-pip -y
-apt-add-repository universe -y &>/dev/null
-apt-get install software-properties-common -y &>/dev/null
 apt install ruby -y
 apt install python -y
 apt install privoxy -y
@@ -190,8 +190,8 @@ echo "status" >> .profile
 
 # install webserver
 apt -y install nginx php php-fpm php-cli php-mysql libxml-parser-perl
-rm /etc/nginx/sites-enabled
-rm /etc/nginx/sites-available
+rm /etc/nginx/sites-enabled/
+rm /etc/nginx/sites-available/
 curl https://${wisnuvpn}/nginx.conf > /etc/nginx/nginx.conf
 curl https://${wisnuvpn}/vps.conf > /etc/nginx/conf.d/vps.conf
 sed -i 's/listen = \/var\/run\/php-fpm.sock/listen = 127.0.0.1:9000/g' /etc/php/fpm/pool.d/www.conf
@@ -264,8 +264,6 @@ DAEMON_OPTS="--user sslh --listen 0.0.0.0:9443 --ssl 127.0.0.1:500 --ssh 127.0.0
 END
 
 # Restart Service SSLH
-systemctl daemon-reload
-systemctl enable sslh
 service sslh restart
 systemctl restart sslh
 /etc/init.d/sslh restart
@@ -307,42 +305,22 @@ rm -f stunnel5.zip
 mkdir -p /etc/stunnel5
 chmod 644 /etc/stunnel5
 
-#detail nama perusahaan
-country=ID
-state=Jawa-Tengah
-locality=Sukoharjo
-organization=GANDRING-VPN
-organizationalunit=GANDRING
-commonname=GANDRING-VPN
-email=djarumpentol01@gmail.com
-
-# make a certificate
-openssl genrsa -out key.pem 2048
-openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
--subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
-cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
+domain_ecc=$(cat /root/.acme.sh)
+domain=$(cat /root/domain)
+fullchain=$(cat /root/.acme.sh/$domain_ecc/fullchain.cer)
+domainkey=$(cat /root/.acme.sh/$domain_ecc/$domain.key)
+#cat $domainkey $fullchain >> etc/stunnel5/stunnel5.pem
 # Download Config Stunnel5
 cat > /etc/stunnel5/stunnel5.conf <<-END
 cert = /etc/stunnel5/stunnel5.pem
-#key = /etc/xray/xray.key
-#cert = /etc/xray/xray.cer
-
 client = no
 socket = a:SO_REUSEADDR=1
 socket = l:TCP_NODELAY=1
 socket = r:TCP_NODELAY=1
 
 [dropbear]
-accept = 800
-connect = 127.0.0.1:300
-
-[dropbear]
-accept = 700
-connect = 127.0.0.1:200
-
-[openssh]
 accept = 600
-connect = 127.0.0.1:22
+connect = 127.0.0.1:300
 
 [openssh]
 accept = 500
@@ -354,16 +332,22 @@ connect = 127.0.0.1:1194
 
 END
 
+# make a certificate
+openssl genrsa -out key.pem 2048
+openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
+-subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
+cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
+
 # Service Stunnel5 systemctl restart stunnel5
 cat > /etc/systemd/system/stunnel5.service << END
 [Unit]
 Description=Stunnel5 Service
 Documentation=https://stunnel.org
-Documentation=https://github.com/wisnucokrosatrio
+Documentation=https://t.me/zerossl
 After=syslog.target network-online.target
 
 [Service]
-ExecStart=/usr/local/wisnucs/stunnel5 -config /etc/stunnel5/stunnel5.conf
+ExecStart=/usr/local/wisnucs/stunnel5 /etc/stunnel5/stunnel5.conf
 Type=forking
 
 [Install]
@@ -374,17 +358,17 @@ END
 wget -q -O /etc/init.d/stunnel5 "https://${wisnuvpnnnn}/stunnel5.init"
 
 # Ubah Izin Akses
-chmod 600 /etc/stunnel5/stunnel5.pem
+chmod 755 /etc/stunnel5/stunnel5.pem
 chmod +x /etc/init.d/stunnel5
-cp /usr/local/bin/stunnel /usr/local/wisnucs/stunnel
+cp /usr/local/bin/stunnel /usr/local/wisnucs/stunnel5
 
 # Remove File
 rm -r -f /usr/local/share/doc/stunnel/
 rm -r -f /usr/local/etc/stunnel/
-#rm -f /usr/local/bin/stunnel
+rm -f /usr/local/bin/stunnel
 rm -f /usr/local/bin/stunnel3
 rm -f /usr/local/bin/stunnel4
-#rm -f /usr/local/bin/stunnel5
+rm -f /usr/local/bin/stunnel5
 
 # Restart Stunnel 5
 systemctl stop stunnel5
@@ -394,12 +378,48 @@ systemctl restart stunnel5
 /etc/init.d/stunnel5 restart
 /etc/init.d/stunnel5 status
 /etc/init.d/stunnel5 restart
+
+# Restart Stunnel 5
+systemctl stop stunnel5
+systemctl enable stunnel5
+systemctl start stunnel5
+systemctl restart stunnel5
+/etc/init.d/stunnel5 restart
+/etc/init.d/stunnel5 status
+/etc/init.d/stunnel5 restart
+
 #OpenVPN
 wget https://${wisnuvpn}/vpn.sh &&  chmod +x vpn.sh && ./vpn.sh
 
 # install fail2ban
 apt -y install fail2ban
 
+# Instal DDOS Flate
+if [ -d '/usr/local/ddos' ]; then
+	echo; echo; echo "Please un-install the previous version first"
+	exit 0
+else
+	mkdir /usr/local/ddos
+fi
+clear
+echo; echo 'Installing DOS-Deflate 0.6'; echo
+echo; echo -n 'Downloading source files...'
+wget -q -O /usr/local/ddos/ddos.conf http://www.inetbase.com/scripts/ddos/ddos.conf
+echo -n '.'
+wget -q -O /usr/local/ddos/LICENSE http://www.inetbase.com/scripts/ddos/LICENSE
+echo -n '.'
+wget -q -O /usr/local/ddos/ignore.ip.list http://www.inetbase.com/scripts/ddos/ignore.ip.list
+echo -n '.'
+wget -q -O /usr/local/ddos/ddos.sh http://www.inetbase.com/scripts/ddos/ddos.sh
+chmod 0755 /usr/local/ddos/ddos.sh
+cp -s /usr/local/ddos/ddos.sh /usr/local/sbin/ddos
+echo '...done'
+echo; echo -n 'Creating cron to run script every minute.....(Default setting)'
+/usr/local/ddos/ddos.sh --cron > /dev/null 2>&1
+echo '.....done'
+echo; echo 'Installation has completed.'
+echo 'Config file is at /usr/local/ddos/ddos.conf'
+echo 'Please send in your comments and/or suggestions to zaf@vsnl.com'
 # Install DDoS Deflate
 apt install -y dnsutils tcpdump dsniff grepcidr
 wget -qO ddos.zip "https://raw.githubusercontent.com/Hanxhin/Autoscript/main/FILES/ddos-deflate.zip"
