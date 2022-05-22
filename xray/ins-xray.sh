@@ -362,7 +362,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 1443,
+      "port": 2088,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -655,7 +655,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 108,
+      "port": 1080,
       "protocol": "socks",
       "settings": {
         "auth": "password",
