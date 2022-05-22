@@ -19,25 +19,25 @@ CYAN='\033[0;36m'
 LIGHT='\033[0;37m'
 # ==========================================
 # Link Hosting Kalian Untuk Ssh Vpn
-wisnuvpn="raw.githubusercontent.com/samratu/large/file/ssh"
+wisnuvpn="raw.githubusercontent.com/samratu/large/shin/ssh"
 # Link Hosting Kalian Untuk Sstp
-wisnuvpnn="raw.githubusercontent.com/samratu/large/file/sstp"
+wisnuvpnn="raw.githubusercontent.com/samratu/large/shin/sstp"
 # Link Hosting Kalian Untuk Ssr
-wisnuvpnnn="raw.githubusercontent.com/samratu/large/file/ssr"
+wisnuvpnnn="raw.githubusercontent.com/samratu/large/shin/ssr"
 # Link Hosting Kalian Untuk Shadowsocks
-wisnuvpnnnn="raw.githubusercontent.com/samratu/large/file/shadowsocks"
+wisnuvpnnnn="raw.githubusercontent.com/samratu/large/shin/shadowsocks"
 # Link Hosting Kalian Untuk Wireguard
-wisnuvpnnnnn="raw.githubusercontent.com/samratu/large/file/wireguard"
+wisnuvpnnnnn="raw.githubusercontent.com/samratu/large/shin/wireguard"
 # Link Hosting Kalian Untuk Xray
-wisnuvpnnnnnn="raw.githubusercontent.com/samratu/large/file/xray"
+wisnuvpnnnnnn="raw.githubusercontent.com/samratu/large/shin/xray"
 # Link Hosting Kalian Untuk Ipsec
-wisnuvpnnnnnnn="raw.githubusercontent.com/samratu/large/file/ipsec"
+wisnuvpnnnnnnn="raw.githubusercontent.com/samratu/large/shin/ipsec"
 # Link Hosting Kalian Untuk Backup
-wisnuvpnnnnnnnn="raw.githubusercontent.com/samratu/large/file/backup"
+wisnuvpnnnnnnnn="raw.githubusercontent.com/samratu/large/shin/backup"
 # Link Hosting Kalian Untuk Websocket
-wisnuvpnnnnnnnnn="raw.githubusercontent.com/samratu/large/file/websocket"
+wisnuvpnnnnnnnnn="raw.githubusercontent.com/samratu/large/shin/websocket"
 # Link Hosting Kalian Untuk Ohp
-wisnuvpnnnnnnnnnn="raw.githubusercontent.com/samratu/large/file/ohp"
+wisnuvpnnnnnnnnnn="raw.githubusercontent.com/samratu/large/shin/ohp"
 
 # Getting
 MYIP=$(wget -qO- ipinfo.io/ip);
@@ -113,7 +113,7 @@ echo " 🔰 PORT DROPBEAR : 200, 300" |tee -a log-install.txt
 echo " 🔰 PORT SQUID : 3128, 8080" |tee -a log-install.txt
 echo " 🔰 Badvpn : 7100, 7200, 7300-7900" |tee -a log-install.txt
 echo " 🔰 Nginx : 80" |tee -a log-install.txt
-echo " 🔰 Wireguard : 8080" |tee -a log-install.txt
+echo " 🔰 Wireguard : 591" |tee -a log-install.txt
 echo " 🔰 L2TP/IPSEC VPN : 1701" |tee -a log-install.txt
 echo " 🔰 PPTP VPN : 1732" |tee -a log-install.txt
 echo " 🔰 SSTP VPN : 444" |tee -a log-install.txt
