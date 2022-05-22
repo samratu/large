@@ -362,7 +362,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 8088,
+      "port": 441,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -1028,7 +1028,7 @@ cat > /etc/xray/xvless.json << END
             }
         },
         {
-            "port": 441,
+            "port": 445,
             "protocol": "vless",
             "settings": {
                 "clients": [
