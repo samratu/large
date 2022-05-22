@@ -96,7 +96,7 @@ cat > /etc/xray/config.json << END
   },
   "inbounds": [
     {
-      "port": 99,
+      "port": 44443,
       "protocol": "vless",
       "settings": {
         "clients": [
@@ -109,7 +109,7 @@ cat > /etc/xray/config.json << END
         "decryption": "none",
         "fallbacks": [
           {
-            "dest": 88
+            "dest": 80
           }
         ]
       },
@@ -362,7 +362,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 443,
+      "port": 1443,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -402,7 +402,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 2053,
+      "port": 2083,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -447,7 +447,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 2052,
+      "port": 2082,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -474,7 +474,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 2083,
+      "port": 8443,
       "protocol": "vless",
       "settings": {
         "clients": [
@@ -520,7 +520,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 2082,
+      "port": 8880,
       "protocol": "vless",
       "settings": {
         "clients": [
@@ -809,7 +809,7 @@ cat > /etc/xray/xtrojan.json << END
       }
     },
     {
-      "port": 443,
+      "port": 2096,
       "listen": "0.0.0.0",
       "protocol": "trojan",
       "tag": "TROJAN-gRPC-in",
@@ -845,7 +845,7 @@ cat > /etc/xray/xtrojan.json << END
       }
     },
     {
-      "port": 2096,
+      "port": 443,
       "listen": "0.0.0.0",
       "protocol": "trojan",
       "tag": "TROJAN-WSTLS-in",
@@ -903,7 +903,7 @@ cat > /etc/xray/xtrojan.json << END
       }
     },
     {
-      "port": 443,
+      "port": 3443,
       "listen": "0.0.0.0",
       "protocol": "trojan",
       "tag": "TROJAN-HTTP/2-in",
@@ -1367,9 +1367,9 @@ cat > /etc/trojan-go/config.json << END
 {
   "run_type": "server",
   "local_addr": "0.0.0.0",
-  "local_port": 2087,
+  "local_port": 2086,
   "remote_addr": "127.0.0.1",
-  "remote_port": 88,
+  "remote_port": 80,
   "log_level": 1,
   "log_file": "/var/log/trojan-go/trojan-go.log",
   "password": [
@@ -1453,8 +1453,8 @@ $uuid
 END
 
 # restart
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2087 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2087 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2086 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2086 -j ACCEPT
 iptables-save > /etc/iptables.up.rules
 iptables-restore -t < /etc/iptables.up.rules
 netfilter-persistent save
