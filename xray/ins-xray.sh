@@ -1028,7 +1028,7 @@ cat > /etc/xray/xvless.json << END
             }
         },
         {
-            "port": 3443,
+            "port": 1443,
             "protocol": "vless",
             "settings": {
                 "clients": [
@@ -1267,8 +1267,8 @@ iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 8080 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 8080 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 441 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 441 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 442 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 442 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 1443 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 1443 -j ACCEPT
 iptables-save > /etc/iptables.up.rules
 iptables-restore -t < /etc/iptables.up.rules
 netfilter-persistent save
