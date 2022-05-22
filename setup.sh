@@ -124,7 +124,7 @@ echo " 🔰 XRAY SHADOWSOCKS : 333" |tee -a log-install.txt
 echo " 🔰 XRAY MTPROTO : 111" |tee -a log-install.txt
 echo " 🔰 WEBSOCKET TLS : 9443" |tee -a log-install.txt
 echo " 🔰 WEBSOCKET NON TLS : 8080" |tee -a log-install.txt
-echo " 🔰 PORT OVPNWS : 2086" |tee -a log-install.txt
+echo " 🔰 PORT OVPNWS : 2087" |tee -a log-install.txt
 echo " 🔰 OHP SSH : 8181" |tee -a log-install.txt
 echo " 🔰 OHP Dropbear : 8282" |tee -a log-install.txt
 echo " 🔰 OHP OpenVPN : 8383" |tee -a log-install.txt
@@ -143,7 +143,7 @@ echo " 🔰 VLESS GRPC NON TLS: 2082" |tee -a log-install.txt
 echo " 🔰 VLESS H2C : 5443" |tee -a log-install.txt
 echo " 🔰 VLESS HTTP TLS : 8088" |tee -a log-install.txt
 echo " 🔰 VLESS HTTP NON TLS : 888" |tee -a log-install.txt
-echo " 🔰 TROJAN GO : 2087" |tee -a log-install.txt
+echo " 🔰 TROJAN GO : 2086" |tee -a log-install.txt
 echo " 🔰 TROJAN GRPC : 2096" |tee -a log-install.txt
 echo " 🔰 TROJAN HTTP : 880" |tee -a log-install.txt
 echo " 🔰 TROJAN H2C : 3443" |tee -a log-install.txt
