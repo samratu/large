@@ -18,7 +18,6 @@ apt install curl socat xz-utils wget apt-transport-https gnupg gnupg2 gnupg1 dns
 apt install socat cron bash-completion ntpdate -y
 ntpdate pool.ntp.org
 apt -y install chrony
-apt install chronyd -y
 timedatectl set-ntp true
 systemctl enable chronyd && systemctl restart chronyd
 systemctl enable chrony && systemctl restart chrony
