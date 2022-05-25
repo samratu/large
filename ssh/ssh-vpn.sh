@@ -36,14 +36,22 @@ source /etc/os-release
 ver=$VERSION_ID
 
 #detail nama perusahaan
-country=US
-state=California
-locality=San-Fransisco
-organization=Cloudflare
-organizationalunit=www.cloudflare.com
-commonname=Cloudflare-Inc.
-email=djarumpentol01@gmail.com
+#country=US
+#state=California
+#locality=San-Fransisco
+#organization=Cloudflare
+#organizationalunit=www.cloudflare.com
+#commonname=Cloudflare-Inc.
+#email=djarumpentol01@gmail.com
 
+#detail nama perusahaan
+country=ID
+state=Jawa-Tengah
+locality=Sukoharjo
+organization=gandringVPN
+organizationalunit=gandring
+commonname=gandring
+email=djarumpentol01@gmail.com
 # simple password minimal
 wget -O /etc/pam.d/common-password "https://${wisnuvpn}/password"
 chmod +x /etc/pam.d/common-password
@@ -310,6 +318,11 @@ domain=$(cat /root/domain)
 fullchain=$(cat /root/.acme.sh/$domain_ecc/fullchain.cer)
 domainkey=$(cat /root/.acme.sh/$domain_ecc/$domain.key)
 #cat $domainkey $fullchain >> etc/stunnel5/stunnel5.pem
+# make a certificate
+openssl genrsa -out key.pem 2048
+openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
+-subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
+cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
 # Download Config Stunnel5
 cat > /etc/stunnel5/stunnel5.conf <<-END
 cert = /etc/stunnel5/stunnel5.pem
@@ -331,12 +344,6 @@ accept = 990
 connect = 127.0.0.1:1194
 
 END
-
-# make a certificate
-openssl genrsa -out key.pem 2048
-openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
--subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
-cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
 
 # Service Stunnel5 systemctl restart stunnel5
 cat > /etc/systemd/system/stunnel5.service << END
