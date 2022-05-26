@@ -98,8 +98,6 @@ apt-get purge apache2* -y
 rm -rf /etc/apache2
 
 # install wget and curl
-apt -y install pcre pcre-devel zlib-devel epel-release openssl openssl-devel
-apt -y install libpcre3 libpcre3-dev zlib1g-dev openssl libssl-dev
 apt -y install wget curl
 apt install ssl-cert -y
 apt install ca-certificate-y
@@ -320,14 +318,14 @@ rm -f stunnel5.zip
 mkdir -p /etc/stunnel5
 chmod 644 /etc/stunnel5
 
-openssl genrsa -out key.pem 2048
-openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
+openssl genrsa -out cert.pem 2048
+openssl req -new -x509 -cert key.pem -out cert.pem -days 1095 \
 -subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
-cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
+cat cert.pem key.pem >> /etc/stunnel5/stunnel5.pem
 # Download Config Stunnel5
 cat > /etc/stunnel5/stunnel5.conf <<-END
-#cert = /etc/stunnel5/stunnel5.pem
-cert=" /etc/xray/xray.cer"
+cert = /etc/stunnel5/stunnel5.pem
+#cert=" /etc/xray/xray.cer"
 client = no
 socket = a:SO_REUSEADDR=1
 socket = l:TCP_NODELAY=1
