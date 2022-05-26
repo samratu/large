@@ -98,7 +98,8 @@ apt-get purge apache2* -y
 rm -rf /etc/apache2
 
 # install wget and curl
-apt install -y pcre pcre-devel zlib-devel epel-release openssl openssl-devel
+apt -y install pcre pcre-devel zlib-devel epel-release openssl openssl-devel
+apt -y install libpcre3 libpcre3-dev zlib1g-dev openssl libssl-dev
 apt -y install wget curl
 apt install ssl-cert -y
 apt install ca-certificate-y
