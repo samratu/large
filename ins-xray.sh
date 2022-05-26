@@ -1142,7 +1142,7 @@ cat > /etc/xray/xvless.json << END
             }
         },
         {
-            "port": 888,
+            "port": 2088,
             "protocol": "vless",
             "settings": {
                 "clients": [
@@ -1156,19 +1156,7 @@ cat > /etc/xray/xvless.json << END
             "streamSettings": {
                 "network": "h2",
                 "security": "none",
-                "tlsSettings": {
-                    "serverName": "${domain}",
-                    "alpn": [
-                        "http/1.1",
-                        "h2"
-                    ],
-                    "certificates": [
-                        {
-                            "certificateFile": "/etc/xray/xray.cer",
-                            "keyFile": "/etc/xray/xray.key"
-                        }
-                    ]
-                },
+                "tlsSettings": {},
                 "httpSettings": {
                     "path": "gandring"
                 }
