@@ -449,7 +449,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 2052,
+      "port": 2082,
       "protocol": "vless",
       "settings": {
         "clients": [
@@ -511,6 +511,31 @@ cat > /etc/xray/config.json << END
           "http",
           "tls"
         ]
+      }
+    },
+    {
+      "port": 999,
+      "protocol": "socks",
+      "settings": {
+        "auth": "password",
+        "accounts": [
+          {
+            "user": "gandring",
+            "pass": "gandring"
+          }
+        ],
+        "udp": true
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "security": "none",
+        "tlsSettings": {},
+        "tcpSettings": {},
+        "kcpSettings": {},
+        "wsSettings": {},
+        "httpSettings": {},
+        "quicSettings": {},
+        "grpcSettings": {}
       }
     },
     {
