@@ -289,7 +289,6 @@ apt -y install lsb-release gnupg2 ca-certificates
 # setting vnstat
 apt -y install vnstat
 /etc/init.d/vnstat restart
-apt -y install libsqlite3-dev
 wget https://humdi.net/vnstat/vnstat-2.6.tar.gz
 tar zxvf vnstat-2.6.tar.gz
 cd vnstat-2.6
@@ -327,8 +326,8 @@ openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
 cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
 # Download Config Stunnel5
 cat > /etc/stunnel5/stunnel5.conf <<-END
-cert = /etc/stunnel5/stunnel5.pem
-#cert=" /etc/xray/xray.cer/self_signed_cert.pem"
+#cert = /etc/stunnel5/stunnel5.pem
+cert=" /etc/xray/xray.cer"
 client = no
 socket = a:SO_REUSEADDR=1
 socket = l:TCP_NODELAY=1
