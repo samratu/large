@@ -282,6 +282,8 @@ systemctl restart sslh
 /etc/init.d/sslh restart
 /etc/init.d/sslh status
 /etc/init.d/sslh restart
+rm -f /etc/apt/sources.list.d/nginx.list
+apt -y install lsb-release gnupg2 ca-certificates
 
 # setting vnstat
 apt -y install vnstat
@@ -337,7 +339,7 @@ openssl x509 -in /etc/xray/xray.cer/self_signed_cert.pem -noout || 'print_error 
 # Download Config Stunnel5
 cat > /etc/stunnel5/stunnel5.conf <<-END
 #cert = /etc/stunnel5/stunnel5.pem
-cert = /etc/xray/xray.cer/self_signed_cert.pem
+cert=" /etc/xray/xray.cer/self_signed_cert.pem"
 client = no
 socket = a:SO_REUSEADDR=1
 socket = l:TCP_NODELAY=1
