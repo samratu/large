@@ -97,7 +97,7 @@ cat > /etc/xray/config.json << END
   },
   "inbounds": [
     {
-      "port": 8808,
+      "port": 8088 ,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -178,7 +178,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 44443,
+      "port": 99,
       "protocol": "vless",
       "settings": {
         "clients": [
@@ -252,7 +252,7 @@ cat > /etc/xray/config.json << END
                 "/"
               ],
               "headers": {
-                "Host": "${domain}",
+                "Host": "vmbsmm.cnom.net",
                 "User-Agent": [
                   "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.75 Safari/537.36",
                   "Mozilla/5.0 (iPhone; CPU iPhone OS 10_0_2 like Mac OS X) AppleWebKit/601.1 (KHTML, like Gecko) CriOS/53.0.2785.109 Mobile/14A456 Safari/601.1.46"
@@ -363,7 +363,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 8088,
+      "port": 8808,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -403,7 +403,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 8443,
+      "port": 2083,
       "protocol": "vless",
       "settings": {
         "clients": [
@@ -449,7 +449,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 8880,
+      "port": 2052,
       "protocol": "vless",
       "settings": {
         "clients": [
@@ -514,21 +514,21 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 777,
+      "port": 1080,
       "protocol": "socks",
       "settings": {
         "auth": "password",
         "accounts": [
           {
             "user": "gandring",
-            "pass": "g"
+            "pass": "gandring"
 #xray-socks
           }
         ],
         "udp": true
       },
       "streamSettings": {
-        "network": "tcp",
+        "network": "ws",
         "security": "tls",
         "tlsSettings": {
           "certificates": [
@@ -540,7 +540,12 @@ cat > /etc/xray/config.json << END
         },
         "tcpSettings": {},
         "kcpSettings": {},
-        "wsSettings": {},
+        "wsSettings": {
+          "path": "gandring",
+          "headers": {
+            "Host": "${domain}"
+          }
+        },
         "httpSettings": {},
         "quicSettings": {},
         "grpcSettings": {}
@@ -562,17 +567,6 @@ cat > /etc/xray/config.json << END
       "tag": "tg-out",
       "protocol": "mtproto",
       "settings": {}
-    }
-  ],
-  "outbounds": [
-    {
-      "protocol": "freedom",
-      "settings": {}
-    },
-    {
-      "protocol": "blackhole",
-      "settings": {},
-      "tag": "blocked"
     }
   ],
   "routing": {
@@ -598,11 +592,11 @@ cat > /etc/xray/config.json << END
         "outboundTag": "blocked"
       },
       {
+        "type": "field",
         "inboundTag": [
-          "api"
+          "K"
         ],
-        "outboundTag": "api",
-        "type": "field"
+        "outboundTag": "tg-out"
       },
       {
         "type": "field",
@@ -612,25 +606,6 @@ cat > /etc/xray/config.json << END
         ]
       }
     ]
-  },
-  "stats": {},
-  "api": {
-    "services": [
-      "StatsService"
-    ],
-    "tag": "api"
-  },
-  "policy": {
-    "levels": {
-      "0": {
-        "statsUserDownlink": true,
-        "statsUserUplink": true
-      }
-    },
-    "system": {
-      "statsInboundUplink": true,
-      "statsInboundDownlink": true
-    }
   }
 }
 END
@@ -792,7 +767,7 @@ cat > /etc/xray/xtrojan.json << END
       }
     },
     {
-      "port": 442,
+      "port": 443,
       "listen": "0.0.0.0",
       "protocol": "trojan",
       "tag": "TROJAN-H2C-in",
@@ -1029,7 +1004,7 @@ cat > /etc/xray/xvless.json << END
             }
         },
         {
-            "port": 441,
+            "port": 2082,
             "protocol": "vless",
             "settings": {
                 "clients": [
@@ -1322,7 +1297,7 @@ cat > /etc/trojan-go/config.json << END
 {
   "run_type": "server",
   "local_addr": "0.0.0.0",
-  "local_port": 8880,
+  "local_port": 2086,
   "remote_addr": "127.0.0.1",
   "remote_port": 88,
   "log_level": 1,
@@ -1409,8 +1384,8 @@ END
 
 # restart
 
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 8880 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 8880 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2086 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2086 -j ACCEPT
 iptables-save > /etc/iptables.up.rules
 iptables-restore -t < /etc/iptables.up.rules
 netfilter-persistent save
