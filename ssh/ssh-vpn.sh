@@ -200,16 +200,6 @@ echo "status" >> .profile
 domain = /root/domain
 domain=/etc/xray/domain
 # install webserver
-nginx_conf="/etc/nginx/conf.d/${domain}.conf"
-cd /etc/nginx/conf.d/ && rm -f ${domain}.conf && wget -O ${domain}.conf https://raw.githubusercontent.com/wulabing/Xray_onekey/${github_branch}/config/web.conf
-sed -i "s/xxx/${domain}/g" ${nginx_conf}
-
-rm -rf /www/xray_web
-mkdir -p /www/xray_web
-wget -O web.tar.gz https://raw.githubusercontent.com/wulabing/Xray_onekey/main/basic/web.tar.gz
-tar xzf web.tar.gz -C /www/xray_web
-rm -f web.tar.gz
-
 apt -y install nginx php php-fpm php-cli php-mysql libxml-parser-perl
 rm /etc/nginx/sites-enabled/
 rm /etc/nginx/sites-available/
@@ -331,24 +321,14 @@ rm -f stunnel5.zip
 mkdir -p /etc/stunnel5
 chmod 644 /etc/stunnel5
 
-domain_ecc=$(cat /root/.acme.sh)
-domain=$(cat /root/domain)
-fullchain=$(cat /root/.acme.sh/$domain_ecc/fullchain.cer)
-domainkey=$(cat /root/.acme.sh/$domain_ecc/$domain.key)
-#cat $domainkey $fullchain >> etc/stunnel5/stunnel5.pem
-# make a certificate
-openssl x509 -in /etc/xray/xray.cer/self_signed_cert.pem -noout || 'print_error "生成自签名证书失败" && exit 1'
-chown nobody.nobody /etc/xray/xray.cer/self_signed_cert.pem
-chown nobody.nobody /etc/xray/xray.key/self_signed_key.pem
-
-#openssl genrsa -out key.pem 2048
-#openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
-#-subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
-#cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
+openssl genrsa -out key.pem 2048
+openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
+-subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
+cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
 # Download Config Stunnel5
 cat > /etc/stunnel5/stunnel5.conf <<-END
-#cert = /etc/stunnel5/stunnel5.pem
-cert=" /etc/xray/xray.cer/self_signed_cert.pem"
+cert = /etc/stunnel5/stunnel5.pem
+#cert=" /etc/xray/xray.cer/self_signed_cert.pem"
 client = no
 socket = a:SO_REUSEADDR=1
 socket = l:TCP_NODELAY=1
