@@ -481,7 +481,7 @@ wget -O ceklim "https://${wisnuvpn}/ceklim.sh"
 wget -O tendang "https://${wisnuvpn}/tendang.sh"
 wget -O clearlog "https://${wisnuvpn}/clearlog.sh"
 wget -O changeport "https://${wisnuvpn}/changeport.sh"
-wget -O wbmn "https://${wisnuvpn}/webmin.sh"
+wget -O webmin "https://${wisnuvpn}/webmin.sh"
 wget -O xp "https://${wisnuvpn}/xp.sh"
 wget -O swapkvm "https://${wisnuvpn}/swapkvm.sh"
 
@@ -665,7 +665,7 @@ chmod +x portsstp
 chmod +x portsquid
 chmod +x portvlm
 
-chmod +x wbmn
+chmod +x webmin
 chmod +x xp
 chmod +x swapkvm
 chmod +x addvmess
