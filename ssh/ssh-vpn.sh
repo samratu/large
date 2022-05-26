@@ -293,7 +293,7 @@ systemctl restart sslh
 /etc/init.d/sslh restart
 /etc/init.d/sslh status
 /etc/init.d/sslh restart
-rm -f /etc/apt/sources.list.d/nginx.list
+
 apt -y install lsb-release gnupg2 ca-certificates
 
 # setting vnstat
@@ -339,9 +339,8 @@ domainkey=$(cat /root/.acme.sh/$domain_ecc/$domain.key)
 # make a certificate
 openssl x509 -in /etc/xray/xray.cer/self_signed_cert.pem -noout || 'print_error "生成自签名证书失败" && exit 1'
   print_ok "生成自签名证书成功"
-  chown nobody.$cert_group /etc/xray/xray.cer/self_signed_cert.pem
-  chown nobody.$cert_group /etc/xray/xray.key/self_signed_key.pem
-}
+chown nobody.$cert_group /etc/xray/xray.cer/self_signed_cert.pem
+chown nobody.$cert_group /etc/xray/xray.key/self_signed_key.pem
 
 #openssl genrsa -out key.pem 2048
 #openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
