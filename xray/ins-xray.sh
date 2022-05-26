@@ -191,7 +191,7 @@ cat > /etc/xray/config.json << END
         "decryption": "none",
         "fallbacks": [
           {
-            "dest": 88
+            "dest": 80
           }
         ]
       },
@@ -1324,7 +1324,7 @@ cat > /etc/trojan-go/config.json << END
   "local_addr": "0.0.0.0",
   "local_port": 2086,
   "remote_addr": "127.0.0.1",
-  "remote_port": 88,
+  "remote_port": 80,
   "log_level": 1,
   "log_file": "/var/log/trojan-go/trojan-go.log",
   "password": [
