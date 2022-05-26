@@ -112,7 +112,7 @@ echo " 🔰 PORT STUNNEL5 : 700, 800, 500, 600" |tee -a log-install.txt
 echo " 🔰 PORT DROPBEAR : 200, 300" |tee -a log-install.txt
 echo " 🔰 PORT SQUID : 3128, 3228" |tee -a log-install.txt
 echo " 🔰 Badvpn : 7100, 7200, 7300-7900" |tee -a log-install.txt
-echo " 🔰 Nginx : 88" |tee -a log-install.txt
+echo " 🔰 Nginx : 80" |tee -a log-install.txt
 echo " 🔰 WIREGUARD : 591" |tee -a log-install.txt
 echo " 🔰 L2TP/IPSEC VPN : 1701" |tee -a log-install.txt
 echo " 🔰 PPTP VPN : 1732" |tee -a log-install.txt
@@ -124,7 +124,7 @@ echo " 🔰 XRAY SHADOWSOCKS : 333" |tee -a log-install.txt
 echo " 🔰 XRAY MTPROTO : 111" |tee -a log-install.txt
 echo " 🔰 WEBSOCKET TLS : 8443" |tee -a log-install.txt
 echo " 🔰 WEBSOCKET NON TLS : 8880" |tee -a log-install.txt
-echo " 🔰 PORT OVPNWS : 2087" |tee -a log-install.txt
+echo " 🔰 PORT OVPNWS : 8080" |tee -a log-install.txt
 echo " 🔰 OHP SSH : 8181" |tee -a log-install.txt
 echo " 🔰 OHP Dropbear : 8282" |tee -a log-install.txt
 echo " 🔰 OHP OpenVPN : 8383" |tee -a log-install.txt
