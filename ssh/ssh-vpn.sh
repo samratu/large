@@ -272,7 +272,7 @@ RUN=yes
 # systemd users: don't forget to modify /lib/systemd/system/sslh.service
 DAEMON=/usr/sbin/sslh
 
-DAEMON_OPTS="--user sslh --listen 0.0.0.0:9443 --ssl 127.0.0.1:500 --ssh 127.0.0.1:300 --openvpn 127.0.0.1:1194 --http 127.0.0.1:8280 --pidfile /var/run/sslh/sslh.pid"
+DAEMON_OPTS="--user sslh --listen 0.0.0.0:8443 --ssl 127.0.0.1:500 --ssh 127.0.0.1:300 --openvpn 127.0.0.1:1194 --http 127.0.0.1:8880 --pidfile /var/run/sslh/sslh.pid"
 
 END
 
@@ -324,13 +324,20 @@ fullchain=$(cat /root/.acme.sh/$domain_ecc/fullchain.cer)
 domainkey=$(cat /root/.acme.sh/$domain_ecc/$domain.key)
 #cat $domainkey $fullchain >> etc/stunnel5/stunnel5.pem
 # make a certificate
-openssl genrsa -out key.pem 2048
-openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
--subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
-cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
+openssl x509 -in /etc/xray/xray.cer/self_signed_cert.pem -noout || 'print_error "生成自签名证书失败" && exit 1'
+  print_ok "生成自签名证书成功"
+  chown nobody.$cert_group /etc/xray/xray.cer/self_signed_cert.pem
+  chown nobody.$cert_group /etc/xray/xray.key/self_signed_key.pem
+}
+
+#openssl genrsa -out key.pem 2048
+#openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
+#-subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
+#cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
 # Download Config Stunnel5
 cat > /etc/stunnel5/stunnel5.conf <<-END
-cert = /etc/stunnel5/stunnel5.pem
+#cert = /etc/stunnel5/stunnel5.pem
+cert = /etc/xray/xray.cer/self_signed_cert.pem
 client = no
 socket = a:SO_REUSEADDR=1
 socket = l:TCP_NODELAY=1
@@ -342,7 +349,7 @@ connect = 127.0.0.1:300
 
 [openssh]
 accept = 500
-connect = 127.0.0.1:9443
+connect = 127.0.0.1:8443
 
 [openvpn]
 accept = 990
