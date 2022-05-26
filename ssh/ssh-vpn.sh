@@ -240,6 +240,9 @@ echo "/bin/false" >> /etc/shells
 echo "/usr/sbin/nologin" >> /etc/shells
 /etc/init.d/dropbear restart
 
+mkdir /ssl
+    cp -a /etc/xray/xray.cer/self_signed_cert.pem /ssl/xray.crt
+    cp -a /etc/xray/xray.key/self_signed_key.pem /ssl/xray.key
 # install squid
 cd
 apt -y install squid3
