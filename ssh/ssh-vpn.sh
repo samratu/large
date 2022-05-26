@@ -200,23 +200,15 @@ echo "status" >> .profile
 domain = /root/domain
 domain=/etc/xray/domain
 # install webserver
-function configure_nginx() {
-  nginx_conf="/etc/nginx/conf.d/${domain}.conf"
-  cd /etc/nginx/conf.d/ && rm -f ${domain}.conf && wget -O ${domain}.conf https://raw.githubusercontent.com/wulabing/Xray_onekey/${github_branch}/config/web.conf
-  sed -i "s/xxx/${domain}/g" ${nginx_conf}
-  judge "Nginx 配置 修改"
-  
-  systemctl enable nginx
-  systemctl restart nginx
-}
-function configure_web() {
-  rm -rf /www/xray_web
-  mkdir -p /www/xray_web
-  wget -O web.tar.gz https://raw.githubusercontent.com/wulabing/Xray_onekey/main/basic/web.tar.gz
-  tar xzf web.tar.gz -C /www/xray_web
-  judge "站点伪装"
-  rm -f web.tar.gz
-}
+nginx_conf="/etc/nginx/conf.d/${domain}.conf"
+cd /etc/nginx/conf.d/ && rm -f ${domain}.conf && wget -O ${domain}.conf https://raw.githubusercontent.com/wulabing/Xray_onekey/${github_branch}/config/web.conf
+sed -i "s/xxx/${domain}/g" ${nginx_conf}
+
+rm -rf /www/xray_web
+mkdir -p /www/xray_web
+wget -O web.tar.gz https://raw.githubusercontent.com/wulabing/Xray_onekey/main/basic/web.tar.gz
+tar xzf web.tar.gz -C /www/xray_web
+rm -f web.tar.gz
 
 apt -y install nginx php php-fpm php-cli php-mysql libxml-parser-perl
 rm /etc/nginx/sites-enabled/
