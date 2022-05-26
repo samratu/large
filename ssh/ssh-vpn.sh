@@ -239,9 +239,6 @@ echo "/bin/false" >> /etc/shells
 echo "/usr/sbin/nologin" >> /etc/shells
 /etc/init.d/dropbear restart
 
-mkdir /ssl
-cp -a /etc/xray/xray.cer/self_signed_cert.pem /ssl/xray.crt
-cp -a /etc/xray/xray.key/self_signed_key.pem /ssl/xray.key
 # install squid
 cd
 apt -y install squid3
@@ -282,8 +279,6 @@ systemctl restart sslh
 /etc/init.d/sslh status
 /etc/init.d/sslh restart
 
-apt -y install lsb-release gnupg2 ca-certificates
-
 # setting vnstat
 apt -y install vnstat
 /etc/init.d/vnstat restart
@@ -319,7 +314,7 @@ mkdir -p /etc/stunnel5
 chmod 644 /etc/stunnel5
 
 openssl genrsa -out cert.pem 2048
-openssl req -new -x509 -cert key.pem -out cert.pem -days 1095 \
+openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
 -subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
 cat cert.pem key.pem >> /etc/stunnel5/stunnel5.pem
 # Download Config Stunnel5
