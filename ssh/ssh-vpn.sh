@@ -268,7 +268,7 @@ RUN=yes
 # systemd users: don't forget to modify /lib/systemd/system/sslh.service
 DAEMON=/usr/sbin/sslh
 
-DAEMON_OPTS="--user sslh --listen 0.0.0.0:8443 --ssl 127.0.0.1:500 --ssh 127.0.0.1:300 --openvpn 127.0.0.1:1194 --http 127.0.0.1:8880 --pidfile /var/run/sslh/sslh.pid"
+DAEMON_OPTS="--user sslh --listen 0.0.0.0:443 --ssl 127.0.0.1:500 --ssh 127.0.0.1:300 --openvpn 127.0.0.1:1194 --http 127.0.0.1:80 --pidfile /var/run/sslh/sslh.pid"
 
 END
 
@@ -332,7 +332,7 @@ connect = 127.0.0.1:300
 
 [openssh]
 accept = 500
-connect = 127.0.0.1:8443
+connect = 127.0.0.1:443
 
 [openvpn]
 accept = 990
@@ -481,7 +481,7 @@ wget -O ceklim "https://${wisnuvpn}/ceklim.sh"
 wget -O tendang "https://${wisnuvpn}/tendang.sh"
 wget -O clearlog "https://${wisnuvpn}/clearlog.sh"
 wget -O changeport "https://${wisnuvpn}/changeport.sh"
-wget -O webmin "https://${wisnuvpn}/webmin.sh"
+wget -O wbmn "https://${wisnuvpn}/webmin.sh"
 wget -O xp "https://${wisnuvpn}/xp.sh"
 wget -O swapkvm "https://${wisnuvpn}/swapkvm.sh"
 
@@ -665,7 +665,7 @@ chmod +x portsstp
 chmod +x portsquid
 chmod +x portvlm
 
-chmod +x webmin
+chmod +x wbmn
 chmod +x xp
 chmod +x swapkvm
 chmod +x addvmess
