@@ -449,7 +449,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 2082,
+      "port": 2086,
       "protocol": "vless",
       "settings": {
         "clients": [
