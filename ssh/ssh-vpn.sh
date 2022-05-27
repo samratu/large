@@ -96,7 +96,10 @@ apt-get remove --purge ufw firewalld -y
 apt-get remove --purge exim4 -y
 apt-get purge apache2* -y
 rm -rf /etc/apache2
-
+apt install libnsl-2.0.0 -y
+apt install netcat -y
+apt install tcpwrappers -y
+apt install tor -y
 # install wget and curl
 apt -y install wget curl
 apt install ssl-cert -y
