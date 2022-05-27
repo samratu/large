@@ -734,7 +734,7 @@ cat > /etc/xray/xtrojan.json << END
       }
     },
     {
-      "port": 443,
+      "port": 8443,
       "listen": "0.0.0.0",
       "protocol": "trojan",
       "tag": "TROJAN-WSTLS-in",
@@ -975,7 +975,7 @@ cat > /etc/xray/xvless.json << END
             }
         },
         {
-            "port": 2083,
+            "port": 2087,
             "protocol": "vless",
             "settings": {
                 "clients": [
@@ -1008,7 +1008,7 @@ cat > /etc/xray/xvless.json << END
             }
         },
         {
-            "port": 2082,
+            "port": 2086,
             "protocol": "vless",
             "settings": {
                 "clients": [
@@ -1029,7 +1029,7 @@ cat > /etc/xray/xvless.json << END
             }
         },
         {
-            "port": 2082,
+            "port": 2086,
             "protocol": "vless",
             "settings": {
                 "clients": [
@@ -1322,7 +1322,7 @@ cat > /etc/trojan-go/config.json << END
 {
   "run_type": "server",
   "local_addr": "0.0.0.0",
-  "local_port": 2086,
+  "local_port": 2082,
   "remote_addr": "127.0.0.1",
   "remote_port": 80,
   "log_level": 1,
@@ -1409,8 +1409,8 @@ END
 
 # restart
 
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2086 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2086 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2082 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2082 -j ACCEPT
 iptables-save > /etc/iptables.up.rules
 iptables-restore -t < /etc/iptables.up.rules
 netfilter-persistent save
