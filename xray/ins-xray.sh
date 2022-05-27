@@ -449,7 +449,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 2082,
+      "port": 2086,
       "protocol": "vless",
       "settings": {
         "clients": [
@@ -1322,7 +1322,7 @@ cat > /etc/trojan-go/config.json << END
 {
   "run_type": "server",
   "local_addr": "0.0.0.0",
-  "local_port": 2086,
+  "local_port": 2082,
   "remote_addr": "127.0.0.1",
   "remote_port": 80,
   "log_level": 1,
