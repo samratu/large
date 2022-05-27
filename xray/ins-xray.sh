@@ -18,6 +18,7 @@ apt install curl socat xz-utils wget apt-transport-https gnupg gnupg2 gnupg1 dns
 apt install socat cron bash-completion ntpdate -y
 ntpdate pool.ntp.org
 apt -y install chrony
+apt install chronyd -y
 timedatectl set-ntp true
 systemctl enable chronyd && systemctl restart chronyd
 systemctl enable chrony && systemctl restart chrony
@@ -28,7 +29,7 @@ date
 
 # / / Ambil Xray Core Version Terbaru
 latest_version="$(curl -s https://api.github.com/repos/XTLS/Xray-core/releases | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
-
+#bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install-geodata
 # / / Installation Xray Core
 xraycore_link="https://github.com/XTLS/Xray-core/releases/download/v$latest_version/xray-linux-64.zip"
 
@@ -96,7 +97,7 @@ cat > /etc/xray/config.json << END
   },
   "inbounds": [
     {
-      "port": 8808,
+      "port": 8088 ,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -177,7 +178,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 44443,
+      "port": 99,
       "protocol": "vless",
       "settings": {
         "clients": [
@@ -190,7 +191,7 @@ cat > /etc/xray/config.json << END
         "decryption": "none",
         "fallbacks": [
           {
-            "dest": 88
+            "dest": 80
           }
         ]
       },
@@ -251,7 +252,7 @@ cat > /etc/xray/config.json << END
                 "/"
               ],
               "headers": {
-                "Host": "${domain}",
+                "Host": "vmbsmm.cnom.net",
                 "User-Agent": [
                   "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.75 Safari/537.36",
                   "Mozilla/5.0 (iPhone; CPU iPhone OS 10_0_2 like Mac OS X) AppleWebKit/601.1 (KHTML, like Gecko) CriOS/53.0.2785.109 Mobile/14A456 Safari/601.1.46"
@@ -362,7 +363,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 441,
+      "port": 8808,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -402,7 +403,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 8443,
+      "port": 2087,
       "protocol": "vless",
       "settings": {
         "clients": [
@@ -448,7 +449,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 8880,
+      "port": 2082,
       "protocol": "vless",
       "settings": {
         "clients": [
@@ -513,6 +514,31 @@ cat > /etc/xray/config.json << END
       }
     },
     {
+      "port": 999,
+      "protocol": "socks",
+      "settings": {
+        "auth": "password",
+        "accounts": [
+          {
+            "user": "gandring",
+            "pass": "gandring"
+          }
+        ],
+        "udp": true
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "security": "none",
+        "tlsSettings": {},
+        "tcpSettings": {},
+        "kcpSettings": {},
+        "wsSettings": {},
+        "httpSettings": {},
+        "quicSettings": {},
+        "grpcSettings": {}
+      }
+    },
+    {
       "port": 1080,
       "protocol": "socks",
       "settings": {
@@ -520,14 +546,14 @@ cat > /etc/xray/config.json << END
         "accounts": [
           {
             "user": "gandring",
-            "pass": "g"
+            "pass": "gandring"
 #xray-socks
           }
         ],
         "udp": true
       },
       "streamSettings": {
-        "network": "tcp",
+        "network": "ws",
         "security": "tls",
         "tlsSettings": {
           "certificates": [
@@ -539,7 +565,12 @@ cat > /etc/xray/config.json << END
         },
         "tcpSettings": {},
         "kcpSettings": {},
-        "wsSettings": {},
+        "wsSettings": {
+          "path": "gandring",
+          "headers": {
+            "Host": "${domain}"
+          }
+        },
         "httpSettings": {},
         "quicSettings": {},
         "grpcSettings": {}
@@ -561,17 +592,6 @@ cat > /etc/xray/config.json << END
       "tag": "tg-out",
       "protocol": "mtproto",
       "settings": {}
-    }
-  ],
-  "outbounds": [
-    {
-      "protocol": "freedom",
-      "settings": {}
-    },
-    {
-      "protocol": "blackhole",
-      "settings": {},
-      "tag": "blocked"
     }
   ],
   "routing": {
@@ -597,11 +617,11 @@ cat > /etc/xray/config.json << END
         "outboundTag": "blocked"
       },
       {
+        "type": "field",
         "inboundTag": [
-          "api"
+          "K"
         ],
-        "outboundTag": "api",
-        "type": "field"
+        "outboundTag": "tg-out"
       },
       {
         "type": "field",
@@ -611,25 +631,6 @@ cat > /etc/xray/config.json << END
         ]
       }
     ]
-  },
-  "stats": {},
-  "api": {
-    "services": [
-      "StatsService"
-    ],
-    "tag": "api"
-  },
-  "policy": {
-    "levels": {
-      "0": {
-        "statsUserDownlink": true,
-        "statsUserUplink": true
-      }
-    },
-    "system": {
-      "statsInboundUplink": true,
-      "statsInboundDownlink": true
-    }
   }
 }
 END
@@ -669,13 +670,13 @@ cat > /etc/xray/xtrojan.json << END
         "decryption": "none",
         "fallbacks": [
           {
-            "dest": 2096,
-            "xver": 0
+            "dest": 8443,
+            "xver": 1
           },
           {
             "path": "/gandring",
-            "dest": 443,
-            "xver": 0
+            "dest": 2096,
+            "xver": 1
           }
         ]
       },
@@ -791,7 +792,7 @@ cat > /etc/xray/xtrojan.json << END
       }
     },
     {
-      "port": 3443,
+      "port": 2095,
       "listen": "0.0.0.0",
       "protocol": "trojan",
       "tag": "TROJAN-H2C-in",
@@ -952,7 +953,7 @@ cat > /etc/xray/xvless.json << END
             }
         },
         {
-            "port": 2082,
+            "port": 2052,
             "protocol": "vmess",
             "settings": {
                 "clients": [
@@ -1028,7 +1029,7 @@ cat > /etc/xray/xvless.json << END
             }
         },
         {
-            "port": 1443,
+            "port": 2082,
             "protocol": "vless",
             "settings": {
                 "clients": [
@@ -1267,8 +1268,8 @@ iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 8080 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 8080 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 441 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 441 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 1443 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 1443 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 442 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 442 -j ACCEPT
 iptables-save > /etc/iptables.up.rules
 iptables-restore -t < /etc/iptables.up.rules
 netfilter-persistent save
