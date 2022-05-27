@@ -403,7 +403,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 2087,
+      "port": 8443,
       "protocol": "vless",
       "settings": {
         "clients": [
@@ -449,7 +449,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 2086,
+      "port": 8880,
       "protocol": "vless",
       "settings": {
         "clients": [
@@ -975,7 +975,7 @@ cat > /etc/xray/xvless.json << END
             }
         },
         {
-            "port": 2083,
+            "port": 2087,
             "protocol": "vless",
             "settings": {
                 "clients": [
@@ -1008,7 +1008,7 @@ cat > /etc/xray/xvless.json << END
             }
         },
         {
-            "port": 2082,
+            "port": 2086,
             "protocol": "vless",
             "settings": {
                 "clients": [
@@ -1029,7 +1029,7 @@ cat > /etc/xray/xvless.json << END
             }
         },
         {
-            "port": 2082,
+            "port": 2086,
             "protocol": "vless",
             "settings": {
                 "clients": [
@@ -1409,8 +1409,8 @@ END
 
 # restart
 
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2086 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2086 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2082 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2082 -j ACCEPT
 iptables-save > /etc/iptables.up.rules
 iptables-restore -t < /etc/iptables.up.rules
 netfilter-persistent save
