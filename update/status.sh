@@ -83,6 +83,7 @@ status48=$(systemctl status xray             | grep -i "active (running)")
 status49=$(systemctl status xray             | grep -i "active (running)")
 status50=$(systemctl status xray             | grep -i "active (running)")
 status51=$(systemctl status xray             | grep -i "active (running)")
+status52=$(systemctl status xray             | grep -i "active (running)")
 #======================================
 if [[ $status01 == "" ]]; then
       sstatus01=$ERROR
@@ -509,6 +510,14 @@ else
       sstatus51=$AKTIF
       mantap+=("hore53")
 fi
+if [[ $status52 == "" ]]; then
+      sstatus52=$ERROR
+      ingfo+=("XRAY SOCKS5 TCP")
+      dahlah+=("err54")
+else
+      sstatus52=$AKTIF
+      mantap+=("hore54")
+fi
 jumlah1="${#mantap[@]}"
 jumlah2="${#dahlah[@]}"
 
@@ -700,12 +709,13 @@ echo -e "$bl🔰 $off $bl TROJAN WS TLS               $off : $sstatus45🔰"
 echo -e "$bl🔰 $off $bl TROJAN WS NON TLS           $off : $sstatus46🔰"
 echo -e "$bl🔰 $off $bl XRAY SHADOWSOCKS            $off : $sstatus47🔰"
 echo -e "$bl🔰 $off $bl XRAY MT PROTO               $off : $sstatus48🔰"
-echo -e "$bl🔰 $off $bl SOCKS5 TCP                  $off : $sstatus49🔰"
+echo -e "$bl🔰 $off $bl SOCKS5 WEBSOCKET            $off : $sstatus49🔰"
+echo -e "$bl🔰 $off $bl SOCKS5 TCP                  $off : $sstatus52🔰"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\E[43;1;46m             🔰 SOLO THE SPIRIT OF JAVA 🔰              \E[0m"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "  - JUMLAH LAYANAN RUNNING PERFECT [ ${green}$jumlah_aktif${off} ]"
-echo -e "  - JUMLAH LAYANAN RUNNING TROUBLE [ ${red}$jumlah_error${off} ]"
+echo -e "  🔰 JUMLAH LAYANAN RUNNING PERFECT [ ${green}$jumlah_aktif${off} ]"
+echo -e "  ⚠️ JUMLAH LAYANAN RUNNING TROUBLE [ ${red}$jumlah_error${off} ]"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\E[43;1;46m             🔰 LUXURY EDITION ZEROSSL 🔰               \E[0m"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
