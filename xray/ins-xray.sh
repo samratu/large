@@ -363,7 +363,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 8088,
+      "port": 2087,
       "protocol": "vmess",
       "settings": {
         "clients": [
