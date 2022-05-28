@@ -64,7 +64,8 @@ alias acme.sh=~/.acme.sh/acme.sh
 chown -R nobody:nogroup /etc/xray
 chmod 644 /etc/xray/xray.crt
 chmod 644 /etc/xray/xray.key
-
+cp -a /etc/xray/xray.crt /ssl/xray.crt
+cp -a /etc/xray/xray.key /ssl/xray.key
 sudo lsof -t -i tcp:80 -s tcp:listen | sudo xargs kill
 #cd /root/
 #wget https://raw.githubusercontent.com/acmesh-official/acme.sh/master/acme.sh
