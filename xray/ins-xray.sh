@@ -974,7 +974,7 @@ cat > /etc/xray/xvless.json << END
                 "decryption": "none"
             },
             "streamSettings": {
-                "network": "gun",
+                "network": "grpc",
                 "security": "tls",
                 "tlsSettings": {
                     "serverName": "${domain}",
@@ -1008,7 +1008,7 @@ cat > /etc/xray/xvless.json << END
                 "decryption": "none"
             },
             "streamSettings": {
-                "network": "gun",
+                "network": "grpc",
                 "serverName": "${domain}",
                 "security": "none",
                 "grpcSettings": {
@@ -1062,7 +1062,7 @@ cat > /etc/xray/xvless.json << END
                 "decryption": "none"
             },
             "streamSettings": {
-                "network": "gun",
+                "network": "grpc",
                 "serverName": "${domain}",
                 "security": "none",
                 "grpcSettings": {
