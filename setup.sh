@@ -19,25 +19,25 @@ CYAN='\033[0;36m'
 LIGHT='\033[0;37m'
 # ==========================================
 # Link Hosting Kalian Untuk Ssh Vpn
-wisnuvpn="raw.githubusercontent.com/samratu/large/sae/ssh"
+wisnuvpn="raw.githubusercontent.com/samratu/large/file/ssh"
 # Link Hosting Kalian Untuk Sstp
-wisnuvpnn="raw.githubusercontent.com/samratu/large/sae/sstp"
+wisnuvpnn="raw.githubusercontent.com/samratu/large/file/sstp"
 # Link Hosting Kalian Untuk Ssr
-wisnuvpnnn="raw.githubusercontent.com/samratu/large/sae/ssr"
+wisnuvpnnn="raw.githubusercontent.com/samratu/large/file/ssr"
 # Link Hosting Kalian Untuk Shadowsocks
-wisnuvpnnnn="raw.githubusercontent.com/samratu/large/sae/shadowsocks"
+wisnuvpnnnn="raw.githubusercontent.com/samratu/large/file/shadowsocks"
 # Link Hosting Kalian Untuk Wireguard
-wisnuvpnnnnn="raw.githubusercontent.com/samratu/large/sae/wireguard"
+wisnuvpnnnnn="raw.githubusercontent.com/samratu/large/file/wireguard"
 # Link Hosting Kalian Untuk Xray
-wisnuvpnnnnnn="raw.githubusercontent.com/samratu/large/sae/xray"
+wisnuvpnnnnnn="raw.githubusercontent.com/samratu/large/file/xray"
 # Link Hosting Kalian Untuk Ipsec
-wisnuvpnnnnnnn="raw.githubusercontent.com/samratu/large/sae/ipsec"
+wisnuvpnnnnnnn="raw.githubusercontent.com/samratu/large/file/ipsec"
 # Link Hosting Kalian Untuk Backup
-wisnuvpnnnnnnnn="raw.githubusercontent.com/samratu/large/sae/backup"
+wisnuvpnnnnnnnn="raw.githubusercontent.com/samratu/large/file/backup"
 # Link Hosting Kalian Untuk Websocket
-wisnuvpnnnnnnnnn="raw.githubusercontent.com/samratu/large/sae/websocket"
+wisnuvpnnnnnnnnn="raw.githubusercontent.com/samratu/large/file/websocket"
 # Link Hosting Kalian Untuk Ohp
-wisnuvpnnnnnnnnnn="raw.githubusercontent.com/samratu/large/sae/ohp"
+wisnuvpnnnnnnnnnn="raw.githubusercontent.com/samratu/large/file/ohp"
 
 # Getting
 MYIP=$(wget -qO- ipinfo.io/ip);
@@ -107,19 +107,21 @@ echo " 🔰 >>> Service & Port" |tee -a log-install.txt
 echo " 🔰 PORT OPENSSH : 22" |tee -a log-install.txt
 echo " 🔰 PORT OPENVPN TCP : 1194" |tee -a log-install.txt
 echo " 🔰 PORT OPENVPN UDP : 1195" |tee -a log-install.txt
-echo " 🔰 PORT OPENVPN SSL : 990" |tee -a log-install.txt
-echo " 🔰 PORT STUNNEL5 : 500, 600, 700" |tee -a log-install.txt
+echo " 🔰 PORT OPENVPN SSL : 443" |tee -a log-install.txt
+echo " 🔰 PORT STUNNEL5 : 700, 800, 500, 600" |tee -a log-install.txt
 echo " 🔰 PORT DROPBEAR : 200, 300" |tee -a log-install.txt
 echo " 🔰 PORT SQUID : 3128, 3228" |tee -a log-install.txt
 echo " 🔰 Badvpn : 7100, 7200, 7300-7900" |tee -a log-install.txt
-echo " 🔰 Nginx : 80" |tee -a log-install.txt
-echo " 🔰 Wireguard : 591" |tee -a log-install.txt
+echo " 🔰 Nginx : 88" |tee -a log-install.txt
+echo " 🔰 WIREGUARD : 591" |tee -a log-install.txt
 echo " 🔰 L2TP/IPSEC VPN : 1701" |tee -a log-install.txt
 echo " 🔰 PPTP VPN : 1732" |tee -a log-install.txt
 echo " 🔰 SSTP VPN : 444" |tee -a log-install.txt
-echo " 🔰 Shadowsocks-R : 1444-1943" |tee -a log-install.txt
+echo " 🔰 Shadowsocks-R : 1444-1543" |tee -a log-install.txt
 echo " 🔰 SS-OBFS TLS : 2444-2943" |tee -a log-install.txt
 echo " 🔰 SS-OBFS HTTP : 2944-3442" |tee -a log-install.txt
+echo " 🔰 XRAY SHADOWSOCKS : 333" |tee -a log-install.txt
+echo " 🔰 XRAY MTPROTO : 111" |tee -a log-install.txt
 echo " 🔰 WEBSOCKET TLS : 9443" |tee -a log-install.txt
 echo " 🔰 WEBSOCKET NON TLS : 8280" |tee -a log-install.txt
 echo " 🔰 PORT OVPNWS : 8080" |tee -a log-install.txt
@@ -128,29 +130,30 @@ echo " 🔰 OHP Dropbear : 8282" |tee -a log-install.txt
 echo " 🔰 OHP OpenVPN : 8383" |tee -a log-install.txt
 echo " 🔰 VMESS WS TLS : 2053" |tee -a log-install.txt
 echo " 🔰 VMESS WS NON TLS : 2052" |tee -a log-install.txt
-echo " 🔰 VMESS GRPC TLS: 2083" |tee -a log-install.txt
+echo " 🔰 VMESS GRPC TLS: 2053" |tee -a log-install.txt
 echo " 🔰 VMESS GRPC NON TLS: 2052" |tee -a log-install.txt
-echo " 🔰 VMESS H2C TLS : 8088" |tee -a log-install.txt
-echo " 🔰 VMESS H2C NON TLS : 888" |tee -a log-install.txt
-echo " 🔰 VMESS HTTP TLS : 8808" |tee -a log-install.txt
+echo " 🔰 VMESS H2C TLS : 441" |tee -a log-install.txt
+#echo " 🔰 VMESS H2C NON TLS : 3444" |tee -a log-install.txt
+echo " 🔰 VMESS HTTP TLS : 8088" |tee -a log-install.txt
 echo " 🔰 VMESS HTTP NON TLS : 808" |tee -a log-install.txt
-echo " 🔰 VLESS XTLS : 44443" |tee -a log-install.txt
-echo " 🔰 VLESS WS TLS : 8443" |tee -a log-install.txt
-echo " 🔰 VLESS WS NON TLS : 8880" |tee -a log-install.txt
-echo " 🔰 VLESS GRPC TLS : 2087" |tee -a log-install.txt
-echo " 🔰 VLESS GRPC NON TLS : 2086" |tee -a log-install.txt
-echo " 🔰 VLESS H2C TLS : 2086" |tee -a log-install.txt
-echo " 🔰 VLESS H2C NON TLS: 888" |tee -a log-install.txt
-echo " 🔰 VLESS HTTP TLS : 8088" |tee -a log-install.txt
-echo " 🔰 VLESS HTTP NON TLS : 888" |tee -a log-install.txt
-echo " 🔰 TROJAN GO : 2082" |tee -a log-install.txt
-echo " 🔰 TROJAN GRPC : 2096" |tee -a log-install.txt
+echo " 🔰 VLESS XTLS : 99" |tee -a log-install.txt
+echo " 🔰 VLESS WS TLS : 2087" |tee -a log-install.txt
+echo " 🔰 VLESS WS NON TLS : 2086" |tee -a log-install.txt
+echo " 🔰 VLESS GRPC TLS : 2083" |tee -a log-install.txt
+echo " 🔰 VLESS GRPC NON TLS: 2082" |tee -a log-install.txt
+echo " 🔰 VLESS H2C TLS : 8808" |tee -a log-install.txt
+#echo " 🔰 VLESS H2C NON TLS : 888" |tee -a log-install.txt
+#echo " 🔰 VLESS HTTP TLS : 8888" |tee -a log-install.txt
+#echo " 🔰 VLESS HTTP NON TLS : 888" |tee -a log-install.txt
+echo " 🔰 TROJAN GO : 8880" |tee -a log-install.txt
+echo " 🔰 TROJAN GRPC : 8443" |tee -a log-install.txt
 echo " 🔰 TROJAN HTTP : 880" |tee -a log-install.txt
-echo " 🔰 TROJAN H2C : 2095" |tee -a log-install.txt
+echo " 🔰 TROJAN H2C : 442" |tee -a log-install.txt
 echo " 🔰 TROJAN XTLS : 4443" |tee -a log-install.txt
-echo " 🔰 TROJAN WS TLS : 443" |tee -a log-install.txt
+echo " 🔰 TROJAN WS TLS : 2096" |tee -a log-install.txt
 echo " 🔰 TROJAN WS NON TLS : 2095" |tee -a log-install.txt
-echo " 🔰 SOCKS5 WEBSOCKET : 777" |tee -a log-install.txt
+echo " 🔰 SOCKS5 WEBSOCKET : 108" |tee -a log-install.txt
+echo " 🔰 SOCKS5 TCP : 999 |tee -a log-install.txt
 echo " 🔰 XRAY SHADOWSOCKS : 333" |tee -a log-install.txt
 echo " 🔰 XRAY MT PROTO : 111" |tee -a log-install.txt
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
@@ -161,7 +164,7 @@ echo " 🔰 Dflate                  : [ON]"                         |tee -a log-
 echo " 🔰 IPtables                : [ON]"                         |tee -a log-install.txt
 echo " 🔰 Auto-Reboot             : [ON]"                         |tee -a log-install.txt
 echo " 🔰 IPv6                    : [OFF]"                        |tee -a log-install.txt
-echo " 🔰 Autoreboot On 04.04 GMT +7"                             |tee -a log-install.txt
+echo " 🔰 Autoreboot On 04.00 GMT +7"                             |tee -a log-install.txt
 echo " 🔰 Autobackup Data"                                        |tee -a log-install.txt
 echo " 🔰 Restore Data"                                           |tee -a log-install.txt
 echo " 🔰 Auto Delete Expired Account"                            |tee -a log-install.txt
