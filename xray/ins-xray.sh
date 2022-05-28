@@ -363,7 +363,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 2087,
+      "port": 441,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -792,7 +792,7 @@ cat > /etc/xray/xtrojan.json << END
       }
     },
     {
-      "port": 2096,
+      "port": 442,
       "listen": "0.0.0.0",
       "protocol": "trojan",
       "tag": "TROJAN-H2C-in",
