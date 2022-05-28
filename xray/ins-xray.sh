@@ -59,12 +59,13 @@ alias acme.sh=~/.acme.sh/acme.sh
 /root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
 /root/.acme.sh/acme.sh --issue -d "${domain}" --standalone --keylength ec-256
 /root/.acme.sh/acme.sh --install-cert -d "${domain}" --ecc \
---fullchain-file /etc/xray/xray.cer \
+--fullchain-file /etc/xray/xray.crt \
 --key-file /etc/xray/xray.key
 chown -R nobody:nogroup /etc/xray
-chmod 644 /etc/xray/xray.cer
+chmod 644 /etc/xray/xray.crt
 chmod 644 /etc/xray/xray.key
-
+cp -a /etc/xray/xray.crt /ssl/xray.crt
+cp -a /etc/xray/xray.key /ssl/xray.key
 sudo lsof -t -i tcp:80 -s tcp:listen | sudo xargs kill
 #cd /root/
 #wget https://raw.githubusercontent.com/acmesh-official/acme.sh/master/acme.sh
@@ -81,7 +82,7 @@ sudo lsof -t -i tcp:80 -s tcp:listen | sudo xargs kill
 uuid=$(cat /proc/sys/kernel/random/uuid)
 domain=$(cat /root/domain)
 # // Certificate File
-path_crt="/etc/xray/xray.cer"
+path_crt="/etc/xray/xray.crt"
 path_key="/etc/xray/xray.key"
 #domain_ecc=$(cat /root/.acme.sh)
 #domain.key=$(cat /root/.acme.sh/$domain_ecc)
@@ -89,7 +90,7 @@ path_key="/etc/xray/xray.key"
 #path_key="/root/.acme.sh/$domain_ecc/$domain.key"
 # Buat Config Xray
 cat > /etc/xray/config.json << END
-{
+{{
   "log": {
     "access": "/var/log/xray/access.log",
     "error": "/var/log/xray/error.log",
@@ -114,13 +115,14 @@ cat > /etc/xray/config.json << END
         "tlsSettings": {
           "certificates": [
             {
-              "certificateFile": "/etc/xray/xray.cer",
+              "certificateFile": "/etc/xray/xray.crt",
               "keyFile": "/etc/xray/xray.key"
             }
           ]
         },
         "httpSettings": {},
         "tcpSettings": {
+        "acceptProxyProtocol": true,
           "header": {
             "type": "http",
             "request": {
@@ -205,9 +207,10 @@ cat > /etc/xray/config.json << END
         "quicSettings": {},
         "grpcSettings": {},
         "xtlsSettings": {
+        "acceptProxyProtocol": true,
           "certificates": [
             {
-              "certificateFile": "/etc/xray/xray.cer",
+              "certificateFile": "/etc/xray/xray.crt",
               "keyFile": "/etc/xray/xray.key"
             }
           ],
@@ -243,6 +246,7 @@ cat > /etc/xray/config.json << END
         "tlsSettings": {},
         "httpSettings": {},
         "tcpSettings": {
+        "acceptProxyProtocol": true,
           "header": {
             "type": "http",
             "request": {
@@ -252,7 +256,7 @@ cat > /etc/xray/config.json << END
                 "/"
               ],
               "headers": {
-                "Host": "vmbsmm.cnom.net",
+                "Host": "${domain}",
                 "User-Agent": [
                   "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.75 Safari/537.36",
                   "Mozilla/5.0 (iPhone; CPU iPhone OS 10_0_2 like Mac OS X) AppleWebKit/601.1 (KHTML, like Gecko) CriOS/53.0.2785.109 Mobile/14A456 Safari/601.1.46"
@@ -309,7 +313,7 @@ cat > /etc/xray/config.json << END
         "tlsSettings": {
           "certificates": [
             {
-              "certificateFile": "/etc/xray/xray.cer",
+              "certificateFile": "/etc/xray/xray.crt",
               "keyFile": "/etc/xray/xray.key"
             }
           ]
@@ -318,6 +322,7 @@ cat > /etc/xray/config.json << END
         "kcpSettings": {},
         "httpSettings": {},
         "wsSettings": {
+        "acceptProxyProtocol": true,
           "path": "gandring",
           "headers": {
             "Host": "${domain}"
@@ -347,9 +352,10 @@ cat > /etc/xray/config.json << END
         "kcpSettings": {},
         "httpSettings": {},
         "wsSettings": {
+        "acceptProxyProtocol": true,
           "path": "gandring",
           "headers": {
-            "Host": "${domain}"
+            "Host": "${uuid}"
           }
         },
         "quicSettings": {}
@@ -380,13 +386,14 @@ cat > /etc/xray/config.json << END
         "tlsSettings": {
           "certificates": [
             {
-              "certificateFile": "/etc/xray/xray.cer",
+              "certificateFile": "/etc/xray/xray.crt",
               "keyFile": "/etc/xray/xray.key"
             }
           ]
         },
         "tcpSettings": {},
         "httpSettings": {
+        "acceptProxyProtocol": true,
           "path": "gandring"
         },
         "kcpSettings": {},
@@ -420,7 +427,7 @@ cat > /etc/xray/config.json << END
         "tlsSettings": {
           "certificates": [
             {
-              "certificateFile": "/etc/xray/xray.cer",
+              "certificateFile": "/etc/xray/xray.crt",
               "keyFile": "/etc/xray/xray.key"
             }
           ],
@@ -432,6 +439,7 @@ cat > /etc/xray/config.json << END
         "kcpSettings": {},
         "httpSettings": {},
         "wsSettings": {
+        "acceptProxyProtocol": true,
           "path": "gandring",
           "headers": {
             "Host": "${domain}"
@@ -468,6 +476,7 @@ cat > /etc/xray/config.json << END
         "kcpSettings": {},
         "httpSettings": {},
         "wsSettings": {
+        "acceptProxyProtocol": true,
           "path": "gandring",
           "headers": {
             "Host": "${domain}"
@@ -527,6 +536,7 @@ cat > /etc/xray/config.json << END
         "udp": true
       },
       "streamSettings": {
+      "acceptProxyProtocol": true,
         "network": "tcp",
         "security": "none",
         "tlsSettings": {},
@@ -558,7 +568,7 @@ cat > /etc/xray/config.json << END
         "tlsSettings": {
           "certificates": [
             {
-              "certificateFile": "/etc/xray/xray.cer",
+              "certificateFile": "/etc/xray/xray.crt",
               "keyFile": "/etc/xray/xray.key"
             }
           ]
@@ -566,6 +576,7 @@ cat > /etc/xray/config.json << END
         "tcpSettings": {},
         "kcpSettings": {},
         "wsSettings": {
+        "acceptProxyProtocol": true,
           "path": "gandring",
           "headers": {
             "Host": "${domain}"
@@ -578,7 +589,7 @@ cat > /etc/xray/config.json << END
       "domain": "${domain}"
     }
   ],
-  "outbounds": [
+    "outbounds": [
     {
       "protocol": "freedom",
       "settings": {}
@@ -587,11 +598,6 @@ cat > /etc/xray/config.json << END
       "protocol": "blackhole",
       "settings": {},
       "tag": "blocked"
-    },
-    {
-      "tag": "tg-out",
-      "protocol": "mtproto",
-      "settings": {}
     }
   ],
   "routing": {
@@ -617,11 +623,11 @@ cat > /etc/xray/config.json << END
         "outboundTag": "blocked"
       },
       {
-        "type": "field",
         "inboundTag": [
-          "K"
+          "api"
         ],
-        "outboundTag": "tg-out"
+        "outboundTag": "api",
+        "type": "field"
       },
       {
         "type": "field",
@@ -631,6 +637,25 @@ cat > /etc/xray/config.json << END
         ]
       }
     ]
+  },
+  "stats": {},
+  "api": {
+    "services": [
+      "StatsService"
+    ],
+    "tag": "api"
+  },
+  "policy": {
+    "levels": {
+      "0": {
+        "statsUserDownlink": true,
+        "statsUserUplink": true
+      }
+    },
+    "system": {
+      "statsInboundUplink": true,
+      "statsInboundDownlink": true
+    }
   }
 }
 END
@@ -638,7 +663,7 @@ END
 uuid=$(cat /proc/sys/kernel/random/uuid)
 domain=$(cat /root/domain)
 # // Certificate File
-path_crt="/etc/xray/xray.cer"
+path_crt="/etc/xray/xray.crt"
 path_key="/etc/xray/xray.key"
 #domain_ecc=$(cat /root/.acme.sh)
 #domain.key=$(cat /root/.acme.sh/$domain_ecc)
@@ -684,13 +709,14 @@ cat > /etc/xray/xtrojan.json << END
         "network": "tcp",
         "security": "xtls",
         "xtlsSettings": {
+        "acceptProxyProtocol": true,
           "alpn": [
             "h2",
             "http/1.1"
           ],
           "certificates": [
             {
-              "certificateFile": "/etc/xray/xray.cer",
+              "certificateFile": "/etc/xray/xray.crt",
               "keyFile": "/etc/xray/xray.key"
             }
           ]
@@ -723,12 +749,13 @@ cat > /etc/xray/xtrojan.json << END
           ],
           "certificates": [
             {
-              "certificateFile": "/etc/xray/xray.cer",
+              "certificateFile": "/etc/xray/xray.crt",
               "keyFile": "/etc/xray/xray.key"
             }
           ]
         },
         "grpcSettings": {
+        "acceptProxyProtocol": true,
           "serviceName": "gandring"
         }
       }
@@ -752,6 +779,7 @@ cat > /etc/xray/xtrojan.json << END
         "network": "ws",
         "security": "tls",
         "wsSettings": {
+        "acceptProxyProtocol": true,
           "path": "/gandring"
          },
          "tlsSettings": {
@@ -761,7 +789,7 @@ cat > /etc/xray/xtrojan.json << END
           ],
           "certificates": [
             {
-              "certificateFile": "/etc/xray/xray.cer",
+              "certificateFile": "/etc/xray/xray.crt",
               "keyFile": "/etc/xray/xray.key"
             }
           ]
@@ -787,6 +815,7 @@ cat > /etc/xray/xtrojan.json << END
         "network": "ws",
         "security": "none",
         "wsSettings": {
+        "acceptProxyProtocol": true,
           "path": "/gandring"
         }
       }
@@ -810,6 +839,7 @@ cat > /etc/xray/xtrojan.json << END
         "network": "h2",
         "security": "tls",
         "httpSettings": {
+        "acceptProxyProtocol": true,
           "path": "gandring"
          },
          "tlsSettings": {
@@ -819,7 +849,7 @@ cat > /etc/xray/xtrojan.json << END
           ],
           "certificates": [
             {
-              "certificateFile": "/etc/xray/xray.cer",
+              "certificateFile": "/etc/xray/xray.crt",
               "keyFile": "/etc/xray/xray.key"
             }
           ]
@@ -845,6 +875,7 @@ cat > /etc/xray/xtrojan.json << END
         "network": "tcp",
         "security": "none",
         "tcpSettings": {
+        "acceptProxyProtocol": true,
          "header": {
           "type": "http",
            "response": {
@@ -903,7 +934,7 @@ END
 uuid=$(cat /proc/sys/kernel/random/uuid)
 domain=$(cat /root/domain)
 # // Certificate File
-path_crt="/etc/xray/xray.cer"
+path_crt="/etc/xray/xray.crt"
 path_key="/etc/xray/xray.key"
 #domain_ecc=$(cat /root/.acme.sh)
 #domain.key=$(cat /root/.acme.sh/$domain_ecc)
@@ -932,7 +963,7 @@ cat > /etc/xray/xvless.json << END
                 "decryption": "none"
             },
             "streamSettings": {
-                "network": "gun",
+                "network": "grpc",
                 "security": "tls",
                 "tlsSettings": {
                     "serverName": "${domain}",
@@ -942,12 +973,13 @@ cat > /etc/xray/xvless.json << END
                     ],
                     "certificates": [
                         {
-                            "certificateFile": "/etc/xray/xray.cer",
+                            "certificateFile": "/etc/xray/xray.crt",
                             "keyFile": "/etc/xray/xray.key"
                         }
                     ]
                 },
                 "grpcSettings": {
+                "acceptProxyProtocol": true,
                     "serviceName": "gandring"
                 }
             }
@@ -966,10 +998,11 @@ cat > /etc/xray/xvless.json << END
                 "decryption": "none"
             },
             "streamSettings": {
-                "network": "gun",
+                "network": "grpc",
                 "serverName": "${domain}",
                 "security": "none",
                 "grpcSettings": {
+                "acceptProxyProtocol": true,
                     "serviceName": "gandring"
                 }
             }
@@ -987,7 +1020,7 @@ cat > /etc/xray/xvless.json << END
                 "decryption": "none"
             },
             "streamSettings": {
-                "network": "gun",
+                "network": "grpc",
                 "security": "tls",
                 "tlsSettings": {
                     "serverName": "${domain}",
@@ -997,12 +1030,13 @@ cat > /etc/xray/xvless.json << END
                     ],
                     "certificates": [
                         {
-                            "certificateFile": "/etc/xray/xray.cer",
+                            "certificateFile": "/etc/xray/xray.crt",
                             "keyFile": "/etc/xray/xray.key"
                         }
                     ]
                 },
                 "grpcSettings": {
+                "acceptProxyProtocol": true,
                     "serviceName": "gandring"
                 }
             }
@@ -1020,10 +1054,11 @@ cat > /etc/xray/xvless.json << END
                 "decryption": "none"
             },
             "streamSettings": {
-                "network": "gun",
+                "network": "grpc",
                 "serverName": "${domain}",
                 "security": "none",
                 "grpcSettings": {
+                "acceptProxyProtocol": true,
                     "serviceName": "gandring"
                 }
             }
@@ -1046,12 +1081,13 @@ cat > /etc/xray/xvless.json << END
                 "tlsSettings": {
                     "certificates": [
                         {
-                            "certificateFile": "/etc/xray/xray.cer",
+                            "certificateFile": "/etc/xray/xray.crt",
                             "keyFile": "/etc/xray/xray.key"
                         }
                     ]
                 },
                 "httpSettings": {
+                "acceptProxyProtocol": true,
                     "path": "gandring"
                 }
             }
@@ -1072,6 +1108,7 @@ cat > /etc/xray/xvless.json << END
                 "network": "h2",
                 "security": "none",
                 "httpSettings": {
+                "acceptProxyProtocol": true,
                     "path": "gandring"
                 }
             }
@@ -1311,7 +1348,7 @@ touch /var/log/trojan-go/trojan-go.log
 
 domain=$(cat /root/domain)
 # // Certificate File
-path_cer="/etc/xray/xray.cer"
+path_cer="/etc/xray/xray.crt"
 path_key="/etc/xray/xray.key"
 #domain_ecc=$(cat /root/.acme.sh)
 #domain.key=$(cat /root/.acme.sh/$domain_ecc)
@@ -1335,7 +1372,7 @@ cat > /etc/trojan-go/config.json << END
   "ssl": {
     "verify": false,
     "verify_hostname": false,
-    "cert": "/etc/xray/xray.cer",
+    "cert": "/etc/xray/xray.crt",
     "key": "/etc/xray/xray.key",
     "key_password": "",
     "cipher": "",
