@@ -122,7 +122,6 @@ cat > /etc/xray/config.json << END
         },
         "httpSettings": {},
         "tcpSettings": {
-        "acceptProxyProtocol": true,
           "header": {
             "type": "http",
             "request": {
@@ -207,7 +206,6 @@ cat > /etc/xray/config.json << END
         "quicSettings": {},
         "grpcSettings": {},
         "xtlsSettings": {
-        "acceptProxyProtocol": true,
           "certificates": [
             {
               "certificateFile": "/etc/xray/xray.crt",
@@ -246,7 +244,6 @@ cat > /etc/xray/config.json << END
         "tlsSettings": {},
         "httpSettings": {},
         "tcpSettings": {
-        "acceptProxyProtocol": true,
           "header": {
             "type": "http",
             "request": {
@@ -322,7 +319,6 @@ cat > /etc/xray/config.json << END
         "kcpSettings": {},
         "httpSettings": {},
         "wsSettings": {
-        "acceptProxyProtocol": true,
           "path": "gandring",
           "headers": {
             "Host": "${domain}"
@@ -352,7 +348,6 @@ cat > /etc/xray/config.json << END
         "kcpSettings": {},
         "httpSettings": {},
         "wsSettings": {
-        "acceptProxyProtocol": true,
           "path": "gandring",
           "headers": {
             "Host": "${uuid}"
@@ -439,7 +434,6 @@ cat > /etc/xray/config.json << END
         "kcpSettings": {},
         "httpSettings": {},
         "wsSettings": {
-        "acceptProxyProtocol": true,
           "path": "gandring",
           "headers": {
             "Host": "${domain}"
@@ -476,7 +470,6 @@ cat > /etc/xray/config.json << END
         "kcpSettings": {},
         "httpSettings": {},
         "wsSettings": {
-        "acceptProxyProtocol": true,
           "path": "gandring",
           "headers": {
             "Host": "${domain}"
@@ -536,7 +529,6 @@ cat > /etc/xray/config.json << END
         "udp": true
       },
       "streamSettings": {
-      "acceptProxyProtocol": true,
         "network": "tcp",
         "security": "none",
         "tlsSettings": {},
@@ -576,7 +568,6 @@ cat > /etc/xray/config.json << END
         "tcpSettings": {},
         "kcpSettings": {},
         "wsSettings": {
-        "acceptProxyProtocol": true,
           "path": "gandring",
           "headers": {
             "Host": "${domain}"
@@ -709,7 +700,6 @@ cat > /etc/xray/xtrojan.json << END
         "network": "tcp",
         "security": "xtls",
         "xtlsSettings": {
-        "acceptProxyProtocol": true,
           "alpn": [
             "h2",
             "http/1.1"
@@ -779,7 +769,6 @@ cat > /etc/xray/xtrojan.json << END
         "network": "ws",
         "security": "tls",
         "wsSettings": {
-        "acceptProxyProtocol": true,
           "path": "/gandring"
          },
          "tlsSettings": {
@@ -815,7 +804,6 @@ cat > /etc/xray/xtrojan.json << END
         "network": "ws",
         "security": "none",
         "wsSettings": {
-        "acceptProxyProtocol": true,
           "path": "/gandring"
         }
       }
@@ -875,7 +863,6 @@ cat > /etc/xray/xtrojan.json << END
         "network": "tcp",
         "security": "none",
         "tcpSettings": {
-        "acceptProxyProtocol": true,
          "header": {
           "type": "http",
            "response": {
@@ -999,8 +986,8 @@ cat > /etc/xray/xvless.json << END
             },
             "streamSettings": {
                 "network": "grpc",
-                "serverName": "${domain}",
                 "security": "none",
+                "serverName": "$domain",
                 "grpcSettings": {
                 "acceptProxyProtocol": true,
                     "serviceName": "gandring"
@@ -1055,8 +1042,8 @@ cat > /etc/xray/xvless.json << END
             },
             "streamSettings": {
                 "network": "grpc",
-                "serverName": "${domain}",
                 "security": "none",
+                "serverName": "$domain",
                 "grpcSettings": {
                 "acceptProxyProtocol": true,
                     "serviceName": "gandring"
