@@ -43,22 +43,78 @@ sed -i '/#xray-ss-udp$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'"' /etc/xray/xtrojan.json
 sed -i '/#xray-new-ss$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'"' /etc/xray/xss.json
-cat>/etc/xray/ss-$user.json<<EOF
+cat>/etc/xray/ss-$user-tcp.json<<EOF
       {
       "port": 333,
       "protocol": "shadowsocks",
       "settings": {
-        "method": "chacha20-poly1305",
+        "method": "aes-128-gcm",
         "password": "${user}",
         "network": "tcp,udp"
       }
     },
 EOF
-#vmess_base641=$( base64 -w 0 <<< $shadowsocks_json)
-shadowsocks_base64=$(echo -n "chacha20-poly1305:${user}@${MYIP}:$ss" | base64 -w0)
-#vmess1="vmess://$(base64 -w 0 /etc/xray/ss-$user.json)"
-shadowsocks="ss://$shadowsocks_base64"
+cat>/etc/xray/ss-$user-udp.json<<EOF
+      {
+      "port": 503,
+      "protocol": "shadowsocks",
+      "settings": {
+        "method": "aes-128-gcm",
+        "password": "${user}",
+        "network": "tcp,udp"
+      }
+    },
+EOF
+cat>/etc/xray/ss-$user-tls.json<<EOF
+      {
+      "port": 501,
+      "protocol": "shadowsocks",
+      "settings": {
+        "method": "aes-128-gcm",
+        "password": "${user}",
+        "network": "ws",
+        "security": "tls",
+        "path": "/gandring",
+        "host": "$domain"
+      }
+    },
+EOF
+cat>/etc/xray/ss-$user-nontls.json<<EOF
+      {
+      "port": 502,
+      "protocol": "shadowsocks",
+      "settings": {
+        "method": "aes-128-gcm",
+        "password": "${user}",
+        "network": "ws",
+        "security": "none",
+        "path": "/gandring",
+        "host": "$domain"
+      }
+    },
+EOF
+cat>/etc/xray/ss-$user.json<<EOF
+      {
+      "port": 212,
+      "protocol": "shadowsocks",
+      "settings": {
+        "method": "2022-blake3-aes-128-gcm",
+        "password": "${user}",
+        "network": "tcp,udp"
+      }
+    },
+EOF
 
+tmp1=$(echo -n "aes-128-gcm:${user}@${MYIP}:$sstcp" | base64 -w0)
+tmp2=$(echo -n "aes-128-gcm:${user}@${MYIP}:$sstls" | base64 -w0)
+tmp3=$(echo -n "aes-128-gcm:${user}@${MYIP}:$ssnontls" | base64 -w0)
+tmp4=$(echo -n "aes-128-gcm:${user}@${MYIP}:$ssudp" | base64 -w0)
+tmp5=$(echo -n "2022-blake3-aes-128-gcm:${user}@${MYIP}:$sstls" | base64 -w0)
+shadowsockstcp="ss://$tmp1#$user"
+shadowsockstls="ss://$tmp2#$user"
+shadowsocksnontls="ss://$tmp3#$user"
+shadowsocksudp="ss://$tmp4#$user"
+shadowsocksnew="ss://$tmp5#$user"
 systemctl restart xray.service
 service cron restart
 clear
@@ -78,9 +134,15 @@ echo -e "Password    : ${user}"
 echo -e "Created     : $hariini"
 echo -e "Expired     : $exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Link SS     : ${shadowsocks}"
+echo -e "Link SS tcp : ${shadowsockstcp}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-#echo -e "Link No TLS : ${vmess2}"
+echo -e "Link SS udp : ${shadowsocksudp}"
+echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "Link SS tls : ${shadowsockstls}"
+echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "Link SS nontls : ${shadowsocksnontls}"
+echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "Link SS new : ${shadowsocksnew}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m  🔰LUXURY EDITION BY ZEROSSL🔰   \e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
