@@ -19,6 +19,7 @@ sstls="$(cat ~/log-install.txt | grep -w "SHADOWSOCKS WS TLS" | cut -d: -f2|sed 
 sstcp="$(cat ~/log-install.txt | grep -w "SHADOWSOCKS TCP" | cut -d: -f2|sed 's/ //g')"
 ssnontls="$(cat ~/log-install.txt | grep -w "SHADOWSOCKS WS NON TLS" | cut -d: -f2|sed 's/ //g')"
 ssudp="$(cat ~/log-install.txt | grep -w "SHADOWSOCKS UDP" | cut -d: -f2|sed 's/ //g')"
+ssnew="$(cat ~/log-install.txt | grep -w "SHADOWSOCKS 2022" | cut -d: -f2|sed 's/ //g')"
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 		read -rp "Password : " -e user
 		CLIENT_EXISTS=$(grep -w $user /etc/xray/config.json | wc -l)
@@ -118,7 +119,7 @@ tmp1=$(echo -n "aes-256-gcm:${user}@${MYIP}:$sstcp" | base64 -w0)
 tmp2=$(echo -n "aes-128-gcm:${user}@${MYIP}:$sstls" | base64 -w0)
 tmp3=$(echo -n "aes-128-gcm:${user}@${MYIP}:$ssnontls" | base64 -w0)
 tmp4=$(echo -n "aes-128-gcm:${user}@${MYIP}:$ssudp" | base64 -w0)
-tmp5=$(echo -n "2022-blake3-aes-128-gcm:${user}@${MYIP}:$sstls" | base64 -w0)
+tmp5=$(echo -n "2022-blake3-aes-128-gcm:${user}@${MYIP}:$ssnew" | base64 -w0)
 shadowsockstcp="ss://$tmp1#$user"
 shadowsockstls="ss://$tmp2#$user"
 shadowsocksnontls="ss://$tmp3#$user"
