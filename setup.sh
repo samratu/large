@@ -154,7 +154,11 @@ echo " 🔰 TROJAN WS TLS : 2096" |tee -a log-install.txt
 echo " 🔰 TROJAN WS NON TLS : 2095" |tee -a log-install.txt
 echo " 🔰 SOCKS5 WEBSOCKET : 108" |tee -a log-install.txt
 echo " 🔰 SOCKS5 TCP : 999 |tee -a log-install.txt
-echo " 🔰 XRAY SHADOWSOCKS : 333" |tee -a log-install.txt
+echo " 🔰 SHADOWSOCKS TCP : 333" |tee -a log-install.txt
+echo " 🔰 SHADOWSOCKS UDP : 503" |tee -a log-install.txt
+echo " 🔰 SHADOWSOCKS WS TLS: 501" |tee -a log-install.txt
+echo " 🔰 SHADOWSOCKS WS NON TLS : 502" |tee -a log-install.txt
+echo " 🔰 SHADOWSOCKS 2022 : 212" |tee -a log-install.txt
 echo " 🔰 XRAY MT PROTO : 111" |tee -a log-install.txt
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo " 🔰>> Server Information & Other Features"                  |tee -a log-install.txt
