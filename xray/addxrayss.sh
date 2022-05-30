@@ -34,8 +34,6 @@ uuid=$(cat /proc/sys/kernel/random/uuid)
 read -p "Expired (Days) : " masaaktif
 hariini=`date -d "0 days" +"%Y-%m-%d"`
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
-sed -i '/#xray-ss-tcp$/a\### '"$user $exp"'\
-},{"id": "'""$uuid""'"' /etc/xray/config.json
 sed -i '/#xray-ss-tls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'"' /etc/xray/xtrojan.json
 sed -i '/#xray-ss-nontls$/a\### '"$user $exp"'\
@@ -44,17 +42,7 @@ sed -i '/#xray-ss-udp$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'"' /etc/xray/xtrojan.json
 sed -i '/#xray-new-ss$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'"' /etc/xray/xss.json
-cat>/etc/xray/ss-$user-tcp.json<<EOF
-      {
-      "port": 333,
-      "protocol": "shadowsocks",
-      "settings": {
-        "method": "chacha20-poly1305",
-        "password": "${user}",
-        "network": "tcp,udp"
-      }
-    },
-EOF
+
 cat>/etc/xray/ss-$user-udp.json<<EOF
       {
       "port": 503,
