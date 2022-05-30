@@ -32,7 +32,7 @@ latest_version="$(curl -s https://api.github.com/repos/XTLS/Xray-core/releases |
 #bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install-geodata
 # / / Installation Xray Core
 xraycore_link="https://github.com/XTLS/Xray-core/releases/download/v$latest_version/xray-linux-64.zip"
-
+#xraycore_link="https://raw.githubusercontent.com/samratu/large/file/Xray-linux-64.zip"
 # / / Make Main Directory
 mkdir -p /usr/bin/xray
 mkdir -p /etc/xray
@@ -82,7 +82,7 @@ sudo lsof -t -i tcp:80 -s tcp:listen | sudo xargs kill
 uuid=$(cat /proc/sys/kernel/random/uuid)
 domain=$(cat /root/domain)
 # // Certificate File
-path_crt="/etc/xray/xray.cer"
+path_crt="/etc/xray/xray.crt"
 path_key="/etc/xray/xray.key"
 #domain_ecc=$(cat /root/.acme.sh)
 #domain.key=$(cat /root/.acme.sh/$domain_ecc)
@@ -94,7 +94,7 @@ cat > /etc/xray/config.json << END
   "log": {
     "access": "/var/log/xray/access.log",
     "error": "/var/log/xray/error.log",
-    "loglevel": "info"
+    "loglevel": "warning"
   },
   "inbounds": [
     {
@@ -253,7 +253,7 @@ cat > /etc/xray/config.json << END
                 "/"
               ],
               "headers": {
-                "Host": "vmbsmm.cnom.net",
+                "Host": "${domain}",
                 "User-Agent": [
                   "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.75 Safari/537.36",
                   "Mozilla/5.0 (iPhone; CPU iPhone OS 10_0_2 like Mac OS X) AppleWebKit/601.1 (KHTML, like Gecko) CriOS/53.0.2785.109 Mobile/14A456 Safari/601.1.46"
@@ -350,7 +350,7 @@ cat > /etc/xray/config.json << END
         "wsSettings": {
           "path": "gandring",
           "headers": {
-            "Host": "${domain}"
+            "Host": "${uuid}"
           }
         },
         "quicSettings": {}
@@ -388,6 +388,7 @@ cat > /etc/xray/config.json << END
         },
         "tcpSettings": {},
         "httpSettings": {
+        "acceptProxyProtocol": true,
           "path": "gandring"
         },
         "kcpSettings": {},
@@ -483,50 +484,9 @@ cat > /etc/xray/config.json << END
       "settings": {
         "method": "chacha20-poly1305",
         "password": "gandring",
-#xray-ss
+#xray-ss-tcp
         "network": "tcp,udp"
       },
-      "sniffing": {
-        "enabled": true,
-        "destOverride": [
-          "http",
-          "tls"
-        ]
-      }
-    },
-    {
-      "port": 2087,
-      "protocol": "shadowsocks",
-      "settings": {
-        "method": "chacha20-poly1305",
-        "password": "gandring",
-#xray-ss-ws
-        "streamSettings": {
-        "network": "ws",
-        "security": "tls",
-        "tlsSettings": {
-          "certificates": [
-            {
-              "certificateFile": "/etc/xray/xray.crt",
-              "keyFile": "/etc/xray/xray.key"
-            }
-          ],
-          "alpn": [
-            "http/1.1"
-          ]
-        },
-        "tcpSettings": {},
-        "kcpSettings": {},
-        "httpSettings": {},
-        "wsSettings": {
-          "path": "gandring",
-          "headers": {
-            "Host": "${domain}"
-          }
-        },
-        "quicSettings": {}
-      },
-      "domain": "${domain}",
       "sniffing": {
         "enabled": true,
         "destOverride": [
@@ -620,7 +580,7 @@ cat > /etc/xray/config.json << END
       "domain": "${domain}"
     }
   ],
-  "outbounds": [
+    "outbounds": [
     {
       "protocol": "freedom",
       "settings": {}
@@ -629,11 +589,6 @@ cat > /etc/xray/config.json << END
       "protocol": "blackhole",
       "settings": {},
       "tag": "blocked"
-    },
-    {
-      "tag": "tg-out",
-      "protocol": "mtproto",
-      "settings": {}
     }
   ],
   "routing": {
@@ -659,11 +614,11 @@ cat > /etc/xray/config.json << END
         "outboundTag": "blocked"
       },
       {
-        "type": "field",
         "inboundTag": [
-          "K"
+          "api"
         ],
-        "outboundTag": "tg-out"
+        "outboundTag": "api",
+        "type": "field"
       },
       {
         "type": "field",
@@ -673,6 +628,25 @@ cat > /etc/xray/config.json << END
         ]
       }
     ]
+  },
+  "stats": {},
+  "api": {
+    "services": [
+      "StatsService"
+    ],
+    "tag": "api"
+  },
+  "policy": {
+    "levels": {
+      "0": {
+        "statsUserDownlink": true,
+        "statsUserUplink": true
+      }
+    },
+    "system": {
+      "statsInboundUplink": true,
+      "statsInboundDownlink": true
+    }
   }
 }
 END
@@ -680,7 +654,7 @@ END
 uuid=$(cat /proc/sys/kernel/random/uuid)
 domain=$(cat /root/domain)
 # // Certificate File
-path_crt="/etc/xray/xray.cer"
+path_crt="/etc/xray/xray.crt"
 path_key="/etc/xray/xray.key"
 #domain_ecc=$(cat /root/.acme.sh)
 #domain.key=$(cat /root/.acme.sh/$domain_ecc)
@@ -689,6 +663,7 @@ path_key="/etc/xray/xray.key"
 # Buat Config Xray
 cat > /etc/xray/xtrojan.json << END
 {
+  "{
   "log": {
     "access": "/var/log/xray/access.log",
     "error": "/var/log/xray/error.log",
@@ -771,6 +746,7 @@ cat > /etc/xray/xtrojan.json << END
           ]
         },
         "grpcSettings": {
+        "acceptProxyProtocol": true,
           "serviceName": "gandring"
         }
       }
@@ -852,6 +828,7 @@ cat > /etc/xray/xtrojan.json << END
         "network": "h2",
         "security": "tls",
         "httpSettings": {
+        "acceptProxyProtocol": true,
           "path": "gandring"
          },
          "tlsSettings": {
@@ -865,6 +842,81 @@ cat > /etc/xray/xtrojan.json << END
               "keyFile": "/etc/xray/xray.key"
             }
           ]
+        }
+      }
+    },
+    {
+      "port": 503,
+      "protocol": "shadowsocks",
+      "settings": {
+        "method": "aes-128-gcm",
+        "password": "gandring",
+        "client": [
+           {
+             "password": "gandring",
+             "email": "gandring@p0x.smule.my.id"
+#xray-ss-udp
+           }
+        ],
+        "network": "tcp,udp"
+      },
+      "sniffing": {
+        "enabled": true,
+        "destOverride": [
+          "http",
+          "tls"
+        ]
+      }
+    },
+    {
+      "port": 501,
+      "protocol": "shadowsocks",
+      "settings": {
+        "method": "aes-128-gcm",
+        "password": "gandring",
+        "client": [
+           {
+             "password": "gandring",
+             "email": "gandring@p0x.smule.my.id"
+#xray-ss-tls
+           }
+        ],
+        "network": "ws",
+        "security": "tls",
+        "wsSettings": {
+          "path": "/gandring"
+         },
+         "tlsSettings": {
+          "alpn": [
+            "h2",
+            "http/1.1"
+          ],
+          "certificates": [
+            {
+              "certificateFile": "/etc/xray/xray.crt",
+              "keyFile": "/etc/xray/xray.key"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "port": 502,
+      "protocol": "shadowsocks",
+      "settings": {
+        "method": "aes-128-gcm",
+        "password": "gandring",
+        "client": [
+           {
+             "password": "gandring",
+             "email": "gandring@p0x.smule.my.id"
+#xray-ss-nontls
+           }
+        ],
+        "network": "ws",
+        "security": "none",
+        "wsSettings": {
+          "path": "/gandring"
         }
       }
     },
@@ -945,7 +997,7 @@ END
 uuid=$(cat /proc/sys/kernel/random/uuid)
 domain=$(cat /root/domain)
 # // Certificate File
-path_crt="/etc/xray/xray.cer"
+path_crt="/etc/xray/xray.crt"
 path_key="/etc/xray/xray.key"
 #domain_ecc=$(cat /root/.acme.sh)
 #domain.key=$(cat /root/.acme.sh/$domain_ecc)
@@ -957,7 +1009,7 @@ cat > /etc/xray/xvless.json << END
     "log": {
             "access": "/var/log/xray/access.log",
         "error": "/var/log/xray/error.log",
-        "loglevel": "info"
+        "loglevel": "warning"
     },
     "inbounds": [
         {
@@ -990,6 +1042,7 @@ cat > /etc/xray/xvless.json << END
                     ]
                 },
                 "grpcSettings": {
+                "acceptProxyProtocol": true,
                     "serviceName": "gandring"
                 }
             }
@@ -1009,9 +1062,10 @@ cat > /etc/xray/xvless.json << END
             },
             "streamSettings": {
                 "network": "grpc",
-                "serverName": "${domain}",
                 "security": "none",
+                "serverName": "$domain",
                 "grpcSettings": {
+                "acceptProxyProtocol": true,
                     "serviceName": "gandring"
                 }
             }
@@ -1029,7 +1083,7 @@ cat > /etc/xray/xvless.json << END
                 "decryption": "none"
             },
             "streamSettings": {
-                "network": "gun",
+                "network": "grpc",
                 "security": "tls",
                 "tlsSettings": {
                     "serverName": "${domain}",
@@ -1045,6 +1099,7 @@ cat > /etc/xray/xvless.json << END
                     ]
                 },
                 "grpcSettings": {
+                "acceptProxyProtocol": true,
                     "serviceName": "gandring"
                 }
             }
@@ -1063,9 +1118,10 @@ cat > /etc/xray/xvless.json << END
             },
             "streamSettings": {
                 "network": "grpc",
-                "serverName": "${domain}",
                 "security": "none",
+                "serverName": "$domain",
                 "grpcSettings": {
+                "acceptProxyProtocol": true,
                     "serviceName": "gandring"
                 }
             }
@@ -1094,6 +1150,7 @@ cat > /etc/xray/xvless.json << END
                     ]
                 },
                 "httpSettings": {
+                "acceptProxyProtocol": true,
                     "path": "gandring"
                 }
             }
@@ -1114,6 +1171,7 @@ cat > /etc/xray/xvless.json << END
                 "network": "h2",
                 "security": "none",
                 "httpSettings": {
+                "acceptProxyProtocol": true,
                     "path": "gandring"
                 }
             }
@@ -1189,6 +1247,113 @@ cat > /etc/xray/xvless.json << END
   }
 }
 END
+
+uuid=$(cat /proc/sys/kernel/random/uuid)
+domain=$(cat /root/domain)
+# // Certificate File
+path_crt="/etc/xray/xray.crt"
+path_key="/etc/xray/xray.key"
+#domain_ecc=$(cat /root/.acme.sh)
+#domain.key=$(cat /root/.acme.sh/$domain_ecc)
+#path_crt="/root/.acme.sh/$domain_ecc/fullchain.cer"
+#path_key="/root/.acme.sh/$domain_ecc/$domain.key"
+# Buat Config Xray
+cat > /etc/xray/xss.json << END
+{
+  "log": {
+    "access": "/var/log/xray/access.log",
+    "error": "/var/log/xray/error.log",
+    "loglevel": "warning"
+  },
+  "inbounds": [
+  {
+      "port": 212,
+      "protocol": "shadowsocks",
+      "settings": {
+        "method": "2022-blake3-aes-128-gcm",
+        "password": "gandring",
+        "clients": [
+          {
+            "password": "gandring",
+            "email": "gandring@p0x.smule.my.id"
+#xray-new-ss
+          }
+        ],
+        "network": "tcp,udp"
+      }
+    }
+  ],
+    "outbounds": [
+    {
+      "protocol": "freedom",
+      "settings": {}
+    },
+    {
+      "protocol": "blackhole",
+      "settings": {},
+      "tag": "blocked"
+    }
+  ],
+  "routing": {
+    "rules": [
+      {
+        "type": "field",
+        "ip": [
+          "0.0.0.0/8",
+          "10.0.0.0/8",
+          "100.64.0.0/10",
+          "169.254.0.0/16",
+          "172.16.0.0/12",
+          "192.0.0.0/24",
+          "192.0.2.0/24",
+          "192.168.0.0/16",
+          "198.18.0.0/15",
+          "198.51.100.0/24",
+          "203.0.113.0/24",
+          "::1/128",
+          "fc00::/7",
+          "fe80::/10"
+        ],
+        "outboundTag": "blocked"
+      },
+      {
+        "inboundTag": [
+          "api"
+        ],
+        "outboundTag": "api",
+        "type": "field"
+      },
+      {
+        "type": "field",
+        "outboundTag": "blocked",
+        "protocol": [
+          "bittorrent"
+        ]
+      }
+    ]
+  },
+  "stats": {},
+  "api": {
+    "services": [
+      "StatsService"
+    ],
+    "tag": "api"
+  },
+  "policy": {
+    "levels": {
+      "0": {
+        "statsUserDownlink": true,
+        "statsUserUplink": true
+      }
+    },
+    "system": {
+      "statsInboundUplink": true,
+      "statsInboundDownlink": true
+    }
+  }
+}
+END
+
 # / / Installation Xray Service
 cat > /etc/systemd/system/xray.service << END
 [Unit]
@@ -1249,7 +1414,25 @@ RestartPreventExitStatus=23
 WantedBy=multi-user.target
 END
 
+# / / Installation Xray Service
+cat > /etc/systemd/system/xss.service << END
+[Unit]
+Description=XTROJAN ROUTING DAM COLO PENGKOL BY Z
+Documentation=https://t.me/zerossl
+After=network.target nss-lookup.target
 
+[Service]
+User=root
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+NoNewPrivileges=true
+ExecStart=/usr/local/bin/xray -config /etc/xray/xss.json
+Restart=on-failure
+RestartPreventExitStatus=23
+
+[Install]
+WantedBy=multi-user.target
+END
 # // Enable & Start Service
 # Accept port Xray
 iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 443 -j ACCEPT
@@ -1312,6 +1495,15 @@ iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 441 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 441 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 442 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 442 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 212 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 212 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 501 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 501 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 502 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 502 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 503 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 503 -j ACCEPT
+
 iptables-save > /etc/iptables.up.rules
 iptables-restore -t < /etc/iptables.up.rules
 netfilter-persistent save
@@ -1336,6 +1528,13 @@ systemctl enable xvless
 systemctl stop xvless
 systemctl start xvless
 systemctl restart xvless
+
+##restart&start service
+systemctl daemon-reload
+systemctl enable xss
+systemctl stop xss
+systemctl start xss
+systemctl restart xss
 
 # Install Trojan Go
 latest_version="$(curl -s "https://api.github.com/repos/p4gefau1t/trojan-go/releases" | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
