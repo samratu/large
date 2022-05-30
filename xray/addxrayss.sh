@@ -125,6 +125,8 @@ shadowsocksnontls="ss://$tmp3#$user"
 shadowsocksudp="ss://$tmp4#$user"
 shadowsocksnew="ss://$tmp5#$user"
 systemctl restart xray.service
+systemctl restart xss.service
+systemctl restart xtrojan.service
 service cron restart
 clear
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
