@@ -55,7 +55,7 @@ cat > /etc/shadowsocks-libev/$user-tls.json<<END
     "server_port":$tls,
     "password":"$user",
     "timeout":60,
-    "method":"aes-256-cfb",
+    "method":"aes-128-gcm",
     "fast_open":true,
     "no_delay":true,
     "nameserver":"1.1.1.1",
@@ -70,7 +70,7 @@ cat > /etc/shadowsocks-libev/$user-http.json <<-END
     "server_port":$http,
     "password":"$user",
     "timeout":60,
-    "method":"aes-256-cfb",
+    "method":"aes-128-gcm",
     "fast_open":true,
     "no_delay":true,
     "nameserver":"1.1.1.1",
@@ -86,8 +86,8 @@ systemctl enable shadowsocks-libev-server@$user-tls.service
 systemctl start shadowsocks-libev-server@$user-tls.service
 systemctl enable shadowsocks-libev-server@$user-http.service
 systemctl start shadowsocks-libev-server@$user-http.service
-tmp1=$(echo -n "aes-256-cfb:${user}@${MYIP}:$tls" | base64 -w0)
-tmp2=$(echo -n "aes-256-cfb:${user}@${MYIP}:$http" | base64 -w0)
+tmp1=$(echo -n "aes-128-gcm:${user}@${MYIP}:$tls" | base64 -w0)
+tmp2=$(echo -n "aes-128-gcm:${user}@${MYIP}:$http" | base64 -w0)
 linkss1="ss://${tmp1}?plugin=obfs-local;obfs=tls;obfs-host=bing.com"
 linkss2="ss://${tmp2}?plugin=obfs-local;obfs=http;obfs-host=bing.com"
 echo -e "### $user $exp
@@ -103,7 +103,7 @@ echo -e "Domain      : $domain"
 echo -e "Port TLS    : $tls"
 echo -e "Port No TLS : $http"
 echo -e "Password    : $user"
-echo -e "Method      : aes-256-cfb"
+echo -e "Method      : aes-128-gcm"
 echo -e "Created     : $hariini"
 echo -e "Expired     : $exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
