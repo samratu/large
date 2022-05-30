@@ -90,7 +90,7 @@ path_key="/etc/xray/xray.key"
 #path_key="/root/.acme.sh/$domain_ecc/$domain.key"
 # Buat Config Xray
 cat > /etc/xray/config.json << END
-{{
+{
   "log": {
     "access": "/var/log/xray/access.log",
     "error": "/var/log/xray/error.log",
