@@ -21,7 +21,7 @@ tls="$(cat ~/log-install.txt | grep -w "VMESS WS TLS" | cut -d: -f2|sed 's/ //g'
 nontls="$(cat ~/log-install.txt | grep -w "VMESS WS NON TLS" | cut -d: -f2|sed 's/ //g')"
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 		read -rp "Username : " -e user
-		CLIENT_EXISTS=$(grep -w $user /etc/xray/xvmess.json | wc -l)
+		CLIENT_EXISTS=$(grep -w $user /etc/xray/config.json | wc -l)
 
 		if [[ ${CLIENT_EXISTS} == '1' ]]; then
 			echo ""
@@ -34,9 +34,9 @@ read -p "Expired (Days) : " masaaktif
 hariini=`date -d "0 days" +"%Y-%m-%d"`
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#vmess-tls$/a\### '"$user $exp"'\
-},{"id": "'""$uuid""'"' /etc/xray/xvmess.json
+},{"id": "'""$uuid""'"' /etc/xray/config.json
 sed -i '/#vmess-nontls$/a\### '"$user $exp"'\
-},{"id": "'""$uuid""'"' /etc/xray/xvmess.json
+},{"id": "'""$uuid""'"' /etc/xray/config.json
 cat>/etc/xray/vmess-$user-tls.json<<EOF
       {
       "v": "2",
