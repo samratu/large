@@ -484,7 +484,7 @@ cat > /etc/xray/config.json << END
       "settings": {
         "method": "chacha20-poly1305",
         "password": "gandring",
-#xray-ss
+#xray-ss-tcp
         "network": "tcp,udp"
       },
       "sniffing": {
@@ -663,6 +663,7 @@ path_key="/etc/xray/xray.key"
 # Buat Config Xray
 cat > /etc/xray/xtrojan.json << END
 {
+  "{
   "log": {
     "access": "/var/log/xray/access.log",
     "error": "/var/log/xray/error.log",
@@ -854,9 +855,9 @@ cat > /etc/xray/xtrojan.json << END
            {
              "password": "gandring",
              "email": "gandring@p0x.smule.my.id"
+#xray-ss-udp
            }
         ],
-#xray-ss-udp
         "network": "tcp,udp"
       },
       "sniffing": {
@@ -872,14 +873,14 @@ cat > /etc/xray/xtrojan.json << END
       "protocol": "shadowsocks",
       "settings": {
         "method": "aes-128-gcm",
-        "password": "bagus",
+        "password": "gandring",
         "client": [
            {
-             "password": "bagus",
+             "password": "gandring",
              "email": "gandring@p0x.smule.my.id"
+#xray-ss-tls
            }
         ],
-#xray-ss-tls
         "network": "ws",
         "security": "tls",
         "wsSettings": {
@@ -904,14 +905,14 @@ cat > /etc/xray/xtrojan.json << END
       "protocol": "shadowsocks",
       "settings": {
         "method": "aes-128-gcm",
-        "password": "satrio",
+        "password": "gandring",
         "client": [
            {
-             "password": "satrio",
+             "password": "gandring",
              "email": "gandring@p0x.smule.my.id"
+#xray-ss-nontls
            }
         ],
-#xray-ss-nontls
         "network": "ws",
         "security": "none",
         "wsSettings": {
