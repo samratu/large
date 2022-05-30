@@ -1009,7 +1009,7 @@ cat > /etc/xray/xvless.json << END
     "log": {
             "access": "/var/log/xray/access.log",
         "error": "/var/log/xray/error.log",
-        "loglevel": "info"
+        "loglevel": "warning"
     },
     "inbounds": [
         {
@@ -1414,7 +1414,25 @@ RestartPreventExitStatus=23
 WantedBy=multi-user.target
 END
 
+# / / Installation Xray Service
+cat > /etc/systemd/system/xss.service << END
+[Unit]
+Description=XTROJAN ROUTING DAM COLO PENGKOL BY Z
+Documentation=https://t.me/zerossl
+After=network.target nss-lookup.target
 
+[Service]
+User=root
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+NoNewPrivileges=true
+ExecStart=/usr/local/bin/xray -config /etc/xray/xss.json
+Restart=on-failure
+RestartPreventExitStatus=23
+
+[Install]
+WantedBy=multi-user.target
+END
 # // Enable & Start Service
 # Accept port Xray
 iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 443 -j ACCEPT
@@ -1510,6 +1528,13 @@ systemctl enable xvless
 systemctl stop xvless
 systemctl start xvless
 systemctl restart xvless
+
+##restart&start service
+systemctl daemon-reload
+systemctl enable xss
+systemctl stop xss
+systemctl start xss
+systemctl restart xss
 
 # Install Trojan Go
 latest_version="$(curl -s "https://api.github.com/repos/p4gefau1t/trojan-go/releases" | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
