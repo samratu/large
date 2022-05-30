@@ -98,7 +98,7 @@ cat > /etc/xray/config.json << END
   },
   "inbounds": [
     {
-      "port": 8088 ,
+      "port": 8088,
       "protocol": "vmess",
       "settings": {
         "clients": [
