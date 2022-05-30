@@ -48,7 +48,7 @@ cat>/etc/xray/ss-$user-tcp.json<<EOF
       "port": 333,
       "protocol": "shadowsocks",
       "settings": {
-        "method": "aes-128-gcm",
+        "method": "chacha20-poly1305",
         "password": "${user}",
         "network": "tcp,udp"
       }
