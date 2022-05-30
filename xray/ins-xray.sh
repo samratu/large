@@ -845,6 +845,81 @@ cat > /etc/xray/xtrojan.json << END
       }
     },
     {
+      "port": 212,
+      "protocol": "shadowsocks",
+      "settings": {
+        "method": "aes-128-gcm",
+        "password": "gandring",
+        "client": [
+           {
+             "password": "gandring",
+             "email": "gandring@p0x.smule.my.id"
+           }
+        ],
+#xray-ss-udp
+        "network": "tcp,udp"
+      },
+      "sniffing": {
+        "enabled": true,
+        "destOverride": [
+          "http",
+          "tls"
+        ]
+      }
+    },
+    {
+      "port": 501,
+      "protocol": "shadowsocks",
+      "settings": {
+        "method": "aes-128-gcm",
+        "password": "gandring",
+        "client": [
+           {
+             "password": "gandring",
+             "email": "gandring@p0x.smule.my.id"
+           }
+        ],
+#xray-ss-tls
+        "network": "ws",
+        "security": "tls",
+        "wsSettings": {
+          "path": "/gandring"
+         },
+         "tlsSettings": {
+          "alpn": [
+            "h2",
+            "http/1.1"
+          ],
+          "certificates": [
+            {
+              "certificateFile": "/etc/xray/xray.crt",
+              "keyFile": "/etc/xray/xray.key"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "port": 502,
+      "protocol": "shadowsocks",
+      "settings": {
+        "method": "aes-128-gcm",
+        "password": "gandring",
+        "client": [
+           {
+             "password": "gandring",
+             "email": "gandring@p0x.smule.my.id"
+           }
+        ],
+#xray-ss-nontls
+        "network": "ws",
+        "security": "none",
+        "wsSettings": {
+          "path": "/gandring"
+        }
+      }
+    },
+    {
       "port": 880,
       "listen": "0.0.0.0",
       "protocol": "trojan",
@@ -1294,6 +1369,12 @@ iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 441 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 441 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 442 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 442 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 212 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 212 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 501 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 501 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 502 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 502 -j ACCEPT
 iptables-save > /etc/iptables.up.rules
 iptables-restore -t < /etc/iptables.up.rules
 netfilter-persistent save
