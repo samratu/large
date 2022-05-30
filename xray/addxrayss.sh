@@ -25,7 +25,7 @@ until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 
 		if [[ ${CLIENT_EXISTS} == '1' ]]; then
 			echo ""
-			echo -e "Password ${RED}${CLIENT_NAME}${NC} Already On VPS Please Choose Another"
+			echo -e "Username ${RED}${CLIENT_NAME}${NC} Already On VPS Please Choose Another"
 			exit 1
 		fi
 	done
@@ -33,10 +33,16 @@ uuid=$(cat /proc/sys/kernel/random/uuid)
 read -p "Expired (Days) : " masaaktif
 hariini=`date -d "0 days" +"%Y-%m-%d"`
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
-#sed -i '/#vmess-tls$/a\### '"$user $exp"'\
-#},{"id": "'""$uuid""'"' /etc/xray/config.json
-sed -i '/#xray-ss$/a\### '"$user $exp"'\
+sed -i '/#xray-ss-tcp$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'"' /etc/xray/config.json
+sed -i '/#xray-ss-tls$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'"' /etc/xray/xtrojan.json
+sed -i '/#xray-ss-nontls$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'"' /etc/xray/xtrojan.json
+sed -i '/#xray-ss-udp$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'"' /etc/xray/xtrojan.json
+sed -i '/#xray-new-ss$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'"' /etc/xray/xss.json
 cat>/etc/xray/ss-$user.json<<EOF
       {
       "port": 333,
