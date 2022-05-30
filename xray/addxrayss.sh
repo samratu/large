@@ -93,19 +93,28 @@ cat>/etc/xray/ss-$user-nontls.json<<EOF
       }
     },
 EOF
-cat>/etc/xray/ss-$user.json<<EOF
+cat>/etc/xray/ss-$user-new.json<<EOF
       {
+  "inbounds": [
+    {
       "port": 212,
       "protocol": "shadowsocks",
       "settings": {
         "method": "2022-blake3-aes-128-gcm",
-        "password": "${user}",
+        "password": "gandring",
         "network": "tcp,udp"
       }
-    },
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "freedom"
+    }
+  ]
+}
 EOF
 
-tmp1=$(echo -n "aes-128-gcm:${user}@${MYIP}:$sstcp" | base64 -w0)
+tmp1=$(echo -n "aes-256-gcm:${user}@${MYIP}:$sstcp" | base64 -w0)
 tmp2=$(echo -n "aes-128-gcm:${user}@${MYIP}:$sstls" | base64 -w0)
 tmp3=$(echo -n "aes-128-gcm:${user}@${MYIP}:$ssnontls" | base64 -w0)
 tmp4=$(echo -n "aes-128-gcm:${user}@${MYIP}:$ssudp" | base64 -w0)
@@ -128,7 +137,10 @@ echo -e "Address     : ${domain}"
 echo -e "Port SS     : ${ss}"
 #echo -e "User ID     : ${uuid}"
 #echo -e "Alter ID    : 0"
+echo -e "Security    : aes-256-gcm"
+echo -e "Security    : aes-128-gcm"
 echo -e "Security    : chacha20-poly1305"
+echo -e "Security    : 2022-blake3-aes-128-gcm"
 echo -e "Network     : tcp,udp"
 echo -e "Password    : ${user}"
 echo -e "Created     : $hariini"
