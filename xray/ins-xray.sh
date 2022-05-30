@@ -845,7 +845,7 @@ cat > /etc/xray/xtrojan.json << END
       }
     },
     {
-      "port": 212,
+      "port": 503,
       "protocol": "shadowsocks",
       "settings": {
         "method": "aes-128-gcm",
@@ -872,10 +872,10 @@ cat > /etc/xray/xtrojan.json << END
       "protocol": "shadowsocks",
       "settings": {
         "method": "aes-128-gcm",
-        "password": "gandring",
+        "password": "bagus",
         "client": [
            {
-             "password": "gandring",
+             "password": "bagus",
              "email": "gandring@p0x.smule.my.id"
            }
         ],
@@ -904,10 +904,10 @@ cat > /etc/xray/xtrojan.json << END
       "protocol": "shadowsocks",
       "settings": {
         "method": "aes-128-gcm",
-        "password": "gandring",
+        "password": "satrio",
         "client": [
            {
-             "password": "gandring",
+             "password": "satrio",
              "email": "gandring@p0x.smule.my.id"
            }
         ],
@@ -1246,6 +1246,113 @@ cat > /etc/xray/xvless.json << END
   }
 }
 END
+
+uuid=$(cat /proc/sys/kernel/random/uuid)
+domain=$(cat /root/domain)
+# // Certificate File
+path_crt="/etc/xray/xray.crt"
+path_key="/etc/xray/xray.key"
+#domain_ecc=$(cat /root/.acme.sh)
+#domain.key=$(cat /root/.acme.sh/$domain_ecc)
+#path_crt="/root/.acme.sh/$domain_ecc/fullchain.cer"
+#path_key="/root/.acme.sh/$domain_ecc/$domain.key"
+# Buat Config Xray
+cat > /etc/xray/xss.json << END
+{
+  "log": {
+    "access": "/var/log/xray/access.log",
+    "error": "/var/log/xray/error.log",
+    "loglevel": "warning"
+  },
+  "inbounds": [
+  {
+      "port": 212,
+      "protocol": "shadowsocks",
+      "settings": {
+        "method": "2022-blake3-aes-128-gcm",
+        "password": "gandring",
+        "clients": [
+          {
+            "password": "gandring",
+            "email": "gandring@p0x.smule.my.id"
+#xray-new-ss
+          }
+        ],
+        "network": "tcp,udp"
+      }
+    }
+  ],
+    "outbounds": [
+    {
+      "protocol": "freedom",
+      "settings": {}
+    },
+    {
+      "protocol": "blackhole",
+      "settings": {},
+      "tag": "blocked"
+    }
+  ],
+  "routing": {
+    "rules": [
+      {
+        "type": "field",
+        "ip": [
+          "0.0.0.0/8",
+          "10.0.0.0/8",
+          "100.64.0.0/10",
+          "169.254.0.0/16",
+          "172.16.0.0/12",
+          "192.0.0.0/24",
+          "192.0.2.0/24",
+          "192.168.0.0/16",
+          "198.18.0.0/15",
+          "198.51.100.0/24",
+          "203.0.113.0/24",
+          "::1/128",
+          "fc00::/7",
+          "fe80::/10"
+        ],
+        "outboundTag": "blocked"
+      },
+      {
+        "inboundTag": [
+          "api"
+        ],
+        "outboundTag": "api",
+        "type": "field"
+      },
+      {
+        "type": "field",
+        "outboundTag": "blocked",
+        "protocol": [
+          "bittorrent"
+        ]
+      }
+    ]
+  },
+  "stats": {},
+  "api": {
+    "services": [
+      "StatsService"
+    ],
+    "tag": "api"
+  },
+  "policy": {
+    "levels": {
+      "0": {
+        "statsUserDownlink": true,
+        "statsUserUplink": true
+      }
+    },
+    "system": {
+      "statsInboundUplink": true,
+      "statsInboundDownlink": true
+    }
+  }
+}
+END
+
 # / / Installation Xray Service
 cat > /etc/systemd/system/xray.service << END
 [Unit]
@@ -1375,6 +1482,9 @@ iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 501 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 501 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 502 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 502 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 503 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 503 -j ACCEPT
+
 iptables-save > /etc/iptables.up.rules
 iptables-restore -t < /etc/iptables.up.rules
 netfilter-persistent save
