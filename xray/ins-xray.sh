@@ -94,11 +94,71 @@ cat > /etc/xray/config.json << END
   "log": {
     "access": "/var/log/xray/access.log",
     "error": "/var/log/xray/error.log",
-    "loglevel": "warning"
+    "loglevel": "info"
   },
   "inbounds": [
     {
-      "port": 8088 ,
+      "port": 99,
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "${uuid}",
+            "flow": "xtls-rprx-direct"
+#vless-xtls
+          }
+        ],
+        "decryption": "none",
+        "fallbacks": [
+          {
+            "dest": 60000,
+            "alpn": "",
+            "xver": 1
+          },
+          {
+            "dest": 60001,
+            "alpn": "h2",
+            "xver": 1
+          },
+          {
+            "dest": 2053,
+            "path": "/gandring",
+            "xver": 1
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "security": "xtls",
+        "tcpSettings": {},
+        "kcpSettings": {},
+        "wsSettings": {},
+        "httpSettings": {},
+        "quicSettings": {},
+        "grpcSettings": {},
+        "xtlsSettings": {
+          "certificates": [
+            {
+              "certificateFile": "/etc/xray/xray.crt",
+              "keyFile": "/etc/xray/xray.key"
+            }
+          ],
+          "alpn": [
+            "http/1.1"
+          ]
+        }
+      },
+      "domain": "${domain}",
+      "sniffing": {
+        "enabled": true,
+        "destOverride": [
+          "http",
+          "tls"
+        ]
+      }
+    },
+    {
+      "port": 8088,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -179,54 +239,6 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 99,
-      "protocol": "vless",
-      "settings": {
-        "clients": [
-          {
-            "id": "${uuid}",
-            "flow": "xtls-rprx-direct"
-#vless-xtls
-          }
-        ],
-        "decryption": "none",
-        "fallbacks": [
-          {
-            "dest": 80
-          }
-        ]
-      },
-      "streamSettings": {
-        "network": "tcp",
-        "security": "xtls",
-        "tcpSettings": {},
-        "kcpSettings": {},
-        "wsSettings": {},
-        "httpSettings": {},
-        "quicSettings": {},
-        "grpcSettings": {},
-        "xtlsSettings": {
-          "certificates": [
-            {
-              "certificateFile": "/etc/xray/xray.crt",
-              "keyFile": "/etc/xray/xray.key"
-            }
-          ],
-          "alpn": [
-            "http/1.1"
-          ]
-        }
-      },
-      "domain": "${domain}",
-      "sniffing": {
-        "enabled": true,
-        "destOverride": [
-          "http",
-          "tls"
-        ]
-      }
-    },
-    {
       "port": 808,
       "protocol": "vmess",
       "settings": {
@@ -253,7 +265,7 @@ cat > /etc/xray/config.json << END
                 "/"
               ],
               "headers": {
-                "Host": "${domain}",
+                "Host": "$domain",
                 "User-Agent": [
                   "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.75 Safari/537.36",
                   "Mozilla/5.0 (iPhone; CPU iPhone OS 10_0_2 like Mac OS X) AppleWebKit/601.1 (KHTML, like Gecko) CriOS/53.0.2785.109 Mobile/14A456 Safari/601.1.46"
@@ -319,14 +331,14 @@ cat > /etc/xray/config.json << END
         "kcpSettings": {},
         "httpSettings": {},
         "wsSettings": {
-          "path": "gandring",
+          "path": "/gandring",
           "headers": {
             "Host": "${domain}"
           }
         },
         "quicSettings": {}
       },
-      "domain": "${domain}"
+      "domain": "$domain"
     },
     {
       "port": 2052,
@@ -348,9 +360,9 @@ cat > /etc/xray/config.json << END
         "kcpSettings": {},
         "httpSettings": {},
         "wsSettings": {
-          "path": "gandring",
+          "path": "/gandring",
           "headers": {
-            "Host": "${uuid}"
+            "Host": "${domain}"
           }
         },
         "quicSettings": {}
@@ -434,7 +446,7 @@ cat > /etc/xray/config.json << END
         "kcpSettings": {},
         "httpSettings": {},
         "wsSettings": {
-          "path": "gandring",
+          "path": "/gandring",
           "headers": {
             "Host": "${domain}"
           }
@@ -470,7 +482,7 @@ cat > /etc/xray/config.json << END
         "kcpSettings": {},
         "httpSettings": {},
         "wsSettings": {
-          "path": "gandring",
+          "path": "/gandring",
           "headers": {
             "Host": "${domain}"
           }
@@ -484,7 +496,7 @@ cat > /etc/xray/config.json << END
       "settings": {
         "method": "chacha20-poly1305",
         "password": "gandring",
-#xray-ss-tcp
+#xray-ss
         "network": "tcp,udp"
       },
       "sniffing": {
@@ -568,7 +580,7 @@ cat > /etc/xray/config.json << END
         "tcpSettings": {},
         "kcpSettings": {},
         "wsSettings": {
-          "path": "gandring",
+          "path": "/gandring",
           "headers": {
             "Host": "${domain}"
           }
@@ -577,10 +589,10 @@ cat > /etc/xray/config.json << END
         "quicSettings": {},
         "grpcSettings": {}
       },
-      "domain": "${domain}"
+      "domain": "$domain"
     }
   ],
-    "outbounds": [
+  "outbounds": [
     {
       "protocol": "freedom",
       "settings": {}
@@ -589,6 +601,11 @@ cat > /etc/xray/config.json << END
       "protocol": "blackhole",
       "settings": {},
       "tag": "blocked"
+    },
+    {
+      "tag": "tg-out",
+      "protocol": "mtproto",
+      "settings": {}
     }
   ],
   "routing": {
@@ -614,11 +631,11 @@ cat > /etc/xray/config.json << END
         "outboundTag": "blocked"
       },
       {
+        "type": "field",
         "inboundTag": [
-          "api"
+          "K"
         ],
-        "outboundTag": "api",
-        "type": "field"
+        "outboundTag": "tg-out"
       },
       {
         "type": "field",
@@ -628,25 +645,6 @@ cat > /etc/xray/config.json << END
         ]
       }
     ]
-  },
-  "stats": {},
-  "api": {
-    "services": [
-      "StatsService"
-    ],
-    "tag": "api"
-  },
-  "policy": {
-    "levels": {
-      "0": {
-        "statsUserDownlink": true,
-        "statsUserUplink": true
-      }
-    },
-    "system": {
-      "statsInboundUplink": true,
-      "statsInboundDownlink": true
-    }
   }
 }
 END
@@ -686,7 +684,13 @@ cat > /etc/xray/xtrojan.json << END
         "decryption": "none",
         "fallbacks": [
           {
-            "dest": 8443,
+            "dest": 60000,
+            "alpn": "",
+            "xver": 1
+          },
+          {
+            "dest": 60001,
+            "alpn": "h2",
             "xver": 1
           },
           {
@@ -714,7 +718,7 @@ cat > /etc/xray/xtrojan.json << END
       }
     },
     {
-      "port": 8443,
+      "port": 443,
       "listen": "0.0.0.0",
       "protocol": "trojan",
       "tag": "TROJAN-gRPC-in",
@@ -745,6 +749,7 @@ cat > /etc/xray/xtrojan.json << END
           ]
         },
         "grpcSettings": {
+        "acceptProxyProtocol": true,
           "serviceName": "gandring"
         }
       }
@@ -826,7 +831,8 @@ cat > /etc/xray/xtrojan.json << END
         "network": "h2",
         "security": "tls",
         "httpSettings": {
-          "path": "gandring"
+        "acceptProxyProtocol": true,
+          "path": "/gandring"
          },
          "tlsSettings": {
           "alpn": [
@@ -843,7 +849,7 @@ cat > /etc/xray/xtrojan.json << END
       }
     },
     {
-      "port": 503,
+      "port": 212,
       "protocol": "shadowsocks",
       "settings": {
         "method": "aes-128-gcm",
