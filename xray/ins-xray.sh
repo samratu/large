@@ -663,7 +663,6 @@ path_key="/etc/xray/xray.key"
 # Buat Config Xray
 cat > /etc/xray/xtrojan.json << END
 {
-  "{
   "log": {
     "access": "/var/log/xray/access.log",
     "error": "/var/log/xray/error.log",
@@ -746,7 +745,6 @@ cat > /etc/xray/xtrojan.json << END
           ]
         },
         "grpcSettings": {
-        "acceptProxyProtocol": true,
           "serviceName": "gandring"
         }
       }
@@ -828,7 +826,6 @@ cat > /etc/xray/xtrojan.json << END
         "network": "h2",
         "security": "tls",
         "httpSettings": {
-        "acceptProxyProtocol": true,
           "path": "gandring"
          },
          "tlsSettings": {
