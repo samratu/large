@@ -695,7 +695,7 @@ cat > /etc/xray/xtrojan.json << END
           },
           {
             "path": "/gandring",
-            "dest": 2096,
+            "dest": 443,
             "xver": 1
           }
         ]
@@ -718,7 +718,7 @@ cat > /etc/xray/xtrojan.json << END
       }
     },
     {
-      "port": 8443,
+      "port": 443,
       "listen": "0.0.0.0",
       "protocol": "trojan",
       "tag": "TROJAN-gRPC-in",
