@@ -306,17 +306,23 @@ mkdir -p /etc/stunnel5
 chmod 644 /etc/stunnel5
 
 domain=$(cat /root/domain)
-openssl req -newkey rsa:2048 -nodes -keyout $domain.key -out $domain.csr
-#openssl genrsa -out key.pem 2048
+#openssl req -newkey rsa:2048 -nodes -keyout $domain.key -out $domain.csr
+#openssl genrsa -out key.pem 1024
 #openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
--subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
+#-subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
 #cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
-cat $domain.key $domain.csr >> /etc/stunnel5/stunnel5.pem
+cat /etc/xray/xray.crt /etc/xray/xray.key >> /etc/stunnel5/stunnel5.pem
+
+# Ubah Izin Akses
+chmod 755 /etc/stunnel5/stunnel5.pem
+chmod +x /etc/init.d/stunnel5
+cp /usr/local/bin/stunnel /usr/local/wisnucs/stunnel5
+
 # Download Config Stunnel5
 cat > /etc/stunnel5/stunnel5.conf <<-END
-#cert = /etc/stunnel5/stunnel5.pem
-cert=$(cat /etc/xray/xray.crt)
-key=$(cat /etc/xray/xray.key)
+cert = /etc/stunnel5/stunnel5.pem
+#cert=/etc/xray/xray.crt
+#key=/etc/xray/xray.key
 # Download Config Stunnel5
 cat > /etc/stunnel5/stunnel5.conf <<-END
 cert = /etc/stunnel5/stunnel5.pem
@@ -339,12 +345,6 @@ connect = 127.0.0.1:1194
 
 END
 
-# make a certificate
-openssl genrsa -out key.pem 2048
-openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
--subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
-cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
-
 # Service Stunnel5 systemctl restart stunnel5
 cat > /etc/systemd/system/stunnel5.service << END
 [Unit]
@@ -363,11 +363,6 @@ END
 
 # Service Stunnel5 /etc/init.d/stunnel5
 wget -q -O /etc/init.d/stunnel5 "https://${wisnuvpnnnn}/stunnel5.init"
-
-# Ubah Izin Akses
-chmod 755 /etc/stunnel5/stunnel5.pem
-chmod +x /etc/init.d/stunnel5
-cp /usr/local/bin/stunnel /usr/local/wisnucs/stunnel5
 
 # Remove File
 rm -r -f /usr/local/share/doc/stunnel/
