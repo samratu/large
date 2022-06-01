@@ -318,11 +318,11 @@ chmod 644 /etc/stunnel5
 
 domain=$(cat /root/domain)
 #openssl req -newkey rsa:2048 -nodes -keyout $domain.key -out $domain.csr
-#openssl genrsa -out key.pem 2048
-#openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
-#-subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
-#cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
-cat /etc/xray/xray.crt /etc/xray/xray.key >> /etc/stunnel5/stunnel5.pem
+openssl genrsa -out key.pem 1024
+openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
+-subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
+cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
+#cat /etc/xray/xray.crt /etc/xray/xray.key >> /etc/stunnel5/stunnel5.pem
 
 # Service Stunnel5 /etc/init.d/stunnel5
 wget -q -O /etc/init.d/stunnel5 "https://${wisnuvpnnnn}/stunnel5.init"
