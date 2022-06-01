@@ -105,9 +105,9 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "grpc",
-      "path": "gandring",
+      "path": "/gandring",
       "type": "none",
-      "host": "${domain}",
+      "serverName": "${domain}",
       "tls": "tls"
 }
 EOF
@@ -120,9 +120,9 @@ cat>/etc/xray/vmess-$user-nontls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "grpc",
-      "path": "gandring",
+      "path": "/gandring",
       "type": "none",
-      "host": "${domain}",
+      "serverName": "${domain}",
       "tls": "none"
 }
 EOF
@@ -162,7 +162,7 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "h2",
-      "path": "gandring",
+      "path": "/gandring",
       #"type": "multi",
       "host": "",
       "tls": "tls"
