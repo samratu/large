@@ -163,8 +163,8 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "aid": "0",
       "net": "h2",
       "path": "gandring",
-      #"type": "multi",
-      "host": "",
+      "host": "${domain}",
+      "serverName": "${domain}",
       "tls": "tls"
 }
 EOF
@@ -204,7 +204,7 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "tcp",
-      #"path": "/",
+      "path": "/",
       "type": "http",
       "host": "${domain}",
       "tls": "tls"
@@ -219,7 +219,7 @@ cat>/etc/xray/vmess-$user-nontls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "tcp",
-      #"path": "/",
+      "path": "/",
       "type": "http",
       "host": "${domain}",
       "tls": "none"
@@ -258,7 +258,7 @@ echo -e "WS TLS: ${vmess1}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "WS NONTLS: ${vmess2}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "GRPC: ${vmessgrpc}"
+echo -e "GRPC TLS: ${vmessgrpc}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "GRPC NONTLS: ${vmessgrpcnon}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
