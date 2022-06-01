@@ -376,7 +376,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 441,
+      "port": 2053,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -718,7 +718,7 @@ cat > /etc/xray/xtrojan.json << END
       }
     },
     {
-      "port": 443,
+      "port": 8443,
       "listen": "0.0.0.0",
       "protocol": "trojan",
       "tag": "TROJAN-gRPC-in",
@@ -1051,7 +1051,7 @@ cat > /etc/xray/xvless.json << END
             }
         },
         {
-            "port": 2052,
+            "port": 2082,
             "protocol": "vmess",
             "settings": {
                 "clients": [
