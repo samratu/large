@@ -73,7 +73,7 @@ sed -i '/#vless-nontls$/a\#### '"$user $exp"'\
 vlesstls="vless://${uuid}@${domain}:$vltls?sni=${domain}&host=${domain}&type=ws&security=tls&path=gandring&encryption=none#${user}"
 vlessnontls="vless://${uuid}@${domain}:$vlnontls?host=${domain}&security=none&type=ws&path=gandring&encryption=none#${user}"
 vlessgrpc="vless://${uuid}@${domain}:$vlgrpc?serviceName=gandring&sni=${domain}&mode=multi&type=grpc&security=tls&encryption=none#${user}"
-vlessgrpcnon="vless://${uuid}@${domain}:$vlgrpcnon?serviceName=gandring&sni=${domain}&mode=multi&type=grpc&security=none&encryption=none#${user}"
+vlessgrpcnon="vless://${uuid}@${domain}:$vlgrpcnon?serviceName=gandring&serverName=${domain}&mode=multi&type=grpc&security=none&encryption=none#${user}"
 vlesshdua="vless://${uuid}@${domain}:$vlhdua?type=http&security=tls&path=gandring&encryption=none#${user}"
 vlesshduanon="vless://${uuid}@${domain}:$vlhduanon?type=http&security=none&path=gandring&encryption=none#${user}"
 vlessxtls="vless://${uuid}@${domain}:$vlxtls?security=xtls&encryption=none&flow=xtls-rprx-direct#${user}"
