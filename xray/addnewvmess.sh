@@ -164,7 +164,7 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "net": "h2",
       "path": "/gandring",
       #"type": "multi",
-      "host": "$domain",
+      "host": "",
       "tls": "tls"
 }
 EOF
