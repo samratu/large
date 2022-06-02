@@ -903,7 +903,7 @@ cat > /etc/xray/xvless.json << END
     "log": {
             "access": "/var/log/xray/access.log",
         "error": "/var/log/xray/error.log",
-        "loglevel": "info"
+        "loglevel": "warning"
     },
     "inbounds": [
         {
@@ -936,6 +936,7 @@ cat > /etc/xray/xvless.json << END
                     ]
                 },
                 "grpcSettings": {
+                "acceptProxyProtocol": true,
                     "serviceName": "gandring"
                 }
             }
@@ -956,94 +957,15 @@ cat > /etc/xray/xvless.json << END
             "streamSettings": {
                 "network": "grpc",
                 "security": "none",
-                "tlsSettings": {
-                    "serverName": "${domain}",
-                    "alpn": [
-                        "http/1.1",
-                        "h2"
-                    ],
-                    "certificates": [
-                        {
-                            "certificateFile": "/etc/xray/xray.crt",
-                            "keyFile": "/etc/xray/xray.key"
-                        }
-                    ],
-                },
+                "serverName": "$domain",
                 "grpcSettings": {
+                "acceptProxyProtocol": true,
                     "serviceName": "gandring"
                 }
             }
         },
         {
-            "port": 888,
-            "protocol": "vmess",
-            "settings": {
-                "clients": [
-                    {
-                        "id": "${uuid}",
-                        "alterid": 0
-#vmess-hdua-tls
-                    }
-                ],
-                "decryption": "none"
-            },
-            "streamSettings": {
-                "network": "h2",
-                "security": "tls",
-                "tlsSettings": {
-                    "serverName": "${domain}",
-                    "alpn": [
-                        "http/1.1",
-                        "h2"
-                    ],
-                    "certificates": [
-                        {
-                            "certificateFile": "/etc/xray/xray.crt",
-                            "keyFile": "/etc/xray/xray.key"
-                        }
-                    ]
-                },
-                "httpSettings": {
-                    "path": "gandring"
-                }
-            }
-        },
-        {
-            "port": 88888,
-            "protocol": "vmess",
-            "settings": {
-                "clients": [
-                    {
-                        "id": "${uuid}",
-                        "alterid": 0
-#vmess-hdua-nontls
-                    }
-                ],
-                "decryption": "none"
-            },
-            "streamSettings": {
-                "network": "h2",
-                "security": "none",
-                "tlsSettings": {
-                    "serverName": "${domain}",
-                    "alpn": [
-                        "http/1.1",
-                        "h2"
-                    ],
-                    "certificates": [
-                        {
-                            "certificateFile": "/etc/xray/xray.crt",
-                            "keyFile": "/etc/xray/xray.key"
-                        }
-                    ]
-                },
-                "httpSettings": {
-                    "path": "/gandring"
-                }
-            }
-        },
-        {
-            "port": 2083,
+            "port": 443,
             "protocol": "vless",
             "settings": {
                 "clients": [
@@ -1071,6 +993,7 @@ cat > /etc/xray/xvless.json << END
                     ]
                 },
                 "grpcSettings": {
+                "acceptProxyProtocol": true,
                     "serviceName": "gandring"
                 }
             }
@@ -1090,26 +1013,15 @@ cat > /etc/xray/xvless.json << END
             "streamSettings": {
                 "network": "grpc",
                 "security": "none",
-                "tlsSettings": {
-                    "serverName": "${domain}",
-                    "alpn": [
-                        "http/1.1",
-                        "h2"
-                    ],
-                    "certificates": [
-                        {
-                            "certificateFile": "/etc/xray/xray.crt",
-                            "keyFile": "/etc/xray/xray.key"
-                        }
-                    ],
-                },
+                "serverName": "$domain",
                 "grpcSettings": {
+                "acceptProxyProtocol": true,
                     "serviceName": "gandring"
                 }
             }
         },
         {
-            "port": 8888,
+            "port": 443,
             "protocol": "vless",
             "settings": {
                 "clients": [
@@ -1124,11 +1036,6 @@ cat > /etc/xray/xvless.json << END
                 "network": "h2",
                 "security": "tls",
                 "tlsSettings": {
-                    "serverName": "${domain}",
-                    "alpn": [
-                        "http/1.1",
-                        "h2"
-                    ],
                     "certificates": [
                         {
                             "certificateFile": "/etc/xray/xray.crt",
@@ -1137,12 +1044,13 @@ cat > /etc/xray/xvless.json << END
                     ]
                 },
                 "httpSettings": {
-                    "path": "/gandring"
+                "acceptProxyProtocol": true,
+                    "path": "gandring"
                 }
             }
         },
         {
-            "port": 2088,
+            "port": 20820,
             "protocol": "vless",
             "settings": {
                 "clients": [
@@ -1156,13 +1064,119 @@ cat > /etc/xray/xvless.json << END
             "streamSettings": {
                 "network": "h2",
                 "security": "none",
-                "tlsSettings": {},
                 "httpSettings": {
-                    "path": "/gandring"
+                "acceptProxyProtocol": true,
+                    "path": "gandring"
                 }
             }
         }
     ],
+    "outbounds": [
+    {
+      "protocol": "freedom",
+      "settings": {}
+    },
+    {
+      "protocol": "blackhole",
+      "settings": {},
+      "tag": "blocked"
+    }
+  ],
+  "routing": {
+    "rules": [
+      {
+        "type": "field",
+        "ip": [
+          "0.0.0.0/8",
+          "10.0.0.0/8",
+          "100.64.0.0/10",
+          "169.254.0.0/16",
+          "172.16.0.0/12",
+          "192.0.0.0/24",
+          "192.0.2.0/24",
+          "192.168.0.0/16",
+          "198.18.0.0/15",
+          "198.51.100.0/24",
+          "203.0.113.0/24",
+          "::1/128",
+          "fc00::/7",
+          "fe80::/10"
+        ],
+        "outboundTag": "blocked"
+      },
+      {
+        "inboundTag": [
+          "api"
+        ],
+        "outboundTag": "api",
+        "type": "field"
+      },
+      {
+        "type": "field",
+        "outboundTag": "blocked",
+        "protocol": [
+          "bittorrent"
+        ]
+      }
+    ]
+  },
+  "stats": {},
+  "api": {
+    "services": [
+      "StatsService"
+    ],
+    "tag": "api"
+  },
+  "policy": {
+    "levels": {
+      "0": {
+        "statsUserDownlink": true,
+        "statsUserUplink": true
+      }
+    },
+    "system": {
+      "statsInboundUplink": true,
+      "statsInboundDownlink": true
+    }
+  }
+}
+END
+
+uuid=$(cat /proc/sys/kernel/random/uuid)
+domain=$(cat /root/domain)
+# // Certificate File
+path_crt="/etc/xray/xray.crt"
+path_key="/etc/xray/xray.key"
+#domain_ecc=$(cat /root/.acme.sh)
+#domain.key=$(cat /root/.acme.sh/$domain_ecc)
+#path_crt="/root/.acme.sh/$domain_ecc/fullchain.cer"
+#path_key="/root/.acme.sh/$domain_ecc/$domain.key"
+# Buat Config Xray
+cat > /etc/xray/xss.json << END
+{
+  "log": {
+    "access": "/var/log/xray/access.log",
+    "error": "/var/log/xray/error.log",
+    "loglevel": "warning"
+  },
+  "inbounds": [
+  {
+      "port": 212,
+      "protocol": "shadowsocks",
+      "settings": {
+        "method": "2022-blake3-aes-128-gcm",
+        "password": "gandring",
+        "clients": [
+          {
+            "password": "gandring",
+            "email": "gandring@p0x.smule.my.id"
+#xray-new-ss
+          }
+        ],
+        "network": "tcp,udp"
+      }
+    }
+  ],
     "outbounds": [
     {
       "protocol": "freedom",
