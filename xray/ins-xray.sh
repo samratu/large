@@ -791,7 +791,7 @@ cat > /etc/xray/xtrojan.json << END
       }
     },
     {
-      "port": 700,
+      "port": 888,
       "listen": "0.0.0.0",
       "protocol": "trojan",
       "tag": "TROJAN-HTTP/2-in",
