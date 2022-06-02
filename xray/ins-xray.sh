@@ -1021,7 +1021,7 @@ cat > /etc/xray/xvless.json << END
             }
         },
         {
-            "port": 88888,
+            "port": 8888,
             "protocol": "vless",
             "settings": {
                 "clients": [
