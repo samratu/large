@@ -376,7 +376,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 2053,
+      "port": 2082,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -553,7 +553,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 108,
+      "port": 1080,
       "protocol": "socks",
       "settings": {
         "auth": "password",
@@ -718,44 +718,7 @@ cat > /etc/xray/xtrojan.json << END
       }
     },
     {
-      "port": 8443,
-      "listen": "0.0.0.0",
-      "protocol": "trojan",
-      "tag": "TROJAN-gRPC-in",
-      "settings": {
-        "clients": [
-          {
-            "password": "gandring",
-            "email": "gandring@p0x.smule.my.id"
-#trojan-grpc
-          }
-        ],
-        "decryption": "none"
-      },
-      "streamSettings": {
-        "network": "grpc",
-        "security": "tls",
-        "tlsSettings": {
-          "serverName": "",
-          "alpn": [
-            "h2",
-            "http/1.1"
-          ],
-          "certificates": [
-            {
-              "certificateFile": "/etc/xray/xray.crt",
-              "keyFile": "/etc/xray/xray.key"
-            }
-          ]
-        },
-        "grpcSettings": {
-        "acceptProxyProtocol": true,
-          "serviceName": "gandring"
-        }
-      }
-    },
-    {
-      "port": 2096,
+      "port": 443,
       "listen": "0.0.0.0",
       "protocol": "trojan",
       "tag": "TROJAN-WSTLS-in",
@@ -813,7 +776,43 @@ cat > /etc/xray/xtrojan.json << END
       }
     },
     {
-      "port": 443,
+      "port": 8443,
+      "listen": "0.0.0.0",
+      "protocol": "trojan",
+      "tag": "TROJAN-gRPC-in",
+      "settings": {
+        "clients": [
+          {
+            "password": "gandring",
+            "email": "gandring@p0x.smule.my.id"
+#trojan-grpc
+          }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "grpc",
+        "security": "tls",
+        "tlsSettings": {
+          "serverName": "",
+          "alpn": [
+            "h2",
+            "http/1.1"
+          ],
+          "certificates": [
+            {
+              "certificateFile": "/etc/xray/xray.crt",
+              "keyFile": "/etc/xray/xray.key"
+            }
+          ]
+        },
+        "grpcSettings": {
+          "serviceName": "gandring"
+        }
+      }
+    },
+    {
+      "port": 2095,
       "listen": "0.0.0.0",
       "protocol": "trojan",
       "tag": "TROJAN-H2C-in",
@@ -1016,7 +1015,7 @@ cat > /etc/xray/xvless.json << END
     },
     "inbounds": [
         {
-            "port": 2083,
+            "port": 2053,
             "protocol": "vmess",
             "settings": {
                 "clients": [
@@ -1051,7 +1050,7 @@ cat > /etc/xray/xvless.json << END
             }
         },
         {
-            "port": 2082,
+            "port": 1000,
             "protocol": "vmess",
             "settings": {
                 "clients": [
@@ -1074,7 +1073,7 @@ cat > /etc/xray/xvless.json << END
             }
         },
         {
-            "port": 443,
+            "port": 2083,
             "protocol": "vless",
             "settings": {
                 "clients": [
@@ -1108,7 +1107,7 @@ cat > /etc/xray/xvless.json << END
             }
         },
         {
-            "port": 2082,
+            "port": 2000,
             "protocol": "vless",
             "settings": {
                 "clients": [
@@ -1130,7 +1129,7 @@ cat > /etc/xray/xvless.json << END
             }
         },
         {
-            "port": 443,
+            "port": 2082,
             "protocol": "vless",
             "settings": {
                 "clients": [
