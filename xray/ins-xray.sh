@@ -965,7 +965,7 @@ cat > /etc/xray/xvless.json << END
             }
         },
         {
-            "port": 443,
+            "port": 2083,
             "protocol": "vless",
             "settings": {
                 "clients": [
@@ -1021,7 +1021,7 @@ cat > /etc/xray/xvless.json << END
             }
         },
         {
-            "port": 443,
+            "port": 88888,
             "protocol": "vless",
             "settings": {
                 "clients": [
@@ -1290,7 +1290,7 @@ END
 # / / Installation Xray Service
 cat > /etc/systemd/system/xvless.service << END
 [Unit]
-Description=XTROJAN ROUTING DAM COLO PENGKOL BY Z
+Description=XVLESS ROUTING DAM COLO PENGKOL BY ZEROSSL
 Documentation=https://t.me/zerossl
 After=network.target nss-lookup.target
 
@@ -1300,6 +1300,26 @@ CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
 ExecStart=/usr/local/bin/xray -config /etc/xray/xvless.json
+Restart=on-failure
+RestartPreventExitStatus=23
+
+[Install]
+WantedBy=multi-user.target
+END
+
+# / / Installation Xray Service
+cat > /etc/systemd/system/xss.service << END
+[Unit]
+Description=XSS ROUTING DAM COLO PENGKOL BY ZEROSSL
+Documentation=https://t.me/zerossl
+After=network.target nss-lookup.target
+
+[Service]
+User=root
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+NoNewPrivileges=true
+ExecStart=/usr/local/bin/xray -config /etc/xray/xss.json
 Restart=on-failure
 RestartPreventExitStatus=23
 
