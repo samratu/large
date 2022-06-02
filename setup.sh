@@ -152,7 +152,7 @@ echo " 🔰 TROJAN H2C : 888" |tee -a log-install.txt
 echo " 🔰 TROJAN XTLS : 4443" |tee -a log-install.txt
 echo " 🔰 TROJAN WS TLS : 2096" |tee -a log-install.txt
 echo " 🔰 TROJAN WS NON TLS : 2095" |tee -a log-install.txt
-echo " 🔰 SOCKS5 WEBSOCKET : 108" |tee -a log-install.txt
+echo " 🔰 SOCKS5 WEBSOCKET : 1080" |tee -a log-install.txt
 echo " 🔰 SOCKS5 TCP : 999 |tee -a log-install.txt
 echo " 🔰 SHADOWSOCKS TCP : 333" |tee -a log-install.txt
 echo " 🔰 SHADOWSOCKS UDP : 503" |tee -a log-install.txt
