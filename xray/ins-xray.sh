@@ -1015,7 +1015,7 @@ cat > /etc/xray/xvless.json << END
     },
     "inbounds": [
         {
-            "port": 2053,
+            "port": 2083,
             "protocol": "vmess",
             "settings": {
                 "clients": [
@@ -1073,7 +1073,7 @@ cat > /etc/xray/xvless.json << END
             }
         },
         {
-            "port": 2083,
+            "port": 2096,
             "protocol": "vless",
             "settings": {
                 "clients": [
