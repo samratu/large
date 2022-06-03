@@ -807,6 +807,7 @@ cat > /etc/xray/xtrojan.json << END
           ]
         },
         "grpcSettings": {
+          "acceptProxyProtocol": true,
           "serviceName": "gandring"
         }
       }
