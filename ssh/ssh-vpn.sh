@@ -251,20 +251,7 @@ sed -i $MYIP2 /etc/squid/squid.conf
 # Install SSLH
 apt -y install sslh
 rm -f /etc/default/sslh
-# install sslh
-cd /root/
-wget -q -O sslh.zip "https://${wisnuvpnnnn}/sslh.zip"
-unzip -o sslh.zip
-cd /root/sslh
-chmod +x configure
-./configure
-make
-make install
-cd /root
-rm -r -f sslh
-rm -f sslh.zip
-mkdir -p /etc/default/sslh
-chmod 644 /etc/default/sslh
+
 # Settings SSLH
 cat > /etc/default/sslh <<-END
 # Default options for sslh initscript
