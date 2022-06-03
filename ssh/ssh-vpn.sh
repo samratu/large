@@ -249,8 +249,8 @@ wget -O /etc/squid/squid.conf "https://${wisnuvpn}/squid3.conf"
 sed -i $MYIP2 /etc/squid/squid.conf
 
 # Install SSLH
-#apt -y install sslh
-#rm -f /etc/default/sslh
+apt -y install sslh
+rm -f /etc/default/sslh
 # install sslh
 cd /root/
 wget -q -O sslh.zip "https://${wisnuvpnnnn}/sslh.zip"
@@ -282,7 +282,7 @@ RUN=yes
 
 # binary to use: forked (sslh) or single-thread (sslh-select) version
 # systemd users: don't forget to modify /lib/systemd/system/sslh.service
-#DAEMON=/usr/sbin/sslh
+DAEMON=/usr/sbin/sslh
 
 DAEMON_OPTS="--user sslh --listen 0.0.0.0:8443 --ssh 127.0.0.1:22 --ssl 127.0.0.1:500 --ssh 127.0.0.1:300 --openvpn 127.0.0.1:1194 --http 127.0.0.1:2082 --pidfile /var/run/sslh/sslh.pid"
 
