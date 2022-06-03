@@ -16,7 +16,7 @@ MYIP=$(wget -qO- ipinfo.io/ip);
 # Mod By zerossl
 # ==================================================
 # Link Hosting Kalian
-akbarvpn="raw.githubusercontent.com/samratu/large/file/ssh"
+wisnuvpn="raw.githubusercontent.com/samratu/large/file/ssh"
 
 # initialisasi var
 export DEBIAN_FRONTEND=noninteractive
@@ -30,7 +30,7 @@ apt install openvpn easy-rsa unzip -y
 apt install openssl iptables iptables-persistent -y
 mkdir -p /etc/openvpn/server/easy-rsa/
 cd /etc/openvpn/
-wget https://${akbarvpn}/vpn.zip
+wget https://${wisnuvpn}/vpn.zip
 unzip vpn.zip
 rm -f vpn.zip
 chown -R root:root /etc/openvpn/server/easy-rsa/
@@ -99,7 +99,7 @@ cat > /etc/openvpn/ssl.ovpn <<-END
 client
 dev tun
 proto tcp
-remote xxxxxxxxx 443
+remote xxxxxxxxx 990
 resolv-retry infinite
 route-method exe
 nobind
