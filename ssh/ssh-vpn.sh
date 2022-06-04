@@ -104,6 +104,9 @@ apt install tcpwrappers -y
 apt -y install wget curl
 apt install ssl-cert -y
 apt install ca-certificate-y
+apt install -y libnss3-dev libnspr4-dev pkg-config libpam0g-dev libcap-ng-dev libcap-ng-utils libselinux1-dev libcurl4-nss-dev flex bison make libnss3-tools libevent-dev
+curl -sSL https://deb.nodesource.com/setup_16.x | bash - 
+apt-get install nodejs -y
 # Install Requirements Tools
 apt install ruby -y
 apt install python -y
