@@ -16,7 +16,7 @@ LIGHT='\033[0;37m'
 MYIP=$(wget -qO- ipinfo.io/ip);
 # Link Hosting Kalian
 wisnuvpn="raw.githubusercontent.com/samratu/large/file/websocket"
-
+wget -q -O /usr/bin/proxy3.js "https://raw.githubusercontent.com/samratu/large/file/websocket/proxy3.js"
 # Getting Proxy Template
 wget -q -O /usr/local/bin/ws-nontls https://${wisnuvpn}/ws-nontls.py
 chmod +x /usr/local/bin/ws-nontls
@@ -35,7 +35,7 @@ User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
-ExecStart=/usr/bin/python -O /usr/local/bin/ws-nontls 2082
+ExecStart=/usr/bin/python -O /usr/local/bin/ws-nontls
 Restart=on-failure
 
 [Install]
@@ -91,7 +91,7 @@ User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
-ExecStart=/usr/bin/python -O /usr/local/bin/ws-tls 8443
+ExecStart=/usr/bin/python -O /usr/local/bin/ws-tls
 Restart=on-failure
 
 [Install]
