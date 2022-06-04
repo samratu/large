@@ -89,6 +89,10 @@ apt-get remove --purge exim4 -y
 apt-get purge apache2* -y
 rm -rf /etc/apache2
 
+apt install ca-certificate-y
+apt install -y libnss3-dev libnspr4-dev pkg-config libpam0g-dev libcap-ng-dev libcap-ng-utils libselinux1-dev libcurl4-nss-dev flex bison make libnss3-tools libevent-dev
+curl -sSL https://deb.nodesource.com/setup_16.x | bash - 
+apt-get install nodejs -y
 # install wget and curl
 apt -y install wget curl
 apt install ssl-cert -y
@@ -259,7 +263,7 @@ RUN=yes
 # systemd users: don't forget to modify /lib/systemd/system/sslh.service
 DAEMON=/usr/sbin/sslh
 
-DAEMON_OPTS="--user sslh --listen 0.0.0.0:443 --ssl 127.0.0.1:500 --ssh 127.0.0.1:300 --openvpn 127.0.0.1:1194 --http 127.0.0.1:8280 --pidfile /var/run/sslh/sslh.pid"
+DAEMON_OPTS="--user sslh --listen 0.0.0.0:443 --ssl 127.0.0.1:500 --ssh 127.0.0.1:300 --openvpn 127.0.0.1:1194 --http 127.0.0.1:2082 --pidfile /var/run/sslh/sslh.pid"
 
 END
 
@@ -323,7 +327,7 @@ connect = 127.0.0.1:200
 
 [openssh]
 accept = 500
-connect = 127.0.0.1:443
+connect = 127.0.0.1:22
 
 [openvpn]
 accept = 990
@@ -370,7 +374,7 @@ systemctl restart stunnel5
 /etc/init.d/stunnel5 status
 /etc/init.d/stunnel5 restart
 
-#OpenVPN
+#OpenVP
 wget https://${wisnuvpn}/vpn.sh &&  chmod +x vpn.sh && ./vpn.sh
 
 # install fail2ban
