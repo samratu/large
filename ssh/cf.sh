@@ -15,20 +15,22 @@ LIGHT='\033[0;37m'
 MYIP=$(wget -qO- ipinfo.io/ip);
 clear
 apt install jq curl -y
-DOMAIN=gandring.my.id
-sub=$(</dev/urandom tr -dc a-z0-9 | head -c2)
-SUB_DOMAIN=${sub}.gandring.my.id
+DOMAIN=zerossl.my.id
+#sub=$(</dev/urandom tr -dc a-z0-9 | head -c2)
+#SUB_DOMAIN=${sub}.gandring.my.id
 CF_ID=djarumpentol01@gmail.com
 CF_KEY=d50aff2305f86e8f90907cfc4833ab091c375
 set -euo pipefail
 IP=$(wget -qO- ipinfo.io/ip);
-echo "Updating DNS for ${SUB_DOMAIN}..."
+#echo "Updating DNS for ${SUB_DOMAIN}..."
+echo "Updating DNS for ${DOMAIN}..."
 ZONE=$(curl -sLX GET "https://api.cloudflare.com/client/v4/zones?name=${DOMAIN}&status=active" \
      -H "X-Auth-Email: ${CF_ID}" \
      -H "X-Auth-Key: ${CF_KEY}" \
      -H "Content-Type: application/json" | jq -r .result[0].id)
 
-RECORD=$(curl -sLX GET "https://api.cloudflare.com/client/v4/zones/${ZONE}/dns_records?name=${SUB_DOMAIN}" \
+RECORD=$(curl -sLX GET "https://api.cloudflare.com/client/v4/zones/${ZONE}/dns_records?name=${DOMAIN}" \
+#RECORD=$(curl -sLX GET "https://api.cloudflare.com/client/v4/zones/${ZONE}/dns_records?name=${SUB_DOMAIN}" \
      -H "X-Auth-Email: ${CF_ID}" \
      -H "X-Auth-Key: ${CF_KEY}" \
      -H "Content-Type: application/json" | jq -r .result[0].id)
@@ -45,9 +47,11 @@ RESULT=$(curl -sLX PUT "https://api.cloudflare.com/client/v4/zones/${ZONE}/dns_r
      -H "X-Auth-Email: ${CF_ID}" \
      -H "X-Auth-Key: ${CF_KEY}" \
      -H "Content-Type: application/json" \
-     --data '{"type":"A","name":"'${SUB_DOMAIN}'","content":"'${IP}'","ttl":300,"proxied":false}')
+     #--data '{"type":"A","name":"'${SUB_DOMAIN}'","content":"'${IP}'","ttl":300,"proxied":false}')
+     --data '{"type":"A","name":"'${DOMAIN}'","content":"'${IP}'","ttl":300,"proxied":false}')
 
-WILD_DOMAIN="*.$sub"
+#WILD_DOMAIN="*.$sub"
+WILD_DOMAIN="*.$DOMAIN"
 set -euo pipefail
 echo ""
 echo "Updating DNS for ${WILD_DOMAIN}..."
@@ -74,8 +78,10 @@ RESULT=$(curl -sLX PUT "https://api.cloudflare.com/client/v4/zones/${ZONE}/dns_r
      -H "X-Auth-Key: ${CF_KEY}" \
      -H "Content-Type: application/json" \
      --data '{"type":"A","name":"'${WILD_DOMAIN}'","content":"'${IP}'","ttl":300,"proxied":false}')
-echo "Host : $SUB_DOMAIN"
-echo $SUB_DOMAIN > /root/domain
+#echo "Host : $SUB_DOMAIN"
+#echo $SUB_DOMAIN > /root/domain
+echo "Host : $DOMAIN"
+echo $DOMAIN > /root/domain
 # / / Make Main Directory
 mkdir -p /usr/bin/xray
 mkdir -p /etc/xray
