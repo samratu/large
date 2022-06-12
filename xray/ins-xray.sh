@@ -1,5 +1,5 @@
 #!/bin/bash
-# @ Copyrigt 2021 By zerossl
+# @ Copyrigt 2017 By zerossl
 # Color
 RED='\033[0;31m'
 NC='\033[0m'
