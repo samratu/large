@@ -1260,7 +1260,7 @@ path_key="/etc/xray/xray.key"
 #path_crt="/root/.acme.sh/$domain_ecc/fullchain.cer"
 #path_key="/root/.acme.sh/$domain_ecc/$domain.key"
 # Buat Config Xray
-cat > /usr/local/etc/xray/xvmess.json << END
+cat > /etc/xray/xvmess.json << END
 {
   "log": {
     "access": "/var/log/xray/access.log",
@@ -1717,7 +1717,7 @@ User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
-ExecStart=/usr/local/bin/xray -config /usr/local/etc/xray/xvmess.json
+ExecStart=/usr/local/bin/xray -config /etc/xray/xvmess.json
 Restart=on-failure
 RestartPreventExitStatus=23
 
