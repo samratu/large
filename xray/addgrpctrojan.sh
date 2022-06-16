@@ -41,6 +41,7 @@ sed -i '/#trojan-grpc$/a\#&# '"$user $exp"'\
 trojangrpc="trojan://${uuid}@${domain}:$tgrpc?mode=gun&security=tls&type=grpc&serviceName=/gandring&sni=${domain}#${user}"
 systemctl restart xray.service
 systemctl restart xtrojan.service
+systemctl restart xvmess
 service cron restart
 clear
 echo -e ""
