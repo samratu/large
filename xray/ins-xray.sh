@@ -1982,3 +1982,4 @@ systemctl restart trojan-go
 
 cd
 cp /root/domain /etc/xray
+cp /root/domain /usr/local/etc/xray
