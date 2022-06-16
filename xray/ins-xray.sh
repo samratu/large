@@ -1301,6 +1301,18 @@ cat > /usr/local/etc/xray/xvmess.json << END
                         "xver": 1
                     },
                     {
+                        "dest": 1330,
+                        "xver": 1
+                    },
+                    {
+                        "dest": 1340,
+                        "xver": 1
+                    },
+                    {
+                        "dest": 1350,
+                        "xver": 1
+                    },
+                    {
                         "path": "/gandring",
                         "dest": 1234,
                         "xver": 1
@@ -1445,6 +1457,34 @@ cat > /usr/local/etc/xray/xvmess.json << END
       }
     },
     {
+          "port": 1330,
+          "listen": "127.0.0.1",
+          "protocol": "trojan",
+          "settings": {
+           "clients": [
+       {
+           "password": "gandring",
+           "level": 0,
+           "email": "gandring@p0x.smule.my.id"
+#trojan-hdua
+       }
+      ],
+           "fallbacks": [
+       {
+           "dest": 88
+       }
+     ]
+  },
+      "streamSettings": {
+        "network": "h2",
+        "security": "none",
+        "httpSettings": {
+          "acceptProxyProtocol": true,
+          "path": "/bekti"
+         }
+      }
+    },
+    {
           "port": 2345,
           "listen": "127.0.0.1",
           "protocol": "trojan",
@@ -1493,6 +1533,30 @@ cat > /usr/local/etc/xray/xvmess.json << END
                 "wsSettings": {
                     "acceptProxyProtocol": true,
                     "path": "/satrio"
+                }
+            }
+        },
+        {
+            "port": 1340,
+            "listen": "127.0.0.1",
+            "protocol": "vless",
+            "settings": {
+                "clients": [
+                    {
+                        "id": "gandring",
+                        "level": 0,
+                        "email": "gandring@p0x.smule.my.id"
+#vless-hdua
+                    }
+                ],
+                "decryption": "none"
+            },
+            "streamSettings": {
+                "network": "h2",
+                "security": "none",
+                "httpSettings": {
+                    "acceptProxyProtocol": true,
+                    "path": "/zerossl"
                 }
             }
         },
@@ -1570,6 +1634,29 @@ cat > /usr/local/etc/xray/xvmess.json << END
                 "wsSettings": {
                     "acceptProxyProtocol": true,
                     "path": "/shanum"
+                }
+        }
+  },
+  {
+            "port": 1350,
+            "listen": "127.0.0.1",
+            "protocol": "vmess",
+            "settings": {
+                "clients": [
+                    {
+                        "id": "gandring",
+                        "level": 0,
+                        "email": "gandring@p0x.smule.my.id"
+#vmess-hdua
+                     }
+                ]
+            },
+            "streamSettings": {
+                "network": "h2",
+                "security": "none",
+                "httpSettings": {
+                    "acceptProxyProtocol": true,
+                    "path": "/demak"
                 }
         }
   },
@@ -1665,112 +1752,6 @@ cat > /usr/local/etc/xray/xvmess.json << END
       "statsInboundDownlink": true,
       "statsOutboundUplink" : true,
       "statsOutboundDownlink" : true
-    }
-  }
-}
-END
-
-uuid=$(cat /proc/sys/kernel/random/uuid)
-domain=$(cat /root/domain)
-# // Certificate File
-path_crt="/etc/xray/xray.crt"
-path_key="/etc/xray/xray.key"
-#domain_ecc=$(cat /root/.acme.sh)
-#domain.key=$(cat /root/.acme.sh/$domain_ecc)
-#path_crt="/root/.acme.sh/$domain_ecc/fullchain.cer"
-#path_key="/root/.acme.sh/$domain_ecc/$domain.key"
-# Buat Config Xray
-cat > /etc/xray/xss.json << END
-{
-  "log": {
-    "access": "/var/log/xray/access.log",
-    "error": "/var/log/xray/error.log",
-    "loglevel": "warning"
-  },
-  "inbounds": [
-  {
-      "port": 212,
-      "protocol": "shadowsocks",
-      "settings": {
-        "method": "2022-blake3-aes-128-gcm",
-        "password": "gandring",
-        "clients": [
-          {
-            "password": "gandring",
-            "email": "gandring@p0x.smule.my.id"
-#xray-new-ss
-          }
-        ],
-        "network": "tcp,udp"
-      }
-    }
-  ],
-    "outbounds": [
-    {
-      "protocol": "freedom",
-      "settings": {}
-    },
-    {
-      "protocol": "blackhole",
-      "settings": {},
-      "tag": "blocked"
-    }
-  ],
-  "routing": {
-    "rules": [
-      {
-        "type": "field",
-        "ip": [
-          "0.0.0.0/8",
-          "10.0.0.0/8",
-          "100.64.0.0/10",
-          "169.254.0.0/16",
-          "172.16.0.0/12",
-          "192.0.0.0/24",
-          "192.0.2.0/24",
-          "192.168.0.0/16",
-          "198.18.0.0/15",
-          "198.51.100.0/24",
-          "203.0.113.0/24",
-          "::1/128",
-          "fc00::/7",
-          "fe80::/10"
-        ],
-        "outboundTag": "blocked"
-      },
-      {
-        "inboundTag": [
-          "api"
-        ],
-        "outboundTag": "api",
-        "type": "field"
-      },
-      {
-        "type": "field",
-        "outboundTag": "blocked",
-        "protocol": [
-          "bittorrent"
-        ]
-      }
-    ]
-  },
-  "stats": {},
-  "api": {
-    "services": [
-      "StatsService"
-    ],
-    "tag": "api"
-  },
-  "policy": {
-    "levels": {
-      "0": {
-        "statsUserDownlink": true,
-        "statsUserUplink": true
-      }
-    },
-    "system": {
-      "statsInboundUplink": true,
-      "statsInboundDownlink": true
     }
   }
 }
