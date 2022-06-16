@@ -694,7 +694,7 @@ cat > /etc/xray/xtrojan.json << END
           },
           {
             "path": "/gandring",
-            "dest": 443,
+            "dest": 88,
             "xver": 1
           }
         ]
@@ -1376,7 +1376,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
       ],
            "fallbacks": [
        {
-           "dest": 8081
+           "dest": 88
        }
      ]
   },
@@ -1883,7 +1883,7 @@ cat > /etc/trojan-go/config.json << END
   "local_addr": "0.0.0.0",
   "local_port": 2053,
   "remote_addr": "127.0.0.1",
-  "remote_port": 80,
+  "remote_port": 88,
   "log_level": 1,
   "log_file": "/var/log/trojan-go/trojan-go.log",
   "password": [
