@@ -20,6 +20,7 @@ domain=$(cat /etc/xray/domain)
 uuid=$(cat /proc/sys/kernel/random/uuid)
 tgrpc="$(cat ~/log-install.txt | grep -w "TROJAN GRPC" | cut -d: -f2|sed 's/ //g')"
 txtls="$(cat ~/log-install.txt | grep -w "TROJAN XTLS" | cut -d: -f2|sed 's/ //g')"
+tgfw="$(cat ~/log-install.txt | grep -w "TROJAN GFW" | cut -d: -f2|sed 's/ //g')"
 thdua="$(cat ~/log-install.txt | grep -w "TROJAN H2C" | cut -d: -f2|sed 's/ //g')"
 thttp="$(cat ~/log-install.txt | grep -w "TROJAN HTTP" | cut -d: -f2|sed 's/ //g')"
 ttls="$(cat ~/log-install.txt | grep -w "TROJAN WS TLS" | cut -d: -f2|sed 's/ //g')"
@@ -52,6 +53,8 @@ sed -i '/#trojan-hdua$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
 sed -i '/#trojan-tls$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
+sed -i '/#trojan-gfw$/a\#&# '"$user $exp"'\
+},{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#trojan-nontls$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
 sed -i '/#trojan-http$/a\#&# '"$user $exp"'\
@@ -72,6 +75,7 @@ trojango="trojan-go://${uuid}@${domain}:${trgo}/?sni=${domain}&type=ws&host=${do
 trojanhdua="trojan://${uuid}@${domain}:$thdua?sni=${domain}&type=http&security=tls&path=gandring#${user}"
 trojangrpc="trojan://${uuid}@${domain}:$tgrpc?mode=gun&security=tls&type=grpc&serviceName=gandring&sni=${domain}#${user}"
 trojanxtls="trojan://${uuid}@${domain}:$txtls?security=xtls&type=tcp&headerType=none&flow=xtls-rprx-direct#${user}"
+trojangfw="trojan://${uuid}@${domain}:$tgfw?security=tls&type=tcp&headerType=none&flow=xtls-rprx-direct#${user}"
 trojantls="trojan://${uuid}@${domain}:$ttls?type=ws&security=tls&host=$domain&path=%2fgandring&sni=$domain#${user}"
 trojannontls="trojan://${uuid}@${domain}:$tnontls?type=ws&security=none&host=$domain&path=%2fgandring#${user}"
 trojanhttp="trojan://${uuid}@${domain}:$thttp?sni=${domain}&type=tcp&security=none&host=${domain}&headerType=http#${user}"
@@ -87,7 +91,7 @@ echo -e "NAMA            :${user}"
 echo -e "IP/Host         :${MYIP}"
 echo -e "IP/Host         :${MYIP6}"
 echo -e "Address         :${domain}"
-echo -e "Protocol        :GRPC,H2C,TCP/XTLS,WS,HTTP,GO"
+echo -e "Protocol        :GRPC,H2C,GFW,XTLS,WS,HTTP,GO"
 echo -e "ServiceName     :gandring"
 echo -e "Path WS         :/trojanws"
 echo -e "Path H2C        :gandring"
@@ -106,6 +110,8 @@ echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━�
 echo -e "Link GRPC:  ${trojangrpc}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "Link XTLS:  ${trojanxtls}"
+echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "Link GFW:  ${trojangfw}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "Link HTTP/2:  ${trojanhdua}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
