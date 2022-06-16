@@ -1260,7 +1260,7 @@ path_key="/etc/xray/xray.key"
 #path_crt="/root/.acme.sh/$domain_ecc/fullchain.cer"
 #path_key="/root/.acme.sh/$domain_ecc/$domain.key"
 # Buat Config Xray
-cat > /etc/xray/xvmess.json << END
+cat > /usr/local/etc/xray/xvmess.json << END
 {
   "log": {
     "access": "/var/log/xray/access.log",
