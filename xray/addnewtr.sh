@@ -39,6 +39,16 @@ until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${user_EXISTS} == '0' ]]; do
 			exit 1
 		fi
 	done
+until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${user_EXISTS} == '0' ]]; do
+		read -rp "Password : " -e user
+		user_EXISTS=$(grep -w $user /usr/local/etc/xray/xvmess.json | wc -l)
+
+		if [[ ${user_EXISTS} == '1' ]]; then
+			echo ""
+			echo -e "Username ${RED}${user}${NC} Already On VPS Please Choose Another"
+			exit 1
+		fi
+	done
 uuid=$(cat /proc/sys/kernel/random/uuid)
 read -p "Expired (Days) : " masaaktif
 #read -p "Expired (Seconds) : " masaaktif
@@ -46,9 +56,9 @@ hariini=`date -d "0 days" +"%Y-%m-%d"`
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 #exp=`date -d "$masaaktif seconds" +"%Y-%m-%d"`
 sed -i '/#trojan-grpc$/a\#&# '"$user $exp"'\
-},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
+},{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#trojan-xtls$/a\#&# '"$user $exp"'\
-},{"password": "'""$uuid""'","flow": "'""xtls-rprx-direct""'", "email": "'""$user""'"' /etc/xray/xtrojan.json
+},{"password": "'""$uuid""'","flow": "'""xtls-rprx-direct""'", "email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#trojan-hdua$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
 sed -i '/#trojan-tls$/a\#&# '"$user $exp"'\
@@ -92,8 +102,8 @@ echo -e "IP/Host         :${MYIP}"
 echo -e "IP/Host         :${MYIP6}"
 echo -e "Address         :${domain}"
 echo -e "Protocol        :GRPC,H2C,GFW,XTLS,WS,HTTP,GO"
-echo -e "ServiceName     :gandring"
-echo -e "Path WS         :/trojanws"
+echo -e "ServiceName     :/bagus"
+echo -e "Path WS         :/gandring"
 echo -e "Path H2C        :gandring"
 echo -e "Path Trojan-Go  :/gandring"
 echo -e "Port GRPC       :${tgrpc}"
