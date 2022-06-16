@@ -1689,7 +1689,7 @@ END
 # / / Installation Xray Service
 cat > /etc/systemd/system/xvless.service << END
 [Unit]
-Description=XTROJAN ROUTING DAM COLO PENGKOL BY Z
+Description=XVLESS ROUTING DAM COLO PENGKOL BY SHANUM
 Documentation=https://t.me/zerossl
 After=network.target nss-lookup.target
 
@@ -1853,6 +1853,13 @@ systemctl enable xss
 systemctl stop xss
 systemctl start xss
 systemctl restart xss
+
+##restart&start service
+systemctl daemon-reload
+systemctl enable xvmess
+systemctl stop xvmess
+systemctl start xvmess
+systemctl restart xvmess
 
 # Install Trojan Go
 latest_version="$(curl -s "https://api.github.com/repos/p4gefau1t/trojan-go/releases" | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
