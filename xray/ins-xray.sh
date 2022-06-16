@@ -1283,37 +1283,37 @@ cat > /usr/local/etc/xray/xvmess.json << END
             "settings": {
                 "clients": [
                     {
-                        "id": "$uuid",
+                        "id": "gandring",
                         "flow": "xtls-rprx-direct",
                         "level": 0,
-                        "email": "user"
+                        "email": "gandring@p0x.smule.my.id"
 #vless-xtls
                     }
                 ],
                 "decryption": "none",
                 "fallbacks": [
                     {
-                        "dest": 1000,
+                        "dest": 1310,
                         "xver": 1
                     },
                     {
-                        "path": "/trojanws",
-                        "dest": 1001,
+                        "path": "/gandring",
+                        "dest": 1320,
                         "xver": 1
                     },
                     {
-                        "path": "/vlessws",
-                        "dest": 1002,
+                        "path": "/bagus",
+                        "dest": 1234,
                         "xver": 1
                     },
                     {
-                        "path": "/vmesstcp",
-                        "dest": 1003,
+                        "path": "/satrio",
+                        "dest": 2345,
                         "xver": 1
                     },
                     {
-                        "path": "/vmessws",
-                        "dest": 1004,
+                        "path": "/wisnu",
+                        "dest": 3456,
                         "xver": 1
                     }
                 ]
@@ -1335,16 +1335,16 @@ cat > /usr/local/etc/xray/xvmess.json << END
             }
         },
         {
-            "port": 1000,
+            "port": 1310,
             "listen": "127.0.0.1",
             "protocol": "trojan",
             "settings": {
                 "clients": [
                     {
-                        "password": "$uuid",
+                        "password": "gandring",
                         "level": 0,
-                        "email": "user"
-#trojan-tcp
+                        "email": "gandring@p0x.smule.my.id"
+#trojan-gfw
                     }
                 ],
                 "fallbacks": [
@@ -1362,15 +1362,15 @@ cat > /usr/local/etc/xray/xvmess.json << END
             }
         },
       {
-          "port": 1001,
+          "port": 1320,
           "listen": "127.0.0.1",
           "protocol": "trojan",
           "settings": {
            "clients": [
        {
-           "password": "$uuid",
+           "password": "gandring",
            "level": 0,
-           "email": "user"
+           "email": "gandring@p0x.smule.my.id"
 #trojan-tls
        }
       ],
@@ -1385,20 +1385,20 @@ cat > /usr/local/etc/xray/xvmess.json << END
         "security": "none",
         "wsSettings": {
           "acceptProxyProtocol": true,
-          "path": "/trojanws"
+          "path": "/gandring"
          }
       }
     },
         {
-            "port": 1002,
+            "port": 1234,
             "listen": "127.0.0.1",
             "protocol": "vless",
             "settings": {
                 "clients": [
                     {
-                        "id": "$uuid",
+                        "id": "gandring",
                         "level": 0,
-                        "email": "user"
+                        "email": "gandring@p0x.smule.my.id"
 #vless-tls
                     }
                 ],
@@ -1409,20 +1409,20 @@ cat > /usr/local/etc/xray/xvmess.json << END
                 "security": "none",
                 "wsSettings": {
                     "acceptProxyProtocol": true,
-                    "path": "/vlessws"
+                    "path": "/bagus"
                 }
             }
         },
         {
-            "port": 1003,
+            "port": 2345,
             "listen": "127.0.0.1",
             "protocol": "vmess",
             "settings": {
                 "clients": [
                     {
-                        "id": "$uuid",
+                        "id": "gandring",
                         "level": 0,
-                        "email": "user"
+                        "email": "gandring@p0x.smule.my.id"
 #vmess-http-tls
                     }
                 ]
@@ -1436,7 +1436,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
                         "type": "http",
                         "request": {
                             "path": [
-                                "/vmesstcp"
+                                "/satrio"
                             ]
                         }
                     }
@@ -1444,15 +1444,15 @@ cat > /usr/local/etc/xray/xvmess.json << END
             }
         },
         {
-            "port": 1004,
+            "port": 3456,
             "listen": "127.0.0.1",
             "protocol": "vmess",
             "settings": {
                 "clients": [
                     {
-                        "id": "$uuid",
+                        "id": "gandring",
                         "level": 0,
-                        "email": "user"
+                        "email": "gandring@p0x.smule.my.id"
 #vmess-tls
                      }
                 ]
@@ -1462,7 +1462,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
                 "security": "none",
                 "wsSettings": {
                     "acceptProxyProtocol": true,
-                    "path": "/vmessws"
+                    "path": "/wisnu"
                 }
         }
   }
@@ -1708,7 +1708,7 @@ END
 
 cat > /etc/systemd/system/xvmess.service << END
 [Unit]
-Description=XVMESS ROUTING DAM COLO PENGKOL BY GANDRING
+Description=XVMESS ROUTING GAJAH DEMAK BY GANDRING
 Documentation=https://t.me/zerossl
 After=network.target nss-lookup.target
 
@@ -1717,7 +1717,7 @@ User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
-ExecStart=/usr/local/bin/xray -config /etc/xray/xvmess.json
+ExecStart=/usr/local/bin/xray -config /usr/local/etc/xray/xvmess.json
 Restart=on-failure
 RestartPreventExitStatus=23
 
@@ -1728,7 +1728,7 @@ END
 # / / Installation Xray Service
 cat > /etc/systemd/system/xss.service << END
 [Unit]
-Description=XSHADOWSOCKS ROUTING DAM COLO PENGKOL BY Z
+Description=XSHADOWSOCKS ROUTING DAM COLO PENGKOL BY WISNU
 Documentation=https://t.me/zerossl
 After=network.target nss-lookup.target
 
