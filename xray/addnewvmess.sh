@@ -58,7 +58,7 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "ws",
-      "path": "/shanum",
+      "path": "/cokro",
       "type": "none",
       "host": "${domain}",
       "tls": "tls"
@@ -237,7 +237,7 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "tcp",
-      "path": "/cokro",
+      "path": "/wisnu",
       "type": "http",
       "host": "${domain}",
       "tls": "tls"
@@ -264,43 +264,41 @@ vmesshttp="vmess://$(base64 -w 0 /etc/xray/vmess-$user-tls.json)"
 vmesshttpnon="vmess://$(base64 -w 0 /etc/xray/vmess-$user-nontls.json)"
 systemctl restart xvless
 systemctl restart xray.service
+systemctl restart xvmess
 service cron restart
 clear
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m  🔰AKUN VMESS TESTER🔰   \e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "NAMA        :${user}"
-echo -e "IP/Host     :${MYIP}"
-echo -e "IPV6        :$MYIP6"
-echo -e "Address     :${domain}"
+echo -e "IP:${MYIP} / $domain""
 echo -e "Port WS     :${tls}/${nontls}"
 echo -e "Port GRPC   :${vmgrpc}/${vmgrpcnon}"
 echo -e "Port H2C    :${vmhdua}"
 echo -e "Port HTTP   :${vmhttp}/${vmhttpnon}"
 echo -e "User ID     :${uuid}"
-echo -e "Alter ID    :0"
-echo -e "Security    :auto"
 echo -e "Network     :WS,GRPC,H2C,HTTP"
-echo -e "Path WS     :/shanum,gandring"
+echo -e "Path WS     :/cokro,gandring"
 echo -e "Path H2C    :/demak"
+echo -e "Path HTTP   :/wisnu"
 echo -e "ServiceName :/ayesha"
 echo -e "Created     :$hariini"
 echo -e "Expired     :$exp"
 #echo -e "Expired     :$exp2"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "WS TLS: ${vmess1}"
+echo -e "Link WS TLS: ${vmess1}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "WS NONTLS: ${vmess2}"
+echo -e "Link WS NONTLS: ${vmess2}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "GRPC TLS: ${vmessgrpc}"
+echo -e "Link GRPC TLS: ${vmessgrpc}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "GRPC NONTLS: ${vmessgrpcnon}"
+echo -e "Link GRPC NONTLS: ${vmessgrpcnon}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "H2C TLS: ${vmesshdua}"
+echo -e "Link HTTP/2 : ${vmesshdua}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "HTTP TLS : ${vmesshttp}"
+echo -e " Link HTTP TLS : ${vmesshttp}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "HTTP NONTLS: ${vmesshttpnon}"
+echo -e "Link HTTP NONTLS: ${vmesshttpnon}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m🔰LUXURY EDITION ZEROSSL🔰\e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
