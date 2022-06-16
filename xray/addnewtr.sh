@@ -51,7 +51,7 @@ sed -i '/#trojan-xtls$/a\#&# '"$user $exp"'\
 sed -i '/#trojan-hdua$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
 sed -i '/#trojan-tls$/a\#&# '"$user $exp"'\
-},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
+},{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#trojan-nontls$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
 sed -i '/#trojan-http$/a\#&# '"$user $exp"'\
@@ -89,7 +89,7 @@ echo -e "IP/Host         :${MYIP6}"
 echo -e "Address         :${domain}"
 echo -e "Protocol        :GRPC,H2C,TCP/XTLS,WS,HTTP,GO"
 echo -e "ServiceName     :gandring"
-echo -e "Path WS         :/gandring"
+echo -e "Path WS         :/trojanws"
 echo -e "Path H2C        :gandring"
 echo -e "Path Trojan-Go  :/gandring"
 echo -e "Port GRPC       :${tgrpc}"
