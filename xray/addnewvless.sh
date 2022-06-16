@@ -69,7 +69,7 @@ sed -i '/#vless-grpc-nontls$/a\#### '"$user $exp"'\
 sed -i '/#vless-xtls$/a\#&# '"$user $exp"'\
 },{"id": "'""$uuid""'","flow": "'""xtls-rprx-direct""'", "email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#vless-hdua-tls$/a\#### '"$user $exp"'\
-},{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvless.json
+},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#vless-hdua-nontls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvless.json
 sed -i '/#vless-tls$/a\#### '"$user $exp"'\
@@ -86,7 +86,7 @@ vlesstls="vless://${uuid}@${domain}:$vltls?host=${domain}&sni=${domain}&type=ws&
 vlessnontls="vless://${uuid}@${domain}:$vlnontls?host=${domain}&security=none&type=ws&path=gandring&encryption=none#${user}"
 vlessgrpc="vless://${uuid}@${domain}:$vlgrpc?serviceName=%2fwisnu&sni=${domain}&mode=multi&type=grpc&security=tls&encryption=none#${user}"
 vlessgrpcnon="vless://${uuid}@${domain}:$vlgrpcnon?serviceName=gandring&sni=${domain}&mode=multi&type=grpc&security=none&encryption=none#${user}"
-vlesshdua="vless://${uuid}@${domain}:$vlhdua?type=http&security=tls&path=gandring&encryption=none#${user}"
+vlesshdua="vless://${uuid}@${domain}:$vlhdua?type=http&security=tls&path=%2fzerossl&encryption=none#${user}"
 vlesshduanon="vless://${uuid}@${domain}:$vlhduanon?type=http&security=none&path=gandring&encryption=none#${user}"
 vlessxtls="vless://${uuid}@${domain}:$vlxtls?security=xtls&encryption=none&flow=xtls-rprx-direct#${user}"
 systemctl restart xvless.service
@@ -110,10 +110,10 @@ echo -e "Port WS     :$vltls / $vlnontls "
 echo -e "User ID     :${uuid}"
 echo -e "Encryption  :none"
 echo -e "Network     :GRPC,HTTP,H2C,TCP,XTLS,WS"
-echo -e "Security    :tls"
-echo -e "serviceName :gandring"
-echo -e "Path WS     :/vlessws"
-echo -e "Path HTTP/2 :gandring"
+echo -e "Security    :tls,xtls"
+echo -e "serviceName :/wisnu,gandring"
+echo -e "Path WS     :/satrio,gandring"
+echo -e "Path HTTP/2 :/zerossl"
 echo -e "Created     :$hariini"
 echo -e "Expired     :$exp"
 #echo -e "Expired     :$exp2"
