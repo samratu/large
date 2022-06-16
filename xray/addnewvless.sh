@@ -63,6 +63,8 @@ hariini=`date -d "0 days" +"%Y-%m-%d"`
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 #exp2=`date -d "$masaaktif seconds" +"%Y-%m-%d"`
 sed -i '/#vless-grpc-tls$/a\#### '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvless.json
+sed -i '/#vless-grpc-tls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#vless-grpc-nontls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvless.json
@@ -70,18 +72,20 @@ sed -i '/#vless-xtls$/a\#&# '"$user $exp"'\
 },{"id": "'""$uuid""'","flow": "'""xtls-rprx-direct""'", "email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#vless-hdua-tls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
+sed -i '/#vless-hdua-tls$/a\#### '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvless.json
 sed -i '/#vless-hdua-nontls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvless.json
 sed -i '/#vless-tls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#vless-nontls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
-#sed -i '/#vless-http-tls$/a\#### '"$user $exp"'\
-#},{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvless.json
+sed -i '/#vless-http-tls$/a\#### '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 #sed -i '/#vless-http-nontls$/a\#### '"$user $exp"'\
 #},{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvless.json
 #vlesshttpnon="vless://${uuid}@${domain}:$vlhttpnon?host=${domain}&security=none&type=tcp&headerType=http&encryption=none#${user}"
-#vlesshttp="vless://${uuid}@${domain}:$vlhttp?sni=${domain}&host=${domain}&type=tcp&security=tls&headerType=http&encryption=none#${user}"
+vlesshttp="vless://${uuid}@${domain}:$vlhttp?sni=${domain}&host=${domain}&type=tcp&security=tls&headerType=http&encryption=none#${user}"
 vlesstls="vless://${uuid}@${domain}:$vltls?host=${domain}&sni=${domain}&type=ws&security=tls&path=%2fsatrio&encryption=none#${user}"
 vlessnontls="vless://${uuid}@${domain}:$vlnontls?host=${domain}&security=none&type=ws&path=gandring&encryption=none#${user}"
 vlessgrpc="vless://${uuid}@${domain}:$vlgrpc?serviceName=%2fwisnu&sni=${domain}&mode=multi&type=grpc&security=tls&encryption=none#${user}"
@@ -109,10 +113,10 @@ echo -e "Port XTLS   :$vlxtls"
 echo -e "Port WS     :$vltls / $vlnontls "
 echo -e "User ID     :${uuid}"
 echo -e "Encryption  :none"
-echo -e "Network     :GRPC,HTTP,H2C,TCP,XTLS,WS"
+echo -e "Network     :GRPC,HTTP,H2C,GFW,XTLS,WS"
 echo -e "Security    :tls,xtls"
-echo -e "serviceName :/wisnu,gandring"
-echo -e "Path WS     :/satrio,gandring"
+echo -e "serviceName :/satrio,gandring"
+echo -e "Path WS     :/bagus,gandring"
 echo -e "Path HTTP/2 :/zerossl"
 echo -e "Created     :$hariini"
 echo -e "Expired     :$exp"
