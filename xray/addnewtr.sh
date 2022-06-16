@@ -60,14 +60,16 @@ sed -i '/#trojan-grpc$/a\#&# '"$user $exp"'\
 sed -i '/#trojan-xtls$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","flow": "'""xtls-rprx-direct""'", "email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#trojan-hdua$/a\#&# '"$user $exp"'\
-},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
+},{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#trojan-tls$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#trojan-gfw$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#trojan-nontls$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
-sed -i '/#trojan-http$/a\#&# '"$user $exp"'\
+sed -i '/#trojan-http-tls$/a\#&# '"$user $exp"'\
+},{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
+sed -i '/#trojan-http-nontls$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
 sed -i '/#xray-ss-udp$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
@@ -82,15 +84,17 @@ hariini=`date -d "0 days" +"%Y-%m-%d"`
 echo -e "### $user $exp" >> /etc/trojan-go/akun.conf
 systemctl restart trojan-go.service
 trojango="trojan-go://${uuid}@${domain}:${trgo}/?sni=${domain}&type=ws&host=${domain}&path=/gandring&encryption=none#$user"
-trojanhdua="trojan://${uuid}@${domain}:$thdua?sni=${domain}&type=http&security=tls&path=gandring#${user}"
-trojangrpc="trojan://${uuid}@${domain}:$tgrpc?mode=gun&security=tls&type=grpc&serviceName=gandring&sni=${domain}#${user}"
+trojanhdua="trojan://${uuid}@${domain}:$thdua?sni=${domain}&type=http&security=tls&path=%2fbekti#${user}"
+trojangrpc="trojan://${uuid}@${domain}:$tgrpc?mode=gun&security=tls&type=grpc&serviceName=%2fbagus&sni=${domain}#${user}"
 trojanxtls="trojan://${uuid}@${domain}:$txtls?security=xtls&type=tcp&headerType=none&flow=xtls-rprx-direct#${user}"
 trojangfw="trojan://${uuid}@${domain}:$tgfw?security=tls&type=tcp&headerType=none&flow=xtls-rprx-direct#${user}"
 trojantls="trojan://${uuid}@${domain}:$ttls?type=ws&security=tls&host=$domain&path=%2fgandring&sni=$domain#${user}"
 trojannontls="trojan://${uuid}@${domain}:$tnontls?type=ws&security=none&host=$domain&path=%2fgandring#${user}"
-trojanhttp="trojan://${uuid}@${domain}:$thttp?sni=${domain}&type=tcp&security=none&host=${domain}&headerType=http#${user}"
+trojanhttp="trojan://${uuid}@${domain}:$thttp?sni=${domain}&type=tcp&security=none&path=/&headerType=http#${user}"
+#trojanhttp="trojan://${uuid}@${domain}:$thttp?sni=${domain}&type=tcp&security=tls&path=%2fcokro&headerType=http#${user}"
 systemctl restart xray.service
 systemctl restart xtrojan.service
+systemctl restart xvmess
 service cron restart
 clear
 echo -e ""
@@ -104,7 +108,7 @@ echo -e "Address         :${domain}"
 echo -e "Protocol        :GRPC,H2C,GFW,XTLS,WS,HTTP,GO"
 echo -e "ServiceName     :/bagus"
 echo -e "Path WS         :/gandring"
-echo -e "Path H2C        :gandring"
+echo -e "Path H2C        :/bekti"
 echo -e "Path Trojan-Go  :/gandring"
 echo -e "Port GRPC       :${tgrpc}"
 echo -e "Port WSTLS      :${ttls}"
