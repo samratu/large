@@ -1894,8 +1894,8 @@ cat > /etc/trojan-go/config.json << END
   "ssl": {
     "verify": false,
     "verify_hostname": false,
-    "cert": "/etc/xray/xray.crt",
-    "key": "/etc/xray/xray.key",
+    "cert": "/usr/local/etc/xray/fullchain.pem",
+    "key": "/usr/local/etc/xray/privkey.pem",
     "key_password": "",
     "cipher": "",
     "curves": "",
