@@ -57,7 +57,7 @@ sed -i '/#vless-grpc-tls$/a\#### '"$user $exp"'\
 sed -i '/#vless-grpc-nontls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvless.json
 sed -i '/#vless-xtls$/a\#&# '"$user $exp"'\
-},{"id": "'""$uuid""'","flow": "'""xtls-rprx-direct""'", "email": "'""$user""'"' /etc/xray/config.json
+},{"id": "'""$uuid""'","flow": "'""xtls-rprx-direct""'", "email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#vless-hdua-tls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvless.json
 sed -i '/#vless-hdua-nontls$/a\#### '"$user $exp"'\
@@ -101,7 +101,7 @@ echo -e "Encryption  :none"
 echo -e "Network     :GRPC,HTTP,H2C,TCP,XTLS,WS"
 echo -e "Security    :tls"
 echo -e "serviceName :gandring"
-echo -e "Path WS     :gandring"
+echo -e "Path WS     :/vlessws"
 echo -e "Path HTTP/2 :gandring"
 echo -e "Created     :$hariini"
 echo -e "Expired     :$exp"
