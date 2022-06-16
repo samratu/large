@@ -58,7 +58,7 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "ws",
-      "path": "gandring",
+      "path": "/shanum",
       "type": "none",
       "host": "${domain}",
       "tls": "tls"
@@ -98,13 +98,25 @@ until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 			exit 1
 		fi
 	done
+vmgrpc="$(cat ~/log-install.txt | grep -w "VMESS GRPC TLS" | cut -d: -f2|sed 's/ //g')"
+vmgrpcnon="$(cat ~/log-install.txt | grep -w "VMESS GRPC NON TLS" | cut -d: -f2|sed 's/ //g')"
+until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
+		read -rp "User: " -e user
+		CLIENT_EXISTS=$(grep -w $user /usr/local/etc/xray/xvmess.json | wc -l)
+
+		if [[ ${CLIENT_EXISTS} == '1' ]]; then
+			echo ""
+			echo "A Client Username Was Already Created, Please Enter New Username"
+			exit 1
+		fi
+	done
 uuid=$(cat /proc/sys/kernel/random/uuid)
 read -p "Expired (Days): " masaaktif
 #read -p "Expired (Seconds) : " masaaktif
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 #exp2=`date -d "$masaaktif seconds" +"%Y-%m-%d"`
 sed -i '/#vmess-grpc-tls$/a\### '"$user $exp"'\
-},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/xvless.json
+},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#vmess-grpc-nontls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/xvless.json
 cat>/etc/xray/vmess-$user-tls.json<<EOF
@@ -116,7 +128,7 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "grpc",
-      "path": "gandring",
+      "path": "/ayesha",
       "type": "none",
       "host": "${domain}",
       "tls": "tls"
@@ -215,7 +227,7 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "tcp",
-      "path": "/",
+      "path": "/cokro",
       "type": "http",
       "host": "${domain}",
       "tls": "tls"
@@ -259,8 +271,8 @@ echo -e "User ID     :${uuid}"
 echo -e "Alter ID    :0"
 echo -e "Security    :auto"
 echo -e "Network     :WS,GRPC,H2C,HTTP"
-echo -e "Path        :gandring"
-echo -e "ServiceName :gandring"
+echo -e "Path        :/shanum,gandring"
+echo -e "ServiceName :/ayesha"
 echo -e "Created     :$hariini"
 echo -e "Expired     :$exp"
 #echo -e "Expired     :$exp2"
