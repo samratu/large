@@ -400,7 +400,7 @@ cat > /etc/xray/config.json << END
         "tcpSettings": {},
         "httpSettings": {
         "acceptProxyProtocol": true,
-          "path": "gandring"
+          "path": "/vmesshttp"
         },
         "kcpSettings": {},
         "wsSettings": {},
@@ -807,7 +807,7 @@ cat > /etc/xray/xtrojan.json << END
         },
         "grpcSettings": {
           "acceptProxyProtocol": true,
-          "serviceName": "gandring"
+          "serviceName": "/trojangrpc"
         }
       }
     },
@@ -831,7 +831,7 @@ cat > /etc/xray/xtrojan.json << END
         "security": "tls",
         "httpSettings": {
         "acceptProxyProtocol": true,
-          "path": "/gandring"
+          "path": "/trojanhttp"
          },
          "tlsSettings": {
           "alpn": [
@@ -1045,7 +1045,7 @@ cat > /etc/xray/xvless.json << END
                 },
                 "grpcSettings": {
                 "acceptProxyProtocol": true,
-                    "serviceName": "gandring"
+                    "serviceName": "/vmessgrpc"
                 }
             }
         },
@@ -1102,7 +1102,7 @@ cat > /etc/xray/xvless.json << END
                 },
                 "grpcSettings": {
                 "acceptProxyProtocol": true,
-                    "serviceName": "gandring"
+                    "serviceName": "/vlessgrpc"
                 }
             }
         },
@@ -1153,7 +1153,7 @@ cat > /etc/xray/xvless.json << END
                 },
                 "httpSettings": {
                 "acceptProxyProtocol": true,
-                    "path": "gandring"
+                    "path": "/vlesshttp"
                 }
             }
         },
