@@ -31,7 +31,7 @@ until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 vlgrpcnon="$(cat ~/log-install.txt | grep -w "VLESS GRPC NON TLS" | cut -d: -f2|sed 's/ //g')"
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 		read -rp "Username : " -e user
-		CLIENT_EXISTS=$(grep -w $user /etc/xray/xvless.json | wc -l)
+		CLIENT_EXISTS=$(grep -w $user /usr/local/etc/xray/xvmess.json | wc -l)
 
 		if [[ ${CLIENT_EXISTS} == '1' ]]; then
 			echo ""
@@ -46,7 +46,7 @@ exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#vless-grpc-tls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvless.json
 sed -i '/#vless-grpc-nontls$/a\#### '"$user $exp"'\
-},{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvless.json
+},{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
 vlessgrpc1="vless://${uuid}@${domain}:$vlgrpc?serviceName=gandring&sni=${domain}&mode=multi&type=grpc&security=tls&encryption=none#${user}"
 vlessgrpc2="vless://${uuid}@${domain}:$vlgrpcnon?serviceName=gandring&sni=${domain}&mode=multi&type=grpc&security=none&encryption=none#${user}"
 systemctl restart xvless.service
@@ -70,9 +70,9 @@ echo -e "ServiceName  :gandring"
 echo -e "Created      :$hariini"
 echo -e "Expired      :$exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "GRPC TLS: ${vlessgrpc1}"
+echo -e "Link GRPC TLS: ${vlessgrpc1}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "GRPC NON TLS: ${vlessgrpc2}"
+echo -e "Link GRPC NON TLS: ${vlessgrpc2}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m🔰LUXURY EDITION ZEROSSL🔰\e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
