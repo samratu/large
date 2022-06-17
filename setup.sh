@@ -94,10 +94,13 @@ RemainAfterExit=yes
 [Install]
 WantedBy=multi-user.target
 EOF
-systemctl daemon-reload
-systemctl enable autosett
+
+wget -O /etc/set.sh "https://${wisnuvpn}/set.sh"
+chmod +x /etc/set.sh
 history -c
 echo "1.2" > /home/ver
+systemctl daemon-reload
+systemctl enable autosett
 echo " "
 echo "Installation has been completed!!"echo " "
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
