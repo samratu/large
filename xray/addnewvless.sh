@@ -67,12 +67,12 @@ sed -i '/#vless-grpc-tls$/a\#### '"$user $exp"'\
 sed -i '/#vless-grpc-tls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#vless-grpc-nontls$/a\#### '"$user $exp"'\
-},{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvless.json
+},{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
 sed -i '/#vless-xtls$/a\#&# '"$user $exp"'\
 },{"id": "'""$uuid""'","flow": "'""xtls-rprx-direct""'", "email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
-sed -i '/#vless-hdua-tls$/a\#### '"$user $exp"'\
+sed -i '/#vless-hdua$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
-sed -i '/#vless-hdua-tls$/a\#### '"$user $exp"'\
+sed -i '/#vless-hdua$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvless.json
 sed -i '/#vless-hdua-nontls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvless.json
@@ -91,7 +91,7 @@ vlessnontls="vless://${uuid}@${domain}:$vlnontls?host=${domain}&security=none&ty
 vlessgrpc="vless://${uuid}@${domain}:$vlgrpc?serviceName=%2fvlessgrpc&sni=${domain}&mode=multi&type=grpc&security=tls&encryption=none#${user}"
 vlessgrpcnon="vless://${uuid}@${domain}:$vlgrpcnon?serviceName=gandring&sni=${domain}&mode=multi&type=grpc&security=none&encryption=none#${user}"
 vlesshdua="vless://${uuid}@${domain}:$vlhdua?type=http&security=tls&path=%2fvlesshttp&encryption=none#${user}"
-vlesshduanon="vless://${uuid}@${domain}:$vlhduanon?type=http&security=none&path=gandring&encryption=none#${user}"
+#vlesshduanon="vless://${uuid}@${domain}:$vlhduanon?type=http&security=none&path=gandring&encryption=none#${user}"
 vlessxtls="vless://${uuid}@${domain}:$vlxtls?security=xtls&encryption=none&flow=xtls-rprx-direct#${user}"
 systemctl restart xvless.service
 systemctl restart xray.service
@@ -106,9 +106,9 @@ echo -e "NAMA        :${user}"
 echo -e "IP/Host     :${MYIP}"
 echo -e "IPV6        :${MYIP6}"
 echo -e "Address     :${domain}"
-echo -e "Port GRPC   :$vlgrpc ,2096/ $vlgrpcnon"
+echo -e "Port GRPC   :$vlgrpc/ $vlgrpcnon"
 #echo -e "Port HTTP  :$vlhttp"
-echo -e "Port H2C    :$vlhdua ,1340/ $vlhduanon"
+echo -e "Port H2C    :$vlhdua / $vlhduanon"
 echo -e "Port XTLS   :$vlxtls"
 echo -e "Port WS     :$vltls / $vlnontls "
 echo -e "User ID     :${uuid}"
@@ -133,11 +133,11 @@ echo -e "Link WS TLS:  ${vlesstls}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "Link WS NONTLS:  ${vlessnontls}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Link HTTP/2 TLS:  ${vlesshdua}"
+echo -e "Link HTTP/2:  ${vlesshdua}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 #echo -e "H2C NONTLS :  ${vlesshduanon}"
 #echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "HTTP TLS:  ${vlesshttp}"
+echo -e "Link HTTP :  ${vlesshttp}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 #echo -e "HTTP NONTLS:  ${vlesshttpnon}"
 #echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
