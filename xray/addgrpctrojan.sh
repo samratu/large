@@ -41,7 +41,7 @@ sed -i '/#trojan-grpc$/a\#&# '"$user $exp"'\
 trojangrpc="trojan://${uuid}@${domain}:$tgrpc?mode=gun&security=tls&type=grpc&serviceName=/gandring&sni=${domain}#${user}"
 systemctl restart xray.service
 systemctl restart xtrojan.service
-
+systemctl restart xvless
 service cron restart
 clear
 echo -e ""
@@ -50,7 +50,6 @@ echo -e "\033[1;46m  🔰 AKUN TROJAN GRPC 🔰  \e[m"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "Remarks     :${user}"
 echo -e "IP/Host     :${MYIP}"
-echo -e "IP/Host     :${MYIP6}"
 echo -e "Address     :${domain}"
 echo -e "Protocol    :grpc"
 echo -e "ServiceName :/gandring"
