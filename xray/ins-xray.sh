@@ -950,7 +950,7 @@ cat > /etc/xray/xtrojan.json << END
           {
             "password": "gandring",
             "email": "gandring@p0x.smule.my.id"
-#trojan-http
+#trojan-http-nontls
           }
         ],
         "decryption": "none"
@@ -1923,6 +1923,44 @@ iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 502 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 502 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 503 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 503 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 1310 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 1310 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 1320 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 1320 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 1330 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 1330 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 1340 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 1340 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 1350 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 1350 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 1360 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 1360 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 1370 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 1370 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 1380 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 1380 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 1390 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 1390 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 1400 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 1400 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 1234 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 1234 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2345 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2345 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 3456 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 3456 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 4567 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 4567 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 5678 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 5678 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 6789 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 6789 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 7890 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 7890 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 10808 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 10808 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 10809 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 10809 -j ACCEPT
 sudo iptables -A INPUT -p tcp --dport 80 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
 sudo iptables -A INPUT -p udp --dport 80 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
 sudo iptables -A OUTPUT -p tcp --sport 80 -m conntrack --ctstate ESTABLISHED -j ACCEPT
