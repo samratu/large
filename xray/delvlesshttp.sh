@@ -91,7 +91,7 @@ systemctl restart xray.service
 clear
 echo ""
 echo "==============================="
-echo "  Vmess HTTP Account Deleted  "
+echo "  Vless Account Deleted  "
 echo "==============================="
 echo "Username  : $user"
 echo "Expired   : $exp"
