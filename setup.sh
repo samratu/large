@@ -131,7 +131,7 @@ echo " 🔰 OHP OpenVPN : 8383" |tee -a log-install.txt
 echo " 🔰 VMESS WS TLS : 443" |tee -a log-install.txt
 echo " 🔰 VMESS WS NON TLS : 2052" |tee -a log-install.txt
 echo " 🔰 VMESS GRPC TLS: 443" |tee -a log-install.txt
-echo " 🔰 VMESS GRPC NON TLS: 1000" |tee -a log-install.txt
+echo " 🔰 VMESS GRPC NON TLS: 20005" |tee -a log-install.txt
 echo " 🔰 VMESS H2C TLS : 443" |tee -a log-install.txt
 #echo " 🔰 VMESS H2C NON TLS : 3444" |tee -a log-install.txt
 echo " 🔰 VMESS HTTP TLS : 443" |tee -a log-install.txt
