@@ -138,7 +138,7 @@ echo " 🔰 VMESS HTTP TLS : 443" |tee -a log-install.txt
 echo " 🔰 VMESS HTTP NON TLS : 808" |tee -a log-install.txt
 echo " 🔰 VLESS XTLS : 443" |tee -a log-install.txt
 echo " 🔰 VLESS WS TLS : 443" |tee -a log-install.txt
-echo " 🔰 VLESS WS NON TLS : 2086" |tee -a log-install.txt
+echo " 🔰 VLESS WS NON TLS : 2082" |tee -a log-install.txt
 echo " 🔰 VLESS GRPC TLS : 443" |tee -a log-install.txt
 echo " 🔰 VLESS GRPC NON TLS: 2000" |tee -a log-install.txt
 echo " 🔰 VLESS H2C TLS : 443" |tee -a log-install.txt
