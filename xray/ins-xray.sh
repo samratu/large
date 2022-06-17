@@ -384,7 +384,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 20001,
+      "port": 1350,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -830,8 +830,8 @@ cat > /etc/xray/xtrojan.json << END
       }
     },
     {
-      "port": 888,
-      "listen": "0.0.0.0",
+      "port": 1330,
+      "listen": "127.0.0.1",
       "protocol": "trojan",
       "tag": "TROJAN-H2C-in",
       "settings": {
@@ -866,7 +866,7 @@ cat > /etc/xray/xtrojan.json << END
       }
     },
     {
-      "port": 212,
+      "port": 40,
       "protocol": "shadowsocks",
       "settings": {
         "method": "aes-128-gcm",
@@ -971,8 +971,78 @@ cat > /etc/xray/xtrojan.json << END
         }
       }
     }
- 
-  
+  ],
+  "outbounds": [
+    {
+      "protocol": "freedom",
+      "settings": {}
+    },
+    {
+      "protocol": "blackhole",
+      "settings": {},
+      "tag": "blocked"
+    }
+  ],
+  "routing": {
+    "rules": [
+      {
+        "type": "field",
+        "ip": [
+          "0.0.0.0/8",
+          "10.0.0.0/8",
+          "100.64.0.0/10",
+          "169.254.0.0/16",
+          "172.16.0.0/12",
+          "192.0.0.0/24",
+          "192.0.2.0/24",
+          "192.168.0.0/16",
+          "198.18.0.0/15",
+          "198.51.100.0/24",
+          "203.0.113.0/24",
+          "::1/128",
+          "fc00::/7",
+          "fe80::/10"
+        ],
+        "outboundTag": "blocked"
+      },
+      {
+        "inboundTag": [
+          "api"
+        ],
+        "outboundTag": "api",
+        "type": "field"
+      },
+      {
+        "type": "field",
+        "outboundTag": "blocked",
+        "protocol": [
+          "bittorrent"
+        ]
+      }
+    ]
+  },
+  "stats": {},
+  "api": {
+    "services": [
+      "StatsService"
+    ],
+    "tag": "api"
+  },
+  "policy": {
+    "levels": {
+      "0": {
+        "statsUserDownlink": true,
+        "statsUserUplink": true
+      }
+    },
+    "system": {
+      "statsInboundUplink": true,
+      "statsInboundDownlink": true,
+      "statsOutboundUplink" : true,
+      "statsOutboundDownlink" : true
+    }
+  }
+}
 END
 
 uuid=$(cat /proc/sys/kernel/random/uuid)
@@ -1117,7 +1187,7 @@ cat > /etc/xray/xvless.json << END
             }
         },
         {
-            "port": 2001,
+            "port": 1340,
             "protocol": "vless",
             "settings": {
                 "clients": [
@@ -1620,6 +1690,71 @@ cat > /usr/local/etc/xray/xvmess.json << END
 }
 END
 
+uuid=$(cat /proc/sys/kernel/random/uuid)
+domain=$(cat /root/domain)
+# // Certificate File
+path_crt="/etc/xray/xray.crt"
+path_key="/etc/xray/xray.key"
+#domain_ecc=$(cat /root/.acme.sh)
+#domain.key=$(cat /root/.acme.sh/$domain_ecc)
+#path_crt="/root/.acme.sh/$domain_ecc/fullchain.cer"
+#path_key="/root/.acme.sh/$domain_ecc/$domain.key"
+# Buat Config Xray
+cat > /etc/xray/xss.json << END
+{
+  "inbounds": [
+    {
+      "port": 212,
+      "protocol": "shadowsocks",
+      "settings": {
+        "method": "aes-128-gcm",
+        "password": "gandring",
+        "network": "tcp,udp"
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "freedom",
+      "tag": "direct"
+    },
+    {
+      "protocol": "blackhole",
+      "tag": "blocked"
+    }
+  ],
+  "dns": {
+    "servers": [
+      "8.8.8.8",
+      "8.8.4.4",
+      "1.1.1.1",
+      "1.0.0.1",
+      "localhost",
+      "https+local://dns.google/dns-query",
+      "https+local://1.1.1.1/dns-query"
+    ]
+  },
+  "routing": {
+    "domainStrategy": "AsIs",
+    "rules": [
+      {
+        "type": "field",
+        "inboundTag": [
+          "TROJAN-XTLS-in",
+          "TROJAN-gRPC-in",
+          "TROJAN-WSTLS-in",
+          "TROJAN-WS-in",
+          "TROJAN-H2C-in",
+          "TROJAN-HTTP-in"
+        ],
+        "outboundTag": "blackhole-out",
+        "protocol": [ "bittorrent" ]
+      }
+    ]
+  }
+}
+END
+
 # / / Installation Xray Service
 cat > /etc/systemd/system/xray.service << END
 [Unit]
@@ -1861,7 +1996,7 @@ path_key="/etc/xray/xray.key"
 cat > /etc/trojan-go/config.json << END
 {
   "run_type": "server",
-  "local_addr": "127.0.0.1",
+  "local_addr": "0.0.0.0",
   "local_port": 2053,
   "remote_addr": "127.0.0.1",
   "remote_port": 88,
@@ -1889,7 +2024,7 @@ cat > /etc/trojan-go/config.json << END
     "reuse_session": true,
     "plain_http_response": "",
     "fallback_addr": "127.0.0.1",
-    "fallback_port": 81,
+    "fallback_port": 0,
     "fingerprint": "firefox"
   },
   "tcp": {
@@ -1913,9 +2048,9 @@ cat > /etc/trojan-go/config.json << END
     "api_port": 0,
     "ssl": {
       "enabled": true,
-    "cert": "/etc/ssl/private/fullchain.pem",
-    "key": "/etc/ssl/private/privkey.pem",
-      "verify_client": true,
+      "key": "",
+      "cert": "",
+      "verify_client": false,
       "client_cert": []
     }
   }
@@ -1949,8 +2084,8 @@ END
 
 # restart
 
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 8880 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 8880 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2087 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2087 -j ACCEPT
 iptables-save > /etc/iptables.up.rules
 iptables-restore -t < /etc/iptables.up.rules
 netfilter-persistent save
