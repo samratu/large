@@ -275,7 +275,7 @@ RUN=yes
 # systemd users: don't forget to modify /lib/systemd/system/sslh.service
 DAEMON=/usr/sbin/sslh
 
-DAEMON_OPTS="--user sslh --listen 0.0.0.0:2087 --ssh 127.0.0.1:22 --ssl 127.0.0.1:500 --ssh 127.0.0.1:300 --openvpn 127.0.0.1:1194 --http 127.0.0.1:8082 --pidfile /var/run/sslh/sslh.pid"
+DAEMON_OPTS="--user sslh --listen 0.0.0.0:2087 --ssh 127.0.0.1:22 --ssl 127.0.0.1:500 --ssh 127.0.0.1:300 --openvpn 127.0.0.1:1194 --http 127.0.0.1:80 --pidfile /var/run/sslh/sslh.pid"
 
 END
 
@@ -347,11 +347,18 @@ connect = 127.0.0.1:1194
 END
 
 # make a certificate
-openssl genrsa -out key.pem 2048
-openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
--subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
-cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
-
+#openssl genrsa -out key.pem 2048
+#openssl req -new -x509 -key key.pem -out cert.pem -days 3650 \
+#-subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
+#cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
+openssl genrsa -out ca.key 4096 > /dev/null 2>&1
+openssl req -new -x509 -days 3650 -key ca.key -out ca.crt \
+-subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email" > /dev/null 2>&1
+openssl genrsa -out server.key 4096 > /dev/null 2>&1
+openssl req -new -key server.key -out ia.csr \
+-subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email" > /dev/null 2>&1
+openssl x509 -req -days 3650 -in ia.csr -CA ca.crt -CAkey ca.key -set_serial 01 -out server.crt > /dev/null 2>&1
+cp /home/sstp/server.crt /etc/stunnel5/stunnel5.pem
 # Service Stunnel5 systemctl restart stunnel5
 cat > /etc/systemd/system/stunnel5.service << END
 [Unit]
@@ -438,21 +445,21 @@ wget https://${wisnuvpn}/bbr.sh && chmod +x bbr.sh && ./bbr.sh
 wget -O /etc/issue.net "https://${wisnuvpn}/issue.net"
 
 # blockir torrent
-iptables -A FORWARD -m string --string "get_peers" --algo bm -j DROP
-iptables -A FORWARD -m string --string "announce_peer" --algo bm -j DROP
-iptables -A FORWARD -m string --string "find_node" --algo bm -j DROP
-iptables -A FORWARD -m string --algo bm --string "BitTorrent" -j DROP
-iptables -A FORWARD -m string --algo bm --string "BitTorrent protocol" -j DROP
-iptables -A FORWARD -m string --algo bm --string "peer_id=" -j DROP
-iptables -A FORWARD -m string --algo bm --string ".torrent" -j DROP
-iptables -A FORWARD -m string --algo bm --string "announce.php?passkey=" -j DROP
-iptables -A FORWARD -m string --algo bm --string "torrent" -j DROP
-iptables -A FORWARD -m string --algo bm --string "announce" -j DROP
-iptables -A FORWARD -m string --algo bm --string "info_hash" -j DROP
-iptables-save > /etc/iptables.up.rules
-iptables-restore -t < /etc/iptables.up.rules
-netfilter-persistent save
-netfilter-persistent reload
+sudo iptables -A FORWARD -m string --string "get_peers" --algo bm -j DROP
+sudo iptables -A FORWARD -m string --string "announce_peer" --algo bm -j DROP
+sudo iptables -A FORWARD -m string --string "find_node" --algo bm -j DROP
+sudo iptables -A FORWARD -m string --algo bm --string "BitTorrent" -j DROP
+sudo iptables -A FORWARD -m string --algo bm --string "BitTorrent protocol" -j DROP
+sudo iptables -A FORWARD -m string --algo bm --string "peer_id=" -j DROP
+sudo iptables -A FORWARD -m string --algo bm --string ".torrent" -j DROP
+sudo iptables -A FORWARD -m string --algo bm --string "announce.php?passkey=" -j DROP
+sudo iptables -A FORWARD -m string --algo bm --string "torrent" -j DROP
+sudo iptables -A FORWARD -m string --algo bm --string "announce" -j DROP
+sudo iptables -A FORWARD -m string --algo bm --string "info_hash" -j DROP
+sudo iptables-save > /etc/iptables.up.rules
+sudo iptables-restore -t < /etc/iptables.up.rules
+sudo netfilter-persistent save
+sudo netfilter-persistent reload
 
 # download script
 cd /usr/bin
