@@ -16,7 +16,7 @@ vmgrpc="$(cat ~/log-install.txt | grep -w "VMESS GRPC TLS" | cut -d: -f2|sed 's/
 vmgrpcnon="$(cat ~/log-install.txt | grep -w "VMESS GRPC NON TLS" | cut -d: -f2|sed 's/ //g')"
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 		read -rp "User: " -e user
-		CLIENT_EXISTS=$(grep -w $user /etc/xray/xvless.json | wc -l)
+		CLIENT_EXISTS=$(grep -w $user /etc/xray/config.json | wc -l)
 
 		if [[ ${CLIENT_EXISTS} == '1' ]]; then
 			echo ""
@@ -40,8 +40,10 @@ read -p "Expired (Days): " masaaktif
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#vmess-grpc-tls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/xvless.json
+sed -i '/#vmess-grpc-tls$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#vmess-grpc-nontls$/a\### '"$user $exp"'\
-},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/xvless.json
+},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
 cat>/etc/xray/vmess-$user-tls.json<<EOF
       {
       "v": "2",
@@ -51,7 +53,7 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "grpc",
-      "serviceName": "gandring",
+      "serviceName": "/vmessgrpc",
       "type": "none",
       "serverName": "${domain}",
       "tls": "tls"
@@ -78,6 +80,7 @@ vmessgrpc="vmess://$(base64 -w 0 /etc/xray/vmess-$user-tls.json)"
 vmessgrpcnon="vmess://$(base64 -w 0 /etc/xray/vmess-$user-nontls.json)"
 systemctl restart xvless
 systemctl restart xray
+systemctl restart xvmess
 service cron restart
 clear
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
@@ -86,15 +89,12 @@ echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━�
 echo -e "Remarks     :${user}"
 echo -e "Host        :${domain}"
 echo -e "IP          :${MYIP}"
-echo -e "IPV6        :$MYIP6"
 echo -e "Port TLS    :${vmgrpc}"
 echo -e "Port no TLS :${vmgrpcnon}"
 echo -e "Id          :${uuid}"
-echo -e "AlterId     :0"
-echo -e "Security    :auto"
 echo -e "Network     :grpc"
 echo -e "Host        :${domain}"
-echo -e "serviceName :gandring"
+echo -e "serviceName :/vmessgrpc, gandring"
 echo -e "Expired On  :$exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "GRPC TLS: ${vmessgrpc}"
