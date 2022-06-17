@@ -93,4 +93,5 @@ wget -O /usr/bin/addsstp https://${wisnuvpn}/addsstp.sh && chmod +x /usr/bin/add
 wget -O /usr/bin/delsstp https://${wisnuvpn}/delsstp.sh && chmod +x /usr/bin/delsstp
 wget -O /usr/bin/ceksstp https://${wisnuvpn}/ceksstp.sh && chmod +x /usr/bin/ceksstp
 wget -O /usr/bin/renewsstp https://${wisnuvpn}/renewsstp.sh && chmod +x /usr/bin/renewsstp
+wget -O /usr/bin/trial-sstp https://${wisnuvpn}/yrial-sstp.sh && chmod +x /usr/bin/trial-sstp
 rm -f /root/sstp.sh
