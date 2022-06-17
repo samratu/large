@@ -15,11 +15,11 @@ LIGHT='\033[0;37m'
 MYIP=$(wget -qO- ipinfo.io/ip);
 clear
 apt install jq curl -y
-DOMAIN=zerossl.my.id
+DOMAIN=smule.my.id
 sub=$(</dev/urandom tr -dc a-z0-9 | head -c2)
-SUB_DOMAIN=${sub}.zerossl.my.id
+SUB_DOMAIN=${sub}.smule.my.id
 CF_ID=djarumpentol01@gmail.com
-CF_KEY=d50aff2305f86e8f90907cfc4833ab091c375
+CF_KEY=v1.0-5a1b62e297231f457f7c30d9-9d98dfdb48f56ec7a47cb1161dc2a5936a2eccc3df30e15560116ca939eff8154260bae53c2e6419db38bc4d17ba6b9215a9fd9df28b91564f25a8c8606460d5098405434e99523d
 set -euo pipefail
 IP=$(wget -qO- ipinfo.io/ip);
 echo "Updating DNS for ${SUB_DOMAIN}..."
