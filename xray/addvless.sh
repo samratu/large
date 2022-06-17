@@ -63,6 +63,8 @@ sed -i '/#vless-nontls$/a\#### '"$user $exp"'\
 vlesstls="vless://${uuid}@${domain}:$vltls?host=${domain}&sni=${domain}&type=ws&security=tls&path=%2fbagus&encryption=none#${user}"
 vlessnontls="vless://${uuid}@${domain}:$vlnontls?host=${domain}&security=none&type=ws&path=gandring&encryption=none#${user}"
 systemctl restart xray.service
+systemctl restart xvless
+systemctl restart xvmess
 service cron restart
 clear
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
