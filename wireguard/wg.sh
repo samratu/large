@@ -38,7 +38,7 @@ if [[ -e /etc/wireguard/params ]]; then
 	exit 1
 fi
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "\E[44;46m ${Info}       🔰 Wireguard Script By WISNUCOKROSATRIO 🔰                \e[m"
+echo -e "${Info}       🔰 Wireguard Script By WISNUCOKROSATRIO 🔰
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 # Detect public IPv4 address and pre-fill for the user
 
