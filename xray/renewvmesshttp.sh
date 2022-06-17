@@ -120,7 +120,7 @@ sed -i "s/#&# $user $exp/#&# $user $exp4/g" /etc/xray/config.json
 clear
 echo ""
 echo "================================"
-echo "  Trojan  Account Renewed  "
+echo "  Vmess Account Renewed  "
 echo "================================"
 echo "Username  : $user"
 echo "Expired  : $exp4"
