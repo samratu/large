@@ -73,10 +73,10 @@ sudo lsof -t -i tcp:80 -s tcp:listen | sudo xargs kill
 #bash acme.sh --issue --standalone -d $domain --force
 #bash acme.sh --installcert -d $domain --fullchainpath /etc/xray/xray.crt --keypath /etc/xray/xray.key
 
-#curl https://acme-install.netlify.app/acme.sh -o /root/.acme.sh/acme.sh
-#chmod +x /root/.acme.sh/acme.sh
-#/root/.acme.sh/acme.sh --issue -d $domain --standalone -k ec-256
-#~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath /etc/xray/xray.crt --keypath /etc/xray/xray.key --ecc
+curl https://acme-install.netlify.app/acme.sh -o /root/.acme.sh/acme.sh
+chmod +x /root/.acme.sh/acme.sh
+/root/.acme.sh/acme.sh --issue -d $domain --standalone -k ec-256
+~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath /etc/ssl/private/fullchain.pem --keypath /etc/ssl/private/privkey.pem --ecc
 
 uuid=$(cat /proc/sys/kernel/random/uuid)
 domain=$(cat /root/domain)
