@@ -16,7 +16,17 @@ vmhdua="$(cat ~/log-install.txt | grep -w "VMESS H2C TLS " | cut -d: -f2|sed 's/
 #none="$(cat ~/log-install.txt | grep -w "Vmess None TLS" | cut -d: -f2|sed 's/ //g')"
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 		read -rp "User: " -e user
-		CLIENT_EXISTS=$(grep -w $user /etc/xray/xvmess.json | wc -l)
+		CLIENT_EXISTS=$(grep -w $user /etc/xray/config.json | wc -l)
+
+		if [[ ${CLIENT_EXISTS} == '1' ]]; then
+			echo ""
+			echo "A Client Username Was Already Created, Please Enter New Username"
+			exit 1
+		fi
+	done
+until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
+		read -rp "User: " -e user
+		CLIENT_EXISTS=$(grep -w $user /usr/local/etc/xray/xvmess.json | wc -l)
 
 		if [[ ${CLIENT_EXISTS} == '1' ]]; then
 			echo ""
@@ -27,8 +37,10 @@ until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 uuid=$(cat /proc/sys/kernel/random/uuid)
 read -p "Expired (Days): " masaaktif
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
-sed -i '/#vmess-hdua-tls$/a\### '"$user $exp"'\
-},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/xvmess.json
+sed -i '/#vmess-hdua$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
+sed -i '/#vmess-hdua$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 #sed -i '/#vmess-hdua-nontls$/a\### '"$user $exp"'\
 #},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/xvmess.json
 cat>/etc/xray/vmess-$user-tls.json<<EOF
@@ -40,7 +52,7 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "h2",
-      "path": "gandring",
+      "path": "/wisnu",
       #"type": "multi",
       "host": "",
       "tls": "tls"
@@ -69,6 +81,7 @@ vmesshdua="vmess://$(base64 -w 0 /etc/xray/vmess-$user-tls.json)"
 systemctl daemon-reload
 systemctl restart xvless
 systemctl restart xray
+systemctl restart xvmess
 service cron restart
 clear
 echo -e ""
@@ -78,18 +91,15 @@ echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━�
 echo -e "Remarks        :${user}"
 echo -e "Host           :${domain}"
 echo -e "IP             :${MYIP}"
-echo -e "IPV6           :$MYIP6"
 echo -e "Port TLS       :${vmhdua}"
 #echo -e "Port none TLS : ${vmhduanon}"
 echo -e "Id             :${uuid}"
-echo -e "AlterId        :0"
-echo -e "Security       :auto"
 echo -e "Network        :h2"
 echo -e "Host           :${domain}"
-echo -e "Path           :gandring"
+echo -e "Path           :/wisnu"
 echo -e "Expired On     :$exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "H2C TLS : ${vmesshdua}"   
+echo -e "Link H2C TLS : ${vmesshdua}"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 #echo -e "H2C NONTLS : ${vmesshduanon}"   
 #echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
