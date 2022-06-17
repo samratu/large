@@ -98,7 +98,7 @@ cat > /etc/xray/config.json << END
   "inbounds": [
     {
       "listen": "127.0.0.1",
-      "port": 10808,
+      "port": 10807,
       "protocol": "dokodemo-door",
       "settings": {
         "address": "127.0.0.1"
@@ -384,7 +384,34 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 1350,
+      "port": 2082,
+      "protocol": "vmess",
+      "settings": {
+        "clients": [
+          {
+            "id": "${uuid}",
+            "alterId": 0
+#vmess-grpc-nontls
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "grpc",
+        "security": "none",
+        "tlsSettings": {},
+        "tcpSettings": {},
+        "kcpSettings": {},
+        "wsSettings": {},
+        "httpSettings": {},
+        "quicSettings": {},
+        "grpcSettings": {
+          "serviceName": "gandring",
+          "multiMode": true
+        }
+      }
+    },
+    {
+      "port": 1000,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -471,7 +498,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 2082,
+      "port": 8880,
       "protocol": "vless",
       "settings": {
         "clients": [
@@ -496,6 +523,32 @@ cat > /etc/xray/config.json << END
           }
         },
         "quicSettings": {}
+      }
+    },
+    {
+      "port": 2082,
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "${uuid}"
+#vless-grpc-nontls
+          }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "grpc",
+        "security": "none",
+        "tlsSettings": {},
+        "tcpSettings": {},
+        "kcpSettings": {},
+        "wsSettings": {},
+        "httpSettings": {},
+        "quicSettings": {},
+        "grpcSettings": {
+          "serviceName": "gandring"
+        }
       }
     },
     {
@@ -603,19 +656,24 @@ cat > /etc/xray/config.json << END
   "outbounds": [
     {
       "protocol": "freedom",
-      "settings": {}
+      "tag": "direct"
     },
     {
       "protocol": "blackhole",
-      "settings": {},
       "tag": "blocked"
-    },
-    {
-      "tag": "tg-out",
-      "protocol": "mtproto",
-      "settings": {}
     }
   ],
+  "dns": {
+    "servers": [
+      "8.8.8.8",
+      "8.8.4.4",
+      "1.1.1.1",
+      "1.0.0.1",
+      "localhost",
+      "https+local://dns.google/dns-query",
+      "https+local://1.1.1.1/dns-query"
+    ]
+  },
   "routing": {
     "rules": [
       {
@@ -639,11 +697,11 @@ cat > /etc/xray/config.json << END
         "outboundTag": "blocked"
       },
       {
-        "type": "field",
         "inboundTag": [
-          "K"
+          "api"
         ],
-        "outboundTag": "tg-out"
+        "outboundTag": "api",
+        "type": "field"
       },
       {
         "type": "field",
@@ -653,6 +711,27 @@ cat > /etc/xray/config.json << END
         ]
       }
     ]
+  },
+  "stats": {},
+  "api": {
+    "services": [
+      "StatsService"
+    ],
+    "tag": "api"
+  },
+  "policy": {
+    "levels": {
+      "0": {
+        "statsUserDownlink": true,
+        "statsUserUplink": true
+      }
+    },
+    "system": {
+      "statsInboundUplink": true,
+      "statsInboundDownlink": true,
+      "statsOutboundUplink" : true,
+      "statsOutboundDownlink" : true
+    }
   }
 }
 END
@@ -685,9 +764,8 @@ cat > /etc/xray/xtrojan.json << END
       "tag": "api"
     },
     {
-      "port": 4443,
+      "port": 43,
       "protocol": "trojan",
-      "tag": "TROJAN-XTLS-in",
       "settings": {
         "clients": [
           {
@@ -738,7 +816,6 @@ cat > /etc/xray/xtrojan.json << END
       "port": 20004,
       "listen": "0.0.0.0",
       "protocol": "trojan",
-      "tag": "TROJAN-WSTLS-in",
       "settings": {
         "clients": [
           {
@@ -796,7 +873,6 @@ cat > /etc/xray/xtrojan.json << END
       "port": 8443,
       "listen": "0.0.0.0",
       "protocol": "trojan",
-      "tag": "TROJAN-gRPC-in",
       "settings": {
         "clients": [
           {
@@ -830,10 +906,9 @@ cat > /etc/xray/xtrojan.json << END
       }
     },
     {
-      "port": 1330,
+      "port": 888,
       "listen": "0.0.0.0",
       "protocol": "trojan",
-      "tag": "TROJAN-H2C-in",
       "settings": {
         "clients": [
           {
@@ -944,13 +1019,12 @@ cat > /etc/xray/xtrojan.json << END
       "port": 880,
       "listen": "0.0.0.0",
       "protocol": "trojan",
-      "tag": "TROJAN-HTTP-in",
       "settings": {
         "clients": [
           {
             "password": "gandring",
             "email": "gandring@p0x.smule.my.id"
-#trojan-http-nontls
+#trojan-http
           }
         ],
         "decryption": "none"
@@ -975,14 +1049,24 @@ cat > /etc/xray/xtrojan.json << END
   "outbounds": [
     {
       "protocol": "freedom",
-      "settings": {}
+      "tag": "direct"
     },
     {
       "protocol": "blackhole",
-      "settings": {},
       "tag": "blocked"
     }
   ],
+  "dns": {
+    "servers": [
+      "8.8.8.8",
+      "8.8.4.4",
+      "1.1.1.1",
+      "1.0.0.1",
+      "localhost",
+      "https+local://dns.google/dns-query",
+      "https+local://1.1.1.1/dns-query"
+    ]
+  },
   "routing": {
     "rules": [
       {
@@ -1063,6 +1147,15 @@ cat > /etc/xray/xvless.json << END
     "loglevel": "info"
   },
   "inbounds": [
+    {
+      "listen": "127.0.0.1",
+      "port": 10808,
+      "protocol": "dokodemo-door",
+      "settings": {
+        "address": "127.0.0.1"
+      },
+      "tag": "api"
+    },
     {
             "port": 2083,
             "protocol": "vmess",
@@ -1178,7 +1271,7 @@ cat > /etc/xray/xvless.json << END
             }
         },
         {
-            "port": 1340,
+            "port": 2000,
             "protocol": "vless",
             "settings": {
                 "clients": [
@@ -1231,14 +1324,24 @@ cat > /etc/xray/xvless.json << END
   "outbounds": [
     {
       "protocol": "freedom",
-      "settings": {}
+      "tag": "direct"
     },
     {
       "protocol": "blackhole",
-      "settings": {},
       "tag": "blocked"
     }
   ],
+  "dns": {
+    "servers": [
+      "8.8.8.8",
+      "8.8.4.4",
+      "1.1.1.1",
+      "1.0.0.1",
+      "localhost",
+      "https+local://dns.google/dns-query",
+      "https+local://1.1.1.1/dns-query"
+    ]
+  },
   "routing": {
     "rules": [
       {
@@ -1298,7 +1401,7 @@ cat > /etc/xray/xvless.json << END
       "statsOutboundDownlink" : true
     }
   }
-}     
+}    
 END
 
 uuid=$(cat /proc/sys/kernel/random/uuid)
@@ -1329,15 +1432,15 @@ cat > /usr/local/etc/xray/xvmess.json << END
       "tag": "api"
     },
     {
-        "port": 443,
-        "protocol": "vless",
-        "settings": {
-                "clients": [
-                    {
-                        "id": "$uuid",
-                        "flow": "xtls-rprx-direct",
-                        "level": 0,
-                        "email": "gandring@p0x.smule.my.id"
+       "port": 443,
+       "protocol": "vless",
+       "settings": {
+           "clients": [
+                  {
+                    "id": "$uuid",
+                    "flow": "xtls-rprx-direct",
+                    "level": 0,
+                    "email": "gandring@p0x.smule.my.id"
 #vless-xtls
                     }
                 ],
@@ -1380,6 +1483,11 @@ cat > /usr/local/etc/xray/xvmess.json << END
                     {
                         "path": "/vmesshttp",
                         "dest": 1350,
+                        "xver": 1
+                    },
+                    {
+                        "path": "/trojantcp",
+                        "dest": 1370,
                         "xver": 1
                     }
                 ]
@@ -1432,67 +1540,67 @@ cat > /usr/local/etc/xray/xvmess.json << END
           "listen": "127.0.0.1",
           "protocol": "trojan",
           "settings": {
-           "clients": [
-       {
-           "password": "gandring",
-           "level": 0,
-           "email": "gandring@p0x.smule.my.id"
+             "clients": [
+                {
+                  "password": "gandring",
+                  "level": 0,
+                  "email": "gandring@p0x.smule.my.id"
 #trojan-tls
-        }
-      ],
+                 }
+           ],
            "fallbacks": [
-       {
-           "dest": 88
-       }
-     ]
-  },
+                {
+                  "dest": 88
+                 }
+            ]
+      },
       "streamSettings": {
         "network": "ws",
         "security": "none",
         "wsSettings": {
           "acceptProxyProtocol": true,
-          "path": "/gandring"
-         }
-      }
+              "path": "/gandring"
+          }
+       }
     },
     {
-          "port": 1330,
-          "listen": "127.0.0.1",
-          "protocol": "trojan",
+      "port": 1330,
+      "listen": "127.0.0.1",
+      "protocol": "trojan",
           "settings": {
-           "clients": [
-       {
-           "password": "gandring",
-           "level": 0,
-           "email": "gandring@p0x.smule.my.id"
+             "clients": [
+                {
+                  "password": "gandring",
+                   "level": 0,
+                   "email": "gandring@p0x.smule.my.id"
 #trojan-hdua
-        }
-      ],
+                 }
+           ],
            "fallbacks": [
-       {
-           "dest": 88
-       }
-     ]
-  },
+               {
+                 "dest": 88
+                }
+           ]
+      },
       "streamSettings": {
         "network": "http",
         "security": "none",
         "httpSettings": {
           "acceptProxyProtocol": true,
-          "path": "/trojanhttp"
-         }
-      }
+              "path": "/trojanhttp"
+           }
+       }
     },
-        {
-            "port": 1234,
-            "listen": "127.0.0.1",
-            "protocol": "vless",
+    {
+       "port": 1234,
+       "listen": "127.0.0.1",
+       "protocol": "vless",
             "settings": {
                 "clients": [
-                    {
-                        "id": "$uuid",
-                        "level": 0,
-                        "email": "gandring@p0x.smule.my.id"
+                   {
+                      "id": "$uuid",
+                      "level": 0,
+                      "email": "gandring@p0x.smule.my.id"
 #vless-tls
                     }
                 ],
@@ -1503,15 +1611,15 @@ cat > /usr/local/etc/xray/xvmess.json << END
                 "security": "none",
                 "wsSettings": {
                     "acceptProxyProtocol": true,
-                    "path": "/bagus"
-                }
-            }
+                       "path": "/bagus"
+                   }
+             }
         },
         {
-            "port": 1340,
-            "listen": "127.0.0.1",
-            "protocol": "vless",
-            "settings": {
+          "port": 1340,
+          "listen": "127.0.0.1",
+          "protocol": "vless",
+              "settings": {
                 "clients": [
                     {
                         "id": "$uuid",
@@ -1527,23 +1635,23 @@ cat > /usr/local/etc/xray/xvmess.json << END
                 "security": "none",
                 "httpSettings": {
                     "acceptProxyProtocol": true,
-                    "path": "/vlesshttp"
-                }
-            }
+                        "path": "/vlesshttp"
+                   }
+             }
         },
         {
-            "port": 2345,
-            "listen": "127.0.0.1",
-            "protocol": "vmess",
-            "settings": {
+          "port": 2345,
+          "listen": "127.0.0.1",
+          "protocol": "vmess",
+             "settings": {
                 "clients": [
                     {
-                        "id": "$uuid",
-                        "level": 0,
-                        "email": "gandring@p0x.smule.my.id"
+                      "id": "$uuid",
+                       "level": 0,
+                       "email": "gandring@p0x.smule.my.id"
 #vmess-http-tls
-                    }
-                ]
+                     }
+                 ]
             },
             "streamSettings": {
                 "network": "tcp",
@@ -1562,63 +1670,105 @@ cat > /usr/local/etc/xray/xvmess.json << END
             }
         },
         {
-            "port": 3456,
-            "listen": "127.0.0.1",
-            "protocol": "vmess",
+          "port": 1370,
+          "listen": "127.0.0.1",
+          "protocol": "trojan",
             "settings": {
-                "clients": [
-                    {
-                        "id": "$uuid",
-                        "level": 0,
-                        "email": "gandring@p0x.smule.my.id"
+               "clients": [
+                  {
+                    "password": "gandring",
+                    "level": 0,
+                    "email": "gandring@p0x.smule.my.id"
+#trojan-http-tls
+          }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "security": "none",
+        "tcpSettings": {
+         "header": {
+          "type": "http",
+           "response": {
+           "path": "/trojantcp",
+            "version": "1.1",
+             "status": "200",
+             "reason": "OK",
+             "headers": {}
+            }
+          }
+        }
+      }
+    },
+    {
+      "port": 3456,
+      "listen": "127.0.0.1",
+      "protocol": "vmess",
+            "settings": {
+               "clients": [
+                  {
+                    "id": "$uuid",
+                     "level": 0,
+                     "email": "gandring@p0x.smule.my.id"
 #vmess-tls
-                     }
-                ]
+                   }
+               ]
             },
             "streamSettings": {
                 "network": "ws",
                 "security": "none",
                 "wsSettings": {
                     "acceptProxyProtocol": true,
-                    "path": "/cokro"
-                   }
-            }
+                      "path": "/cokro"
+                    }
+             }
        },
        {
-            "port": 1350,
-            "listen": "127.0.0.1",
-            "protocol": "vmess",
+         "port": 1350,
+         "listen": "127.0.0.1",
+         "protocol": "vmess",
             "settings": {
-                "clients": [
-                    {
-                        "id": "$uuid",
-                        "level": 0,
-                        "email": "gandring@p0x.smule.my.id"
+               "clients": [
+                  {
+                    "id": "$uuid",
+                    "level": 0,
+                    "email": "gandring@p0x.smule.my.id"
 #vmess-hdua
-                     }
-                ]
-            },
-            "streamSettings": {
-                "network": "http",
-                "security": "none",
+                   }
+              ]
+         },
+         "streamSettings": {
+          "network": "http",
+            "security": "none",
                 "httpSettings": {
                     "acceptProxyProtocol": true,
-                    "path": "/vmesshttp"
-                }
-        }
+                       "path": "/vmesshttp"
+                   }
+         }
   }
   ],
   "outbounds": [
     {
       "protocol": "freedom",
-      "settings": {}
+      "tag": "direct"
     },
     {
       "protocol": "blackhole",
-      "settings": {},
       "tag": "blocked"
     }
   ],
+  "dns": {
+    "servers": [
+      "8.8.8.8",
+      "8.8.4.4",
+      "1.1.1.1",
+      "1.0.0.1",
+      "localhost",
+      "https+local://dns.google/dns-query",
+      "https+local://1.1.1.1/dns-query"
+    ]
+  },
   "routing": {
     "rules": [
       {
@@ -1693,7 +1843,21 @@ path_key="/etc/xray/xray.key"
 # Buat Config Xray
 cat > /etc/xray/xss.json << END
 {
+  "log": {
+    "access": "/var/log/xray/access.log",
+    "error": "/var/log/xray/error.log",
+    "loglevel": "info"
+  },
   "inbounds": [
+    {
+      "listen": "127.0.0.1",
+      "port": 10808,
+      "protocol": "dokodemo-door",
+      "settings": {
+        "address": "127.0.0.1"
+      },
+      "tag": "api"
+    },
     {
       "port": 212,
       "protocol": "shadowsocks",
@@ -1726,22 +1890,63 @@ cat > /etc/xray/xss.json << END
     ]
   },
   "routing": {
-    "domainStrategy": "AsIs",
     "rules": [
       {
         "type": "field",
-        "inboundTag": [
-          "TROJAN-XTLS-in",
-          "TROJAN-gRPC-in",
-          "TROJAN-WSTLS-in",
-          "TROJAN-WS-in",
-          "TROJAN-H2C-in",
-          "TROJAN-HTTP-in"
+        "ip": [
+          "0.0.0.0/8",
+          "10.0.0.0/8",
+          "100.64.0.0/10",
+          "169.254.0.0/16",
+          "172.16.0.0/12",
+          "192.0.0.0/24",
+          "192.0.2.0/24",
+          "192.168.0.0/16",
+          "198.18.0.0/15",
+          "198.51.100.0/24",
+          "203.0.113.0/24",
+          "::1/128",
+          "fc00::/7",
+          "fe80::/10"
         ],
-        "outboundTag": "blackhole-out",
-        "protocol": [ "bittorrent" ]
+        "outboundTag": "blocked"
+      },
+      {
+        "inboundTag": [
+          "api"
+        ],
+        "outboundTag": "api",
+        "type": "field"
+      },
+      {
+        "type": "field",
+        "outboundTag": "blocked",
+        "protocol": [
+          "bittorrent"
+        ]
       }
     ]
+  },
+  "stats": {},
+  "api": {
+    "services": [
+      "StatsService"
+    ],
+    "tag": "api"
+  },
+  "policy": {
+    "levels": {
+      "0": {
+        "statsUserDownlink": true,
+        "statsUserUplink": true
+      }
+    },
+    "system": {
+      "statsInboundUplink": true,
+      "statsInboundDownlink": true,
+      "statsOutboundUplink" : true,
+      "statsOutboundDownlink" : true
+    }
   }
 }
 END
@@ -1914,44 +2119,6 @@ iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 502 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 502 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 503 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 503 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 1310 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 1310 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 1320 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 1320 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 1330 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 1330 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 1340 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 1340 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 1350 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 1350 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 1360 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 1360 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 1370 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 1370 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 1380 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 1380 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 1390 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 1390 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 1400 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 1400 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 1234 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 1234 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2345 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2345 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 3456 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 3456 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 4567 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 4567 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 5678 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 5678 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 6789 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 6789 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 7890 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 7890 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 10808 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 10808 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 10809 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 10809 -j ACCEPT
 sudo iptables -A INPUT -p tcp --dport 80 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
 sudo iptables -A INPUT -p udp --dport 80 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
 sudo iptables -A OUTPUT -p tcp --sport 80 -m conntrack --ctstate ESTABLISHED -j ACCEPT
@@ -2028,7 +2195,7 @@ cat > /etc/trojan-go/config.json << END
   "local_addr": "0.0.0.0",
   "local_port": 2053,
   "remote_addr": "127.0.0.1",
-  "remote_port": 88,
+  "remote_port": 443,
   "log_level": 1,
   "log_file": "/var/log/trojan-go/trojan-go.log",
   "password": [
@@ -2053,7 +2220,7 @@ cat > /etc/trojan-go/config.json << END
     "reuse_session": true,
     "plain_http_response": "",
     "fallback_addr": "127.0.0.1",
-    "fallback_port": 0,
+    "fallback_port": 443,
     "fingerprint": "firefox"
   },
   "tcp": {
@@ -2077,9 +2244,9 @@ cat > /etc/trojan-go/config.json << END
     "api_port": 0,
     "ssl": {
       "enabled": true,
-      "key": "",
-      "cert": "",
-      "verify_client": false,
+      "key": "/etc/ssl/private/privkey.pem",
+      "cert": "/etc/ssl/private/fullchain.pem",
+      "verify_client": true,
       "client_cert": []
     }
   }
@@ -2113,8 +2280,8 @@ END
 
 # restart
 
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2087 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2087 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2053 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2053 -j ACCEPT
 iptables-save > /etc/iptables.up.rules
 iptables-restore -t < /etc/iptables.up.rules
 netfilter-persistent save
