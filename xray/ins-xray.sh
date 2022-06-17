@@ -97,6 +97,15 @@ cat > /etc/xray/config.json << END
   },
   "inbounds": [
     {
+      "listen": "127.0.0.1",
+      "port": 10808,
+      "protocol": "dokodemo-door",
+      "settings": {
+        "address": "127.0.0.1"
+      },
+      "tag": "api"
+    },
+    {
       "port": 99,
       "protocol": "vless",
       "settings": {
@@ -663,9 +672,18 @@ cat > /etc/xray/xtrojan.json << END
   "log": {
     "access": "/var/log/xray/access.log",
     "error": "/var/log/xray/error.log",
-    "loglevel": "warning"
+    "loglevel": "info"
   },
   "inbounds": [
+    {
+      "listen": "127.0.0.1",
+      "port": 10808,
+      "protocol": "dokodemo-door",
+      "settings": {
+        "address": "127.0.0.1"
+      },
+      "tag": "api"
+    },
     {
       "port": 4443,
       "protocol": "trojan",
@@ -953,47 +971,8 @@ cat > /etc/xray/xtrojan.json << END
         }
       }
     }
-  ],
-  "outbounds": [
-    {
-      "protocol": "freedom",
-      "tag": "direct"
-    },
-    {
-      "protocol": "blackhole",
-      "tag": "blocked"
-    }
-  ],
-  "dns": {
-    "servers": [
-      "8.8.8.8",
-      "8.8.4.4",
-      "1.1.1.1",
-      "1.0.0.1",
-      "localhost",
-      "https+local://dns.google/dns-query",
-      "https+local://1.1.1.1/dns-query"
-    ]
-  },
-  "routing": {
-    "domainStrategy": "AsIs",
-    "rules": [
-      {
-        "type": "field",
-        "inboundTag": [
-          "TROJAN-XTLS-in",
-          "TROJAN-gRPC-in",
-          "TROJAN-WSTLS-in",
-          "TROJAN-WS-in",
-          "TROJAN-H2C-in",
-          "TROJAN-HTTP-in"
-        ],
-        "outboundTag": "blackhole-out",
-        "protocol": [ "bittorrent" ]
-      }
-    ]
-  }
-}
+ 
+  
 END
 
 uuid=$(cat /proc/sys/kernel/random/uuid)
@@ -1008,13 +987,22 @@ path_key="/etc/xray/xray.key"
 # Buat Config Xray
 cat > /etc/xray/xvless.json << END
 {
-    "log": {
-            "access": "/var/log/xray/access.log",
-        "error": "/var/log/xray/error.log",
-        "loglevel": "warning"
+  "log": {
+    "access": "/var/log/xray/access.log",
+    "error": "/var/log/xray/error.log",
+    "loglevel": "info"
+  },
+  "inbounds": [
+    {
+      "listen": "127.0.0.1",
+      "port": 10808,
+      "protocol": "dokodemo-door",
+      "settings": {
+        "address": "127.0.0.1"
+      },
+      "tag": "api"
     },
-    "inbounds": [
-        {
+    {
             "port": 2083,
             "protocol": "vmess",
             "settings": {
@@ -1178,8 +1166,8 @@ cat > /etc/xray/xvless.json << END
                 }
             }
         }
-    ],
-    "outbounds": [
+  ],
+  "outbounds": [
     {
       "protocol": "freedom",
       "settings": {}
@@ -1244,10 +1232,12 @@ cat > /etc/xray/xvless.json << END
     },
     "system": {
       "statsInboundUplink": true,
-      "statsInboundDownlink": true
+      "statsInboundDownlink": true,
+      "statsOutboundUplink" : true,
+      "statsOutboundDownlink" : true
     }
   }
-}
+}     
 END
 
 uuid=$(cat /proc/sys/kernel/random/uuid)
@@ -1277,10 +1267,10 @@ cat > /usr/local/etc/xray/xvmess.json << END
       },
       "tag": "api"
     },
-        {
-            "port": 443,
-            "protocol": "vless",
-            "settings": {
+    {
+        "port": 443,
+        "protocol": "vless",
+        "settings": {
                 "clients": [
                     {
                         "id": "$uuid",
@@ -1302,8 +1292,18 @@ cat > /usr/local/etc/xray/xvmess.json << END
                         "xver": 1
                     },
                     {
+                        "path": "/trojanhttp",
+                        "dest": 1330,
+                        "xver": 1
+                    },
+                    {
                         "path": "/bagus",
                         "dest": 1234,
+                        "xver": 1
+                    },
+                    {
+                        "path": "/vlesshttp",
+                        "dest": 1340,
                         "xver": 1
                     },
                     {
@@ -1314,6 +1314,11 @@ cat > /usr/local/etc/xray/xvmess.json << END
                     {
                         "path": "/cokro",
                         "dest": 3456,
+                        "xver": 1
+                    },
+                    {
+                        "path": "/vmesshttp",
+                        "dest": 1350,
                         "xver": 1
                     }
                 ]
@@ -1356,12 +1361,12 @@ cat > /usr/local/etc/xray/xvmess.json << END
             "streamSettings": {
                 "network": "tcp",
                 "security": "none",
-                "tlsSettings": {
+                "tcpSettings": {
                     "acceptProxyProtocol": true
                 }
             }
         },
-      {
+        {
           "port": 1320,
           "listen": "127.0.0.1",
           "protocol": "trojan",
@@ -1389,6 +1394,34 @@ cat > /usr/local/etc/xray/xvmess.json << END
          }
       }
     },
+    {
+          "port": 1330,
+          "listen": "127.0.0.1",
+          "protocol": "trojan",
+          "settings": {
+           "clients": [
+       {
+           "password": "gandring",
+           "level": 0,
+           "email": "gandring@p0x.smule.my.id"
+#trojan-hdua
+        }
+      ],
+           "fallbacks": [
+       {
+           "dest": 88
+       }
+     ]
+  },
+      "streamSettings": {
+        "network": "http",
+        "security": "none",
+        "httpSettings": {
+          "acceptProxyProtocol": true,
+          "path": "/trojanhttp"
+         }
+      }
+    },
         {
             "port": 1234,
             "listen": "127.0.0.1",
@@ -1410,6 +1443,30 @@ cat > /usr/local/etc/xray/xvmess.json << END
                 "wsSettings": {
                     "acceptProxyProtocol": true,
                     "path": "/bagus"
+                }
+            }
+        },
+        {
+            "port": 1340,
+            "listen": "127.0.0.1",
+            "protocol": "vless",
+            "settings": {
+                "clients": [
+                    {
+                        "id": "$uuid",
+                        "level": 0,
+                        "email": "gandring@p0x.smule.my.id"
+#vless-hdua
+                    }
+                ],
+                "decryption": "none"
+            },
+            "streamSettings": {
+                "network": "http",
+                "security": "none",
+                "httpSettings": {
+                    "acceptProxyProtocol": true,
+                    "path": "/vlesshttp"
                 }
             }
         },
@@ -1463,6 +1520,29 @@ cat > /usr/local/etc/xray/xvmess.json << END
                 "wsSettings": {
                     "acceptProxyProtocol": true,
                     "path": "/cokro"
+                   }
+            }
+       },
+       {
+            "port": 1350,
+            "listen": "127.0.0.1",
+            "protocol": "vmess",
+            "settings": {
+                "clients": [
+                    {
+                        "id": "$uuid",
+                        "level": 0,
+                        "email": "gandring@p0x.smule.my.id"
+#vmess-hdua
+                     }
+                ]
+            },
+            "streamSettings": {
+                "network": "http",
+                "security": "none",
+                "httpSettings": {
+                    "acceptProxyProtocol": true,
+                    "path": "/vmesshttp"
                 }
         }
   }
@@ -1781,7 +1861,7 @@ path_key="/etc/xray/xray.key"
 cat > /etc/trojan-go/config.json << END
 {
   "run_type": "server",
-  "local_addr": "0.0.0.0",
+  "local_addr": "127.0.0.1",
   "local_port": 2053,
   "remote_addr": "127.0.0.1",
   "remote_port": 88,
@@ -1793,8 +1873,8 @@ cat > /etc/trojan-go/config.json << END
   "disable_http_check": true,
   "udp_timeout": 60,
   "ssl": {
-    "verify": false,
-    "verify_hostname": false,
+    "verify": true,
+    "verify_hostname": true,
     "cert": "/etc/ssl/private/fullchain.pem",
     "key": "/etc/ssl/private/privkey.pem",
     "key_password": "",
@@ -1809,7 +1889,7 @@ cat > /etc/trojan-go/config.json << END
     "reuse_session": true,
     "plain_http_response": "",
     "fallback_addr": "127.0.0.1",
-    "fallback_port": 0,
+    "fallback_port": 81,
     "fingerprint": "firefox"
   },
   "tcp": {
@@ -1832,10 +1912,10 @@ cat > /etc/trojan-go/config.json << END
     "api_addr": "",
     "api_port": 0,
     "ssl": {
-      "enabled": false,
-      "key": "",
-      "cert": "",
-      "verify_client": false,
+      "enabled": true,
+    "cert": "/etc/ssl/private/fullchain.pem",
+    "key": "/etc/ssl/private/privkey.pem",
+      "verify_client": true,
       "client_cert": []
     }
   }
