@@ -513,7 +513,7 @@ cat > /etc/xray/config.json << END
       "settings": {
         "users": [
           {
-            "secret": "abdff3490fe6bb16fbd57f4f45d7215a"
+            "secret": "0f5138e946244020a5163e2be12fa8f2"
 #xray-mtproto
           }
         ]
