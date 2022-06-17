@@ -58,10 +58,14 @@ exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 #exp=`date -d "$masaaktif seconds" +"%Y-%m-%d"`
 sed -i '/#trojan-grpc$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
+sed -i '/#trojan-grpc$/a\#&# '"$user $exp"'\
+},{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#trojan-xtls$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","flow": "'""xtls-rprx-direct""'", "email": "'""$user""'"' /etc/xray/xtrojan.json
 sed -i '/#trojan-hdua$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
+sed -i '/#trojan-hdua$/a\#&# '"$user $exp"'\
+},{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#trojan-tls$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#trojan-gfw$/a\#&# '"$user $exp"'\
@@ -88,7 +92,7 @@ trojango="trojan-go://${uuid}@${domain}:${trgo}/?sni=${domain}&type=ws&host=${do
 trojanhdua="trojan://${uuid}@${domain}:$thdua?sni=${domain}&type=http&security=tls&path=%2ftrojanhttp#${user}"
 trojangrpc="trojan://${uuid}@${domain}:$tgrpc?mode=gun&security=tls&type=grpc&serviceName=%2ftrojangrpc&sni=${domain}#${user}"
 trojanxtls="trojan://${uuid}@${domain}:$txtls?security=xtls&type=tcp&headerType=none&flow=xtls-rprx-direct#${user}"
-trojangfw="trojan://${uuid}@${domain}:$tgfw?security=tls&type=tcp&headerType=none#${user}"
+trojangfw="trojan://$uuid@$domain:$tgfw?type=tcp&security=tls&headerType=none#$user"
 trojantls="trojan://${uuid}@${domain}:$ttls?type=ws&security=tls&host=$domain&path=%2fgandring&sni=$domain#${user}"
 trojannontls="trojan://${uuid}@${domain}:$tnontls?type=ws&security=none&host=$domain&path=%2fgandring#${user}"
 trojanhttptls="trojan://${uuid}@${domain}:$thttp?sni=${domain}&type=tcp&security=tls&path=%2ftrojantcp&headerType=http#${user}"
@@ -102,24 +106,25 @@ echo -e ""
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m 🔰 AKUN TROJAN TESTER 🔰 \e[m"       
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "NAMA            :${user}"
+echo -e "NAMA             :${user}"
 echo -e "IP/Host :${MYIP} / $domain"
-echo -e "Protocol        :GRPC,H2C,GFW,XTLS,WS,HTTP,GO"
-echo -e "ServiceName     :/trojangrpc"
-echo -e "Path WS         :/gandring"
-echo -e "Path H2C        :/trojanhttp"
-echo -e "Path HTTP       :/trojantcp"
-echo -e "Path Trojan-Go  :/gandring"
-echo -e "Port GRPC       :${tgrpc}"
-echo -e "Port WSTLS      :${ttls}"
-echo -e "Port WS Non TLS :${tnontls}"
-echo -e "Port H2C        :${thdua}"
-echo -e "Port HTTP TLS   :${thttp}"
-echo -e "Port HTTP NonTLS:${thttpnon}"
-echo -e "Port TCP        :${txtls}"    
-echo -e "Password        :${uuid}"
-echo -e "Created         :$hariini"
-echo -e "Expired         :$exp"
+echo -e "Protocol         :GRPC,H2C,GFW,XTLS,WS,HTTP,GO"
+echo -e "ServiceName      :/trojangrpc"
+echo -e "Path WS          :/gandring"
+echo -e "Path H2C         :/trojanhttp"
+echo -e "Path HTTP        :/trojantcp"
+echo -e "Path Trojan-Go   :/gandring"
+echo -e "Port GRPC        :${tgrpc}"
+echo -e "Port WSTLS       :${ttls}"
+echo -e "Port WS Non TLS  :${tnontls}"
+echo -e "Port H2C         :${thdua}"
+echo -e "Port HTTP TLS    :${thttp}"
+echo -e "Port HTTP NonTLS :${thttpnon}"
+echo -e "Port GFW         :${tgfw}"
+echo -e "Port XTLS        :${txtls}" 
+echo -e "Password         :${uuid}"
+echo -e "Created          :$hariini"
+echo -e "Expired          :$exp"
 #echo -e "Expired         :$exp2"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "Link GRPC:  ${trojangrpc}"
