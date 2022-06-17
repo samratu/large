@@ -22,7 +22,7 @@ vlxtls="$(cat ~/log-install.txt | grep -w "VLESS XTLS" | cut -d: -f2|sed 's/ //g
 #nontls="$(cat ~/log-install.txt | grep -w "VLESS NON TLS" | cut -d: -f2|sed 's/ //g')"
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 		read -rp "Username : " -e user
-		CLIENT_EXISTS=$(grep -w $user /etc/xray/config.json | wc -l)
+		CLIENT_EXISTS=$(grep -w $user /usr/local/etc/xray/xvmess.json | wc -l)
 
 		if [[ ${CLIENT_EXISTS} == '1' ]]; then
 			echo ""
@@ -35,7 +35,7 @@ read -p "Expired (Days) : " masaaktif
 hariini=`date -d "0 days" +"%Y-%m-%d"`
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#vless-xtls$/a\#### '"$user $exp"'\
-},{"id": "'""$uuid""'","flow": "'""xtls-rprx-direct""'", "email": "'""$user""'"' /etc/xray/config.json
+},{"id": "'""$uuid""'","flow": "'""xtls-rprx-direct""'", "email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 
 vlessxtls="vless://${user}@${domain}:$vlxtls?type=tcp&security=xtls&headerType=none&flow=xtls-rprx-direct&encryption=none#${user}"
 #vlessxtls="vless://${uuid}@${domain}:$vlxtls?security=xtls&type=tcp&headerType=none&encryption=none#${user}"
@@ -44,11 +44,10 @@ systemctl restart xray.service
 service cron restart
 clear
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "\033[1;46m   🔰 AKUN VLESS TCP 🔰   \e[m"   
+echo -e "\033[1;46m 🔰 AKUN VLESS XTLS & GFW 🔰 \e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "Remarks    :${user}"
 echo -e "IP/Host    :${MYIP}"
-echo -e "IPV6       :$MYIP6"
 echo -e "Address    :${domain}"
 echo -e "Port       :${vlxtls}"
 echo -e "User ID    :${uuid}"
