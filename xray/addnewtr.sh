@@ -96,7 +96,7 @@ trojangfw="trojan://$uuid@$domain:$tgfw?type=tcp&security=tls&headerType=none#$u
 trojantls="trojan://${uuid}@${domain}:$ttls?type=ws&security=tls&host=$domain&path=%2fgandring&sni=$domain#${user}"
 trojannontls="trojan://${uuid}@${domain}:$tnontls?type=ws&security=none&host=$domain&path=%2fgandring#${user}"
 trojanhttp="trojan://${uuid}@${domain}:$thttp?sni=${domain}&type=tcp&security=tls&path=%2ftrojantcp&headerType=http#${user}"
-trojanhttpnon="trojan://${uuid}@${domain}:$thttp?sni=${domain}&type=tcp&security=none&path=%2fcokro&headerType=http#${user}"
+trojanhttpnon="trojan://${uuid}@${domain}:$thttpnon?sni=${domain}&type=tcp&security=none&host=${domain}&headerType=http#${user}"
 systemctl restart xray.service
 systemctl restart xtrojan.service
 systemctl restart xvmess
