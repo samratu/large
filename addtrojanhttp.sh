@@ -16,10 +16,21 @@ MYIP=$(wget -qO- ipinfo.io/ip);
 clear
 domain=$(cat /etc/xray/domain)
 uuid=$(cat /proc/sys/kernel/random/uuid)
-thttp="$(cat ~/log-install.txt | grep -w "TROJAN HTTP" | cut -d: -f2|sed 's/ //g')"
+thttp="$(cat ~/log-install.txt | grep -w "TROJAN HTTP TLS" | cut -d: -f2|sed 's/ //g')"
+thttpnon="$(cat ~/log-install.txt | grep -w "TROJAN HTTP NON TLS" | cut -d: -f2|sed 's/ //g')"
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${user_EXISTS} == '0' ]]; do
 		read -rp "Password : " -e user
 		user_EXISTS=$(grep -w $user /etc/xray/xtrojan.json | wc -l)
+
+		if [[ ${user_EXISTS} == '1' ]]; then
+			echo ""
+			echo -e "Username ${RED}${user}${NC} Already On VPS Please Choose Another"
+			exit 1
+		fi
+	done
+until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${user_EXISTS} == '0' ]]; do
+		read -rp "Password : " -e user
+		user_EXISTS=$(grep -w $user /usr/local/etc/xray/xvmess.json | wc -l)
 
 		if [[ ${user_EXISTS} == '1' ]]; then
 			echo ""
@@ -31,12 +42,16 @@ uuid=$(cat /proc/sys/kernel/random/uuid)
 read -p "Expired (Days) : " masaaktif
 hariini=`date -d "0 days" +"%Y-%m-%d"`
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
-sed -i '/#trojan-http$/a\#&# '"$user $exp"'\
+sed -i '/#trojan-http-tls$/a\#&# '"$user $exp"'\
+},{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
+sed -i '/#trojan-http-nontls$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
 
-trojanhttp="trojan://${uuid[@${domain}:$thttp?type=tcp&security=none&host=${domain}&headerType=http#${user}"
+trojanhttp="trojan://${uuid[@${domain}:$thttp?type=tcp&security=tls&path=%2ftrojanhttp&host=${domain}&headerType=http#${user}"
+trojanhttpnon="trojan://${uuid[@${domain}:$thttpnon?type=tcp&security=none&host=${domain}&headerType=http#${user}"
 systemctl restart xray.service
 systemctl restart xtrojan.service
+systemctl restart xvmess
 service cron restart
 clear
 echo -e ""
@@ -53,7 +68,9 @@ echo -e "Password   : ${uuid}"
 echo -e "Created    : $hariini"
 echo -e "Expired    : $exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Link HTTP  : ${trojanhttp}"
+echo -e "Link HTTP TLS : ${trojanhttp}"
+echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "Link HTTP NONTLS : ${trojanhttpnon}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m🔰LUXURY EDITION ZEROSSL🔰\e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
