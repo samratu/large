@@ -1064,15 +1064,6 @@ cat > /etc/xray/xvless.json << END
   },
   "inbounds": [
     {
-      "listen": "127.0.0.1",
-      "port": 10808,
-      "protocol": "dokodemo-door",
-      "settings": {
-        "address": "127.0.0.1"
-      },
-      "tag": "api"
-    },
-    {
             "port": 2083,
             "protocol": "vmess",
             "settings": {
