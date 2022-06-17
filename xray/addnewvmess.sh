@@ -89,6 +89,16 @@ vmgrpc="$(cat ~/log-install.txt | grep -w "VMESS GRPC TLS" | cut -d: -f2|sed 's/
 vmgrpcnon="$(cat ~/log-install.txt | grep -w "VMESS GRPC NON TLS" | cut -d: -f2|sed 's/ //g')"
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 		read -rp "User: " -e user
+		CLIENT_EXISTS=$(grep -w $user /etc/xray/config.json | wc -l)
+
+		if [[ ${CLIENT_EXISTS} == '1' ]]; then
+			echo ""
+			echo "A Client Username Was Already Created, Please Enter New Username"
+			exit 1
+		fi
+	done
+until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
+		read -rp "User: " -e user
 		CLIENT_EXISTS=$(grep -w $user /etc/xray/xvless.json | wc -l)
 
 		if [[ ${CLIENT_EXISTS} == '1' ]]; then
@@ -117,7 +127,7 @@ sed -i '/#vmess-grpc-tls$/a\### '"$user $exp"'\
 sed -i '/#vmess-grpc-tls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#vmess-grpc-nontls$/a\### '"$user $exp"'\
-},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/xvless.json
+},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
 cat>/etc/xray/vmess-$user-tls.json<<EOF
       {
       "v": "2",
@@ -198,7 +208,7 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "net": "h2",
       "path": "/vmesshttp",
       #"type": "multi",
-      "host": "",
+      "host": "$domain",
       "tls": "tls"
 }
 EOF
@@ -284,12 +294,13 @@ echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━�
 echo -e "NAMA        :${user}"
 echo -e "IP :${MYIP}/ ${domain}"
 echo -e "Port WS     :${tls}/${nontls}"
-echo -e "Port GRPC   :${vmgrpc},2083/${vmgrpcnon}"
-echo -e "Port H2C    :${vmhdua},1350"
+echo -e "Port GRPC   :${vmgrpc}/${vmgrpcnon}"
+echo -e "Port H2C    :${vmhdua}"
 echo -e "Port HTTP   :${vmhttp}/${vmhttpnon}"
 echo -e "User ID     :${uuid}"
 echo -e "Network     :WS,GRPC,H2C,HTTP"
 echo -e "Path WS     :/cokro,gandring"
+echo -e "Pat H2C     :/vmesshttp"
 echo -e "ServiceName :/vmessgrpc"
 echo -e "Path HTTP   :/wisnu"
 echo -e "Created     :$hariini"
