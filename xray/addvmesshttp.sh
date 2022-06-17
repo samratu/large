@@ -23,11 +23,21 @@ until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 			exit 1
 		fi
 	done
+until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
+		read -rp "User: " -e user
+		CLIENT_EXISTS=$(grep -w $user /usr/local/etc/xray/xvmess.json | wc -l)
+
+		if [[ ${CLIENT_EXISTS} == '1' ]]; then
+			echo ""
+			echo "A Client Username Was Already Created, Please Enter New Username"
+			exit 1
+		fi
+	done
 uuid=$(cat /proc/sys/kernel/random/uuid)
 read -p "Expired (Days): " masaaktif
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#vmess-http-tls$/a\### '"$user $exp"'\
-},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
+},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#vmess-http-nontls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
 cat>/etc/xray/vmess-$user-tls.json<<EOF
@@ -39,7 +49,7 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "tcp",
-      #"path": "/",
+      "path": "/wisnu",
       "type": "http",
       "host": "${domain}",
       "tls": "tls"
@@ -64,7 +74,7 @@ vmesshttp_base641=$( base64 -w 0 <<< $vmess_json1)
 vmesshttp_base642=$( base64 -w 0 <<< $vmess_json2)
 vmesshttp="vmess://$(base64 -w 0 /etc/xray/vmess-$user-tls.json)"
 vmesshttpnon="vmess://$(base64 -w 0 /etc/xray/vmess-$user-none.json)"
-
+systemctl restart  xvmess
 systemctl restart xray
 service cron restart
 clear
@@ -75,20 +85,17 @@ echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━�
 echo -e "Remarks      :${user}"
 echo -e "Host         :${domain}"
 echo -e "IP           :${MYIP}"
-echo -e "IPV6         :$MYIP6"
 echo -e "Port TLS     :${vmhttp}"
 echo -e "Port NON TLS :${vmhttpnon}"
 echo -e "Id           :${uuid}"
-echo -e "AlterId      :0"
-echo -e "Security     :auto"
 echo -e "Network      :tcp"
 echo -e "Host         :${domain}"
-#echo -e "Path        :/"
+#echo -e "Path        :/wisnu"
 echo -e "Expired On   :$exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "HTTP TLS : ${vmesshttp}"   
+echo -e "Link HTTP TLS : ${vmesshttp}"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "HTTP NON TLS : ${vmesshttpnon}"   
+echo -e "Link HTTP NON TLS : ${vmesshttpnon}"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m🔰LUXURY EDITION ZEROSSL🔰\e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
