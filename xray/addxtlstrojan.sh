@@ -20,6 +20,7 @@ domain=$(cat /etc/xray/domain)
 
 uuid=$(cat /proc/sys/kernel/random/uuid)
 txtls="$(cat ~/log-install.txt | grep -w "TROJAN XTLS" | cut -d: -f2|sed 's/ //g')"
+tgfw="$(cat ~/log-install.txt | grep -w "TROJAN GFW" | cut -d: -f2|sed 's/ //g')"
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${user_EXISTS} == '0' ]]; do
 		read -rp "Password : " -e user
 		user_EXISTS=$(grep -w $user /etc/xray/xtrojan.json | wc -l)
@@ -48,7 +49,7 @@ sed -i '/#trojan-xtls$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","flow": "'""xtls-rprx-direct""'", "email": "'""$user""'"' /etc/xray/xtrojan.json
 
 trojanxtls="trojan://${uuid}@${domain}:$txtls?security=xtls&type=tcp&headerType=none&flow=xtls-rprx-direct#${user}"
-#trojanxtls="trojan://${uuid}@${domain}:$txtls?type=tcp&security=tls&headerType=none#${user}"
+trojangfw="trojan://${uuid}@${domain}:${tgfw}?type=tcp&security=tls&headerType=none#$user"
 service cron restart
 systemctl restart xray.service
 systemctl restart xtrojan.service
@@ -58,18 +59,20 @@ echo -e ""
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m 🔰 AKUN TROJAN XTLS & GFW 🔰   \e[m"       
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Remarks  :${user}"
-echo -e "IP/Host  :${MYIP}"
-echo -e "Address  :${domain}"
-echo -e "Protocol :tcp"
-#echo -e "ServiceName: gandring"
-echo -e "Port     :${txtls}"
-echo -e "Password :${uuid}"
-echo -e "Security :XTLS/TLS"
-echo -e "Created  :$hariini"
-echo -e "Expired  :$exp"
+echo -e "Nama       :${user}"
+echo -e "IP/Host    :${MYIP}"
+echo -e "Alamat     :${domain}"
+echo -e "Protokol   :tcp"
+echo -e "Port XTLS  :${txtls}"
+echo -e "Port GFW   :${txtls}"
+echo -e "Sandi      :${uuid}"
+echo -e "Satpam     :XTLS/TLS"
+echo -e "Dibuat     :$hariini"
+echo -e "Kadaluarsa :$exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "Link XTLS : ${trojanxtls}"
+echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "Link GFW : ${trojangfw}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m🔰LUXURY EDITION ZEROSSL🔰\e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
