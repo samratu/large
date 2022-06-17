@@ -86,7 +86,7 @@ sed -i '/#vless-http-tls$/a\#### '"$user $exp"'\
 #},{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvless.json
 #vlesshttpnon="vless://${uuid}@${domain}:$vlhttpnon?host=${domain}&security=none&type=tcp&headerType=http&encryption=none#${user}"
 vlesshttp="vless://${uuid}@${domain}:$vlhttp?sni=${domain}&host=${domain}&type=tcp&security=tls&path=%2fvlesstcp&headerType=http&encryption=none#${user}"
-vlesstls="vless://${uuid}@${domain}:$vltls?host=${domain}&sni=${domain}&type=ws&security=tls&path=%2fsatrio&encryption=none#${user}"
+vlesstls="vless://${uuid}@${domain}:$vltls?host=${domain}&sni=${domain}&type=ws&security=tls&path=%2fbagus&encryption=none#${user}"
 vlessnontls="vless://${uuid}@${domain}:$vlnontls?host=${domain}&security=none&type=ws&path=gandring&encryption=none#${user}"
 vlessgrpc="vless://${uuid}@${domain}:$vlgrpc?serviceName=%2fvlessgrpc&sni=${domain}&mode=multi&type=grpc&security=tls&encryption=none#${user}"
 vlessgrpcnon="vless://${uuid}@${domain}:$vlgrpcnon?serviceName=gandring&sni=${domain}&mode=multi&type=grpc&security=none&encryption=none#${user}"
