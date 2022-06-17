@@ -45,8 +45,10 @@ uuid=$(cat /proc/sys/kernel/random/uuid)
 read -p "Expired (Days) : " masaaktif
 hariini=`date -d "0 days" +"%Y-%m-%d"`
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
-sed -i '/#vless-hdua-tls$/a\#### '"$user $exp"'\
+sed -i '/#vless-hdua$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvless.json
+sed -i '/#vless-hdua$/a\#### '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#vless-hdua-nontls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvless.json
 vlesshdua="vless://${uuid}@${domain}:$vlhdua?type=http&security=tls&path=%2fvlesshttp&encryption=none#${user}"
@@ -61,7 +63,6 @@ echo -e "\033[1;46m 🔰 AKUN VLESS HTTP/2 🔰  \e[m"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "Remarks     :${user}"
 echo -e "IP/Host     :${MYIP}"
-echo -e "IPV6        :$MYIP6"
 echo -e "Address     :${domain}"
 echo -e "Port        :$vlhdua"
 echo -e "User ID     :${uuid}"
@@ -72,7 +73,7 @@ echo -e "Path        :/vlesshttp"
 echo -e "Created     :$hariini"
 echo -e "Expired     :$exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "H2C TLS: ${vlesshdua}"
+echo -e "Link H2C TLS: ${vlesshdua}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 #echo -e "H2C NONTLS: ${vlesshduanon}"
 #echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
