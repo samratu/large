@@ -52,7 +52,7 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "h2",
-      "path": "/wisnu",
+      "path": "/vmesshttp",
       #"type": "multi",
       "host": "",
       "tls": "tls"
