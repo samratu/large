@@ -80,6 +80,7 @@ openssl req -new -key server.key -out ca.csr \
 -subj "/C=ID/ST=Jawa-Tengah/L=Sukoharjo/O=GANDRING-VPN/OU=GANDRING/CN=GANDRING-VPN/emailAddress=djarumpentol01@gmail.com"
 #-subj "/C=US/ST=California/L=San-Fransisco/O=Cloudflare Inc./OU=www.cloudflare.com/CN=Managed CA f04e6b9f08b2fe102b1106b9aa860b8e/emailAddress=djarumpentol01@gmail.com"
 openssl x509 -req -days 1059 -in ca.csr -CA ca.crt -CA key ca.key -set_serial 01 -out server.crt
+cp /etc/ssl/private/fullchain.pem /home/vps/public_html/server.pem
 cp /home/sstp/server.crt /home/vps/public_html/server.crt
 iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 444 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 444 -j ACCEPT
