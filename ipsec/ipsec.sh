@@ -114,7 +114,6 @@ cd /opt/src || exit 1
 if ! /usr/local/sbin/ipsec --version 2>/dev/null | grep -qF "$SWAN_VER"; then
   exiterr "Libreswan $SWAN_VER failed to build."
 fi
-
 bigecho "Creating VPN configuration..."
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 L2TP_NET=192.168.42.0/24
@@ -262,25 +261,23 @@ novj
 novjccomp
 nologfd
 END
-
-bigecho "Updating IPTables rules....."
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-service fail2ban stop >/dev/null 2>&1
-iptables -t nat -I POSTROUTING -s 192.168.43.0/24 -o $NET_IFACE -j MASQUERADE
-iptables -t nat -I POSTROUTING -s 192.168.42.0/24 -o $NET_IFACE -j MASQUERADE
-iptables -t nat -I POSTROUTING -s 192.168.41.0/24 -o $NET_IFACE -j MASQUERADE
+bigecho "Updating IPTables rules....."
+sudo service fail2ban stop >/dev/null 2>&1
+sudo iptables -t nat -I POSTROUTING -s 192.168.43.0/24 -o $NET_IFACE -j MASQUERADE
+sudo iptables -t nat -I POSTROUTING -s 192.168.42.0/24 -o $NET_IFACE -j MASQUERADE
+sudo iptables -t nat -I POSTROUTING -s 192.168.41.0/24 -o $NET_IFACE -j MASQUERADE
 if [[ ${OS} == "centos" ]]; then
-service iptables save
-iptables-restore < /etc/sysconfig/iptables 
+sudo service iptables save
+sudo iptables-restore < /etc/sysconfig/iptables 
 else
-iptables-save > /etc/iptables.up.rules
-iptables-restore -t < /etc/iptables.up.rules
-netfilter-persistent save
-netfilter-persistent reload
+sudo iptables-save > /etc/iptables.up.rules
+sudo iptables-restore -t < /etc/iptables.up.rules
+sudo netfilter-persistent save
+sudo netfilter-persistent reload
 fi
-
-bigecho "Enabling services on boot....."
 echo -e "\033[1;31m══════════════════════════════════\033[0m"
+bigecho "Enabling services on boot....."
 systemctl enable xl2tpd
 systemctl enable ipsec
 systemctl enable pptpd
@@ -289,16 +286,15 @@ for svc in fail2ban ipsec xl2tpd; do
   update-rc.d "$svc" enable >/dev/null 2>&1
   systemctl enable "$svc" 2>/dev/null
 done
-
+echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 bigecho "Starting services......"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 sysctl -e -q -p
 chmod 600 /etc/ipsec.secrets* /etc/ppp/chap-secrets* /etc/ipsec.d/passwd*
-echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 mkdir -p /run/pluto
-service fail2ban restart 2>/dev/null
-service ipsec restart 2>/dev/null
-service xl2tpd restart 2>/dev/null
+sudo service fail2ban restart 2>/dev/null
+sudo service ipsec restart 2>/dev/null
+sudo service xl2tpd restart 2>/dev/null
 wget -O /usr/bin/addl2tp https://${wisnuvpn}/addl2tp.sh && chmod +x /usr/bin/addl2tp
 wget -O /usr/bin/dell2tp https://${wisnuvpn}/dell2tp.sh && chmod +x /usr/bin/dell2tp
 wget -O /usr/bin/addpptp https://${wisnuvpn}/addpptp.sh && chmod +x /usr/bin/addpptp
