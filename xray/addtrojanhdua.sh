@@ -29,15 +29,29 @@ until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${user_EXISTS} == '0' ]]; do
 		fi
 	done
 uuid=$(cat /proc/sys/kernel/random/uuid)
+thdua="$(cat ~/log-install.txt | grep -w "TROJAN H2C" | cut -d: -f2|sed 's/ //g')"
+until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${user_EXISTS} == '0' ]]; do
+		read -rp "Password : " -e user
+		user_EXISTS=$(grep -w $user /usr/local/etc/xray/xvmess.json | wc -l)
+
+		if [[ ${user_EXISTS} == '1' ]]; then
+			echo ""
+			echo -e "Username ${RED}${user}${NC} Already On VPS Please Choose Another"
+			exit 1
+		fi
+	done
+uuid=$(cat /proc/sys/kernel/random/uuid)
 read -p "Expired (Days) : " masaaktif
 hariini=`date -d "0 days" +"%Y-%m-%d"`
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#trojan-hdua$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
-
-trojanhdua="trojan://${uuid}@${domain}:$thdua?sni=${domain}&type=http&security=tls&path=gandring#${user}"
+sed -i '/#trojan-hdua$/a\#&# '"$user $exp"'\
+},{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
+trojanhdua="trojan://${uuid}@${domain}:$thdua?sni=${domain}&type=http&security=tls&path=%2fzerossl#${user}"
 systemctl restart xray.service
 systemctl restart xtrojan.service
+systemctl restart xvmess.service
 service cron restart
 clear
 echo -e ""
@@ -48,13 +62,13 @@ echo -e "Remarks    :${user}"
 echo -e "IP/Host    :${MYIP}"
 echo -e "Address    :${domain}"
 echo -e "Protocol   :H2C"
-echo -e "Path       :gandring"
+echo -e "Path       :/zerossl"
 echo -e "Port       :${thdua}"
 echo -e "Password   :${uuid}"
 echo -e "Created    :$hariini"
 echo -e "Expired    :$exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Link HTTP/2  : ${trojanhdua}"
+echo -e "Link HTTP/2:  ${trojanhdua}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m🔰LUXURY EDITION ZEROSSL🔰\e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
