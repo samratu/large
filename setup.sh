@@ -133,7 +133,7 @@ echo " 🔰 OHP Dropbear : 8282" |tee -a log-install.txt
 echo " 🔰 OHP OpenVPN : 8383" |tee -a log-install.txt
 echo " 🔰 VMESS WS TLS : 443" |tee -a log-install.txt
 echo " 🔰 VMESS WS NON TLS : 2052" |tee -a log-install.txt
-echo " 🔰 VMESS GRPC TLS: 443" |tee -a log-install.txt
+echo " 🔰 VMESS GRPC TLS: 2083" |tee -a log-install.txt
 echo " 🔰 VMESS GRPC NON TLS: 2082" |tee -a log-install.txt
 echo " 🔰 VMESS H2C TLS : 1000" |tee -a log-install.txt
 #echo " 🔰 VMESS H2C NON TLS : 3444" |tee -a log-install.txt
@@ -142,7 +142,7 @@ echo " 🔰 VMESS HTTP NON TLS : 808" |tee -a log-install.txt
 echo " 🔰 VLESS XTLS : 443" |tee -a log-install.txt
 echo " 🔰 VLESS WS TLS : 443" |tee -a log-install.txt
 echo " 🔰 VLESS WS NON TLS : 8880" |tee -a log-install.txt
-echo " 🔰 VLESS GRPC TLS : 443" |tee -a log-install.txt
+echo " 🔰 VLESS GRPC TLS : 2096" |tee -a log-install.txt
 echo " 🔰 VLESS GRPC NON TLS: 2082" |tee -a log-install.txt
 echo " 🔰 VLESS H2C TLS : 2000" |tee -a log-install.txt
 #echo " 🔰 VLESS H2C NON TLS : 888" |tee -a log-install.txt
