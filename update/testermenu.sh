@@ -56,10 +56,10 @@ addnewvmess
 delnewvmess
 ;;
 7)
-addextreme
+addxtreme
 ;;
 8)
-delextreme
+delxtreme
 ;;
 9)
 ceknewtr
