@@ -252,9 +252,10 @@ trojannontls="trojan://${uuid}@${domain}:$tnontls?type=ws&security=none&host=$do
 trojangfw="trojan://$uuid@$domain:$tgfw?type=tcp&security=tls&headerType=none#$user"
 vlesstls="vless://${uuid}@${domain}:$vltls?host=${domain}&sni=${domain}&type=ws&security=tls&path=%2fbagus&encryption=none#${user}"
 vlessnontls="vless://${uuid}@${domain}:$vlnontls?host=${domain}&security=none&type=ws&path=gandring&encryption=none#${user}"
+vlessxtls="vless://${uuid}@${domain}:$vlxtls?security=xtls&encryption=none&flow=xtls-rprx-direct#${user}"
 systemctl restart xvmess.service
 systemctl restart xray.service
-systemctl restart xray.service
+systemctl restart xtrojan.service
 #systemctl restart v2ray@.service
 service cron restart
 clear
