@@ -110,10 +110,12 @@ wget -O delwg "https://${wisnuvpn}/delwg.sh"
 wget -O renewwg "https://${wisnuvpn}/renewwg.sh"
 wget -O trial-wg "https://${wisnuvpn}/trial-wg.sh"
 wget -O portwg "https://${wisnuvpn}/portwg.sh"
+wget -O cekwg "https://${wisnuvpn}/cekwg.sh"
 chmod +x addwg
 chmod +x delwg
 chmod +x renewwg
 chmod +x trial-wg
 chmod +x portwg
+chmod +x cekwg
 cd
 rm -f /root/wg.sh
