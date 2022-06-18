@@ -47,7 +47,7 @@ sed -i '/#trojan-http-tls$/a\#&# '"$user $exp"'\
 sed -i '/#trojan-http-nontls$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
 trojanhttp="trojan://${uuid[@${domain}:$thttp?type=tcp&security=tls&path=%2ftrojantcp&host=${domain}&headerType=http#${user}"
-trojanhttpnon="trojan://${uuid[@${domain}:$thttp?type=tcp&security=none&host=${domain}&headerType=http#${user}"
+trojanhttpnon="trojan://${uuid[@${domain}:$thttpnon?type=tcp&security=none&host=${domain}&headerType=http#${user}"
 systemctl restart xray.service
 systemctl restart xtrojan.service
 systemctl restart xvmess.service
