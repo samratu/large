@@ -12,8 +12,7 @@ CYAN='\033[0;36m'
 LIGHT='\033[0;37m'
 # ==========================================
 # Getting
-MYIP=$(wget -qO- http://ipv4.icanhazip.com);
-MYIP6=$(wget -qO- http://ipv6.icanhazip.com);
+MYIP=$(wget -qO- ipinfo.io/ip);
 clear
 # Load params
 source /etc/wireguard/params
