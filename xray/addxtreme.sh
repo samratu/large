@@ -26,6 +26,8 @@ vltls="$(cat ~/log-install.txt | grep -w "VLESS WS TLS" | cut -d: -f2|sed 's/ //
 vlnontls="$(cat ~/log-install.txt | grep -w "VLESS WS NON TLS" | cut -d: -f2|sed 's/ //g')"
 ttls="$(cat ~/log-install.txt | grep -w "TROJAN WS TLS" | cut -d: -f2|sed 's/ //g')"
 tnontls="$(cat ~/log-install.txt | grep -w "TROJAN WS NON TLS" | cut -d: -f2|sed 's/ //g')"
+vmhttp="$(cat ~/log-install.txt | grep -w "VMESS HTTP TLS" | cut -d: -f2|sed 's/ //g')"
+vmhttpnon="$(cat ~/log-install.txt | grep -w "VMESS HTTP NON TLS" | cut -d: -f2|sed 's/ //g')"
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${user_EXISTS} == '0' ]]; do
 		read -rp "Password : " -e user
 		user_EXISTS=$(grep -w $user /usr/local/etc/xray/xvmess.json | wc -l)
@@ -85,9 +87,9 @@ sed -i '/#vless-tls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#vless-nontls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
-vlesstls="vless://${uuid}@${domain}:$vltls?host=${domain}&sni=${domain}&type=ws&security=tls&path=%2fbagus&encryption=none#${user}"
-vlessnontls="vless://${uuid}@${domain}:$vlnontls?host=${domain}&security=none&type=ws&path=gandring&encryption=none#${user}"
 
+sed -i '/#vless-xtls$/a\#&# '"$user $exp"'\
+},{"id": "'""$uuid""'","flow": "'""xtls-rprx-direct""'", "email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 		read -rp "Username : " -e user
 		CLIENT_EXISTS=$(grep -w $user /etc/xray/config.json | wc -l)
@@ -152,8 +154,7 @@ vmess1="vmess://$(base64 -w 0 /etc/xray/vmess-$user-tls.json)"
 vmess2="vmess://$(base64 -w 0 /etc/xray/vmess-$user-nontls.json)"
 rm -rf /etc/xray/vmess-$user-tls.json
 rm -rf /etc/xray/vmess-$user-nontls.json
-vmhttp="$(cat ~/log-install.txt | grep -w "VMESS HTTP TLS" | cut -d: -f2|sed 's/ //g')"
-vmhttpnon="$(cat ~/log-install.txt | grep -w "VMESS HTTP NON TLS" | cut -d: -f2|sed 's/ //g')"
+
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 		read -rp "User: " -e user
 		CLIENT_EXISTS=$(grep -w $user /etc/xray/config.json | wc -l)
@@ -249,6 +250,8 @@ sed -i '/#trojan-gfw$/a\#&# '"$user $exp"'\
 trojantls="trojan://${uuid}@${domain}:$ttls?type=ws&security=tls&host=$domain&path=%2fgandring&sni=$domain#${user}"
 trojannontls="trojan://${uuid}@${domain}:$tnontls?type=ws&security=none&host=$domain&path=%2fgandring#${user}"
 trojangfw="trojan://$uuid@$domain:$tgfw?type=tcp&security=tls&headerType=none#$user"
+vlesstls="vless://${uuid}@${domain}:$vltls?host=${domain}&sni=${domain}&type=ws&security=tls&path=%2fbagus&encryption=none#${user}"
+vlessnontls="vless://${uuid}@${domain}:$vlnontls?host=${domain}&security=none&type=ws&path=gandring&encryption=none#${user}"
 systemctl restart xvmess.service
 systemctl restart xray.service
 systemctl restart xray.service
@@ -256,13 +259,17 @@ systemctl restart xray.service
 service cron restart
 clear
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "\033[1;46m 🔰 AKUN VLESS XTLS & GFW 🔰 \e[m"   
+echo -e "\033[1;46m 🔰 AKUN AIO TESTER 🔰 \e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "Nama              :${user}"
 echo -e "IP :${MYIP} / $domain"
-echo -e "Port              :${vlxtlsp}"
+echo -e "Port TLS          :${vlxtls}"
+echo -e "Port TROJAN nontls:${tnontls}"
+echo -e "Port HTTP nontls  :${vmhttpnon}"
+echo -e "Port VMESS nontls :${vltls}"
+echo -e "Port VLESS nontls :${vlnontls}"
 echo -e "User ID           :${uuid}"
-echo -e "Network           :GRPC,WEBSOCKET,HTTP,TCP,XTLS"
+echo -e "Network           :WEBSOCKET,HTTP,TCP,XTLS"
 echo -e "Security          :xtls,tls"
 echo -e "Flow  XTLS        :all flow"
 echo -e "Path Vmess ws     :/cokro ,gandring"
