@@ -80,13 +80,13 @@ source /etc/wireguard/params
 
 # Add server interface
 echo "[Interface]
-Address = $SERVER_WG_IPV4/24
+Address = $SERVER_WG_IPV4/32
 ListenPort = $SERVER_PORT
 PrivateKey = $SERVER_PRIV_KEY
 PostUp = iptables -A FORWARD -i wg0 -j ACCEPT; iptables -t nat -A POSTROUTING -o $SERVER_PUB_NIC -j MASQUERADE;
 PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -D POSTROUTING -o $SERVER_PUB_NIC -j MASQUERADE;" >>"/etc/wireguard/wg0.conf"
 
-sudo iptables -t nat -I POSTROUTING -s 10.11.11.1 -o $SERVER_PUB_NIC -j MASQUERADE
+sudo iptables -t nat -I POSTROUTING -s 10.11.11.1/32 -o $SERVER_PUB_NIC -j MASQUERADE
 sudo iptables -I INPUT 1 -i wg0 -j ACCEPT
 sudo iptables -I FORWARD 1 -i $SERVER_PUB_NIC -o wg0 -j ACCEPT
 sudo iptables -I FORWARD 1 -i wg0 -o $SERVER_PUB_NIC -j ACCEPT
@@ -108,8 +108,12 @@ cd /usr/bin
 wget -O addwg "https://${wisnuvpn}/addwg.sh"
 wget -O delwg "https://${wisnuvpn}/delwg.sh"
 wget -O renewwg "https://${wisnuvpn}/renewwg.sh"
+wget -O trial-wg "https://${wisnuvpn}/trial-wg.sh"
+wget -O portwg "https://${wisnuvpn}/portwg.sh"
 chmod +x addwg
 chmod +x delwg
 chmod +x renewwg
+chmod +x trial-wg
+chmod +x portwg
 cd
 rm -f /root/wg.sh
