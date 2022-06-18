@@ -248,6 +248,7 @@ sed -i '/#trojan-gfw$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 trojantls="trojan://${uuid}@${domain}:$ttls?type=ws&security=tls&host=$domain&path=%2fgandring&sni=$domain#${user}"
 trojannontls="trojan://${uuid}@${domain}:$tnontls?type=ws&security=none&host=$domain&path=%2fgandring#${user}"
+trojangfw="trojan://$uuid@$domain:$tgfw?type=tcp&security=tls&headerType=none#$user"
 systemctl restart xvmess.service
 systemctl restart xray.service
 systemctl restart xray.service
@@ -273,7 +274,7 @@ echo -e "Expired           :$exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "Link XTLS:  ${vlessxtls}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Link GFW:  ${trojanlink}"
+echo -e "Link GFW:  ${trojangfw}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "Link WS TLS:  ${vlesstls}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━\033[0m"
