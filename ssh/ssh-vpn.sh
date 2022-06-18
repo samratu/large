@@ -682,9 +682,9 @@ chmod +x addtrojanwss
 chmod +x addtrojanhttp
 chmod +x addtrojanhdua
 chmod +x renewxrayss
-chmod +x addextreme
+chmod +x addxtreme
 
-chmod +x delextreme
+chmod +x delxtreme
 chmod +x cekxrayss
 chmod +x delxrayss
 chmod +x delvmess
