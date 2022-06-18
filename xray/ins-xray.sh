@@ -100,15 +100,6 @@ cat > /etc/xray/config.json << END
   },
   "inbounds": [
     {
-      "listen": "127.0.0.1",
-      "port": 10807,
-      "protocol": "dokodemo-door",
-      "settings": {
-        "address": "127.0.0.1"
-      },
-      "tag": "api"
-    },
-    {
       "port": 99,
       "protocol": "vless",
       "settings": {
@@ -1151,15 +1142,6 @@ cat > /etc/xray/xvless.json << END
   },
   "inbounds": [
     {
-      "listen": "127.0.0.1",
-      "port": 10808,
-      "protocol": "dokodemo-door",
-      "settings": {
-        "address": "127.0.0.1"
-      },
-      "tag": "api"
-    },
-    {
             "port": 2083,
             "protocol": "vmess",
             "settings": {
@@ -1427,7 +1409,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
   "inbounds": [
     {
       "listen": "127.0.0.1",
-      "port": 10808,
+      "port": 10085,
       "protocol": "dokodemo-door",
       "settings": {
         "address": "127.0.0.1"
@@ -1435,20 +1417,20 @@ cat > /usr/local/etc/xray/xvmess.json << END
       "tag": "api"
     },
     {
-       "port": 443,
+      "port": 443,
        "protocol": "vless",
-       "settings": {
-           "clients": [
-                  {
-                    "id": "$uuid",
-                    "flow": "xtls-rprx-direct",
-                    "level": 0,
-                    "email": "gandring@p0x.smule.my.id"
+          "settings": {
+             "clients": [
+                    {
+                      "id": "gandring",
+                      "flow": "xtls-rprx-direct",
+                      "level": 0,
+                      "email": "gandring@p0x.smule.my.id"
 #vless-xtls
                     }
                 ],
                 "decryption": "none",
-                "fallbacks": [
+                 "fallbacks": [
                     {
                         "dest": 1310,
                         "xver": 1
@@ -1459,18 +1441,8 @@ cat > /usr/local/etc/xray/xvmess.json << END
                         "xver": 1
                     },
                     {
-                        "path": "/trojanhttp",
-                        "dest": 1330,
-                        "xver": 1
-                    },
-                    {
                         "path": "/bagus",
                         "dest": 1234,
-                        "xver": 1
-                    },
-                    {
-                        "path": "/vlesshttp",
-                        "dest": 1340,
                         "xver": 1
                     },
                     {
@@ -1481,16 +1453,6 @@ cat > /usr/local/etc/xray/xvmess.json << END
                     {
                         "path": "/cokro",
                         "dest": 3456,
-                        "xver": 1
-                    },
-                    {
-                        "path": "/vmesshttp",
-                        "dest": 1350,
-                        "xver": 1
-                    },
-                    {
-                        "path": "/trojantcp",
-                        "dest": 1370,
                         "xver": 1
                     }
                 ]
@@ -1512,21 +1474,21 @@ cat > /usr/local/etc/xray/xvmess.json << END
             }
         },
         {
-            "port": 1310,
-            "listen": "127.0.0.1",
+          "port": 1310,
+          "listen": "127.0.0.1",
             "protocol": "trojan",
-            "settings": {
+             "settings": {
                 "clients": [
                     {
-                        "password": "gandring",
-                        "level": 0,
-                        "email": "gandring@p0x.smule.my.id"
+                      "password": "gandring",
+                      "level": 0,
+                      "email": "gandring@p0x.smule.my.id"
 #trojan-gfw
                     }
                 ],
                 "fallbacks": [
                     {
-                        "dest": 81
+                      "dest": 81
                     }
                 ]
             },
@@ -1543,69 +1505,41 @@ cat > /usr/local/etc/xray/xvmess.json << END
           "listen": "127.0.0.1",
           "protocol": "trojan",
           "settings": {
-             "clients": [
-                {
-                  "password": "gandring",
-                  "level": 0,
-                  "email": "gandring@p0x.smule.my.id"
+           "clients": [
+         {
+           "password": "gandring",
+           "level": 0,
+           "email": "gandring@p0x.smule.my.id"
 #trojan-tls
-                 }
-           ],
-           "fallbacks": [
-                {
-                  "dest": 88
-                 }
-            ]
-      },
-      "streamSettings": {
-        "network": "ws",
+          }
+       ],
+       "fallbacks": [
+          {
+           "dest": 88
+           }
+        ]
+     },
+     "streamSettings": {
+       "network": "ws",
         "security": "none",
         "wsSettings": {
           "acceptProxyProtocol": true,
-              "path": "/gandring"
-          }
-       }
+          "path": "/gandring"
+         }
+      }
     },
     {
-      "port": 1330,
-      "listen": "127.0.0.1",
-      "protocol": "trojan",
-          "settings": {
-             "clients": [
-                {
-                  "password": "gandring",
-                   "level": 0,
-                   "email": "gandring@p0x.smule.my.id"
-#trojan-hdua
-                 }
-           ],
-           "fallbacks": [
-               {
-                 "dest": 88
-                }
-           ]
-      },
-      "streamSettings": {
-        "network": "http",
-        "security": "none",
-        "httpSettings": {
-          "acceptProxyProtocol": true,
-              "path": "/trojanhttp"
-           }
-       }
-    },
-    {
-       "port": 1234,
-       "listen": "127.0.0.1",
-       "protocol": "vless",
+      "port": 1234,
+        "listen": "127.0.0.1",
+          "protocol": "vless",
             "settings": {
                 "clients": [
-                   {
-                      "id": "$uuid",
+                    {
+                      "id": "gandring",
                       "level": 0,
                       "email": "gandring@p0x.smule.my.id"
 #vless-tls
-                    }
+                     }
                 ],
                 "decryption": "none"
             },
@@ -1614,47 +1548,23 @@ cat > /usr/local/etc/xray/xvmess.json << END
                 "security": "none",
                 "wsSettings": {
                     "acceptProxyProtocol": true,
-                       "path": "/bagus"
-                   }
-             }
-        },
-        {
-          "port": 1340,
-          "listen": "127.0.0.1",
-          "protocol": "vless",
-              "settings": {
-                "clients": [
-                    {
-                        "id": "$uuid",
-                        "level": 0,
-                        "email": "gandring@p0x.smule.my.id"
-#vless-hdua
-                    }
-                ],
-                "decryption": "none"
-            },
-            "streamSettings": {
-                "network": "http",
-                "security": "none",
-                "httpSettings": {
-                    "acceptProxyProtocol": true,
-                        "path": "/vlesshttp"
-                   }
-             }
+                    "path": "/bagus"
+                }
+            }
         },
         {
           "port": 2345,
-          "listen": "127.0.0.1",
-          "protocol": "vmess",
-             "settings": {
+           "listen": "127.0.0.1",
+            "protocol": "vmess",
+            "settings": {
                 "clients": [
                     {
-                      "id": "$uuid",
-                       "level": 0,
-                       "email": "gandring@p0x.smule.my.id"
+                        "id": "gandring",
+                        "level": 0,
+                        "email": "gandring@p0x.smule.my.id"
 #vmess-http-tls
-                     }
-                 ]
+                    }
+                ]
             },
             "streamSettings": {
                 "network": "tcp",
@@ -1673,83 +1583,28 @@ cat > /usr/local/etc/xray/xvmess.json << END
             }
         },
         {
-          "port": 1370,
-          "listen": "127.0.0.1",
-          "protocol": "trojan",
+          "port": 3456,
+           "listen": "127.0.0.1",
+            "protocol": "vmess",
             "settings": {
-               "clients": [
-                  {
-                    "password": "gandring",
-                    "level": 0,
-                    "email": "gandring@p0x.smule.my.id"
-#trojan-http-tls
-          }
-        ],
-        "decryption": "none"
-      },
-      "streamSettings": {
-        "network": "tcp",
-        "security": "none",
-        "tcpSettings": {
-         "header": {
-          "type": "http",
-           "response": {
-           "path": "/trojantcp",
-            "version": "1.1",
-             "status": "200",
-             "reason": "OK",
-             "headers": {}
-            }
-          }
-        }
-      }
-    },
-    {
-      "port": 3456,
-      "listen": "127.0.0.1",
-      "protocol": "vmess",
-            "settings": {
-               "clients": [
-                  {
-                    "id": "$uuid",
-                     "level": 0,
-                     "email": "gandring@p0x.smule.my.id"
+                "clients": [
+                    {
+                        "id": "gandring",
+                        "level": 0,
+                        "email": "gandring@p0x.smule.my.id"
 #vmess-tls
-                   }
-               ]
+                     }
+                ]
             },
             "streamSettings": {
                 "network": "ws",
                 "security": "none",
                 "wsSettings": {
                     "acceptProxyProtocol": true,
-                      "path": "/cokro"
-                    }
+                       "path": "/cokro"
+                     }
              }
-       },
-       {
-         "port": 1350,
-         "listen": "127.0.0.1",
-         "protocol": "vmess",
-            "settings": {
-               "clients": [
-                  {
-                    "id": "$uuid",
-                    "level": 0,
-                    "email": "gandring@p0x.smule.my.id"
-#vmess-hdua
-                   }
-              ]
-         },
-         "streamSettings": {
-          "network": "http",
-            "security": "none",
-                "httpSettings": {
-                    "acceptProxyProtocol": true,
-                       "path": "/vmesshttp"
-                   }
-         }
-  }
+       }
   ],
   "outbounds": [
     {
@@ -2227,7 +2082,7 @@ cat > /etc/trojan-go/config.json << END
     "reuse_session": true,
     "plain_http_response": "",
     "fallback_addr": "127.0.0.1",
-    "fallback_port": 443,
+    "fallback_port": 0,
     "fingerprint": "firefox"
   },
   "tcp": {
@@ -2246,14 +2101,14 @@ cat > /etc/trojan-go/config.json << END
     "host": "$domain"
   },
     "api": {
-    "enabled": false,
+    "enabled": true,
     "api_addr": "",
     "api_port": 0,
     "ssl": {
       "enabled": true,
       "key": "/etc/ssl/private/privkey.pem",
       "cert": "/etc/ssl/private/fullchain.pem",
-      "verify_client": true,
+      "verify_client": false,
       "client_cert": []
     }
   }
@@ -2293,7 +2148,6 @@ sudo iptables-save > /etc/iptables.up.rules
 sudo iptables-restore -t < /etc/iptables.up.rules
 sudo netfilter-persistent save
 sudo netfilter-persistent reload
-
 systemctl daemon-reload
 systemctl stop trojan-go
 systemctl start trojan-go
