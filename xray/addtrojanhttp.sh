@@ -50,7 +50,7 @@ trojanhttp="trojan://${uuid[@${domain}:$thttp?type=tcp&security=tls&path=%2ftroj
 trojanhttpnon="trojan://${uuid[@${domain}:$thttp?type=tcp&security=none&host=${domain}&headerType=http#${user}"
 systemctl restart xray.service
 systemctl restart xtrojan.service
-systemctl restart xvmess
+systemctl restart xvmess.service
 service cron restart
 clear
 echo -e ""
@@ -69,7 +69,7 @@ echo -e "Expired    :$exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "Link HTTP  : ${trojanhttp}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Link HTTP  : ${trojanhttpnon}"
+echo -e "Link HTTP nontls : ${trojanhttpnon}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m🔰LUXURY EDITION ZEROSSL🔰\e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
