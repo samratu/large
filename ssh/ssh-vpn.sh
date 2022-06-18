@@ -494,6 +494,8 @@ wget -O portopenssh "https://${wisnuvpn}/portopenssh.sh"
 wget -O portsshnontls "https://${wisnuvpn}/portsshnontls.sh"
 wget -O portsshwstls "https://${wisnuvpn}/portsshwstls.sh"
 
+wget -O ins-sshws "https://${wisnuvpn}/ins-sshws.sh"
+
 wget -O addvmess "https://${wisnuvpnn}/addvmess.sh"
 wget -O addnewtr "https://${wisnuvpnn}/addnewtr.sh"
 wget -O addvmessgrpc "https://${wisnuvpnn}/addvmessgrpc.sh"
@@ -651,6 +653,8 @@ chmod +x ceklim
 chmod +x ram
 chmod +x renewssh
 chmod +x clearlog
+
+chmod +x ins-sshws
 
 chmod +x changeport
 chmod +x portovpn
