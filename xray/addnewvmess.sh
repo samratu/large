@@ -162,6 +162,8 @@ vmess_base641=$( base64 -w 0 <<< vmess_json1)
 vmess_base642=$( base64 -w 0 <<< $vmess_json2)
 vmessgrpc="vmess://$(base64 -w 0 /etc/xray/vmess-$user-tls.json)"
 vmessgrpcnon="vmess://$(base64 -w 0 /etc/xray/vmess-$user-nontls.json)"
+rm -rf /etc/xray/vmess-$user-tls.json
+rm -rf /etc/xray/vmess-$user-nontls.json
 
 domain=$(cat /etc/xray/domain)
 vmhdua="$(cat ~/log-install.txt | grep -w "VMESS H2C TLS" | cut -d: -f2|sed 's/ //g')"
@@ -216,6 +218,8 @@ vmesshdua=$( base64 -w 0 <<< $vmess_json1)
 #vmess_base642=$( base64 -w 0 <<< $vmess_json2)
 vmesshdua="vmess://$(base64 -w 0 /etc/xray/vmess-$user-tls.json)"
 #vmessgrpclink2="vmess://$(base64 -w 0 /etc/xray/$user-none.json)"
+rm -rf /etc/xray/vmess-$user-tls.json
+rm -rf /etc/xray/vmess-$user-nontls.json
 
 domain=$(cat /etc/xray/domain)
 vmhttp="$(cat ~/log-install.txt | grep -w "VMESS HTTP TLS" | cut -d: -f2|sed 's/ //g')"
@@ -283,6 +287,9 @@ vmesshttp_base641=$( base64 -w 0 <<< $vmess_json1)
 vmesshttp_base642=$( base64 -w 0 <<< $vmess_json2)
 vmesshttp="vmess://$(base64 -w 0 /etc/xray/vmess-$user-tls.json)"
 vmesshttpnon="vmess://$(base64 -w 0 /etc/xray/vmess-$user-nontls.json)"
+rm -rf /etc/xray/vmess-$user-tls.json
+rm -rf /etc/xray/vmess-$user-nontls.json
+
 systemctl restart xvless
 systemctl restart xray.service
 systemctl restart xvmess
