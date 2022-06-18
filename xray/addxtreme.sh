@@ -17,30 +17,15 @@ MYIP=$(wget -qO- https://ipv4.icanhazip.com);
 MYIP6=$(wget -qO- https://ipv6.icanhazip.com);
 clear
 domain=$(cat /etc/xray/domain)
-
-vlxtls="$(cat ~/log-install.txt | grep -w "VLESS XTLS" | cut -d: -f2|sed 's/ //g')"
-#nontls="$(cat ~/log-install.txt | grep -w "VLESS NON TLS" | cut -d: -f2|sed 's/ //g')"
-until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
-		read -rp "Username : " -e user
-		CLIENT_EXISTS=$(grep -w $user /usr/local/etc/xray/xvmess.json | wc -l)
-
-		if [[ ${CLIENT_EXISTS} == '1' ]]; then
-			echo ""
-			echo -e "Username ${RED}${user}${NC} Already On VPS Please Choose Another"
-			exit 1
-		fi
-	done
-uuid=$(cat /proc/sys/kernel/random/uuid)
-read -p "Expired (Days) : " masaaktif
-hariini=`date -d "0 days" +"%Y-%m-%d"`
-exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
-sed -i '/#vless-xtls$/a\#### '"$user $exp"'\
-},{"id": "'""$uuid""'","flow": "'""xtls-rprx-direct""'", "email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
-
-vlessxtls="vless://${user}@${domain}:$vlxtls?type=tcp&security=xtls&headerType=none&flow=xtls-rprx-direct&encryption=none#${user}"
-#vlessxtls="vless://${uuid}@${domain}:$vlxtls?security=xtls&type=tcp&headerType=none&encryption=none#${user}"
+tls="$(cat ~/log-install.txt | grep -w "VMESS WS TLS" | cut -d: -f2|sed 's/ //g')"
+nontls="$(cat ~/log-install.txt | grep -w "VMESS WS NON TLS" | cut -d: -f2|sed 's/ //g')"
 uuid=$(cat /proc/sys/kernel/random/uuid)
 tgfw="$(cat ~/log-install.txt | grep -w "TROJAN GFW" | cut -d: -f2|sed 's/ //g')"
+vlxtls="$(cat ~/log-install.txt | grep -w "VLESS XTLS" | cut -d: -f2|sed 's/ //g')"
+vltls="$(cat ~/log-install.txt | grep -w "VLESS WS TLS" | cut -d: -f2|sed 's/ //g')"
+vlnontls="$(cat ~/log-install.txt | grep -w "VLESS WS NON TLS" | cut -d: -f2|sed 's/ //g')"
+ttls="$(cat ~/log-install.txt | grep -w "TROJAN WS TLS" | cut -d: -f2|sed 's/ //g')"
+tnontls="$(cat ~/log-install.txt | grep -w "TROJAN WS NON TLS" | cut -d: -f2|sed 's/ //g')"
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${user_EXISTS} == '0' ]]; do
 		read -rp "Password : " -e user
 		user_EXISTS=$(grep -w $user /usr/local/etc/xray/xvmess.json | wc -l)
@@ -59,8 +44,7 @@ sed -i '/#trojan-gfw$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 
 trojanlink="trojan://${uuid}@${domain}:$tgfw?sni=${domain}&type=tcp&security=tls&headerType=none#${user}"
-vltls="$(cat ~/log-install.txt | grep -w "VLESS WS TLS" | cut -d: -f2|sed 's/ //g')"
-vlnontls="$(cat ~/log-install.txt | grep -w "VLESS WS NON TLS" | cut -d: -f2|sed 's/ //g')"
+
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 		read -rp "Username : " -e user
 		CLIENT_EXISTS=$(grep -w $user /etc/xray/config.json | wc -l)
@@ -103,8 +87,7 @@ sed -i '/#vless-nontls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
 vlesstls="vless://${uuid}@${domain}:$vltls?host=${domain}&sni=${domain}&type=ws&security=tls&path=%2fbagus&encryption=none#${user}"
 vlessnontls="vless://${uuid}@${domain}:$vlnontls?host=${domain}&security=none&type=ws&path=gandring&encryption=none#${user}"
-tls="$(cat ~/log-install.txt | grep -w "VMESS WS TLS" | cut -d: -f2|sed 's/ //g')"
-nontls="$(cat ~/log-install.txt | grep -w "VMESS WS NON TLS" | cut -d: -f2|sed 's/ //g')"
+
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 		read -rp "Username : " -e user
 		CLIENT_EXISTS=$(grep -w $user /etc/xray/config.json | wc -l)
@@ -232,8 +215,7 @@ vmesshttp_base641=$( base64 -w 0 <<< $vmess_json1)
 vmesshttp_base642=$( base64 -w 0 <<< $vmess_json2)
 vmesshttp="vmess://$(base64 -w 0 /etc/xray/vmess-$user-tls.json)"
 vmesshttpnon="vmess://$(base64 -w 0 /etc/xray/vmess-$user-none.json)"
-ttls="$(cat ~/log-install.txt | grep -w "TROJAN WS TLS" | cut -d: -f2|sed 's/ //g')"
-tnontls="$(cat ~/log-install.txt | grep -w "TROJAN WS NON TLS" | cut -d: -f2|sed 's/ //g')"
+
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${user_EXISTS} == '0' ]]; do
 		read -rp "Password : " -e user
 		user_EXISTS=$(grep -w $user /etc/xray/xtrojan.json | wc -l)
@@ -274,20 +256,19 @@ clear
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m 🔰 AKUN VLESS XTLS & GFW 🔰 \e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Remarks                  :${user}"
-echo -e "IP/Host                    :${MYIP}"
-echo -e "Address                    :${domain}"
-echo -e "Port                           :${vlxtls}"
-echo -e "User ID                      :${uuid}"
-echo -e "Network                    :GRPC,WEBSOCKET,HTTP,TCP,XTLS"
-echo -e "Security                     :xtls,tls"
-echo -e "Flow  XTLS               :all flow"
-echo -e "Path Vmess ws       :/cokro ,gandring"
-echo -e "Path  Vless ws         :/bagus, gandring"
-echo -e "Path  Trojan grpc    :/gandring"
-echo -e "Path Vmess http     :/wisnu"
-echo -e "Created                     :$hariini"
-echo -e "Expired                      :$exp"
+echo -e "Nama              :${user}"
+echo -e "IP :${MYIP} / $domain"
+echo -e "Port              :${vlxtlsp}"
+echo -e "User ID           :${uuid}"
+echo -e "Network           :GRPC,WEBSOCKET,HTTP,TCP,XTLS"
+echo -e "Security          :xtls,tls"
+echo -e "Flow  XTLS        :all flow"
+echo -e "Path Vmess ws     :/cokro ,gandring"
+echo -e "Path  Vless ws    :/bagus, gandring"
+echo -e "Path  Trojan grpc :/gandring"
+echo -e "Path Vmess http   :/wisnu"
+echo -e "Created           :$hariini"
+echo -e "Expired           :$exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "Link XTLS:  ${vlessxtls}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━\033[0m"
@@ -307,7 +288,7 @@ echo -e "Link HTTP NONTLS:  ${vmesshttpnon}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "Link TLS:  ${trojantls}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Link Non TLS       : ${trojannontls}"
+echo -e "Link Non TLS:  ${trojannontls}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m🔰LUXURY EDITION ZEROSSL🔰\e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━\033[0m"
