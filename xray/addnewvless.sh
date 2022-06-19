@@ -69,7 +69,7 @@ sed -i '/#vless-grpc-tls$/a\#### '"$user $exp"'\
 sed -i '/#vless-grpc-nontls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
 sed -i '/#vless-xtls$/a\#&# '"$user $exp"'\
-},{"id": "'""$uuid""'","flow": "'""xtls-rprx-direct""'", "email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
+},{"id": "'""$uuid""'","flow": "'""xtls-rprx-splice-udp443""'", "email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#vless-hdua$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#vless-hdua$/a\#### '"$user $exp"'\
@@ -82,17 +82,20 @@ sed -i '/#vless-nontls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
 sed -i '/#vless-http-tls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
-#sed -i '/#vless-http-nontls$/a\#### '"$user $exp"'\
-#},{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvless.json
-#vlesshttpnon="vless://${uuid}@${domain}:$vlhttpnon?host=${domain}&security=none&type=tcp&headerType=http&encryption=none#${user}"
-vlesshttp="vless://${uuid}@${domain}:$vlhttp?sni=${domain}&host=${domain}&type=tcp&security=tls&path=%2fvlesstcp&headerType=http&encryption=none#${user}"
+sed -i '/#vless-http-tls$/a\#### '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
+sed -i '/#vless-http-nontls$/a\#### '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvless.json
+vlesshttpnon="vless://${uuid}@${domain}:$vlhttpnon?host=${domain}&security=none&type=tcp&headerType=http&encryption=none#${user}"
+vlesshttp="vless://${uuid}@${domain}:$vlhttp?sni=${domain}&host=${domain}&type=tcp&security=tls&path=%2fwisnutcp&headerType=http&encryption=none#${user}"
 vlesstls="vless://${uuid}@${domain}:$vltls?host=${domain}&sni=${domain}&type=ws&security=tls&path=%2fbagus&encryption=none#${user}"
 vlessnontls="vless://${uuid}@${domain}:$vlnontls?host=${domain}&security=none&type=ws&path=gandring&encryption=none#${user}"
-vlessgrpc="vless://${uuid}@${domain}:$vlgrpc?serviceName=%2fvlessgrpc&sni=${domain}&mode=multi&type=grpc&security=tls&encryption=none#${user}"
-vlessgrpcnon="vless://${uuid}@${domain}:$vlgrpcnon?serviceName=gandring&sni=${domain}&mode=multi&type=grpc&security=none&encryption=none#${user}"
-vlesshdua="vless://${uuid}@${domain}:$vlhdua?type=http&security=tls&path=%2fvlesshttp&encryption=none#${user}"
+vlessgrpc="vless://${uuid}@${domain}:$vlgrpc?serviceName=%2fwisnugrpc&sni=${domain}&mode=multi&type=grpc&security=tls&encryption=none#${user}"
+vlessgrpcnon="vless://${uuid}@${domain}:$vlgrpcnon?serviceName=/gandring&sni=${domain}&mode=multi&type=grpc&security=none&encryption=none#${user}"
+vlesshdua="vless://${uuid}@${domain}:$vlhdua?type=http&security=tls&path=%2fwisnuhttp&encryption=none#${user}"
 #vlesshduanon="vless://${uuid}@${domain}:$vlhduanon?type=http&security=none&path=gandring&encryption=none#${user}"
-vlessxtls="vless://${uuid}@${domain}:$vlxtls?security=xtls&encryption=none&flow=xtls-rprx-direct#${user}"
+vlessxtls="vless://${uuid}@${domain}:$vlxtls?security=xtls&encryption=none&flow=xtls-rprx-splice-udp443#${user}"
+vlessgfw="vless://${uuid}@${domain}:$vlxtls?security=tls&encryption=none#${user}"
 systemctl restart xvless.service
 systemctl restart xray.service
 systemctl restart xtrojan.service
@@ -103,31 +106,29 @@ echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━�
 echo -e "\033[1;46m 🔰 AKUN VLESS TESTER 🔰  \e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "NAMA        :${user}"
-echo -e "IP/Host     :${MYIP}"
-echo -e "IPV6        :${MYIP6}"
-echo -e "Address     :${domain}"
+echo -e "IP:${MYIP} / $domain"
 echo -e "Port GRPC   :$vlgrpc/ $vlgrpcnon"
-#echo -e "Port HTTP  :$vlhttp"
+#echo -e "Port HTTP  :$vlhttp/ $vlhttpnon"
 echo -e "Port H2C    :$vlhdua / $vlhduanon"
 echo -e "Port XTLS   :$vlxtls"
 echo -e "Port WS     :$vltls / $vlnontls "
 echo -e "User ID     :${uuid}"
-echo -e "Encryption  :none"
 echo -e "Network     :GRPC,HTTP,H2C,GFW,XTLS,WS"
 echo -e "Security    :tls,xtls"
-echo -e "serviceName :/vlessgrpc,gandring"
-echo -e "Path WS     :/bagus,gandring"
-echo -e "Path HTTP/2 :/vlesshttp"
-echo -e "Path HTTP   :/vlesstcp"
+echo -e "serviceName :/wisnugrpc,/gandring"
+echo -e "Path WS     :/bagus,/gandring"
+echo -e "Path HTTP/2 :/wisnuhttp"
+echo -e "Path HTTP   :/wisnutcp"
 echo -e "Created     :$hariini"
 echo -e "Expired     :$exp"
-#echo -e "Expired    :$exp2"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "Link gRPC TLS:  ${vlessgrpc}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "Link gRPC NONTLS:  ${vlessgrpcnon}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Link GFW/XTLS:  ${vlessxtls}"
+echo -e "Link GFW:  ${vlessxtls}"
+echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "Link XTLS:  ${vlessgfw}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "Link WS TLS:  ${vlesstls}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
@@ -139,8 +140,8 @@ echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━�
 #echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "Link HTTP :  ${vlesshttp}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-#echo -e "HTTP NONTLS:  ${vlesshttpnon}"
-#echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "HTTP NONTLS:  ${vlesshttpnon}"
+echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m🔰LUXURY EDITION ZEROSSL🔰\e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e ""
