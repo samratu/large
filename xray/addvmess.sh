@@ -56,7 +56,7 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "ws",
-      "path": "/cokro",
+      "path": "/satrio",
       "type": "none",
       "host": "${domain}",
       "tls": "tls"
@@ -71,7 +71,7 @@ cat>/etc/xray/vmess-$user-nontls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "ws",
-      "path": "/gandring",
+      "path": "/satrio",
       "type": "none",
       "host": "${domain}",
       "tls": "none"
@@ -90,16 +90,16 @@ clear
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m 🔰AKUN VMESS WEBSOCKET🔰 \e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Remarks     :${user}"
+echo -e "Nama        :${user}"
 echo -e "IP/Host     :${MYIP}"
-echo -e "Address     :${domain}"
+echo -e "Alamat      :${domain}"
 echo -e "Port TLS    :${tls}"
 echo -e "Port No TLS :${nontls}"
-echo -e "User ID     :${uuid}"
+echo -e "UserID :${uuid}"
 echo -e "Protokol    :WEBSOCKET"
-echo -e "Path        :/bagus , /gandring"
-echo -e "Created     :$hariini"
-echo -e "Expired     :$exp"
+echo -e "Path        :/satrio"
+echo -e "Dibuat      :$hariini"
+echo -e "Kadaluarsa  :$exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "Link TLS    : ${vmess1}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
