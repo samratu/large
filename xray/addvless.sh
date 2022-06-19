@@ -61,7 +61,7 @@ sed -i '/#vless-tls$/a\#### '"$user $exp"'\
 sed -i '/#vless-nontls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
 vlesstls="vless://${uuid}@${domain}:$vltls?host=${domain}&sni=${domain}&type=ws&security=tls&path=%2fbagus&encryption=none#${user}"
-vlessnontls="vless://${uuid}@${domain}:$vlnontls?host=${domain}&security=none&type=ws&path=gandring&encryption=none#${user}"
+vlessnontls="vless://${uuid}@${domain}:$vlnontls?host=${domain}&security=none&type=ws&path=%2fgandring&encryption=none#${user}"
 systemctl restart xray.service
 systemctl restart xvless
 systemctl restart xvmess
@@ -79,7 +79,7 @@ echo -e "Port No TLS :$vlnontls"
 echo -e "User ID     :${uuid}"
 echo -e "Encryption  :none"
 echo -e "Network     :ws"
-echo -e "Path        :/bagus, gandring"
+echo -e "Path        :/bagus, /gandring"
 echo -e "Created     :$hariini"
 echo -e "Expired     :$exp"
 #echo -e "Expired     :$exp2"
