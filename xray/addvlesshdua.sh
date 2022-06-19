@@ -51,7 +51,7 @@ sed -i '/#vless-hdua$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#vless-hdua-nontls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvless.json
-vlesshdua="vless://${uuid}@${domain}:$vlhdua?type=http&security=tls&path=%2fwisnuhttp&encryption=none#${user}"
+vlesshdua="vless://${uuid}@${domain}:$vlhdua?type=http&security=tls&path=/bagus&encryption=none#${user}"
 vlesshduanon="vless://${uuid}@${domain}:$vlhduanon?type=http&security=none&path=gandring&encryption=none#${user}"
 systemctl restart xvless.service
 systemctl restart xray.service
@@ -61,16 +61,15 @@ clear
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m 🔰 AKUN VLESS HTTP/2 🔰  \e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Remarks     :${user}"
-echo -e "IP/Host     :${MYIP}"
-echo -e "Address     :${domain}"
-echo -e "Port        :$vlhdua"
-echo -e "User ID     :${uuid}"
-echo -e "Encryption  :none"
-echo -e "Network     :H2"
-echo -e "Path        :/wisnuhttp"
-echo -e "Created     :$hariini"
-echo -e "Expired     :$exp"
+echo -e "Nama         :${user}"
+echo -e "IP/Host      :${MYIP}"
+echo -e "Address      :${domain}"
+echo -e "Port         :$vlhdua"
+echo -e "UserID :${uuid}"
+echo -e "Protokol     :H2"
+echo -e "Path         :/bagus"
+echo -e "Dibuat       :$hariini"
+echo -e "Kadaluarsa   :$exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "Link H2C TLS: ${vlesshdua}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
