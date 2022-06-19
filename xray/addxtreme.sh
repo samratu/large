@@ -135,11 +135,8 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
 }
 EOF
 vmess_base641=$( base64 -w 0 <<< $vmess_json1)
-vmess_base642=$( base64 -w 0 <<< $vmess_json2)
 vmess1="vmess://$(base64 -w 0 /etc/xray/vmess-$user-tls.json)"
-vmess2="vmess://$(base64 -w 0 /etc/xray/vmess-$user-nontls.json)"
 rm -rf /etc/xray/vmess-$user-tls.json
-rm -rf /etc/xray/vmess-$user-nontls.json
 
 cat>/etc/xray/vmess-$user-tls.json<<EOF
       {
@@ -157,11 +154,8 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
 }
 EOF
 vmesshttp_base641=$( base64 -w 0 <<< $vmess_json1)
-vmesshttp_base642=$( base64 -w 0 <<< $vmess_json2)
 vmesshttp="vmess://$(base64 -w 0 /etc/xray/vmess-$user-tls.json)"
-vmesshttpnon="vmess://$(base64 -w 0 /etc/xray/vmess-$user-nontls.json)"
 rm -rf /etc/xray/vmess-$user-tls.json
-rm -rf /etc/xray/vmess-$user-nontls.json
 
 uuid=$(cat /proc/sys/kernel/random/uuid)
 tgrpc="$(cat ~/log-install.txt | grep -w "TROJAN GRPC" | cut -d: -f2|sed 's/ //g')"
