@@ -150,7 +150,7 @@ echo " 🔰 VLESS HTTP TLS : 443" |tee -a log-install.txt
 #echo " 🔰 VLESS HTTP NON TLS : 888" |tee -a log-install.txt
 echo " 🔰 TROJAN GO : 2053" |tee -a log-install.txt
 echo " 🔰 TROJAN GRPC : 8443" |tee -a log-install.txt
-echo " 🔰 TROJAN HTTP TLS : 443" |tee -a log-install.txt
+echo " 🔰 TROJAN HTTP TLS : 8808" |tee -a log-install.txt
 echo " 🔰 TROJAN HTTP NON TLS : 880" |tee -a log-install.txt
 echo " 🔰 TROJAN H2C : 888" |tee -a log-install.txt
 echo " 🔰 TROJAN XTLS : 43" |tee -a log-install.txt
