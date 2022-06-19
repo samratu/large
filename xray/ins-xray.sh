@@ -362,7 +362,7 @@ cat > /etc/xray/config.json << END
         "kcpSettings": {},
         "httpSettings": {},
         "wsSettings": {
-          "path": "/satrio",
+          "path": "/wisnu",
           "headers": {
             "Host": "${domain}"
           }
@@ -399,7 +399,7 @@ cat > /etc/xray/config.json << END
         "httpSettings": {},
         "quicSettings": {},
         "grpcSettings": {
-          "serviceName": "/satrio",
+          "serviceName": "/cokro",
           "multiMode": true
         }
       }
@@ -511,7 +511,7 @@ cat > /etc/xray/config.json << END
         "kcpSettings": {},
         "httpSettings": {},
         "wsSettings": {
-          "path": "/bagus",
+          "path": "/shanum",
           "headers": {
             "Host": "${domain}"
           }
@@ -541,7 +541,7 @@ cat > /etc/xray/config.json << END
         "httpSettings": {},
         "quicSettings": {},
         "grpcSettings": {
-          "serviceName": "/bagus"
+          "serviceName": "/ayesha"
         }
       }
     },
@@ -785,7 +785,7 @@ cat > /etc/xray/xtrojan.json << END
             "xver": 0
           },
           {
-            "path": "/gandring",
+            "path": "/bagus",
             "dest": 2095,
             "xver": 0
           }
@@ -840,7 +840,7 @@ cat > /etc/xray/xtrojan.json << END
           ]
         },
         "grpcSettings": {
-          "serviceName": "/gandring"
+          "serviceName": "/bagus"
         }
       }
     },
@@ -919,7 +919,7 @@ cat > /etc/xray/xtrojan.json << END
         "security": "tls",
         "httpSettings": {
         "acceptProxyProtocol": true,
-          "path": "/gandring"
+          "path": "/satrio"
          },
          "tlsSettings": {
           "alpn": [
@@ -1044,7 +1044,7 @@ cat > /etc/xray/xtrojan.json << END
             "type": "http",
              "request": {
              "path": [
-              "/gandring"
+              "/satrio"
              ]
             }
           }
@@ -1243,7 +1243,7 @@ cat > /etc/xray/xvless.json << END
                     ]
                 },
                 "grpcSettings": {
-                    "serviceName": "/satrio"
+                    "serviceName": "/cokro"
                 }
             }
         },
@@ -1298,7 +1298,7 @@ cat > /etc/xray/xvless.json << END
                     ]
                 },
                 "grpcSettings": {
-                    "serviceName": "/bagus"
+                    "serviceName": "/ayesha"
                 }
             }
         },
@@ -1348,7 +1348,7 @@ cat > /etc/xray/xvless.json << END
                     ]
                 },
                 "httpSettings": {
-                    "path": "/bagus"
+                    "path": "/satrio"
                 }
             }
         },
@@ -1508,57 +1508,57 @@ cat > /usr/local/etc/xray/xvmess.json << END
                         "xver": 1
                     },
                     {
-                        "path": "/gandring",
+                        "path": "/gandringhttp",
                         "dest": 1330,
                         "xver": 1
                     },
                     {
-                        "path": "/gandring",
+                        "path": "/gandringgrpc",
                         "dest": 1340,
                         "xver": 1
                     },
                     {
-                        "path": "/bagus",
+                        "path": "/wisnu",
                         "dest": 1350,
                         "xver": 1
                     },
                     {
-                        "path": "/bagus",
+                        "path": "/wisnuhttp",
                         "dest": 1360,
                         "xver": 1
                     },
                     {
-                        "path": "/bagus",
+                        "path": "/wisnugrpc",
                         "dest": 1370,
                         "xver": 1
                     },
                     {
-                        "path": "/bagus",
+                        "path": "/shanumtcp",
                         "dest": 1380,
                         "xver": 1
                     },
                     {
-                        "path": "/satrio",
+                        "path": "/shanum",
                         "dest": 1390,
                         "xver": 1
                     },
                     {
-                        "path": "/satrio",
+                        "path": "/shanumhttp",
                         "dest": 1400,
                         "xver": 1
                     },
                     {
-                        "path": "/satrio",
+                        "path": "/shanumgrpc",
                         "dest": 1410,
                         "xver": 1
                     },
                     {
-                        "path": "/gandring",
+                        "path": "/gandringtcp",
                         "dest": 1420,
                         "xver": 1
                     },
                     {
-                        "path": "/bagus",
+                        "path": "/wisnutcp",
                         "dest": 1430,
                         "xver": 1
                     }
@@ -1659,7 +1659,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
         "security": "none",
         "httpSettings": {
           "acceptProxyProtocol": true,
-          "path": "/gandring"
+          "path": "/gandringhttp"
          }
       }
     },
@@ -1687,7 +1687,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
         "security": "none",
         "grpcSettings": {
           "acceptProxyProtocol": true,
-              "path": "/gandring"
+              "path": "/gandringgrpc"
            }
         }
     },
@@ -1711,7 +1711,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
                 "security": "none",
                 "wsSettings": {
                     "acceptProxyProtocol": true,
-                    "path": "/bagus"
+                    "path": "/wisnu"
                 }
             }
         },
@@ -1735,7 +1735,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
                 "security": "none",
                 "httpSettings": {
                     "acceptProxyProtocol": true,
-                    "path": "/bagus"
+                    "path": "/wisnuhttp"
                 }
             }
         },
@@ -1759,7 +1759,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
                 "security": "none",
                 "grpcSettings": {
                     "acceptProxyProtocol": true,
-                    "path": "/bagus"
+                    "path": "/wisnugrpc"
                 }
             }
         },
@@ -1786,7 +1786,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
                         "type": "http",
                         "request": {
                             "path": [
-                                "/satrio"
+                                "/shanumtcp"
                             ]
                         }
                     }
@@ -1812,7 +1812,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
                 "security": "none",
                 "wsSettings": {
                     "acceptProxyProtocol": true,
-                    "path": "/satrio"
+                    "path": "/shanum"
                 }
         }
   },
@@ -1835,7 +1835,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
                 "security": "none",
                 "httpSettings": {
                     "acceptProxyProtocol": true,
-                    "path": "/satrio"
+                    "path": "/shanumhttp"
                 }
         }
   },
@@ -1858,7 +1858,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
                 "security": "none",
                 "grpcSettings": {
                     "acceptProxyProtocol": true,
-                    "path": "/satrio"
+                    "path": "/shanumgrpc"
                 }
         }
   },
@@ -1886,7 +1886,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
             "type": "http",
              "request": {
              "path": [
-              "/gandring"
+              "/gandringtcp"
              ]
             }
           }
@@ -1917,7 +1917,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
             "type": "http",
              "request": {
              "path": [
-              "/bagus"
+              "/wisnutcp"
              ]
             }
           }
