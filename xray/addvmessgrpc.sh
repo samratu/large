@@ -49,6 +49,7 @@ until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 	done
 uuid=$(cat /proc/sys/kernel/random/uuid)
 read -p "Expired (Days): " masaaktif
+hariini=`date -d "0 days" +"%Y-%m-%d"`
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#vmess-grpc-tls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/xvless.json
@@ -107,7 +108,7 @@ echo -e "UserId :${uuid}"
 echo -e "Protokol     :grpc"
 echo -e "Host        :${domain}"
 echo -e "serviceName :/satrio"
-echo -e "Expired On  :$exp"
+echo -e "  :$exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "Link GRPC TLS: ${vmessgrpc}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
