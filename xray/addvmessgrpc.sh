@@ -24,6 +24,18 @@ until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 			exit 1
 		fi
 	done
+vmgrpc="$(cat ~/log-install.txt | grep -w "VMESS GRPC TLS" | cut -d: -f2|sed 's/ //g')"
+vmgrpcnon="$(cat ~/log-install.txt | grep -w "VMESS GRPC NON TLS" | cut -d: -f2|sed 's/ //g')"
+until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
+		read -rp "User: " -e user
+		CLIENT_EXISTS=$(grep -w $user /usr/local/etc/xray/xvmess.json | wc -l)
+
+		if [[ ${CLIENT_EXISTS} == '1' ]]; then
+			echo ""
+			echo "A Client Username Was Already Created, Please Enter New Username"
+			exit 1
+		fi
+	done
 vmgrpcnon="$(cat ~/log-install.txt | grep -w "VMESS GRPC NON TLS" | cut -d: -f2|sed 's/ //g')"
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 		read -rp "User: " -e user
@@ -53,7 +65,7 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "grpc",
-      "serviceName": "/vmessgrpc",
+      "serviceName": "/shanumgrpc",
       "type": "none",
       "serverName": "${domain}",
       "tls": "tls"
@@ -68,7 +80,7 @@ cat>/etc/xray/vmess-$user-nontls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "grpc",
-      "serviceName": "gandring",
+      "serviceName": "/gandring",
       "type": "none",
       "serverName": "${domain}",
       "tls": "none"
@@ -94,7 +106,7 @@ echo -e "Port no TLS :${vmgrpcnon}"
 echo -e "Id          :${uuid}"
 echo -e "Network     :grpc"
 echo -e "Host        :${domain}"
-echo -e "serviceName :/vmessgrpc, gandring"
+echo -e "serviceName :/shanumgrpc, /gandring"
 echo -e "Expired On  :$exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "Link GRPC TLS: ${vmessgrpc}"
