@@ -58,7 +58,7 @@ systemctl restart xvmess
 clear
 echo -e ""
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "\033[1;46m 🔰 AKUN TROJAN XTLS & GFW 🔰   \e[m"       
+echo -e "\033[1;46m🔰 AKUN TROJAN XTLS GFW 🔰\e[m"       
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "Nama       :${user}"
 echo -e "IP/Host    :${MYIP}"
