@@ -57,7 +57,7 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "ws",
-      "path": "/cokro",
+      "path": "/satrio",
       "type": "none",
       "host": "${domain}",
       "tls": "tls"
@@ -72,7 +72,7 @@ cat>/etc/xray/vmess-$user-nontls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "ws",
-      "path": "/gandring",
+      "path": "/satrio",
       "type": "none",
       "host": "${domain}",
       "tls": "none"
@@ -137,7 +137,7 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "grpc",
-      "path": "/shanumgrpc",
+      "path": "/satrio",
       "type": "none",
       "host": "${domain}",
       "tls": "tls"
@@ -152,7 +152,7 @@ cat>/etc/xray/vmess-$user-nontls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "grpc",
-      "path": "/gandring",
+      "path": "/satrio",
       "type": "none",
       "host": "${domain}",
       "tls": "none"
@@ -208,7 +208,7 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "h2",
-      "path": "/shanumhttp",
+      "path": "/satrio",
       #"type": "multi",
       "host": "$domain",
       "tls": "tls"
@@ -262,7 +262,7 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "tcp",
-      "path": "/wisnu",
+      "path": "/satrio",
       "type": "http",
       "host": "${domain}",
       "tls": "tls"
@@ -298,21 +298,17 @@ clear
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m  🔰AKUN VMESS TESTER🔰   \e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "NAMA        :${user}"
 echo -e "IP :${MYIP}/ ${domain}"
-echo -e "Port WS     :${tls}/${nontls}"
-echo -e "Port GRPC   :${vmgrpc}/${vmgrpcnon}"
-echo -e "Port H2C    :${vmhdua}"
-echo -e "Port HTTP   :${vmhttp}/${vmhttpnon}"
-echo -e "User ID     :${uuid}"
-echo -e "Network     :WS,GRPC,H2C,HTTP"
-echo -e "Path WS     :/cokro,/gandring"
-echo -e "Pat H2C     :/shanumhttp"
-echo -e "ServiceName :/shanumgrpc"
-echo -e "Path HTTP   :/wisnu"
-echo -e "Created     :$hariini"
-echo -e "Expired     :$exp"
-#echo -e "Expired     :$exp2"
+echo -e "UserID :${uuid}"
+echo -e "NAMA             :${user}"
+echo -e "Port WS          :${tls}/${nontls}"
+echo -e "Port GRPC        :${vmgrpc}/${vmgrpcnon}"
+echo -e "Port H2C         :${vmhdua}"
+echo -e "Port HTTP        :${vmhttp}/${vmhttpnon}"
+echo -e "Protokol         :WS,GRPC,H2C,HTTP"
+echo -e "Path/serviceName :/cokro,/gandring"
+echo -e "Dibuat           :$hariini"
+echo -e "Kadaluarsa       :$exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "Link WS TLS:  ${vmess1}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
