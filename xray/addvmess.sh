@@ -71,7 +71,7 @@ cat>/etc/xray/vmess-$user-nontls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "ws",
-      "path": "gandring",
+      "path": "/gandring",
       "type": "none",
       "host": "${domain}",
       "tls": "none"
@@ -96,10 +96,8 @@ echo -e "Address     :${domain}"
 echo -e "Port TLS    :${tls}"
 echo -e "Port No TLS :${nontls}"
 echo -e "User ID     :${uuid}"
-echo -e "Alter ID    :0"
-echo -e "Security    :auto"
-echo -e "Network     :ws"
-echo -e "Path        :/bagus"
+echo -e "Protokol    :WEBSOCKET"
+echo -e "Path        :/bagus , /gandring"
 echo -e "Created     :$hariini"
 echo -e "Expired     :$exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
