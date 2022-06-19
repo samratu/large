@@ -48,7 +48,7 @@ sed -i '/#trojan-hdua$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
 sed -i '/#trojan-hdua$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
-trojanhdua="trojan://${uuid}@${domain}:$thdua?sni=${domain}&type=http&security=tls&path=%2fgandringhttp#${user}"
+trojanhdua="trojan://${uuid}@${domain}:$thdua?sni=${domain}&type=http&security=tls&path=/gandring#${user}"
 systemctl restart xray.service
 systemctl restart xtrojan.service
 systemctl restart xvmess.service
@@ -58,15 +58,15 @@ echo -e ""
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m 🔰 AKUN TROJAN HTTP/2 🔰 \e[m"       
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Remarks    :${user}"
+echo -e "Nama       :${user}"
 echo -e "IP/Host    :${MYIP}"
 echo -e "Address    :${domain}"
 echo -e "Protocol   :H2C"
-echo -e "Path       :/gandringhttp"
+echo -e "Path       :/gandring"
 echo -e "Port       :${thdua}"
-echo -e "Password   :${uuid}"
-echo -e "Created    :$hariini"
-echo -e "Expired    :$exp"
+echo -e "Password :${uuid}"
+echo -e "Dibuat     :$hariini"
+echo -e "Kadaluarsa :$exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "Link HTTP/2:  ${trojanhdua}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
