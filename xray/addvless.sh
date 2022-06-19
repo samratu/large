@@ -60,8 +60,8 @@ sed -i '/#vless-tls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#vless-nontls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
-vlesstls="vless://${uuid}@${domain}:$vltls?host=${domain}&sni=${domain}&type=ws&security=tls&path=%2fbagus&encryption=none#${user}"
-vlessnontls="vless://${uuid}@${domain}:$vlnontls?host=${domain}&security=none&type=ws&path=%2fgandring&encryption=none#${user}"
+vlesstls="vless://${uuid}@${domain}:$vltls?host=${domain}&sni=${domain}&type=ws&security=tls&path=/bagus&encryption=none#${user}"
+vlessnontls="vless://${uuid}@${domain}:$vlnontls?host=${domain}&security=none&type=ws&path=/bagus&encryption=none#${user}"
 systemctl restart xray.service
 systemctl restart xvless
 systemctl restart xvmess
@@ -70,19 +70,17 @@ clear
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m🔰 AKUN VLESS WEBSOCKET 🔰\e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Remarks     :${user}"
+echo -e "Nama        :${user}"
 echo -e "IP/Host     :${MYIP}"
-echo -e "IPV6        :$MYIP6"
 echo -e "Address     :${domain}"
 echo -e "Port TLS    :$vltls"
 echo -e "Port No TLS :$vlnontls"
 echo -e "User ID     :${uuid}"
 echo -e "Encryption  :none"
 echo -e "Network     :ws"
-echo -e "Path        :/bagus, /gandring"
+echo -e "Path        :/bagus"
 echo -e "Created     :$hariini"
 echo -e "Expired     :$exp"
-#echo -e "Expired     :$exp2"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "Link WS TLS: ${vlesstls}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
