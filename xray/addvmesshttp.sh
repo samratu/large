@@ -35,6 +35,7 @@ until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 	done
 uuid=$(cat /proc/sys/kernel/random/uuid)
 read -p "Expired (Days): " masaaktif
+hariini=`date -d "0 days" +"%Y-%m-%d"`
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#vmess-http-tls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
@@ -49,7 +50,7 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "tcp",
-      "path": "/wisnu",
+      "path": "/satrio",
       "type": "http",
       "host": "${domain}",
       "tls": "tls"
@@ -82,16 +83,17 @@ echo -e ""
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m  🔰 AKUN VMESS HTTP 🔰   \e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Remarks      :${user}"
+echo -e "Nama         :${user}"
 echo -e "Host         :${domain}"
 echo -e "IP           :${MYIP}"
 echo -e "Port TLS     :${vmhttp}"
 echo -e "Port NON TLS :${vmhttpnon}"
-echo -e "Id           :${uuid}"
+echo -e "Id :${uuid}"
 echo -e "Network      :tcp"
 echo -e "Host         :${domain}"
-#echo -e "Path        :/wisnu"
-echo -e "Expired On   :$exp"
+#echo -e "Path        :/satrio"
+echo -e "Dibuat       :$hariini"
+echo -e "Kadaluarsa   :$exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "Link HTTP TLS : ${vmesshttp}"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
