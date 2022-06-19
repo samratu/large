@@ -154,7 +154,7 @@ echo " 🔰 TROJAN GRPC : 8443" |tee -a log-install.txt
 echo " 🔰 TROJAN HTTP TLS : 443" |tee -a log-install.txt
 echo " 🔰 TROJAN HTTP NON TLS : 880" |tee -a log-install.txt
 echo " 🔰 TROJAN H2C : 888" |tee -a log-install.txt
-echo " 🔰 TROJAN XTLS : 43" |tee -a log-install.txt
+echo " 🔰 TROJAN XTLS : 1440" |tee -a log-install.txt
 echo " 🔰 TROJAN GFW : 443" |tee -a log-install.txt
 echo " 🔰 TROJAN WS TLS : 443" |tee -a log-install.txt
 echo " 🔰 TROJAN WS NON TLS : 2095" |tee -a log-install.txt
