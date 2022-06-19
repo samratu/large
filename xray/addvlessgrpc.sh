@@ -59,8 +59,8 @@ sed -i '/#vless-grpc-tls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#vless-grpc-nontls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
-vlessgrpc1="vless://${uuid}@${domain}:$vlgrpc?serviceName=/bagus&sni=${domain}&mode=multi&type=grpc&security=tls&encryption=none#${user}"
-vlessgrpc2="vless://${uuid}@${domain}:$vlgrpcnon?serviceName=/bagus&sni=${domain}&mode=multi&type=grpc&security=none&encryption=none#${user}"
+vlessgrpc1="vless://${uuid}@${domain}:$vlgrpc?serviceName=/wisnugrpc&sni=${domain}&mode=multi&type=grpc&security=tls&encryption=none#${user}"
+vlessgrpc2="vless://${uuid}@${domain}:$vlgrpcnon?serviceName=/wisnugrpc&sni=${domain}&mode=multi&type=grpc&security=none&encryption=none#${user}"
 systemctl restart xvless.service
 systemctl restart xray.service
 systemctl restart xvmess
@@ -77,7 +77,7 @@ echo -e "Port TLS     :$vlgrpc"
 echo -e "Port NON TLS :$vlgrpcnon"
 echo -e "UserID :${uuid}"
 echo -e "Protokol     :GRPC"
-echo -e "ServiceName  :/bagus"
+echo -e "ServiceName  :/wisnugrpc"
 echo -e "Dibuat       :$hariini"
 echo -e "Kadaluarsa   :$exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
