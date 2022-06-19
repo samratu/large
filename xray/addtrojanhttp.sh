@@ -44,9 +44,11 @@ hariini=`date -d "0 days" +"%Y-%m-%d"`
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#trojan-http-tls$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
+sed -i '/#trojan-http-tls$/a\#&# '"$user $exp"'\
+},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
 sed -i '/#trojan-http-nontls$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
-trojanhttp="trojan://${uuid[@${domain}:$thttp?type=tcp&security=tls&path=%2ftrojantcp&host=${domain}&headerType=http#${user}"
+trojanhttp="trojan://${uuid[@${domain}:$thttp?type=tcp&security=tls&path=%2fgandringtcp&host=${domain}&headerType=http#${user}"
 trojanhttpnon="trojan://${uuid[@${domain}:$thttpnon?type=tcp&security=none&host=${domain}&headerType=http#${user}"
 systemctl restart xray.service
 systemctl restart xtrojan.service
@@ -61,13 +63,13 @@ echo -e "Remarks    :${user}"
 echo -e "IP/Host    :${MYIP}"
 echo -e "Address    :${domain}"
 echo -e "Protocol   :tcp"
-echo -e "Path       :/trojantcp"
+echo -e "Path       :/gandringtcp"
 echo -e "Port       :${thttp}"
 echo -e "Password   :${uuid}"
 echo -e "Created    :$hariini"
 echo -e "Expired    :$exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Link HTTP  : ${trojanhttp}"
+echo -e "Link HTTP TLS : ${trojanhttp}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "Link HTTP nontls : ${trojanhttpnon}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
