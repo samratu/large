@@ -11,8 +11,7 @@ MYIP=$(wget -qO- https://ipv4.icanhazip.com);
 MYIP6=$(wget -qO- https://ipv6.icanhazip.com);
 clear
 domain=$(cat /etc/xray/domain)
-vmhdua="$(cat ~/log-install.txt | grep -w "VMESS H2C TLS " | cut -d: -f2|sed 's/ //g')"
-#vmhduanon="$(cat ~/log-install.txt | grep -w "VMESS H2C NON TLS" | cut -d: -f2|sed 's/ //g')"
+vmhdua="$(cat ~/log-install.txt | grep -w "VMESS H2C TLS" | cut -d: -f2|sed 's/ //g')"
 #none="$(cat ~/log-install.txt | grep -w "Vmess None TLS" | cut -d: -f2|sed 's/ //g')"
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 		read -rp "User: " -e user
@@ -36,14 +35,15 @@ until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 	done
 uuid=$(cat /proc/sys/kernel/random/uuid)
 read -p "Expired (Days): " masaaktif
-hariini=`date -d "0 days" +"%Y-%m-%d"`
+#read -p "Expired (Seconds) : " masaaktif
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
+#exp2=`date -d "$masaaktif seconds" +"%Y-%m-%d"`
 sed -i '/#vmess-hdua$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
 sed -i '/#vmess-hdua$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
-#sed -i '/#vmess-hdua-nontls$/a\### '"$user $exp"'\
-#},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/xvmess.json
+#sed -i '/#none$/a\### '"$user $exp"'\
+#},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
 cat>/etc/xray/vmess-$user-tls.json<<EOF
       {
       "v": "0",
@@ -55,30 +55,17 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "net": "h2",
       "path": "/shanumhttp",
       #"type": "multi",
-      "host": "",
+      "host": "$domain",
       "tls": "tls"
 }
 EOF
-
-#cat>/etc/xray/vmess-$user-nontls.json<<EOF
-      {
-      "v": "0",
-      "ps": "${user}",
-      "add": "${domain}",
-      "port": "${vmhduanon}",
-      "id": "${uuid}",
-      "aid": "0",
-      "net": "h2",
-      "path": "/satrio",
-      #"type": "multi",
-      "host": "",
-      "tls": "none"
-#}
-#EOF
-vmesshdua_base641=$( base64 -w 0 <<< $vmess_json1)
-#vmesshduanon_base642=$( base64 -w 0 <<< $vmess_json2)
+vmesshdua=$( base64 -w 0 <<< $vmess_json1)
+#vmess_base642=$( base64 -w 0 <<< $vmess_json2)
 vmesshdua="vmess://$(base64 -w 0 /etc/xray/vmess-$user-tls.json)"
-#vmesshduanon="vmess://$(base64 -w 0 /etc/xray/vmess-$user-nontls.json)"
+#vmessgrpclink2="vmess://$(base64 -w 0 /etc/xray/$user-none.json)"
+rm -rf /etc/xray/vmess-$user-tls.json
+rm -rf /etc/xray/vmess-$user-nontls.json
+
 systemctl daemon-reload
 systemctl restart xvless
 systemctl restart xray
