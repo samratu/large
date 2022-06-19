@@ -53,7 +53,7 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "h2",
-      "path": "/satrio",
+      "path": "/shanumhttp",
       #"type": "multi",
       "host": "",
       "tls": "tls"
@@ -96,7 +96,7 @@ echo -e "Port TLS   :${vmhdua}"
 echo -e "Id :${uuid}"
 echo -e "Network    :h2"
 echo -e "Host       :${domain}"
-echo -e "Path       :/satrio"
+echo -e "Path       :/shanumhttp"
 echo -e "Dibuat     :$hariini"
 echo -e "Kadaluarsa :$exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
