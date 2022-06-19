@@ -48,7 +48,7 @@ sed -i '/#trojan-hdua$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
 sed -i '/#trojan-hdua$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
-trojanhdua="trojan://${uuid}@${domain}:$thdua?sni=${domain}&type=http&security=tls&path=/gandring#${user}"
+trojanhdua="trojan://${uuid}@${domain}:$thdua?sni=${domain}&type=http&security=tls&path=/gandringhttp#${user}"
 systemctl restart xray.service
 systemctl restart xtrojan.service
 systemctl restart xvmess.service
@@ -62,7 +62,7 @@ echo -e "Nama       :${user}"
 echo -e "IP/Host    :${MYIP}"
 echo -e "Address    :${domain}"
 echo -e "Protocol   :H2C"
-echo -e "Path       :/gandring"
+echo -e "Path       :/gandringhttp"
 echo -e "Port       :${thdua}"
 echo -e "Password :${uuid}"
 echo -e "Dibuat     :$hariini"
