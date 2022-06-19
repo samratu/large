@@ -51,7 +51,7 @@ sed -i '/#vless-hdua$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#vless-hdua-nontls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvless.json
-vlesshdua="vless://${uuid}@${domain}:$vlhdua?type=http&security=tls&path=/bagus&encryption=none#${user}"
+vlesshdua="vless://${uuid}@${domain}:$vlhdua?type=http&security=tls&path=/wisnuhttp&encryption=none#${user}"
 vlesshduanon="vless://${uuid}@${domain}:$vlhduanon?type=http&security=none&path=gandring&encryption=none#${user}"
 systemctl restart xvless.service
 systemctl restart xray.service
@@ -67,7 +67,7 @@ echo -e "Address      :${domain}"
 echo -e "Port         :$vlhdua"
 echo -e "UserID :${uuid}"
 echo -e "Protokol     :H2"
-echo -e "Path         :/bagus"
+echo -e "Path         :/wisnuhttp"
 echo -e "Dibuat       :$hariini"
 echo -e "Kadaluarsa   :$exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
