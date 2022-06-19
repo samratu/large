@@ -56,7 +56,7 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "ws",
-      "path": "/satrio",
+      "path": "/shanum",
       "type": "none",
       "host": "${domain}",
       "tls": "tls"
@@ -71,7 +71,7 @@ cat>/etc/xray/vmess-$user-nontls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "ws",
-      "path": "/satrio",
+      "path": "/shanum",
       "type": "none",
       "host": "${domain}",
       "tls": "none"
@@ -97,7 +97,7 @@ echo -e "Port TLS    :${tls}"
 echo -e "Port No TLS :${nontls}"
 echo -e "UserID :${uuid}"
 echo -e "Protokol    :WEBSOCKET"
-echo -e "Path        :/satrio"
+echo -e "Path        :/shanum"
 echo -e "Dibuat      :$hariini"
 echo -e "Kadaluarsa  :$exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
