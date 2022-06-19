@@ -61,7 +61,7 @@ sed -i '/#trojan-grpc$/a\#&# '"$user $exp"'\
 sed -i '/#trojan-grpc$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#trojan-xtls$/a\#&# '"$user $exp"'\
-},{"password": "'""$uuid""'","flow": "'""xtls-rprx-splice-udp443""'", "email": "'""$user""'"' /etc/xray/xtrojan.json
+},{"password": "'""$uuid""'","flow": "'""xtls-rprx-direct""'", "email": "'""$user""'"' /etc/xray/xtrojan.json
 sed -i '/#trojan-hdua$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
 sed -i '/#trojan-hdua$/a\#&# '"$user $exp"'\
