@@ -106,7 +106,7 @@ cat > /etc/xray/config.json << END
         "clients": [
           {
             "id": "${uuid}",
-            "flow": "xtls-rprx-direct"
+            "flow": "xtls-rprx-splice-udp443"
 #vless-xtls
           }
         ],
@@ -763,7 +763,7 @@ cat > /etc/xray/xtrojan.json << END
         "clients": [
           {
             "password": "gandring",
-            "flow": "xtls-rprx-direct",
+            "flow": "xtls-rprx-splice-udp443",
             "email": "gandring@p0x.smule.my.id",
             "level": 0
 #trojan-xtls
@@ -1451,7 +1451,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
                 "clients": [
                     {
                         "id": "gandring",
-                        "flow": "xtls-rprx-direct",
+                        "flow": "xtls-rprx-splice-udp443",
                         "level": 0,
                         "email": "gandring@p0x.smule.my.id"
 #vless-xtls
