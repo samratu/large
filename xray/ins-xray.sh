@@ -124,7 +124,7 @@ cat > /etc/xray/config.json << END
           },
           {
             "dest": 2053,
-            "path": "/satrio",
+            "path": "/shanumgrpc",
             "xver": 1
           }
         ]
@@ -307,7 +307,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 20000,
+      "port": 2007,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -362,7 +362,7 @@ cat > /etc/xray/config.json << END
         "kcpSettings": {},
         "httpSettings": {},
         "wsSettings": {
-          "path": "/wisnu",
+          "path": "/shanum",
           "headers": {
             "Host": "${domain}"
           }
@@ -399,7 +399,7 @@ cat > /etc/xray/config.json << END
         "httpSettings": {},
         "quicSettings": {},
         "grpcSettings": {
-          "serviceName": "/cokro",
+          "serviceName": "/shanumgrpc",
           "multiMode": true
         }
       }
@@ -430,7 +430,7 @@ cat > /etc/xray/config.json << END
         "tcpSettings": {},
         "httpSettings": {
         "acceptProxyProtocol": true,
-          "path": "/satrio"
+          "path": "/shanumhttp"
         },
         "kcpSettings": {},
         "wsSettings": {},
@@ -511,7 +511,7 @@ cat > /etc/xray/config.json << END
         "kcpSettings": {},
         "httpSettings": {},
         "wsSettings": {
-          "path": "/shanum",
+          "path": "/wisnugrpc",
           "headers": {
             "Host": "${domain}"
           }
@@ -541,7 +541,7 @@ cat > /etc/xray/config.json << END
         "httpSettings": {},
         "quicSettings": {},
         "grpcSettings": {
-          "serviceName": "/ayesha"
+          "serviceName": "/wisnugrpc"
         }
       }
     },
@@ -785,7 +785,7 @@ cat > /etc/xray/xtrojan.json << END
             "xver": 0
           },
           {
-            "path": "/bagus",
+            "path": "/gandring",
             "dest": 2095,
             "xver": 0
           }
@@ -840,7 +840,7 @@ cat > /etc/xray/xtrojan.json << END
           ]
         },
         "grpcSettings": {
-          "serviceName": "/bagus"
+          "serviceName": "/gandringgrpc"
         }
       }
     },
@@ -919,7 +919,7 @@ cat > /etc/xray/xtrojan.json << END
         "security": "tls",
         "httpSettings": {
         "acceptProxyProtocol": true,
-          "path": "/satrio"
+          "path": "/gandringhttp"
          },
          "tlsSettings": {
           "alpn": [
@@ -1011,7 +1011,7 @@ cat > /etc/xray/xtrojan.json << END
       }
     },
     {
-      "port": 8808,
+      "port": 6005,
       "listen": "0.0.0.0",
       "protocol": "trojan",
       "settings": {
@@ -1243,7 +1243,7 @@ cat > /etc/xray/xvless.json << END
                     ]
                 },
                 "grpcSettings": {
-                    "serviceName": "/cokro"
+                    "serviceName": "/shanumgrpc"
                 }
             }
         },
@@ -1298,7 +1298,7 @@ cat > /etc/xray/xvless.json << END
                     ]
                 },
                 "grpcSettings": {
-                    "serviceName": "/ayesha"
+                    "serviceName": "/wisnugrpc"
                 }
             }
         },
@@ -1348,7 +1348,7 @@ cat > /etc/xray/xvless.json << END
                     ]
                 },
                 "httpSettings": {
-                    "path": "/satrio"
+                    "path": "/wisnuhttp"
                 }
             }
         },
