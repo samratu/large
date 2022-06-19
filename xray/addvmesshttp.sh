@@ -50,7 +50,7 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "tcp",
-      "path": "/satrio",
+      "path": "/shanumtcp",
       "type": "http",
       "host": "${domain}",
       "tls": "tls"
@@ -91,7 +91,7 @@ echo -e "Port NON TLS :${vmhttpnon}"
 echo -e "Id :${uuid}"
 echo -e "Network      :tcp"
 echo -e "Host         :${domain}"
-#echo -e "Path        :/satrio"
+#echo -e "Path        :/shanumtcp"
 echo -e "Dibuat       :$hariini"
 echo -e "Kadaluarsa   :$exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
