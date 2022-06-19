@@ -66,7 +66,7 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "grpc",
-      "serviceName": "/satrio",
+      "serviceName": "/shanumgrpc",
       "type": "none",
       "serverName": "${domain}",
       "tls": "tls"
@@ -81,7 +81,7 @@ cat>/etc/xray/vmess-$user-nontls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "grpc",
-      "serviceName": "/satrio",
+      "serviceName": "/shanumgrpc",
       "type": "none",
       "serverName": "${domain}",
       "tls": "none"
@@ -107,7 +107,7 @@ echo -e "Port no TLS :${vmgrpcnon}"
 echo -e "UserId :${uuid}"
 echo -e "Protokol     :grpc"
 echo -e "Host        :${domain}"
-echo -e "serviceName :/satrio"
+echo -e "serviceName :/shanumgrpc"
 echo -e "Dibuat      :$hariini"
 echo -e "Kadaluarsa  :$exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
