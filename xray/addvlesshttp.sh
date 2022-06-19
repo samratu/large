@@ -60,7 +60,7 @@ sed -i '/#vless-http-tls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#vless-http-nontls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvless.json
-vlesshttp="vless://${uuid}@${domain}:$vlhttp?sni=${domain}&host=${domain}&type=tcp&security=tls&path=/bagus&headerType=http&encryption=none#${user}"
+vlesshttp="vless://${uuid}@${domain}:$vlhttp?sni=${domain}&host=${domain}&type=tcp&security=tls&path=/wisnutcp&headerType=http&encryption=none#${user}"
 vlesshttpnon="vless://${uuid}@${domain}:$vlhttpnon?host=${domain}&security=none&type=tcp&headerType=http&encryption=none#${user}"
 systemctl restart xtrojan.service
 systemctl restart xvless.service
@@ -80,7 +80,7 @@ echo -e "Port NON TLS: $vlhttpnon"
 echo -e "UserID : ${uuid}"
 echo -e "Encryption  : none"
 echo -e "Protokol    : tcp"
-echo -e "Path        : /bagus"
+echo -e "Path        : /wisnutcp"
 echo -e "Dibuat      : $hariini"
 echo -e "Kadaluarsa  : $exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
