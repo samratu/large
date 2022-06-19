@@ -42,10 +42,11 @@ vlessgfw="vless://${uuid}@${domain}:$vlxtls?security=tls&type=tcp&headerType=non
 systemctl restart xray.service
 #systemctl restart v2ray@.service
 systemctl restart xvmess
+systemctl restart xtrojan
 service cron restart
 clear
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "\033[1;46m 🔰 AKUN VLESS XTLS & GFW 🔰 \e[m"   
+echo -e "\033[1;46m🔰 AKUN VLESS XTLS GFW 🔰 \e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "Remarks    :${user}"
 echo -e "IP/Host    :${MYIP}"
