@@ -72,7 +72,7 @@ cat>/etc/xray/vmess-$user-nontls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "ws",
-      "path": "gandring",
+      "path": "/gandring",
       "type": "none",
       "host": "${domain}",
       "tls": "none"
@@ -137,7 +137,7 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "grpc",
-      "path": "/vmessgrpc",
+      "path": "/shanumgrpc",
       "type": "none",
       "host": "${domain}",
       "tls": "tls"
@@ -208,7 +208,7 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "h2",
-      "path": "/vmesshttp",
+      "path": "/shanumhttp",
       #"type": "multi",
       "host": "$domain",
       "tls": "tls"
@@ -306,9 +306,9 @@ echo -e "Port H2C    :${vmhdua}"
 echo -e "Port HTTP   :${vmhttp}/${vmhttpnon}"
 echo -e "User ID     :${uuid}"
 echo -e "Network     :WS,GRPC,H2C,HTTP"
-echo -e "Path WS     :/cokro,gandring"
-echo -e "Pat H2C     :/vmesshttp"
-echo -e "ServiceName :/vmessgrpc"
+echo -e "Path WS     :/cokro,/gandring"
+echo -e "Pat H2C     :/shanumhttp"
+echo -e "ServiceName :/shanumgrpc"
 echo -e "Path HTTP   :/wisnu"
 echo -e "Created     :$hariini"
 echo -e "Expired     :$exp"
