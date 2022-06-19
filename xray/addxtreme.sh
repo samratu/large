@@ -45,7 +45,7 @@ exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#trojan-gfw$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 
-trojanlink="trojan://${uuid}@${domain}:$tgfw?sni=${domain}&type=tcp&security=tls&headerType=none#${user}"
+trojangfw="trojan://${uuid}@${domain}:$tgfw?sni=${domain}&type=tcp&security=tls&headerType=none#${user}"
 
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 		read -rp "Username : " -e user
@@ -88,7 +88,7 @@ sed -i '/#vless-tls$/a\#### '"$user $exp"'\
 sed -i '/#vless-nontls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
 sed -i '/#vless-xtls$/a\#&# '"$user $exp"'\
-},{"id": "'""$uuid""'","flow": "'""xtls-rprx-direct""'", "email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
+},{"id": "'""$uuid""'","flow": "'""xtls-rprx-splice-udp443""'", "email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 		read -rp "Username : " -e user
@@ -142,7 +142,7 @@ cat>/etc/xray/vmess-$user-nontls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "ws",
-      "path": "gandring",
+      "path": "/gandring",
       "type": "none",
       "host": "${domain}",
       "tls": "none"
@@ -212,10 +212,12 @@ cat>/etc/xray/vmess-$user-nontls.json<<EOF
       "tls": "none"
 }
 EOF
-vmesshttp_base641=$( base64 -w 0 <<< $vmess_json1)
-vmesshttp_base642=$( base64 -w 0 <<< $vmess_json2)
+vmesshttp2=$( base64 -w 0 <<< $vmess_json1)
+vmesshttpnon2=$( base64 -w 0 <<< $vmess_json2)
 vmesshttp="vmess://$(base64 -w 0 /etc/xray/vmess-$user-tls.json)"
 vmesshttpnon="vmess://$(base64 -w 0 /etc/xray/vmess-$user-none.json)"
+rm -rf /etc/xray/vmess-$user-tls.json
+rm -rf /etc/xray/vmess-$user-nontls.json
 
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${user_EXISTS} == '0' ]]; do
 		read -rp "Password : " -e user
@@ -245,14 +247,12 @@ sed -i '/#trojan-tls$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#trojan-nontls$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
-sed -i '/#trojan-gfw$/a\#&# '"$user $exp"'\
-},{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 trojantls="trojan://${uuid}@${domain}:$ttls?type=ws&security=tls&host=$domain&path=%2fgandring&sni=$domain#${user}"
 trojannontls="trojan://${uuid}@${domain}:$tnontls?type=ws&security=none&host=$domain&path=%2fgandring#${user}"
 trojangfw="trojan://$uuid@$domain:$tgfw?type=tcp&security=tls&headerType=none#$user"
 vlesstls="vless://${uuid}@${domain}:$vltls?host=${domain}&sni=${domain}&type=ws&security=tls&path=%2fbagus&encryption=none#${user}"
-vlessnontls="vless://${uuid}@${domain}:$vlnontls?host=${domain}&security=none&type=ws&path=gandring&encryption=none#${user}"
-vlessxtls="vless://${uuid}@${domain}:$vlxtls?security=xtls&encryption=none&flow=xtls-rprx-direct#${user}"
+vlessnontls="vless://${uuid}@${domain}:$vlnontls?host=${domain}&security=none&type=ws&path=%2fgandring&encryption=none#${user}"
+vlessxtls="vless://${uuid}@${domain}:$vlxtls?security=xtls&encryption=none&flow=xtls-rprx-splice-udp443#${user}"
 systemctl restart xvmess.service
 systemctl restart xray.service
 systemctl restart xtrojan.service
@@ -272,7 +272,7 @@ echo -e "Port VLESS nontls :${vlnontls}"
 echo -e "User ID           :${uuid}"
 echo -e "Network           :WEBSOCKET,HTTP,TCP,XTLS"
 echo -e "Security          :xtls,tls"
-echo -e "Flow  XTLS        :all flow"
+echo -e "Flow  XTLS        :only origin type not support"
 echo -e "Path Vmess ws     :/cokro ,gandring"
 echo -e "Path  Vless ws    :/bagus, gandring"
 echo -e "Path  Trojan grpc :/gandring"
