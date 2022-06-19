@@ -124,7 +124,7 @@ cat > /etc/xray/config.json << END
           },
           {
             "dest": 2053,
-            "path": "/gandring",
+            "path": "/shanumgrpc",
             "xver": 1
           }
         ]
@@ -160,7 +160,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 8088,
+      "port": 8544,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -307,7 +307,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 20000,
+      "port": 20003,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -399,8 +399,7 @@ cat > /etc/xray/config.json << END
         "httpSettings": {},
         "quicSettings": {},
         "grpcSettings": {
-          "serviceName": "gandring",
-          "multiMode": true
+          "serviceName": "/gandring"
         }
       }
     },
@@ -430,7 +429,7 @@ cat > /etc/xray/config.json << END
         "tcpSettings": {},
         "httpSettings": {
         "acceptProxyProtocol": true,
-          "path": "/vmesshttp"
+          "path": "/shanumhttp"
         },
         "kcpSettings": {},
         "wsSettings": {},
@@ -446,7 +445,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 20003,
+      "port": 20004,
       "protocol": "vless",
       "settings": {
         "clients": [
@@ -541,7 +540,7 @@ cat > /etc/xray/config.json << END
         "httpSettings": {},
         "quicSettings": {},
         "grpcSettings": {
-          "serviceName": "gandring"
+          "serviceName": "/gandring"
         }
       }
     },
@@ -664,8 +663,8 @@ cat > /etc/xray/config.json << END
       "1.1.1.1",
       "1.0.0.1",
       "localhost",
-      "https+local://dns.google/dns-query",
-      "https+local://1.1.1.1/dns-query"
+      "localhost://dns.google/dns-query",
+      "localhost://1.1.1.1/dns-query"
     ]
   },
   "routing": {
@@ -758,7 +757,7 @@ cat > /etc/xray/xtrojan.json << END
       "tag": "api"
     },
     {
-      "port": 43,
+      "port": 1430,
       "protocol": "trojan",
       "settings": {
         "clients": [
@@ -773,19 +772,13 @@ cat > /etc/xray/xtrojan.json << END
         "decryption": "none",
         "fallbacks": [
           {
-            "dest": 60000,
-            "alpn": "",
-            "xver": 1
-          },
-          {
-            "dest": 60001,
-            "alpn": "h2",
-            "xver": 1
+            "dest": 8443,
+            "xver": 0
           },
           {
             "path": "/gandring",
-            "dest": 88,
-            "xver": 1
+            "dest": 2095,
+            "xver": 0
           }
         ]
       },
@@ -793,6 +786,7 @@ cat > /etc/xray/xtrojan.json << END
         "network": "tcp",
         "security": "xtls",
         "xtlsSettings": {
+        "acceptProxyProtocol": true,
           "alpn": [
             "h2",
             "http/1.1"
@@ -807,7 +801,42 @@ cat > /etc/xray/xtrojan.json << END
       }
     },
     {
-      "port": 20004,
+      "port": 8443,
+      "listen": "0.0.0.0",
+      "protocol": "trojan",
+      "settings": {
+        "clients": [
+          {
+            "password": "gandring",
+            "email": "gandring@p0x.smule.my.id"
+#trojan-grpc
+          }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "grpc",
+        "security": "tls",
+        "tlsSettings": {
+          "serverName": "",
+          "alpn": [
+            "h2",
+            "http/1.1"
+          ],
+          "certificates": [
+            {
+              "certificateFile": "/etc/ssl/private/fullchain.pem",
+              "keyFile": "/etc/ssl/private/privkey.pem"
+            }
+          ]
+        },
+        "grpcSettings": {
+          "serviceName": "/gandringgrpc"
+        }
+      }
+    },
+    {
+      "port": 20009,
       "listen": "0.0.0.0",
       "protocol": "trojan",
       "settings": {
@@ -844,7 +873,6 @@ cat > /etc/xray/xtrojan.json << END
       "port": 2095,
       "listen": "0.0.0.0",
       "protocol": "trojan",
-      "tag": "TROJAN-WS-in",
       "settings": {
         "clients": [
           {
@@ -860,42 +888,6 @@ cat > /etc/xray/xtrojan.json << END
         "security": "none",
         "wsSettings": {
           "path": "/gandring"
-        }
-      }
-    },
-    {
-      "port": 8443,
-      "listen": "0.0.0.0",
-      "protocol": "trojan",
-      "settings": {
-        "clients": [
-          {
-            "password": "gandring",
-            "email": "gandring@p0x.smule.my.id"
-#trojan-grpc
-          }
-        ],
-        "decryption": "none"
-      },
-      "streamSettings": {
-        "network": "grpc",
-        "security": "tls",
-        "tlsSettings": {
-          "serverName": "",
-          "alpn": [
-            "h2",
-            "http/1.1"
-          ],
-          "certificates": [
-            {
-              "certificateFile": "/etc/ssl/private/fullchain.pem",
-              "keyFile": "/etc/ssl/private/privkey.pem"
-            }
-          ]
-        },
-        "grpcSettings": {
-          "acceptProxyProtocol": true,
-          "serviceName": "/trojangrpc"
         }
       }
     },
@@ -918,7 +910,7 @@ cat > /etc/xray/xtrojan.json << END
         "security": "tls",
         "httpSettings": {
         "acceptProxyProtocol": true,
-          "path": "/trojanhttp"
+          "path": "/gandringhttp"
          },
          "tlsSettings": {
           "alpn": [
@@ -1010,6 +1002,47 @@ cat > /etc/xray/xtrojan.json << END
       }
     },
     {
+      "port": 8808,
+      "listen": "0.0.0.0",
+      "protocol": "trojan",
+      "settings": {
+        "clients": [
+          {
+            "password": "gandring",
+            "email": "gandring@p0x.smule.my.id"
+#trojan-http-tls
+           }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "security": "tls",
+        "tlsSettings": {
+          "alpn": [
+            "h2",
+            "http/1.1"
+          ],
+          "certificates": [
+            {
+              "certificateFile": "/etc/ssl/private/fullchain.pem",
+              "keyFile": "/etc/ssl/private/privkey.pem"
+            }
+          ]
+        },
+        "tcpSettings": {
+         "header": {
+            "type": "http",
+             "request": {
+             "path": [
+              "/gandringtcp"
+             ]
+            }
+          }
+        }
+      }
+    },
+    {
       "port": 880,
       "listen": "0.0.0.0",
       "protocol": "trojan",
@@ -1018,8 +1051,8 @@ cat > /etc/xray/xtrojan.json << END
           {
             "password": "gandring",
             "email": "gandring@p0x.smule.my.id"
-#trojan-http
-          }
+#trojan-http-nontls
+           }
         ],
         "decryption": "none"
       },
@@ -1057,8 +1090,8 @@ cat > /etc/xray/xtrojan.json << END
       "1.1.1.1",
       "1.0.0.1",
       "localhost",
-      "https+local://dns.google/dns-query",
-      "https+local://1.1.1.1/dns-query"
+      "localhost://dns.google/dns-query",
+      "localhost://1.1.1.1/dns-query"
     ]
   },
   "routing": {
@@ -1171,8 +1204,7 @@ cat > /etc/xray/xvless.json << END
                     ]
                 },
                 "grpcSettings": {
-                "acceptProxyProtocol": true,
-                    "serviceName": "/vmessgrpc"
+                    "serviceName": "/shanumgrpc"
                 }
             }
         },
@@ -1194,7 +1226,6 @@ cat > /etc/xray/xvless.json << END
                 "security": "none",
                 "serverName": "$domain",
                 "grpcSettings": {
-                "acceptProxyProtocol": true,
                     "serviceName": "gandring"
                 }
             }
@@ -1228,13 +1259,12 @@ cat > /etc/xray/xvless.json << END
                     ]
                 },
                 "grpcSettings": {
-                "acceptProxyProtocol": true,
-                    "serviceName": "/vlessgrpc"
+                    "serviceName": "/wisnugrpc"
                 }
             }
         },
         {
-            "port": 20002,
+            "port": 30002,
             "protocol": "vless",
             "settings": {
                 "clients": [
@@ -1279,8 +1309,7 @@ cat > /etc/xray/xvless.json << END
                     ]
                 },
                 "httpSettings": {
-                "acceptProxyProtocol": true,
-                    "path": "/vlesshttp"
+                    "path": "/wisnuhttp"
                 }
             }
         },
@@ -1300,7 +1329,6 @@ cat > /etc/xray/xvless.json << END
                 "network": "h2",
                 "security": "none",
                 "httpSettings": {
-                "acceptProxyProtocol": true,
                     "path": "gandring"
                 }
             }
@@ -1409,7 +1437,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
   "inbounds": [
     {
       "listen": "127.0.0.1",
-      "port": 10085,
+      "port": 10808,
       "protocol": "dokodemo-door",
       "settings": {
         "address": "127.0.0.1"
@@ -1417,20 +1445,20 @@ cat > /usr/local/etc/xray/xvmess.json << END
       "tag": "api"
     },
     {
-      "port": 443,
-       "protocol": "vless",
-          "settings": {
-             "clients": [
+            "port": 443,
+            "protocol": "vless",
+            "settings": {
+                "clients": [
                     {
-                      "id": "gandring",
-                      "flow": "xtls-rprx-direct",
-                      "level": 0,
-                      "email": "gandring@p0x.smule.my.id"
+                        "id": "gandring",
+                        "flow": "xtls-rprx-direct",
+                        "level": 0,
+                        "email": "gandring@p0x.smule.my.id"
 #vless-xtls
                     }
                 ],
                 "decryption": "none",
-                 "fallbacks": [
+                "fallbacks": [
                     {
                         "dest": 1310,
                         "xver": 1
@@ -1441,18 +1469,53 @@ cat > /usr/local/etc/xray/xvmess.json << END
                         "xver": 1
                     },
                     {
+                        "path": "/gandringhttp",
+                        "dest": 1330,
+                        "xver": 1
+                    },
+                    {
+                        "path": "/gandringgrpc",
+                        "dest": 1340,
+                        "xver": 1
+                    },
+                    {
                         "path": "/bagus",
-                        "dest": 1234,
+                        "dest": 1350,
+                        "xver": 1
+                    },
+                    {
+                        "path": "/wisnuhttp",
+                        "dest": 1360,
+                        "xver": 1
+                    },
+                    {
+                        "path": "/wisnugrpc",
+                        "dest": 1370,
                         "xver": 1
                     },
                     {
                         "path": "/wisnu",
-                        "dest": 2345,
+                        "dest": 1380,
                         "xver": 1
                     },
                     {
                         "path": "/cokro",
-                        "dest": 3456,
+                        "dest": 1390,
+                        "xver": 1
+                    },
+                    {
+                        "path": "/shanumhttp",
+                        "dest": 1400,
+                        "xver": 1
+                    },
+                    {
+                        "path": "/shanumgrpc",
+                        "dest": 1410,
+                        "xver": 1
+                    },
+                    {
+                        "path": "/gandringtcp",
+                        "dest": 1420,
                         "xver": 1
                     }
                 ]
@@ -1474,21 +1537,21 @@ cat > /usr/local/etc/xray/xvmess.json << END
             }
         },
         {
-          "port": 1310,
-          "listen": "127.0.0.1",
+            "port": 1310,
+            "listen": "127.0.0.1",
             "protocol": "trojan",
-             "settings": {
+            "settings": {
                 "clients": [
                     {
-                      "password": "gandring",
-                      "level": 0,
-                      "email": "gandring@p0x.smule.my.id"
+                        "password": "gandring",
+                        "level": 0,
+                        "email": "gandring@p0x.smule.my.id"
 #trojan-gfw
                     }
                 ],
                 "fallbacks": [
                     {
-                      "dest": 81
+                        "dest": 81
                     }
                 ]
             },
@@ -1506,21 +1569,21 @@ cat > /usr/local/etc/xray/xvmess.json << END
           "protocol": "trojan",
           "settings": {
            "clients": [
-         {
+       {
            "password": "gandring",
            "level": 0,
            "email": "gandring@p0x.smule.my.id"
 #trojan-tls
-          }
-       ],
-       "fallbacks": [
-          {
+       }
+      ],
+           "fallbacks": [
+       {
            "dest": 88
-           }
-        ]
-     },
-     "streamSettings": {
-       "network": "ws",
+       }
+     ]
+  },
+      "streamSettings": {
+        "network": "ws",
         "security": "none",
         "wsSettings": {
           "acceptProxyProtocol": true,
@@ -1529,15 +1592,71 @@ cat > /usr/local/etc/xray/xvmess.json << END
       }
     },
     {
-      "port": 1234,
-        "listen": "127.0.0.1",
-          "protocol": "vless",
+          "port": 1330,
+          "listen": "127.0.0.1",
+          "protocol": "trojan",
+          "settings": {
+           "clients": [
+       {
+           "password": "gandring",
+           "level": 0,
+           "email": "gandring@p0x.smule.my.id"
+#trojan-hdua
+         }
+      ],
+           "fallbacks": [
+       {
+           "dest": 88
+       }
+     ]
+  },
+      "streamSettings": {
+        "network": "h2",
+        "security": "none",
+        "httpSettings": {
+          "acceptProxyProtocol": true,
+          "path": "/gandringhttp"
+         }
+      }
+    },
+    {
+          "port": 1340,
+          "listen": "127.0.0.1",
+          "protocol": "trojan",
+          "settings": {
+           "clients": [
+        {
+           "password": "gandring",
+           "level": 0,
+           "email": "gandring@p0x.smule.my.id"
+#trojan-grpc
+         }
+      ],
+           "fallbacks": [
+        {
+           "dest": 88
+        }
+     ]
+  },
+      "streamSettings": {
+        "network": "grpc",
+        "security": "none",
+        "grpcSettings": {
+          "acceptProxyProtocol": true,
+              "path": "/gandringgrpc"
+           }
+        }
+    },
+    {
+            "port": 1350,
+            "listen": "127.0.0.1",
+            "protocol": "vless",
             "settings": {
                 "clients": [
                     {
-                      "id": "gandring",
-                      "level": 0,
-                      "email": "gandring@p0x.smule.my.id"
+                        "id": "gandring",
+                        "level": 0,
+                        "email": "gandring@p0x.smule.my.id"
 #vless-tls
                      }
                 ],
@@ -1553,8 +1672,56 @@ cat > /usr/local/etc/xray/xvmess.json << END
             }
         },
         {
-          "port": 2345,
-           "listen": "127.0.0.1",
+            "port": 1360,
+            "listen": "127.0.0.1",
+            "protocol": "vless",
+            "settings": {
+                "clients": [
+                    {
+                        "id": "gandring",
+                        "level": 0,
+                        "email": "gandring@p0x.smule.my.id"
+#vless-hdua
+                    }
+                ],
+                "decryption": "none"
+            },
+            "streamSettings": {
+                "network": "h2",
+                "security": "none",
+                "httpSettings": {
+                    "acceptProxyProtocol": true,
+                    "path": "/wisnuhttp"
+                }
+            }
+        },
+        {
+            "port": 1370,
+            "listen": "127.0.0.1",
+            "protocol": "vless",
+            "settings": {
+                "clients": [
+                    {
+                        "id": "gandring",
+                        "level": 0,
+                        "email": "gandring@p0x.smule.my.id"
+#vless-grpc-tls
+                    }
+                ],
+                "decryption": "none"
+            },
+            "streamSettings": {
+                "network": "grpc",
+                "security": "none",
+                "grpcSettings": {
+                    "acceptProxyProtocol": true,
+                    "path": "/wisnugrpc"
+                }
+            }
+        },
+        {
+            "port": 1380,
+            "listen": "127.0.0.1",
             "protocol": "vmess",
             "settings": {
                 "clients": [
@@ -1583,8 +1750,8 @@ cat > /usr/local/etc/xray/xvmess.json << END
             }
         },
         {
-          "port": 3456,
-           "listen": "127.0.0.1",
+            "port": 1390,
+            "listen": "127.0.0.1",
             "protocol": "vmess",
             "settings": {
                 "clients": [
@@ -1601,10 +1768,87 @@ cat > /usr/local/etc/xray/xvmess.json << END
                 "security": "none",
                 "wsSettings": {
                     "acceptProxyProtocol": true,
-                       "path": "/cokro"
+                    "path": "/cokro"
+                }
+        }
+  },
+  {
+            "port": 1400,
+            "listen": "127.0.0.1",
+            "protocol": "vmess",
+            "settings": {
+                "clients": [
+                    {
+                        "id": "gandring",
+                        "level": 0,
+                        "email": "gandring@p0x.smule.my.id"
+#vmess-hdua
                      }
-             }
-       }
+                ]
+            },
+            "streamSettings": {
+                "network": "h2",
+                "security": "none",
+                "httpSettings": {
+                    "acceptProxyProtocol": true,
+                    "path": "/shanumhttp"
+                }
+        }
+  },
+  {
+            "port": 1410,
+            "listen": "127.0.0.1",
+            "protocol": "vmess",
+            "settings": {
+                "clients": [
+                    {
+                        "id": "gandring",
+                        "level": 0,
+                        "email": "gandring@p0x.smule.my.id"
+#vmess-grpc-tls
+                     }
+                ]
+            },
+            "streamSettings": {
+                "network": "grpc",
+                "security": "none",
+                "grpcSettings": {
+                    "acceptProxyProtocol": true,
+                    "path": "/shanumgrpc"
+                }
+        }
+  },
+  {
+      "port": 1420,
+      "listen": "127.0.0.1",
+      "protocol": "trojan",
+      "settings": {
+        "clients": [
+          {
+            "password": "gandring",
+            "level": 0,
+            "email": "gandring@p0x.smule.my.id"
+#trojan-http-tls
+           }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "security": "none",
+        "tcpSettings": {
+         "acceptProxyProtocol": true,
+          "header": {
+            "type": "http",
+             "request": {
+             "path": [
+              "/gandringtcp"
+             ]
+            }
+          }
+        }
+      }
+    }
   ],
   "outbounds": [
     {
@@ -1623,8 +1867,8 @@ cat > /usr/local/etc/xray/xvmess.json << END
       "1.1.1.1",
       "1.0.0.1",
       "localhost",
-      "https+local://dns.google/dns-query",
-      "https+local://1.1.1.1/dns-query"
+      "localhost://dns.google/dns-query",
+      "localhost://1.1.1.1/dns-query"
     ]
   },
   "routing": {
@@ -1743,8 +1987,8 @@ cat > /etc/xray/xss.json << END
       "1.1.1.1",
       "1.0.0.1",
       "localhost",
-      "https+local://dns.google/dns-query",
-      "https+local://1.1.1.1/dns-query"
+      "localhost://dns.google/dns-query",
+      "localhost://1.1.1.1/dns-query"
     ]
   },
   "routing": {
@@ -1989,6 +2233,10 @@ sudo iptables -A OUTPUT -p tcp --sport 22 -m conntrack --ctstate ESTABLISHED -j 
 sudo iptables -A OUTPUT -p udp --sport 22 -m conntrack --ctstate ESTABLISHED -j ACCEPT
 sudo iptables -A OUTPUT -p tcp --sport 300 -m conntrack --ctstate ESTABLISHED -j ACCEPT
 sudo iptables -A OUTPUT -p udp --sport 300 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+sudo iptables -A OUTPUT -p tcp --sport 10805 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+sudo iptables -A OUTPUT -p udp --sport 10805 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+sudo iptables -A OUTPUT -p tcp --sport 10808 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+sudo iptables -A OUTPUT -p udp --sport 10808 -m conntrack --ctstate ESTABLISHED -j ACCEPT
 sudo iptables-save > /etc/iptables.up.rules
 sudo iptables-restore -t < /etc/iptables.up.rules
 sudo netfilter-persistent save
@@ -2054,7 +2302,7 @@ path_key="/etc/xray/xray.key"
 cat > /etc/trojan-go/config.json << END
 {
   "run_type": "server",
-  "local_addr": "0.0.0.0",
+  "local_addr": "127.0.0.1",
   "local_port": 2053,
   "remote_addr": "127.0.0.1",
   "remote_port": 443,
@@ -2063,7 +2311,7 @@ cat > /etc/trojan-go/config.json << END
   "password": [
       "$uuid"
   ],
-  "disable_http_check": true,
+  "disable_http_check": false,
   "udp_timeout": 60,
   "ssl": {
     "verify": true,
@@ -2082,16 +2330,16 @@ cat > /etc/trojan-go/config.json << END
     "reuse_session": true,
     "plain_http_response": "",
     "fallback_addr": "127.0.0.1",
-    "fallback_port": 0,
+    "fallback_port": 443,
     "fingerprint": "firefox"
   },
   "tcp": {
-    "no_delay": true,
-    "keep_alive": true,
-    "prefer_ipv4": true
+    "no_delay": false,
+    "keep_alive": false,
+    "prefer_ipv4": false
   },
   "mux": {
-    "enabled": true,
+    "enabled": false,
     "concurrency": 8,
     "idle_timeout": 60
   },
@@ -2101,7 +2349,7 @@ cat > /etc/trojan-go/config.json << END
     "host": "$domain"
   },
     "api": {
-    "enabled": true,
+    "enabled": false,
     "api_addr": "",
     "api_port": 0,
     "ssl": {
@@ -2144,10 +2392,10 @@ END
 
 sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2053 -j ACCEPT
 sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2053 -j ACCEPT
-sudo iptables-save > /etc/iptables.up.rules
-sudo iptables-restore -t < /etc/iptables.up.rules
-sudo netfilter-persistent save
-sudo netfilter-persistent reload
+iptables-save > /etc/iptables.up.rules
+iptables-restore -t < /etc/iptables.up.rules
+netfilter-persistent save
+netfilter-persistent reload
 systemctl daemon-reload
 systemctl stop trojan-go
 systemctl start trojan-go
