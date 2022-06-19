@@ -79,7 +79,7 @@ sed -i '/#vless-grpc-tls$/a\#### '"$user $exp"'\
 sed -i '/#vless-grpc-nontls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
 sed -i '/#vless-xtls$/a\#&# '"$user $exp"'\
-},{"id": "'""$uuid""'","flow": "'""xtls-rprx-splice-udp443""'", "email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
+},{"id": "'""$uuid""'","flow": "'""xtls-rprx-direct""'", "email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#vless-hdua$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#vless-hdua$/a\#### '"$user $exp"'\
@@ -136,9 +136,9 @@ echo -e "Link gRPC TLS:  ${vlessgrpc}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "Link gRPC NONTLS:  ${vlessgrpcnon}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Link GFW:  ${vlessxtls}"
+echo -e "Link GFW:  ${vlessgfw}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Link XTLS:  ${vlessgfw}"
+echo -e "Link XTLS:  ${vlessxtls}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "Link WS TLS:  ${vlesstls}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
