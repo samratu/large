@@ -104,6 +104,9 @@ sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
 user=$(grep -E "^### " "/etc/xray/xvless.json" | cut -d ' ' -f 2 | sed -n "${CLIENT_NUMBER}"p)
 exp=$(grep -E "^### " "/etc/xray/xvless.json" | cut -d ' ' -f 3 | sed -n "${CLIENT_NUMBER}"p)
 sed -i "/^### $user $exp/,/^},{/d" /etc/xray/xvless.json
+user=$(grep -E "^### " "/etc/xray/xtrojan.json" | cut -d ' ' -f 2 | sed -n "${CLIENT_NUMBER}"p)
+exp=$(grep -E "^### " "/etc/xray/xtrojan.json" | cut -d ' ' -f 3 | sed -n "${CLIENT_NUMBER}"p)
+sed -i "/^### $user $exp/,/^},{/d" /etc/xray/xtrojan.json
 user=$(grep -E "^### " "/usr/local/etc/xray/xvmess.json" | cut -d ' ' -f 2 | sed -n "${CLIENT_NUMBER}"p)
 exp=$(grep -E "^### " "/usr/local/etc/xray/xvmess.json" | cut -d ' ' -f 3 | sed -n "${CLIENT_NUMBER}"p)
 sed -i "/^### $user $exp/,/^},{/d" /usr/local/etc/xray/xvmess.json
@@ -111,14 +114,12 @@ user=$(grep -E "^### " "/usr/local/etc/xray/satrio.json" | cut -d ' ' -f 2 | sed
 exp=$(grep -E "^### " "/usr/local/etc/xray/satrio.json" | cut -d ' ' -f 3 | sed -n "${CLIENT_NUMBER}"p)
 sed -i "/^### $user $exp/,/^},{/d" /usr/local/etc/xray/satrio.json
 rm -f /etc/xray/vmess-$user-tls.json /etc/xray/vmess-$user-tls.json
+rm -f /etc/xray/vmess-$user-nontls.json /etc/xray/vmess-$user-nontls.json
 systemctl restart xray.service
-systemctl restart xvmess
-systemctl restart satrio
-
 clear
 echo ""
 echo "==============================="
-echo "  Vmess Account Deleted  "
+echo "  vmess Account Deleted  "
 echo "==============================="
 echo "Username  : $user"
 echo "Expired   : $exp"
