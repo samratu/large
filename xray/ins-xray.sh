@@ -2018,7 +2018,7 @@ path_key="/etc/xray/xray.key"
 #path_crt="/root/.acme.sh/$domain_ecc/fullchain.cer"
 #path_key="/root/.acme.sh/$domain_ecc/$domain.key"
 # Buat Config Xray
-cat > /usr/local/etc/xray/none.json << END
+cat > /usr/local/etc/xray/satrio.json << END
 {
   "log": {
     "access": "/var/log/xray/access2.log",
@@ -2548,6 +2548,27 @@ RestartPreventExitStatus=23
 [Install]
 WantedBy=multi-user.target
 END
+
+# / / Installation Xray Service
+cat > /etc/systemd/system/satrio.service << END
+[Unit]
+Description=XSHADOWSOCKS ROUTING DAM COLO PENGKOL BY zerossl
+Documentation=https://t.me/zerossl
+After=network.target nss-lookup.target
+
+[Service]
+User=root
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+NoNewPrivileges=true
+ExecStart=/usr/local/bin/xray -config /usr/local/etc/xray/satrio.json
+Restart=on-failure
+RestartPreventExitStatus=23
+
+[Install]
+WantedBy=multi-user.target
+END
+
 # // Enable & Start Service
 # Accept port Xray
 sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 443 -j ACCEPT
@@ -2618,10 +2639,6 @@ sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 502 -j ACCEPT
 sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 502 -j ACCEPT
 sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 503 -j ACCEPT
 sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 503 -j ACCEPT
-sudo iptables -A INPUT -p tcp --dport 80 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
-sudo iptables -A INPUT -p udp --dport 80 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p tcp --sport 80 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p udp --sport 80 -m conntrack --ctstate ESTABLISHED -j ACCEPT
 sudo iptables -A INPUT -p tcp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
 sudo iptables -A INPUT -p udp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
 sudo iptables -A OUTPUT -p tcp --sport 443 -m conntrack --ctstate ESTABLISHED -j ACCEPT
@@ -2672,6 +2689,13 @@ systemctl enable xvmess
 systemctl stop xvmess
 systemctl start xvmess
 systemctl restart xvmess
+
+##restart&start service
+systemctl daemon-reload
+systemctl enable satrio
+systemctl stop satrio
+systemctl start satrio
+systemctl restart satrio
 
 # Install Trojan Go
 latest_version="$(curl -s "https://api.github.com/repos/p4gefau1t/trojan-go/releases" | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
