@@ -81,10 +81,6 @@ sed -i '/#vless-tls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#vless-http-tls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
-sed -i '/#vmess-tls$/a\### '"$user $exp"'\
-},{"id": "'""$uuid""'"' /usr/local/etc/xray/xvmess.json
-sed -i '/#vmess-http-tls$/a\### '"$user $exp"'\
-},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 
 vlesshttpnon="vless://${uuid}@${domain}:$vlhttpnon?host=${domain}&security=none&type=tcp&headerType=http&encryption=none#${user}"
 vlesshttp="vless://${uuid}@${domain}:$vlhttp?sni=${domain}&host=${domain}&type=tcp&security=tls&path=/wisnutcp&headerType=http&encryption=none#${user}"
@@ -119,6 +115,13 @@ until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 		fi
 	done
 uuid=$(cat /proc/sys/kernel/random/uuid)
+read -p "Expired (Days) : " masaaktif
+#read -p "Expired (Seconds) : " masaaktif
+hariini=`date -d "0 days" +"%Y-%m-%d"`
+exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
+#exp2=`date -d "$masaaktif seconds" +"%Y-%m-%d"`
+sed -i '/#vmess-tls$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'"' /usr/local/etc/xray/xvmess.json
 cat>/etc/xray/vmess-$user-tls.json<<EOF
       {
       "v": "2",
@@ -138,6 +141,14 @@ vmess_base641=$( base64 -w 0 <<< $vmess_json1)
 vmess1="vmess://$(base64 -w 0 /etc/xray/vmess-$user-tls.json)"
 rm -rf /etc/xray/vmess-$user-tls.json
 
+uuid=$(cat /proc/sys/kernel/random/uuid)
+read -p "Expired (Days) : " masaaktif
+#read -p "Expired (Seconds) : " masaaktif
+hariini=`date -d "0 days" +"%Y-%m-%d"`
+exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
+#exp2=`date -d "$masaaktif seconds" +"%Y-%m-%d"`
+sed -i '/#vmess-http-tls$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'"' /usr/local/etc/xray/xvmess.json
 cat>/etc/xray/vmess-$user-tls.json<<EOF
       {
       "v": "2",
@@ -203,20 +214,11 @@ sed -i '/#trojan-gfw$/a\#&# '"$user $exp"'\
 sed -i '/#trojan-http-tls$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 
-exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
-#exp2=`date -d "$masaaktif seconds" +"%Y-%m-%d"`
-hariini=`date -d "0 days" +"%Y-%m-%d"`
-echo -e "### $user $exp" >> /etc/trojan-go/akun.conf
-systemctl restart trojan-go.service
-trojango="trojan-go://${uuid}@${domain}:${trgo}/?sni=${domain}&type=ws&host=${domain}&path=/gandring&encryption=none#$user"
-trojanhdua="trojan://${uuid}@${domain}:$thdua?sni=${domain}&type=http&security=tls&path=/gandringhttp#${user}"
-trojangrpc="trojan://${uuid}@${domain}:$tgrpc?mode=gun&security=tls&type=grpc&serviceName=/gandringgrpc&sni=${domain}#${user}"
 trojanxtls="trojan://${uuid}@${domain}:$txtls?security=xtls&type=tcp&headerType=none&flow=xtls-rprx-splice-udp443#${user}"
 trojangfw="trojan://$uuid@$domain:$tgfw?type=tcp&security=tls&headerType=none#$user"
 trojantls="trojan://${uuid}@${domain}:$ttls?type=ws&security=tls&host=$domain&path=%2fgandring&sni=$domain#${user}"
-trojannontls="trojan://${uuid}@${domain}:$tnontls?type=ws&security=none&host=$domain&path=%2fgandring#${user}"
 trojanhttp="trojan://${uuid}@${domain}:$thttp?sni=${domain}&type=tcp&security=tls&host=$domain&path=/gandringtcp&headerType=http#${user}"
-trojanhttpnon="trojan://${uuid}@${domain}:$thttpnon?sni=${domain}&type=tcp&security=none&host=${domain}&headerType=http#${user}"
+
 systemctl restart xvless.service
 systemctl restart xray.service
 systemctl restart xtrojan.service
