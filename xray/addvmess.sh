@@ -41,7 +41,7 @@ until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 	done
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 		read -rp "Username : " -e user
-		CLIENT_EXISTS=$(grep -w $user /usr/local/etc/xray/none.json | wc -l)
+		CLIENT_EXISTS=$(grep -w $user /usr/local/etc/xray/satrio.json | wc -l)
 
 		if [[ ${CLIENT_EXISTS} == '1' ]]; then
 			echo ""
@@ -56,7 +56,7 @@ exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#vmess-tls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#vmess-nontls$/a\### '"$user $exp"'\
-},{"id": "'""$uuid""'"' /usr/local/etc/xray/none.json
+},{"id": "'""$uuid""'"' /usr/local/etc/xray/satrio.json
 sed -i '/#vmess-nontls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'"' /etc/xray/config.json
 cat>/etc/xray/vmess-$user-tls.json<<EOF
