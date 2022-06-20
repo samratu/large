@@ -58,6 +58,16 @@ until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 	done
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 		read -rp "Username : " -e user
+		CLIENT_EXISTS=$(grep -w $user /usr/local/etc/xray/satrio.json | wc -l)
+
+		if [[ ${CLIENT_EXISTS} == '1' ]]; then
+			echo ""
+			echo -e "Username ${RED}${user}${NC} Already On VPS Please Choose Another"
+			exit 1
+		fi
+	done
+until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
+		read -rp "Username : " -e user
 		CLIENT_EXISTS=$(grep -w $user /etc/xray/xtrojan.json | wc -l)
 
 		if [[ ${CLIENT_EXISTS} == '1' ]]; then
@@ -88,6 +98,8 @@ sed -i '/#vless-hdua-nontls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvless.json
 sed -i '/#vless-tls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
+sed -i '/#vless-nontls$/a\#### '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/satrio.json
 sed -i '/#vless-nontls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
 sed -i '/#vless-http-tls$/a\#### '"$user $exp"'\
