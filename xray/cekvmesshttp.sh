@@ -18,6 +18,7 @@ echo -n > /tmp/other.txt
 data=( `cat /etc/xray/config.json | grep '^###' | cut -d ' ' -f 2`);
 data=( `cat /usr/local/etc/xray/xvmess.json | grep '^#&#' | cut -d ' ' -f 2`);
 data=( `cat /etc/xray/xtrojan.json | grep '^#&#' | cut -d ' ' -f 2`);
+data=( `cat /usr/local/etc/xray/satrio.json | grep '^#&#' | cut -d ' ' -f 2`);
 echo "----------------------------------------";
 echo "---------=[ Vmess User Login ]=---------";
 echo "----------------------------------------";
