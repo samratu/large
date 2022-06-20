@@ -511,7 +511,7 @@ cat > /etc/xray/config.json << END
         "kcpSettings": {},
         "httpSettings": {},
         "wsSettings": {
-          "path": "/wisnugrpc",
+          "path": "/wisnu",
           "headers": {
             "Host": "${domain}"
           }
@@ -2036,7 +2036,7 @@ cat > /usr/local/etc/xray/satrio.json << END
       "tag": "api"
     },
     {
-      "port": 80,
+      "port": 40001,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -2071,7 +2071,7 @@ cat > /usr/local/etc/xray/satrio.json << END
       "domain": "$domain"
     },
     {
-      "port": 80,
+      "port": 40002,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -2106,7 +2106,7 @@ cat > /usr/local/etc/xray/satrio.json << END
       "domain": "$domain"
     },
     {
-      "port": 80,
+      "port": 40003,
       "protocol": "trojan",
       "settings": {
         "clients": [
@@ -2142,7 +2142,7 @@ cat > /usr/local/etc/xray/satrio.json << END
       "domain": "$domain"
     },
     {
-      "port": 80,
+      "port": 40003,
       "protocol": "trojan",
       "settings": {
         "clients": [
@@ -2178,7 +2178,7 @@ cat > /usr/local/etc/xray/satrio.json << END
       "domain": "$domain"
     },
     {
-      "port": 80,
+      "port": 40004,
       "protocol": "vless",
       "settings": {
         "clients": [
@@ -2212,7 +2212,7 @@ cat > /usr/local/etc/xray/satrio.json << END
       "domain": "$domain"
     },
     {
-      "port": 80,
+      "port": 40005,
       "protocol": "vless",
       "settings": {
         "clients": [
