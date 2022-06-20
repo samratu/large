@@ -114,11 +114,12 @@ user=$(grep -E "^### " "/usr/local/etc/xray/satrio.json" | cut -d ' ' -f 2 | sed
 exp=$(grep -E "^### " "/usr/local/etc/xray/satrio.json" | cut -d ' ' -f 3 | sed -n "${CLIENT_NUMBER}"p)
 sed -i "/^### $user $exp/,/^},{/d" /usr/local/etc/xray/satrio.json
 rm -f /etc/xray/vmess-$user-tls.json /etc/xray/vmess-$user-tls.json
+rm -f /etc/xray/vmess-$user-nontls.json /etc/xray/vmess-$user-nontls.json
 systemctl restart xray.service
 clear
 echo ""
 echo "==============================="
-echo "  Tester Account Deleted  "
+echo "  vmess Account Deleted  "
 echo "==============================="
 echo "Username  : $user"
 echo "Expired   : $exp"
