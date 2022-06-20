@@ -1322,6 +1322,213 @@ path_key="/etc/xray/xray.key"
 #path_crt="/root/.acme.sh/$domain_ecc/fullchain.cer"
 #path_key="/root/.acme.sh/$domain_ecc/$domain.key"
 # Buat Config Xray
+cat > /usr/local/etc/xray/satrio.json << END
+{
+  "log": {
+    "access": "/var/log/xray/access.log",
+    "error": "/var/log/xray/error.log",
+    "loglevel": "info"
+  },
+  "inbounds": [
+    {
+      "listen": "127.0.0.1",
+      "port": 10086,
+      "protocol": "dokodemo-door",
+      "settings": {
+        "address": "127.0.0.1"
+      },
+      "tag": "api"
+    },
+    {
+      "port": 80,
+      "protocol": "vmess",
+      "settings": {
+        "clients": [
+          {
+            "id": "$uuid",
+            "alterId": 0
+#vmess-nontls
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "wsSettings": {
+          "path": "/shanum",
+          "headers": {
+            "Host": ""
+          }
+         },
+        "quicSettings": {},
+        "sockopt": {
+          "mark": 0,
+          "tcpFastOpen": true
+        }
+      },
+      "sniffing": {
+        "enabled": true,
+        "destOverride": [
+          "http",
+          "tls"
+        ]
+      },
+      "domain": "$domain"
+    },
+      {
+      "port": 80,
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "$uuid"
+#vless-nontls
+          }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "ws",
+        "wsSettings": {
+          "path": "/wisnu",
+          "headers": {
+            "Host": ""
+          }
+         },
+        "quicSettings": {},
+        "sockopt": {
+          "mark": 0,
+          "tcpFastOpen": true
+        }
+      },
+      "sniffing": {
+        "enabled": true,
+        "destOverride": [
+          "http",
+          "tls"
+        ]
+      },
+      "domain": "$domain"
+    }
+    {
+      "port": 80,
+      "protocol": "trojan",
+      "settings": {
+        "clients": [
+          {
+            "password": "$uuid",
+            "email": "gandring@p0x.smule.my.id"
+#trojan-nontls
+          }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "ws",
+        "wsSettings": {
+          "path": "/gandring",
+          "headers": {
+            "Host": ""
+          }
+         },
+        "quicSettings": {},
+        "sockopt": {
+          "mark": 0,
+          "tcpFastOpen": true
+        }
+      },
+      "sniffing": {
+        "enabled": true,
+        "destOverride": [
+          "http",
+          "tls"
+        ]
+      },
+      "domain": "$domain"
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "freedom",
+      "settings": {}
+    },
+    {
+      "protocol": "blackhole",
+      "settings": {},
+      "tag": "blocked"
+    }
+  ],
+  "routing": {
+    "rules": [
+      {
+        "type": "field",
+        "ip": [
+          "0.0.0.0/8",
+          "10.0.0.0/8",
+          "100.64.0.0/10",
+          "169.254.0.0/16",
+          "172.16.0.0/12",
+          "192.0.0.0/24",
+          "192.0.2.0/24",
+          "192.168.0.0/16",
+          "198.18.0.0/15",
+          "198.51.100.0/24",
+          "203.0.113.0/24",
+          "::1/128",
+          "fc00::/7",
+          "fe80::/10"
+        ],
+        "outboundTag": "blocked"
+      },
+      {
+        "inboundTag": [
+          "api"
+        ],
+        "outboundTag": "api",
+        "type": "field"
+      },
+      {
+        "type": "field",
+        "outboundTag": "blocked",
+        "protocol": [
+          "bittorrent"
+        ]
+      }
+    ]
+  },
+  "stats": {},
+  "api": {
+    "services": [
+      "StatsService"
+    ],
+    "tag": "api"
+  },
+  "policy": {
+    "levels": {
+      "0": {
+        "statsUserDownlink": true,
+        "statsUserUplink": true
+      }
+    },
+    "system": {
+      "statsInboundUplink": true,
+      "statsInboundDownlink": true,
+      "statsOutboundUplink" : true,
+      "statsOutboundDownlink" : true
+    }
+  }
+}
+END
+
+uuid=$(cat /proc/sys/kernel/random/uuid)
+domain=$(cat /root/domain)
+# // Certificate File
+path_crt="/etc/xray/xray.crt"
+path_key="/etc/xray/xray.key"
+#domain_ecc=$(cat /root/.acme.sh)
+#domain.key=$(cat /root/.acme.sh/$domain_ecc)
+#path_crt="/root/.acme.sh/$domain_ecc/fullchain.cer"
+#path_key="/root/.acme.sh/$domain_ecc/$domain.key"
+# Buat Config Xray
 cat > /etc/xray/xvless.json << END
 {
   "log": {
