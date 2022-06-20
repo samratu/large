@@ -118,7 +118,7 @@ systemctl restart satrio
 clear
 echo ""
 echo "==============================="
-echo "  Vmess Account Deleted  "
+echo "  Vless Account Deleted  "
 echo "==============================="
 echo "Username  : $user"
 echo "Expired   : $exp"
