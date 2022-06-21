@@ -92,7 +92,7 @@ vlesstls="vless://${uuid}@${domain}:$vltls?host=${domain}&sni=${domain}&type=ws&
 vlessnontls="vless://${uuid}@${domain}:$vlnontls?host=${domain}&security=none&type=ws&path=/wisnu&encryption=none#%F0%9F%94%B0VLESS+WS+NONTLS+${user}"
 vlessgrpc="vless://${uuid}@${domain}:$vlgrpc?serviceName=/wisnugrpc&sni=${domain}&mode=multi&type=grpc&security=tls&encryption=none#%F0%9F%94%B0VLESS+GRPC+TLS+${user}"
 vlessgrpcnon="vless://${uuid}@${domain}:$vlgrpcnon?serviceName=/wisnugrpc&sni=${domain}&mode=multi&type=grpc&security=none&encryption=none# %F0%9F%94%B0VLESS+GRPC+NONTLS+${user}"
-vlesshdua="vless://${uuid}@${domain}:$vlhdua?sni=jajananpasarkembang.night&type=http&security=tls&path=/wisnuhttp&encryption=none#${user}"
+vlesshdua="vless://${uuid}@${domain}:$vlhdua?sni=jajananpasarkembang.night&type=http&security=tls&path=/wisnuhttp&encryption=none#%F0%9F%94%B0VLESS+H2C+TLS+${user}"
 #vlesshduanon="vless://${uuid}@${domain}:$vlhduanon?sni=cabecabean.me&type=http&security=none&path=/bagus&encryption=none#${user}"
 vlessxtls="vless://${uuid}@${domain}:$vlxtls?sni=ijolumut.saknomen.org&security=xtls&encryption=none&flow=xtls-rprx-splice-udp443#%F0%9F%94%B0VLESS+XTLS+${user}"
 vlessgfw="vless://${uuid}@${domain}:$vlxtls?sni=sakitny.tuh-disana.beb&security=tls&encryption=none#$%F0%9F%94%B0VLESS+GFW+TLS+{user}"
