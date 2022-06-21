@@ -1318,7 +1318,7 @@ cat > /etc/xray/xvless.json << END
                 "clients": [
                     {
                         "id": "${uuid}"
-#vless-hdua-tls
+#vless-hdua
                     }
                 ],
                 "decryption": "none"
