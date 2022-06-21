@@ -48,15 +48,15 @@ sed -i '/#vmess-hdua$/a\### '"$user $exp"'\
 cat>/etc/xray/vmess-$user-tls.json<<EOF
       {
       "v": "0",
-      "ps": "${user}",
+      "ps": "%F0%9F%94%B0VMESS+H2C+TLS+${user}",
       "add": "${domain}",
       "port": "${vmhdua}",
       "id": "${uuid}",
       "aid": "0",
       "net": "h2",
       "path": "/shanumhttp",
-      #"type": "multi",
-      "host": "$domain",
+      "type": "none",
+      "host": "",
       "tls": "tls"
 }
 EOF
