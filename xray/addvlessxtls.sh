@@ -37,8 +37,8 @@ exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#vless-xtls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","flow": "'""xtls-rprx-direct""'", "email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 
-vlessxtls="vless://${user}@${domain}:$vlxtls?type=tcp&security=xtls&headerType=none&flow=xtls-rprx-splice-udp443&encryption=none#${user}"
-vlessgfw="vless://${uuid}@${domain}:$vlxtls?security=tls&type=tcp&headerType=none&encryption=none#${user}"
+vlessxtls="vless://${user}@${domain}:$vlxtls?type=tcp&security=xtls&headerType=none&flow=xtls-rprx-splice-udp443&encryption=none#%F0%9F%94%B0VLESS+XTLS+${user}"
+vlessgfw="vless://${uuid}@${domain}:$vlxtls?security=tls&type=tcp&headerType=none&encryption=none#%F0%9F%94%B0VLESS+GFW+TLS+${user}"
 systemctl restart xray.service
 #systemctl restart v2ray@.service
 systemctl restart xvmess
@@ -59,9 +59,9 @@ echo -e "Flow       :only origin type not supported"
 echo -e "Dibuat     :$hariini"
 echo -e "Kadaluarsa :$exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Link XTLS : ${vlessxtls}"
+echo -e "Link XTLS:  ${vlessxtls}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Link GFW : ${vlessgfw}"
+echo -e "Link GFW:  ${vlessgfw}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m🔰LUXURY EDITION ZEROSSL🔰\e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
