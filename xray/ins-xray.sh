@@ -749,15 +749,6 @@ cat > /etc/xray/xtrojan.json << END
   },
   "inbounds": [
     {
-      "listen": "127.0.0.1",
-      "port": 10808,
-      "protocol": "dokodemo-door",
-      "settings": {
-        "address": "127.0.0.1"
-      },
-      "tag": "api"
-    },
-    {
       "port": 1440,
       "protocol": "trojan",
       "settings": {
@@ -774,11 +765,7 @@ cat > /etc/xray/xtrojan.json << END
         "fallbacks": [
           {
             "dest": 81,
-            "xver": 1
-          },
-          {
-            "dest": 443,
-            "xver": 1
+            "xver": 0
           },
           {
             "dest": 8443,
@@ -2021,14 +2008,14 @@ path_key="/etc/xray/xray.key"
 cat > /usr/local/etc/xray/satrio.json << END
 {
   "log": {
-    "access": "/var/log/xray/access2.log",
-    "error": "/var/log/xray/error2.log",
+    "access": "/var/log/xray/access.log",
+    "error": "/var/log/xray/error.log",
     "loglevel": "info"
   },
   "inbounds": [
     {
       "listen": "127.0.0.1",
-      "port": 10809,
+      "port": 10807,
       "protocol": "dokodemo-door",
       "settings": {
         "address": "127.0.0.1"
@@ -2036,7 +2023,7 @@ cat > /usr/local/etc/xray/satrio.json << END
       "tag": "api"
     },
     {
-      "port": 40001,
+      "port": 80,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -2071,42 +2058,7 @@ cat > /usr/local/etc/xray/satrio.json << END
       "domain": "$domain"
     },
     {
-      "port": 40002,
-      "protocol": "vmess",
-      "settings": {
-        "clients": [
-          {
-            "id": "$uuid",
-            "alterId": 0
-#vmess-http-nontls
-          }
-        ]
-      },
-      "streamSettings": {
-        "network": "tcp",
-        "tcpSettings": {
-          "path": "/shanumtcp",
-          "headers": {
-            "Host": ""
-          }
-         },
-        "quicSettings": {},
-        "sockopt": {
-          "mark": 0,
-          "tcpFastOpen": true
-        }
-      },
-      "sniffing": {
-        "enabled": true,
-        "destOverride": [
-          "http",
-          "tls"
-        ]
-      },
-      "domain": "$domain"
-    },
-    {
-      "port": 40003,
+      "port": 80,
       "protocol": "trojan",
       "settings": {
         "clients": [
@@ -2142,77 +2094,7 @@ cat > /usr/local/etc/xray/satrio.json << END
       "domain": "$domain"
     },
     {
-      "port": 40003,
-      "protocol": "trojan",
-      "settings": {
-        "clients": [
-          {
-            "password": "gandring",
-            "level": 0,
-            "email": "gandring@p0x.smule.my.id"
-#trojan-http-nontls
-          }
-        ]
-      },
-      "streamSettings": {
-        "network": "tcp",
-        "tcpSettings": {
-          "path": "/gandringtcp",
-          "headers": {
-            "Host": ""
-          }
-         },
-        "quicSettings": {},
-        "sockopt": {
-          "mark": 0,
-          "tcpFastOpen": true
-        }
-      },
-      "sniffing": {
-        "enabled": true,
-        "destOverride": [
-          "http",
-          "tls"
-        ]
-      },
-      "domain": "$domain"
-    },
-    {
-      "port": 40004,
-      "protocol": "vless",
-      "settings": {
-        "clients": [
-          {
-            "id": "$uuid"
-#vless-http-nontls
-          }
-        ]
-      },
-      "streamSettings": {
-        "network": "tcp",
-        "tcpSettings": {
-          "path": "/wisnutcp",
-          "headers": {
-            "Host": ""
-          }
-         },
-        "quicSettings": {},
-        "sockopt": {
-          "mark": 0,
-          "tcpFastOpen": true
-        }
-      },
-      "sniffing": {
-        "enabled": true,
-        "destOverride": [
-          "http",
-          "tls"
-        ]
-      },
-      "domain": "$domain"
-    },
-    {
-      "port": 40005,
+      "port": 80,
       "protocol": "vless",
       "settings": {
         "clients": [
@@ -2349,23 +2231,14 @@ cat > /etc/xray/xss.json << END
   },
   "inbounds": [
     {
-      "listen": "127.0.0.1",
-      "port": 10808,
-      "protocol": "dokodemo-door",
-      "settings": {
-        "address": "127.0.0.1"
-      },
-      "tag": "api"
-    },
-    {
-      "port": 212,
-      "protocol": "shadowsocks",
-      "settings": {
-        "method": "aes-128-gcm",
-        "password": "gandring",
-        "network": "tcp,udp"
+        "port":212,
+        "protocol":"shadowsocks",
+        "settings":{
+          "method":"2022-blake3-aes-128-gcm",
+          "password": "fvRKCJ683/9WY0L7SHaNUmAT3WcGEXBxVUvPV7BQms=",
+          "network":"tcp,udp"
+        }
       }
-    }
   ],
   "outbounds": [
     {
@@ -2389,63 +2262,22 @@ cat > /etc/xray/xss.json << END
     ]
   },
   "routing": {
+    "domainStrategy": "AsIs",
     "rules": [
       {
         "type": "field",
-        "ip": [
-          "0.0.0.0/8",
-          "10.0.0.0/8",
-          "100.64.0.0/10",
-          "169.254.0.0/16",
-          "172.16.0.0/12",
-          "192.0.0.0/24",
-          "192.0.2.0/24",
-          "192.168.0.0/16",
-          "198.18.0.0/15",
-          "198.51.100.0/24",
-          "203.0.113.0/24",
-          "::1/128",
-          "fc00::/7",
-          "fe80::/10"
-        ],
-        "outboundTag": "blocked"
-      },
-      {
         "inboundTag": [
-          "api"
+          "TROJAN-XTLS-in",
+          "TROJAN-gRPC-in",
+          "TROJAN-WSTLS-in",
+          "TROJAN-WS-in",
+          "TROJAN-H2C-in",
+          "TROJAN-HTTP-in"
         ],
-        "outboundTag": "api",
-        "type": "field"
-      },
-      {
-        "type": "field",
-        "outboundTag": "blocked",
-        "protocol": [
-          "bittorrent"
-        ]
+        "outboundTag": "blackhole-out",
+        "protocol": [ "bittorrent" ]
       }
     ]
-  },
-  "stats": {},
-  "api": {
-    "services": [
-      "StatsService"
-    ],
-    "tag": "api"
-  },
-  "policy": {
-    "levels": {
-      "0": {
-        "statsUserDownlink": true,
-        "statsUserUplink": true
-      }
-    },
-    "system": {
-      "statsInboundUplink": true,
-      "statsInboundDownlink": true,
-      "statsOutboundUplink" : true,
-      "statsOutboundDownlink" : true
-    }
   }
 }
 END
@@ -2453,7 +2285,7 @@ END
 # / / Installation Xray Service
 cat > /etc/systemd/system/xray.service << END
 [Unit]
-Description=XRAY GAJAH DEMAK BY GANDRING
+Description=XRAY ROUTING DAM COLO PENGKOL BY ZEROSSL
 Documentation=https://t.me/zerossl
 After=network.target nss-lookup.target
 
