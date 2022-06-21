@@ -21,6 +21,9 @@ systemctl restart ws-nontls
 systemctl restart xray
 systemctl restart xtrojan
 systemctl restart xvless
+systemctl restart xvmess
+systemctl restart xss
+systemctl restart satrio
 systemctl restart shadowsocks-libev
 systemctl restart xl2tpd
 systemctl restart pptpd
