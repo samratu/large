@@ -72,8 +72,8 @@ sed -i '/#vless-nontls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/satrio.json
 sed -i '/#vless-nontls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
-vlesstls="vless://${uuid}@${domain}:$vltls?host=${domain}&sni=${domain}&type=ws&security=tls&path=/wisnu&encryption=none#${user}"
-vlessnontls="vless://${uuid}@${domain}:$vlnontls?host=${domain}&security=none&type=ws&path=/wisnu&encryption=none#${user}"
+vlesstls="vless://${uuid}@${domain}:$vltls?host=${domain}&sni=${domain}&type=ws&security=tls&path=/wisnu&encryption=none#%F0%9F%94%B0TROJAN+WS+TLS+${user}"
+vlessnontls="vless://${uuid}@${domain}:$vlnontls?host=${domain}&security=none&type=ws&path=/wisnu&encryption=none#%F0%9F%94%B0TROJAN+WS+NONTLS+${user}"
 systemctl restart xray.service
 systemctl restart xvless
 systemctl restart xvmess
@@ -95,9 +95,9 @@ echo -e "Path        :/wisnu"
 echo -e "Created     :$hariini"
 echo -e "Expired     :$exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Link WS TLS: ${vlesstls}"
+echo -e "Link WS TLS:  ${vlesstls}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Link WS NONTLS: ${vlessnontls}"
+echo -e "Link WS NONTLS:  ${vlessnontls}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m 🔰LUXURY EDITION ZEROSSL🔰\e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
