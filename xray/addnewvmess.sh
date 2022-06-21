@@ -63,7 +63,7 @@ sed -i '/#vmess-nontls$/a\### '"$user $exp"'\
 cat>/etc/xray/vmess-$user-tls.json<<EOF
       {
       "v": "2",
-      "ps": "${user}",
+      "ps": "%F0%9F%94%B0VMESS+WS+TLS+${user}",
       "add": "${domain}",
       "port": "${tls}",
       "id": "${uuid}",
@@ -78,7 +78,7 @@ EOF
 cat>/etc/xray/vmess-$user-nontls.json<<EOF
       {
       "v": "2",
-      "ps": "${user}",
+      "ps": "%F0%9F%94%B0VMESS+WS+NONTLS+${user}",
       "add": "${domain}",
       "port": "${nontls}",
       "id": "${uuid}",
@@ -143,7 +143,7 @@ sed -i '/#vmess-grpc-nontls$/a\### '"$user $exp"'\
 cat>/etc/xray/vmess-$user-tls.json<<EOF
       {
       "v": "2",
-      "ps": "${user}",
+      "ps": "%F0%9F%94%B0VMESS+GRPC+TLS+${user}",
       "add": "${domain}",
       "port": "${vmgrpc}",
       "id": "${uuid}",
@@ -158,7 +158,7 @@ EOF
 cat>/etc/xray/vmess-$user-nontls.json<<EOF
       {
       "v": "2",
-      "ps": "${user}",
+      "ps": "%F0%9F%94%B0VMESS+GRPC+NONTLS+${user}",
       "add": "${domain}",
       "port": "${vmgrpcnon}",
       "id": "${uuid}",
@@ -214,7 +214,7 @@ sed -i '/#vmess-hdua$/a\### '"$user $exp"'\
 cat>/etc/xray/vmess-$user-tls.json<<EOF
       {
       "v": "0",
-      "ps": "${user}",
+      "ps": "%F0%9F%94%B0VMESS+H2C+${user}",
       "add": "${domain}",
       "port": "${vmhdua}",
       "id": "${uuid}",
@@ -222,7 +222,7 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "net": "h2",
       "path": "/shanumhttp",
       #"type": "multi",
-      "host": "$domain",
+      "host": "",
       "tls": "tls"
 }
 EOF
@@ -280,7 +280,7 @@ sed -i '/#vmess-http-nontls$/a\### '"$user $exp"'\
 cat>/etc/xray/vmess-$user-tls.json<<EOF
       {
       "v": "2",
-      "ps": "${user}",
+      "ps": "%F0%9F%94%B0VMESS+HTTP+TLS+${user}",
       "add": "${domain}",
       "port": "${vmhttp}",
       "id": "${uuid}",
@@ -295,7 +295,7 @@ EOF
 cat>/etc/xray/vmess-$user-nontls.json<<EOF
       {
       "v": "2",
-      "ps": "${user}",
+      "ps": "%F0%9F%94%B0VMESS+HTTP+NONTLS+${user}",
       "add": "${domain}",
       "port": "${vmhttpnon}",
       "id": "${uuid}",
@@ -303,7 +303,7 @@ cat>/etc/xray/vmess-$user-nontls.json<<EOF
       "net": "tcp",
       #"path": "/",
       "type": "http",
-      "host": "${domain}",
+      "host": "",
       "tls": "none"
 }
 EOF
