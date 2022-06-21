@@ -103,14 +103,14 @@ hariini=`date -d "0 days" +"%Y-%m-%d"`
 echo -e "### $user $exp" >> /etc/trojan-go/akun.conf
 systemctl restart trojan-go.service
 trojango="trojan-go://${uuid}@${domain}:${trgo}/?sni=${domain}&type=ws&host=${domain}&path=/gandring&encryption=none#$user"
-trojanhdua="trojan://${uuid}@${domain}:$thdua?sni=${domain}&type=http&security=tls&path=/gandringhttp#${user}"
+trojanhdua="trojan://${uuid}@${domain}:$thdua?sni=jambualas.net&type=http&security=tls&path=/gandringhttp#${user}"
 trojangrpc="trojan://${uuid}@${domain}:$tgrpc?mode=gun&security=tls&type=grpc&serviceName=/gandringgrpc&sni=${domain}#${user}"
-trojanxtls="trojan://${uuid}@${domain}:$txtls?security=xtls&type=tcp&headerType=none&flow=xtls-rprx-splice-udp443#${user}"
-trojangfw="trojan://$uuid@$domain:$tgfw?type=tcp&security=tls&headerType=none#$user"
+trojanxtls="trojan://${uuid}@${domain}:$txtls?sni=kimcil.kepolen.com&security=xtls&type=tcp&headerType=none&flow=xtls-rprx-splice-udp443#${user}"
+trojangfw="trojan://$uuid@$domain:$tgfw?sni=pemetikbunga.com&type=tcp&security=tls&headerType=none#$user"
 trojantls="trojan://${uuid}@${domain}:$ttls?type=ws&security=tls&host=$domain&path=%2fgandring&sni=$domain#${user}"
 trojannontls="trojan://${uuid}@${domain}:$tnontls?type=ws&security=none&host=$domain&path=%2fgandring#${user}"
-trojanhttp="trojan://${uuid}@${domain}:$thttp?sni=${domain}&type=tcp&security=tls&host=$domain&path=/gandringtcp&headerType=http#${user}"
-trojanhttpnon="trojan://${uuid}@${domain}:$thttpnon?sni=${domain}&type=tcp&security=none&host=${domain}&headerType=http#${user}"
+trojanhttp="trojan://${uuid}@${domain}:$thttp?sni=gesekan.penghancur-janda.com&type=tcp&security=tls&host=$domain&path=/gandringtcp&headerType=http#${user}"
+trojanhttpnon="trojan://${uuid}@${domain}:$thttpnon?sni=gesekan.penghancur-janda.com&type=tcp&security=none&host=$domain&headerType=http#${user}"
 systemctl restart xray.service
 systemctl restart xtrojan.service
 systemctl restart xvmess
@@ -124,6 +124,7 @@ echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━�
 echo -e "IP: ${MYIP} / $domain"
 echo -e "NAMA             :${user}"
 echo -e "Protokol         :GRPC,H2C,GFW,XTLS,WS,HTTP,GO"
+echo -e "Flow xtls        :only origin type not supported"
 echo -e "ServiceName      :/gandringrpc"
 echo -e "Path HTTP        :/gandringtcp"
 echo -e "Path H2C         :/gandringhttp"
