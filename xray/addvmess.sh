@@ -62,7 +62,7 @@ sed -i '/#vmess-nontls$/a\### '"$user $exp"'\
 cat>/etc/xray/vmess-$user-tls.json<<EOF
       {
       "v": "2",
-      "ps": "${user}",
+      "ps": "%F0%9F%94%B0VMESS+WS+TLS+${user}",
       "add": "${domain}",
       "port": "${tls}",
       "id": "${uuid}",
@@ -77,7 +77,7 @@ EOF
 cat>/etc/xray/vmess-$user-nontls.json<<EOF
       {
       "v": "2",
-      "ps": "${user}",
+      "ps": "%F0%9F%94%B0VMESS+WS+NONTLS+${user}",
       "add": "${domain}",
       "port": "${nontls}",
       "id": "${uuid}",
@@ -113,9 +113,9 @@ echo -e "Path        :/shanum"
 echo -e "Dibuat      :$hariini"
 echo -e "Kadaluarsa  :$exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Link TLS    : ${vmess1}"
+echo -e "Link WS TLS:  ${vmess1}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Link No TLS : ${vmess2}"
+echo -e "Link WS NONTLS:  ${vmess2}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m🔰LUXURY EDITION ZEROSSL🔰\e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
