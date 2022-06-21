@@ -81,17 +81,21 @@ sed -i '/#vless-tls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#vless-http-tls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
+sed -i '/#vless-hdua$/a\#### '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
+sed -i '/#vless-grpc-tls$/a\#### '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 
-vlesshttpnon="vless://${uuid}@${domain}:$vlhttpnon?host=${domain}&security=none&type=tcp&headerType=http&encryption=none#${user}"
-vlesshttp="vless://${uuid}@${domain}:$vlhttp?sni=${domain}&host=${domain}&type=tcp&security=tls&path=/wisnutcp&headerType=http&encryption=none#${user}"
+vlesshttpnon="vless://${uuid}@${domain}:$vlhttpnon?sni=nubiegaming.xyz$host=${domain}&security=none&type=tcp&headerType=http&encryption=none#${user}"
+vlesshttp="vless://${uuid}@${domain}:$vlhttp?sni=gesekan.penghancur-janda.com&&host=${domain}&type=tcp&security=tls&path=/wisnutcp&headerType=http&encryption=none#${user}"
 vlesstls="vless://${uuid}@${domain}:$vltls?host=${domain}&sni=${domain}&type=ws&security=tls&path=%2fwisnu&encryption=none#${user}"
 vlessnontls="vless://${uuid}@${domain}:$vlnontls?host=${domain}&security=none&type=ws&path=/wisnu&encryption=none#${user}"
 vlessgrpc="vless://${uuid}@${domain}:$vlgrpc?serviceName=/wisnugrpc&sni=${domain}&mode=multi&type=grpc&security=tls&encryption=none#${user}"
 vlessgrpcnon="vless://${uuid}@${domain}:$vlgrpcnon?serviceName=/wisnugrpc&sni=${domain}&mode=multi&type=grpc&security=none&encryption=none#${user}"
-vlesshdua="vless://${uuid}@${domain}:$vlhdua?type=http&security=tls&path=/wisnuhttp&encryption=none#${user}"
-#vlesshduanon="vless://${uuid}@${domain}:$vlhduanon?type=http&security=none&path=/bagus&encryption=none#${user}"
-vlessxtls="vless://${uuid}@${domain}:$vlxtls?security=xtls&encryption=none&flow=xtls-rprx-splice-udp443#${user}"
-vlessgfw="vless://${uuid}@${domain}:$vlxtls?security=tls&encryption=none#${user}"
+vlesshdua="vless://${uuid}@${domain}:$vlhdua?sni=jajananpasarkembang.night&type=http&security=tls&path=/wisnuhttp&encryption=none#${user}"
+#vlesshduanon="vless://${uuid}@${domain}:$vlhduanon?sni=cabecabean.me&type=http&security=none&path=/bagus&encryption=none#${user}"
+vlessxtls="vless://${uuid}@${domain}:$vlxtls?sni=ijolumut.saknomen.org&security=xtls&encryption=none&flow=xtls-rprx-splice-udp443#${user}"
+vlessgfw="vless://${uuid}@${domain}:$vlxtls?sni=sakitny.tuh-disana.beb&security=tls&encryption=none#${user}"
 tls="$(cat ~/log-install.txt | grep -w "VMESS WS TLS" | cut -d: -f2|sed 's/ //g')"
 nontls="$(cat ~/log-install.txt | grep -w "VMESS WS NON TLS" | cut -d: -f2|sed 's/ //g')"
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
@@ -169,6 +173,60 @@ vmesshttp="vmess://$(base64 -w 0 /etc/xray/vmess-$user-tls.json)"
 rm -rf /etc/xray/vmess-$user-tls.json
 
 uuid=$(cat /proc/sys/kernel/random/uuid)
+read -p "Expired (Days) : " masaaktif
+#read -p "Expired (Seconds) : " masaaktif
+hariini=`date -d "0 days" +"%Y-%m-%d"`
+exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
+#exp2=`date -d "$masaaktif seconds" +"%Y-%m-%d"`
+sed -i '/#vmess-grpc-tls$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'"' /usr/local/etc/xray/xvmess.json
+cat>/etc/xray/vmess-$user-tls.json<<EOF
+      {
+      "v": "2",
+      "ps": "${user}",
+      "add": "${domain}",
+      "port": "${vmgrpc}",
+      "id": "${uuid}",
+      "aid": "0",
+      "net": "tcp",
+      "path": "/shanumgrpc",
+      "type": "http",
+      "host": "${domain}",
+      "tls": "tls"
+}
+EOF
+vmessgrpc_base641=$( base64 -w 0 <<< $vmess_json1)
+vmessgrpc="vmess://$(base64 -w 0 /etc/xray/vmess-$user-tls.json)"
+rm -rf /etc/xray/vmess-$user-tls.json
+
+uuid=$(cat /proc/sys/kernel/random/uuid)
+read -p "Expired (Days) : " masaaktif
+#read -p "Expired (Seconds) : " masaaktif
+hariini=`date -d "0 days" +"%Y-%m-%d"`
+exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
+#exp2=`date -d "$masaaktif seconds" +"%Y-%m-%d"`
+sed -i '/#vmess-hdua$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'"' /usr/local/etc/xray/xvmess.json
+cat>/etc/xray/vmess-$user-tls.json<<EOF
+      {
+      "v": "2",
+      "ps": "${user}",
+      "add": "${domain}",
+      "port": "${vmhdua}",
+      "id": "${uuid}",
+      "aid": "0",
+      "net": "tcp",
+      "path": "/shanumhttp",
+      "type": "none",
+      "host": "${domain}",
+      "tls": "tls"
+}
+EOF
+vmesshdua_base641=$( base64 -w 0 <<< $vmess_json1)
+vmesshdua="vmess://$(base64 -w 0 /etc/xray/vmess-$user-tls.json)"
+rm -rf /etc/xray/vmess-$user-tls.json
+
+uuid=$(cat /proc/sys/kernel/random/uuid)
 tgrpc="$(cat ~/log-install.txt | grep -w "TROJAN GRPC" | cut -d: -f2|sed 's/ //g')"
 txtls="$(cat ~/log-install.txt | grep -w "TROJAN XTLS" | cut -d: -f2|sed 's/ //g')"
 tgfw="$(cat ~/log-install.txt | grep -w "TROJAN GFW" | cut -d: -f2|sed 's/ //g')"
@@ -213,12 +271,16 @@ sed -i '/#trojan-gfw$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#trojan-http-tls$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
-
-trojanxtls="trojan://${uuid}@${domain}:$txtls?security=xtls&type=tcp&headerType=none&flow=xtls-rprx-splice-udp443#${user}"
-trojangfw="trojan://$uuid@$domain:$tgfw?type=tcp&security=tls&headerType=none#$user"
+sed -i '/#trojan-grpc$/a\#&# '"$user $exp"'\
+},{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
+sed -i '/#trojan-hdua$/a\#&# '"$user $exp"'\
+},{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
+trojanxtls="trojan://${uuid}@${domain}:$txtls?sni=gosok.bilas.cling&security=xtls&type=tcp&headerType=none&flow=xtls-rprx-splice-udp443#${user}"
+trojangfw="trojan://$uuid@$domain:$tgfw?sni=cling.gosokbilas.cling&type=tcp&security=tls&headerType=none#$user"
 trojantls="trojan://${uuid}@${domain}:$ttls?type=ws&security=tls&host=$domain&path=%2fgandring&sni=$domain#${user}"
-trojanhttp="trojan://${uuid}@${domain}:$thttp?sni=${domain}&type=tcp&security=tls&host=$domain&path=/gandringtcp&headerType=http#${user}"
-
+trojanhttp="trojan://${uuid}@${domain}:$thttp?sni=aja.kayakue.lah&type=tcp&security=tls&host=$domain&path=/gandringtcp&headerType=http#${user}"
+trojangrpc="trojan://${uuid}@${domain}:$tgrpc?mode=gun&security=tls&type=grpc&serviceName=/gandringgrpc&sni=$domain#$user"
+trojanhdua="trojan://${uuid}@${domain}:$thdua?sni=aja.kayakue.lah&type=http&security=tls&host=$domain&path=/gandringhttp&headerType=none#${user}"
 systemctl restart xvless.service
 systemctl restart xray.service
 systemctl restart xtrojan.service
@@ -251,15 +313,27 @@ echo -e "Link VLESS WS:  ${vlesstls}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "Link VLESS HTTP:  ${vlesshttp}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "Link VLESS GRPC:  ${vlessgrpc}"
+echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "Link VLESS H2C:  ${vlesshdua}"
+echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "Link TROJAN GFW:  ${trojangfw}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "Link TROJAN WS:  ${trojantls}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "Link TROJAN HTTP:  ${trojanhttp}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "Link TROJAN GRPC:  ${trojangrpc}"
+echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "Link TROJAN H2C:  ${trojanhdua}"
+echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "Link VMESS WS:  ${vmess1}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "Link VMESS HTTP:  ${vmesshttp}"
+echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "Link VMESS HTTP:  ${vmessgrpc}"
+echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "Link VMESS H2C :  ${vmesshdua}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m🔰LUXURY EDITION ZEROSSL🔰\e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
