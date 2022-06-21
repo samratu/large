@@ -60,8 +60,8 @@ sed -i '/#trojan-http-nontls$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
 sed -i '/#trojan-http-nontls$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/satrio.json
-trojanhttp="trojan://${uuid[@${domain}:$thttp?type=tcp&security=tls&path=/gandringtcp&host=${domain}&headerType=http#${user}"
-trojanhttpnon="trojan://${uuid[@${domain}:$thttpnon?type=tcp&security=none&host=${domain}&headerType=http#${user}"
+trojanhttp="trojan://${uuid[@${domain}:$thttp?type=tcp&security=tls&path=/gandringtcp&host=${domain}&headerType=http#%F0%9F%94%B0TROJAN)+HTTP+TLS+${user}"
+trojanhttpnon="trojan://${uuid[@${domain}:$thttpnon?type=tcp&security=none&host=${domain}&headerType=http#%F0%9F%94%B0TROJAN+HTTP+NONTLS+${user}"
 systemctl restart xray.service
 systemctl restart xtrojan.service
 systemctl restart xvmess.service
