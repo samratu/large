@@ -160,7 +160,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 8088,
+      "port": 3030,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -905,7 +905,6 @@ cat > /etc/xray/xtrojan.json << END
         "network": "h2",
         "security": "tls",
         "httpSettings": {
-        "acceptProxyProtocol": true,
           "path": "/gandringhttp"
          },
          "tlsSettings": {
@@ -1645,7 +1644,6 @@ cat > /usr/local/etc/xray/xvmess.json << END
         "network": "h2",
         "security": "none",
         "httpSettings": {
-          "acceptProxyProtocol": true,
           "path": "/gandringhttp"
          }
       }
@@ -1673,7 +1671,6 @@ cat > /usr/local/etc/xray/xvmess.json << END
         "network": "grpc",
         "security": "none",
         "grpcSettings": {
-          "acceptProxyProtocol": true,
               "path": "/gandringgrpc"
            }
         }
@@ -1721,7 +1718,6 @@ cat > /usr/local/etc/xray/xvmess.json << END
                 "network": "h2",
                 "security": "none",
                 "httpSettings": {
-                    "acceptProxyProtocol": true,
                     "path": "/wisnuhttp"
                 }
             }
@@ -1745,7 +1741,6 @@ cat > /usr/local/etc/xray/xvmess.json << END
                 "network": "grpc",
                 "security": "none",
                 "grpcSettings": {
-                    "acceptProxyProtocol": true,
                     "path": "/wisnugrpc"
                 }
             }
@@ -1821,7 +1816,6 @@ cat > /usr/local/etc/xray/xvmess.json << END
                 "network": "h2",
                 "security": "none",
                 "httpSettings": {
-                    "acceptProxyProtocol": true,
                     "path": "/shanumhttp"
                 }
         }
@@ -1844,7 +1838,6 @@ cat > /usr/local/etc/xray/xvmess.json << END
                 "network": "grpc",
                 "security": "none",
                 "grpcSettings": {
-                    "acceptProxyProtocol": true,
                     "path": "/shanumgrpc"
                 }
         }
