@@ -129,7 +129,7 @@ sed -i '/#vmess-tls$/a\### '"$user $exp"'\
 cat>/etc/xray/vmess-$user-tls.json<<EOF
       {
       "v": "2",
-      "ps": "%F0%9F%94%B0VMESS+WS+TLS+${user}",
+      "ps": "🔰VMESS WS TLS ${user}",
       "add": "${domain}",
       "port": "${tls}",
       "id": "${uuid}",
@@ -156,7 +156,7 @@ sed -i '/#vmess-http-tls$/a\### '"$user $exp"'\
 cat>/etc/xray/vmess-$user-tls.json<<EOF
       {
       "v": "2",
-      "ps":"%F0%9F%94%B0VMESS+HTTP+TLS+${user}",
+      "ps":"🔰VMESS HTTP TLS ${user}",
       "add": "${domain}",
       "port": "${vmhttp}",
       "id": "${uuid}",
@@ -183,7 +183,7 @@ sed -i '/#vmess-grpc-tls$/a\### '"$user $exp"'\
 cat>/etc/xray/vmess-$user-tls.json<<EOF
       {
       "v": "2",
-      "ps": "%F0%9F%94%B0VMESS+GRPC+TLS+${user}",
+      "ps": "🔰VMESS GRPC TLS ${user}",
       "add": "${domain}",
       "port": "${vmgrpc}",
       "id": "${uuid}",
@@ -210,7 +210,7 @@ sed -i '/#vmess-hdua$/a\### '"$user $exp"'\
 cat>/etc/xray/vmess-$user-tls.json<<EOF
       {
       "v": "2",
-      "ps": "%F0%9F%94%B0VMESS+H2C+TLS+${user}",
+      "ps": "🔰VMESS H2C TLS ${user}",
       "add": "${domain}",
       "port": "${vmhdua}",
       "id": "${uuid}",
