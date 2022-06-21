@@ -48,7 +48,7 @@ sed -i '/#vmess-hdua$/a\### '"$user $exp"'\
 cat>/etc/xray/vmess-$user-tls.json<<EOF
       {
       "v": "0",
-      "ps": "%F0%9F%94%B0VMESS+H2C+TLS+${user}",
+      "ps": "🔰VMESS H2C TLS ${user}",
       "add": "${domain}",
       "port": "${vmhdua}",
       "id": "${uuid}",
