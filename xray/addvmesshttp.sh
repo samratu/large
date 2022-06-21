@@ -58,7 +58,7 @@ sed -i '/#vmess-http-nontls$/a\### '"$user $exp"'\
 cat>/etc/xray/vmess-$user-tls.json<<EOF
       {
       "v": "2",
-      "ps": "${user}",
+      "ps": "%F0%9F%94%B0VMESS+HTTP+TLS+${user}",
       "add": "${domain}",
       "port": "${vmhttp}",
       "id": "${uuid}",
@@ -73,13 +73,13 @@ EOF
 cat>/etc/xray/vmess-$user-nontls.json<<EOF
       {
       "v": "2",
-      "ps": "${user}",
+      "ps": "%F0%9F%94%B0VMESS+HTTP+NONTLS+${user}",
       "add": "${domain}",
       "port": "${vmhttpnon}",
       "id": "${uuid}",
       "aid": "0",
       "net": "tcp",
-      #"path": "/",
+      "path": "/",
       "type": "http",
       "host": "${domain}",
       "tls": "none"
@@ -112,9 +112,9 @@ echo -e "Path         :/shanumtcp"
 echo -e "Dibuat       :$hariini"
 echo -e "Kadaluarsa   :$exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Link HTTP TLS : ${vmesshttp}"   
+echo -e "Link HTTP TLS: ${vmesshttp}"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Link HTTP NON TLS : ${vmesshttpnon}"   
+echo -e "Link HTTP NONTLS: ${vmesshttpnon}"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m🔰LUXURY EDITION ZEROSSL🔰\e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
