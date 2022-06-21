@@ -60,30 +60,30 @@ sed -i '/#vmess-grpc-nontls$/a\### '"$user $exp"'\
 cat>/etc/xray/vmess-$user-tls.json<<EOF
       {
       "v": "2",
-      "ps": "%F0%9F%94%B0VMESS+GRPC+TLS+${user}",
+      "ps": "🔰VMESS GRPC TLS ${user}",
       "add": "${domain}",
       "port": "${vmgrpc}",
       "id": "${uuid}",
       "aid": "0",
       "net": "grpc",
-      "serviceName": "/shanumgrpc",
+      "path": "/shanumgrpc",
       "type": "none",
-      "serverName": "${domain}",
+      "sni": "${domain}",
       "tls": "tls"
 }
 EOF
 cat>/etc/xray/vmess-$user-nontls.json<<EOF
       {
       "v": "2",
-      "ps": "%F0%9F%94%B0VMESS+GRPC+NONTLS+${user}",
+      "ps": "🔰VMESS GRPC NONTLS ${user}",
       "add": "${domain}",
       "port": "${vmgrpcnon}",
       "id": "${uuid}",
       "aid": "0",
       "net": "grpc",
-      "serviceName": "/shanumgrpc",
+      "path": "/shanumgrpc",
       "type": "none",
-      "host": "${domain}",
+      "sni": "${domain}",
       "tls": "none"
 }
 EOF
