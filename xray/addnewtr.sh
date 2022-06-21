@@ -102,15 +102,15 @@ exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 hariini=`date -d "0 days" +"%Y-%m-%d"`
 echo -e "### $user $exp" >> /etc/trojan-go/akun.conf
 systemctl restart trojan-go.service
-trojango="trojan-go://${uuid}@${domain}:${trgo}/?sni=${domain}&type=ws&host=${domain}&path=/gandring&encryption=none#$user"
-trojanhdua="trojan://${uuid}@${domain}:$thdua?sni=jambualas.net&type=http&security=tls&path=/gandringhttp#${user}"
-trojangrpc="trojan://${uuid}@${domain}:$tgrpc?mode=gun&security=tls&type=grpc&serviceName=/gandringgrpc&sni=${domain}#${user}"
-trojanxtls="trojan://${uuid}@${domain}:$txtls?sni=kimcil.kepolen.com&security=xtls&type=tcp&headerType=none&flow=xtls-rprx-splice-udp443#${user}"
-trojangfw="trojan://$uuid@$domain:$tgfw?sni=pemetikbunga.com&type=tcp&security=tls&headerType=none#$user"
-trojantls="trojan://${uuid}@${domain}:$ttls?type=ws&security=tls&host=$domain&path=%2fgandring&sni=$domain#${user}"
-trojannontls="trojan://${uuid}@${domain}:$tnontls?type=ws&security=none&host=$domain&path=%2fgandring#${user}"
-trojanhttp="trojan://${uuid}@${domain}:$thttp?sni=gesekan.penghancur-janda.com&type=tcp&security=tls&host=$domain&path=/gandringtcp&headerType=http#${user}"
-trojanhttpnon="trojan://${uuid}@${domain}:$thttpnon?sni=gesekan.penghancur-janda.com&type=tcp&security=none&host=$domain&headerType=http#${user}"
+trojango="trojan-go://${uuid}@${domain}:${trgo}/?sni=${domain}&type=ws&host=${domain}&path=/gandring&encryption=none#%F0%9F%94%B0TROJAN+GO+$user"
+trojanhdua="trojan://${uuid}@${domain}:$thdua?sni=jambualas.net&type=http&security=tls&path=/gandringhttp#%F0%9F%94%B0TROJAN+H2C+${user}"
+trojangrpc="trojan://${uuid}@${domain}:$tgrpc?mode=gun&security=tls&type=grpc&serviceName=/gandringgrpc&sni=${domain}#%F0%9F%94%B0TROJAN+GRPC+${user}"
+trojanxtls="trojan://${uuid}@${domain}:$txtls?sni=kimcil.kepolen.com&security=xtls&type=tcp&headerType=none&flow=xtls-rprx-splice-udp443#%F0%9F%94%B0TROJAN+XTLS+${user}"
+trojangfw="trojan://$uuid@$domain:$tgfw?sni=pemetikbunga.com&type=tcp&security=tls&headerType=none#%F0%9F%94%B0TROJAN+GFW+$user"
+trojantls="trojan://${uuid}@${domain}:$ttls?type=ws&security=tls&host=$domain&path=%2fgandring&sni=$domain#%F0%9F%94%B0TROJAN+WS+TLS+${user}"
+trojannontls="trojan://${uuid}@${domain}:$tnontls?type=ws&security=none&host=$domain&path=%2fgandring#%F0%9F%94%B0TROJAN+WS+NONTLS+${user}"
+trojanhttp="trojan://${uuid}@${domain}:$thttp?sni=gesekan.penghancur-janda.com&type=tcp&security=tls&host=$domain&path=/gandringtcp&headerType=http#%F0%9F%94%B0+HTTP+TLS+${user}"
+trojanhttpnon="trojan://${uuid}@${domain}:$thttpnon?sni=gesekan.penghancur-janda.com&type=tcp&security=none&host=$domain&headerType=http#%F0%9F%94%B0TROJAN+HTTP+NONTLS+${user}"
 systemctl restart xray.service
 systemctl restart xtrojan.service
 systemctl restart xvmess
