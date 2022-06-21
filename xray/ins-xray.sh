@@ -2228,7 +2228,7 @@ cat > /etc/xray/xss.json << END
         "protocol":"shadowsocks",
         "settings":{
           "method":"2022-blake3-aes-128-gcm",
-          "password": "fvRKCJ683/9WY0L7SHaNUmAT3WcGEXBxVUvPV7BQms=",
+          "password": "fvRKCJ683/9WY0L7SHaNUmAyT3WcGEXBxVUvPV7BQms=",
           "network":"tcp,udp"
         }
       }
