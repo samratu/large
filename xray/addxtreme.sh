@@ -164,7 +164,7 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "net": "tcp",
       "path": "/shanumtcp",
       "type": "http",
-      "host": "${domain}",
+      "host": "kimcil.kepolen.net",
       "tls": "tls"
 }
 EOF
@@ -216,9 +216,9 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "h2",
-      "path": "/",
+      "path": "/shanumhttp",
       "type": "none",
-      "host": "",
+      "host": "angeladesah.org",
       "tls": "tls"
 }
 EOF
