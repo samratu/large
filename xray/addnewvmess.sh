@@ -151,7 +151,7 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "net": "grpc",
       "path": "/shanumgrpc",
       "type": "none",
-      "sni": "${domain}",
+      "host": "${domain}",
       "tls": "tls"
 }
 EOF
@@ -166,7 +166,7 @@ cat>/etc/xray/vmess-$user-nontls.json<<EOF
       "net": "grpc",
       "path": "/shanumgrpc",
       "type": "none",
-      "sni": "${domain}",
+      "host": "${domain}",
       "tls": "none"
 }
 EOF
@@ -303,7 +303,7 @@ cat>/etc/xray/vmess-$user-nontls.json<<EOF
       "net": "tcp",
       "path": "/",
       "type": "http",
-      "host": "",
+      "host": "$domain",
       "tls": "none"
 }
 EOF
