@@ -81,7 +81,7 @@ cat>/etc/xray/vmess-$user-nontls.json<<EOF
       "net": "tcp",
       "path": "/",
       "type": "http",
-      "host": "",
+      "host": "katakancinta.com",
       "tls": "none"
 }
 EOF
