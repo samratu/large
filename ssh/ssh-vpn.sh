@@ -230,24 +230,25 @@ http {
     tcp_nopush on;
     tcp_nodelay on;
     keepalive_timeout 65;
-    types_hash_max_size 2048;
+    types_hash_max_size 4096;
     server_tokens off;
     include /etc/nginx/mime.types;
     default_type application/octet-stream;
     access_log /var/log/nginx/access.log;
     error_log /var/log/nginx/error.log;
     client_max_body_size 32M;
-	client_header_buffer_size 8m;
-	large_client_header_buffers 8 8m;
+	client_header_buffer_size 32m;
+	large_client_header_buffers 32m;
 
-	fastcgi_buffer_size 8m;
-	fastcgi_buffers 8 8m;
+	fastcgi_buffer_size 32m;
+	fastcgi_buffers 32m;
 
 	fastcgi_read_timeout 600;
 
 	set_real_ip_from 127.0.0.1;
 
   include /etc/nginx/conf.d/*.conf;
+  include /etc/nginx/sites-available/*.conf;
 }
 END
 domain=$/root/domain
@@ -324,7 +325,7 @@ RUN=yes
 # systemd users: don't forget to modify /lib/systemd/system/sslh.service
 DAEMON=/usr/sbin/sslh
 
-DAEMON_OPTS="--user sslh --listen 0.0.0.0:443 --ssh 127.0.0.1:22 --ssl 127.0.0.1:500 --ssh 127.0.0.1:300 --openvpn 127.0.0.1:1194 --http 127.0.0.1:80 --pidfile /var/run/sslh/sslh.pid"
+DAEMON_OPTS="--user sslh --listen 0.0.0.0:2087 --ssh 127.0.0.1:22 --ssl 127.0.0.1:500 --ssh 127.0.0.1:300 --openvpn 127.0.0.1:1194 --http 127.0.0.1:80 --pidfile /var/run/sslh/sslh.pid"
 
 END
 
