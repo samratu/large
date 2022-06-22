@@ -245,27 +245,18 @@ http {
 
 	fastcgi_read_timeout 600;
 
-	set_real_ip_from 204.93.240.0/24;
-	set_real_ip_from 204.93.177.0/24;
-	set_real_ip_from 199.27.128.0/21;
-	set_real_ip_from 173.245.48.0/20;
-	set_real_ip_from 103.21.244.0/22;
-	set_real_ip_from 103.22.200.0/22;
-	set_real_ip_from 103.31.4.0/22;
-	set_real_ip_from 141.101.64.0/18;
-	set_real_ip_from 108.162.192.0/18;
-	set_real_ip_from 190.93.240.0/20;
-	set_real_ip_from 188.114.96.0/20;
-	set_real_ip_from 197.234.240.0/22;
-	set_real_ip_from 198.41.128.0/17;
-	real_ip_header     CF-Connecting-IP;
+	set_real_ip_from 127.0.0.1;
 
   include /etc/nginx/conf.d/*.conf;
 }
 END
-rm /etc/nginx/sites-enabled/$domain >/dev/null 2>&1
-rm /etc/nginx/sites-available/$domain >/dev/null 2>&1
+domain=$/root/domain
+rm /etc/nginx/sites-enabled/$domain/ >/dev/null 2>&1
+rm /etc/nginx/sites-available/$domain/ >/dev/null 2>&1
+curl https://${wisnuvpn}/nginx.conf > /etc/nginx/sites-enabled/$domain/nginx.conf
+curl https://${wisnuvpn}/nginx.conf > /etc/nginx/sites-avalable/$domain/nginx.conf
 curl https://${wisnuvpn}/nginx.conf > /etc/nginx/nginx.conf
+
 curl https://${wisnuvpn}/vps.conf > /etc/nginx/conf.d/vps.conf
 curl https://${wisnuvpn}/default.conf > /etc/nginx/conf.d/default.conf
 sed -i 's/listen = \/var\/run\/php-fpm.sock/listen = 127.0.0.1:9000/g' /etc/php/fpm/pool.d/www.conf
