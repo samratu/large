@@ -38,26 +38,15 @@ until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${user_EXISTS} == '0' ]]; do
 			exit 1
 		fi
 	done
-until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${user_EXISTS} == '0' ]]; do
-		read -rp "Password : " -e user
-		user_EXISTS=$(grep -w $user /usr/local/etc/xray/satrio.json | wc -l)
-
-		if [[ ${user_EXISTS} == '1' ]]; then
-			echo ""
-			echo -e "Username ${RED}${user}${NC} Already On VPS Please Choose Another"
-			exit 1
-		fi
-	done
 uuid=$(cat /proc/sys/kernel/random/uuid)
 read -p "Expired (Days) : " masaaktif
 hariini=`date -d "0 days" +"%Y-%m-%d"`
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#trojan-http-tls$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
-sed -i '/#trojan-http-tls$/a\#&# '"$user $exp"'\
-},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
 sed -i '/#trojan-http-nontls$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
+
 trojanhttp="trojan://${uuid[@${domain}:$thttp?type=tcp&security=tls&path=/gandringtcp&host=${domain}&headerType=http#%F0%9F%94%B0TROJAN)+HTTP+TLS+${user}"
 trojanhttpnon="trojan://${uuid[@${domain}:$thttpnon?type=tcp&security=none&host=${domain}&headerType=http#%F0%9F%94%B0TROJAN+HTTP+NONTLS+${user}"
 systemctl restart xray.service
@@ -82,5 +71,5 @@ echo -e "Link HTTP TLS : ${trojanhttp}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "Link HTTP nontls : ${trojanhttpnon}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "\033[1;46m🔰LUXURY EDITION ZEROSSL🔰 \e[m"   
+echo -e "\033[1;46m🔰LUXURY EDITION ZEROSSL🔰 \e[m"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
