@@ -167,8 +167,8 @@ echo " 🔰 SHADOWSOCKS WS NON TLS : 502" |tee -a log-install.txt
 echo " 🔰 SHADOWSOCKS 2022 : 212" |tee -a log-install.txt
 echo " 🔰 XRAY MT PROTO : 111" |tee -a log-install.txt
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo " 🔰 >> Server Information & Other Features"                 |tee -a log-install.txt
-echo " 🔰 Timezone                : Asia/Jakarta (GMT +7)"        |tee -a log-install.txt
+echo " >> Server Information & Other Features"                    |tee -a log-install.txt
+echo " Timezone                   : Asia/Jakarta (GMT +7)"        |tee -a log-install.txt
 echo " 🔰 Fail2Ban                : [ON]"                         |tee -a log-install.txt
 echo " 🔰 Dflate                  : [ON]"                         |tee -a log-install.txt
 echo " 🔰 IPtables                : [ON]"                         |tee -a log-install.txt
