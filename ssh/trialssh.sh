@@ -47,7 +47,6 @@ echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━�
 echo -e "\033[1;46m🔰 TRIAL SSH DAN OVPN 🔰  \e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "IP : $MYIP/ ${domain}"
-echo -e "IPv6 : $MYIP6"
 echo -e "Username  : $Login"
 echo -e "Password  : $Pass"
 echo -e "Dropbear  :${dropbearport}"
