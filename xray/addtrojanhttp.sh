@@ -64,8 +64,7 @@ systemctl restart xray.service
 systemctl restart xtrojan.service
 systemctl restart xvmess.service
 service cron restart
-clear
-echo -e ""
+
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m  🔰 AKUN TROJAN HTTP 🔰   \e[m"       
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
@@ -85,5 +84,3 @@ echo -e "Link HTTP nontls : ${trojanhttpnon}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m🔰LUXURY EDITION ZEROSSL🔰 \e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e ""
-EOF
