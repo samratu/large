@@ -222,7 +222,7 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "net": "h2",
       "path": "/shanumhttp",
       "type": "none",
-      "host": "",
+      "host": "gg.geming.net",
       "tls": "tls"
 }
 EOF
@@ -303,7 +303,7 @@ cat>/etc/xray/vmess-$user-nontls.json<<EOF
       "net": "tcp",
       "path": "/",
       "type": "http",
-      "host": "$domain",
+      "host": "",
       "tls": "none"
 }
 EOF
