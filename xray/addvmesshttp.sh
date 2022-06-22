@@ -79,9 +79,9 @@ cat>/etc/xray/vmess-$user-nontls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "tcp",
-      "path": "/shanumtcp",
+      "path": "/",
       "type": "http",
-      "host": "${domain}",
+      "host": "",
       "tls": "none"
 }
 EOF
