@@ -1499,7 +1499,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
                         "xver": 1
                     },
                     {
-                        "path": "/gandringgrpc",
+                        "serviceName": "/gandringgrpc",
                         "dest": 1340,
                         "xver": 1
                     },
@@ -1514,7 +1514,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
                         "xver": 1
                     },
                     {
-                        "path": "/wisnugrpc",
+                        "serviceName": "/wisnugrpc",
                         "dest": 1370,
                         "xver": 1
                     },
@@ -1534,7 +1534,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
                         "xver": 1
                     },
                     {
-                        "path": "/shanumgrpc",
+                        "serviceName": "/shanumgrpc",
                         "dest": 1410,
                         "xver": 1
                     },
@@ -1627,7 +1627,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
           "protocol": "trojan",
           "settings": {
            "clients": [
-       {
+         {
            "password": "gandring",
            "level": 0,
            "email": "gandring@p0x.smule.my.id"
@@ -1654,7 +1654,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
           "protocol": "trojan",
           "settings": {
            "clients": [
-        {
+         {
            "password": "gandring",
            "level": 0,
            "email": "gandring@p0x.smule.my.id"
@@ -1671,6 +1671,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
         "network": "grpc",
         "security": "none",
         "grpcSettings": {
+              "acceptProxyProtocol": true,
               "path": "/gandringgrpc"
            }
         }
@@ -1718,6 +1719,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
                 "network": "h2",
                 "security": "none",
                 "httpSettings": {
+                    "acceptProxyProtocol": true,
                     "path": "/wisnuhttp"
                 }
             }
@@ -1741,6 +1743,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
                 "network": "grpc",
                 "security": "none",
                 "grpcSettings": {
+                    "acceptProxyProtocol": true,
                     "path": "/wisnugrpc"
                 }
             }
@@ -1816,6 +1819,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
                 "network": "h2",
                 "security": "none",
                 "httpSettings": {
+                "acceptProxyProtocol": true,
                     "path": "/shanumhttp"
                 }
         }
@@ -1826,7 +1830,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
             "protocol": "vmess",
             "settings": {
                 "clients": [
-                    {
+                     {
                         "id": "gandring",
                         "level": 0,
                         "email": "gandring@p0x.smule.my.id"
@@ -1838,6 +1842,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
                 "network": "grpc",
                 "security": "none",
                 "grpcSettings": {
+                    "acceptProxyProtocol": true,
                     "path": "/shanumgrpc"
                 }
         }
@@ -2016,7 +2021,7 @@ cat > /usr/local/etc/xray/satrio.json << END
       "tag": "api"
     },
     {
-      "port": 80,
+      "port": 10101,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -2051,7 +2056,7 @@ cat > /usr/local/etc/xray/satrio.json << END
       "domain": "$domain"
     },
     {
-      "port": 80,
+      "port": 10101,
       "protocol": "trojan",
       "settings": {
         "clients": [
@@ -2087,7 +2092,7 @@ cat > /usr/local/etc/xray/satrio.json << END
       "domain": "$domain"
     },
     {
-      "port": 80,
+      "port": 10101,
       "protocol": "vless",
       "settings": {
         "clients": [
