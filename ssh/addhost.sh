@@ -12,6 +12,7 @@ echo -e "Masukkan Domain"
 read -p "Hostname / Domain: " host
 rm -f /var/lib/wisnuvs/ipvps.conf
 rm -f /etc/xray/domain
+rm -f /usr/local/etc/xray/domain
 clear
 mkdir /etc/xray
 mkdir /var/lib/wisnucs;
@@ -19,5 +20,5 @@ clear
 echo -e "Masukkan Domain Sekali Lagi"
 read -p "Hostname / Domain: " host
 echo "IP=$host" >> /var/lib/wisnucs/ipvps.conf
-echo "IP=$host" >> /var/lib/wisnucs/ipvps.conf
+echo "$host" >> /usr/local/etc/xray/domain
 echo "$host" >> /etc/xray/domain
