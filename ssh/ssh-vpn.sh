@@ -706,6 +706,7 @@ chmod +x renewssh
 chmod +x clearlog
 
 chmod +x ins-sshws
+chmod +x sshws-true
 
 chmod +x changeport
 chmod +x portovpn
