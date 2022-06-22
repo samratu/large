@@ -216,7 +216,7 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "h2",
-      "path": "/shanumhttp",
+      "path": "/",
       "type": "none",
       "host": "",
       "tls": "tls"
