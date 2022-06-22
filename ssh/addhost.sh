@@ -22,3 +22,4 @@ read -p "Hostname / Domain: " host
 echo "IP=$host" >> /var/lib/wisnucs/ipvps.conf
 echo "$host" >> /usr/local/etc/xray/domain
 echo "$host" >> /etc/xray/domain
+echo "$host" >> /root/domain
