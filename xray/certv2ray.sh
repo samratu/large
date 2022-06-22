@@ -2,6 +2,7 @@
 echo start
 sleep 0.5
 source /var/lib/wisnucs/ipvps.conf
+IP=$(cat 
 domain=$IP
 systemctl stop xtrojan
 systemctl stop xray
