@@ -830,8 +830,8 @@ sudo screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7600 --max-clients 
 sudo screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7700 --max-clients 500
 sudo screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7800 --max-clients 500
 sudo screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7900 --max-clients 500
-echo "0 5 * * * root clearlog && reboot" >> /etc/crontab
-echo "0 0 * * * root xp" >> /etc/crontab
+echo "0 0 1 * * root /root/reboot_otomatis.sh" > /etc/cron.d/reboot_otomatis >> /etc/crontab
+echo "0 0 1 * * root xp" >> /etc/crontab
 history -c
 echo "unset HISTFILE" >> /etc/profile
 
