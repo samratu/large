@@ -3,6 +3,7 @@ echo start
 sleep 0.5
 source /var/lib/wisnucs/ipvps.conf
 IP=$(wget -qO- https://ipv4.icanhazip.com); 
+domain=$(cat /root/domain)
 domain=$IP
 systemctl stop xtrojan
 systemctl stop xray
