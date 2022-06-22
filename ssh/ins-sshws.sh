@@ -3,13 +3,12 @@ dateFromServer=$(curl -v --insecure --silent https://google.com/ 2>&1 | grep Dat
 biji=`date +"%Y-%m-%d" -d "$dateFromServer"`
 #########################
 
-
-
 MYIP=$(curl -sS ipv4.icanhazip.com)
-
 
 portdb=`cat ~/log-install.txt | grep -w "PORT DROPBEAR" | cut -d: -f2|sed 's/ //g' | cut -f2 -d","`
 portsshws=`cat ~/log-install.txt | grep -w "WEBSOCKET NON TLS" | cut -d: -f2 | awk '{print $1}'`
+portsshwstls=`cat ~/log-install.txt | grep -w "WEBSOCKET TLS" | cut -d: -f2 | awk '{print $1}'`
+
 if [ -f "/etc/systemd/system/sshws.service" ]; then
 clear
 else
