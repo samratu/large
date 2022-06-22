@@ -185,6 +185,6 @@ echo -e "\E[44;1;41m           🔰 SOLO THE SPIRIT OF JAVA 🔰            \E[0
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo " 🔰 Installation Log --> /root/log-install.txt"             |tee -a log-install.txt
 echo " Reboot 5 Sec"
-sleep 5
+sleep 1
 rm -f setup.sh
 reboot
