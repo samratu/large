@@ -1641,7 +1641,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
      ]
   },
       "streamSettings": {
-        "network": "h2",
+        "network": "http",
         "security": "none",
         "httpSettings": {
           "path": "/gandringhttp"
@@ -1668,11 +1668,11 @@ cat > /usr/local/etc/xray/xvmess.json << END
      ]
   },
       "streamSettings": {
-        "network": "grpc",
+        "network": "gun",
         "security": "none",
-        "grpcSettings": {
+        "gunSettings": {
               "acceptProxyProtocol": true,
-              "path": "/gandringgrpc"
+              "serviceName": "/gandringgrpc"
            }
         }
     },
@@ -1716,7 +1716,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
                 "decryption": "none"
             },
             "streamSettings": {
-                "network": "h2",
+                "network": "http",
                 "security": "none",
                 "httpSettings": {
                     "acceptProxyProtocol": true,
@@ -1740,11 +1740,11 @@ cat > /usr/local/etc/xray/xvmess.json << END
                 "decryption": "none"
             },
             "streamSettings": {
-                "network": "grpc",
+                "network": "gun",
                 "security": "none",
-                "grpcSettings": {
+                "gunSettings": {
                     "acceptProxyProtocol": true,
-                    "path": "/wisnugrpc"
+                    "serviceName": "/wisnugrpc"
                 }
             }
         },
@@ -1816,7 +1816,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
                 ]
             },
             "streamSettings": {
-                "network": "h2",
+                "network": "http",
                 "security": "none",
                 "httpSettings": {
                 "acceptProxyProtocol": true,
@@ -1839,11 +1839,11 @@ cat > /usr/local/etc/xray/xvmess.json << END
                 ]
             },
             "streamSettings": {
-                "network": "grpc",
+                "network": "gun",
                 "security": "none",
-                "grpcSettings": {
+                "gunSettings": {
                     "acceptProxyProtocol": true,
-                    "path": "/shanumgrpc"
+                    "gun": "/shanumgrpc"
                 }
         }
   },
@@ -2585,13 +2585,13 @@ cat > /etc/trojan-go/config.json << END
     "reuse_session": true,
     "plain_http_response": "",
     "fallback_addr": "127.0.0.1",
-    "fallback_port": 443,
+    "fallback_port": 22,
     "fingerprint": "firefox"
   },
   "tcp": {
-    "no_delay": true,
-    "keep_alive": true,
-    "prefer_ipv4": true
+    "no_delay": false,
+    "keep_alive": false,
+    "prefer_ipv4": false
   },
   "mux": {
     "enabled": false,
@@ -2604,11 +2604,11 @@ cat > /etc/trojan-go/config.json << END
     "host": "$domain"
   },
     "api": {
-    "enabled": true,
+    "enabled": false,
     "api_addr": "",
     "api_port": 0,
     "ssl": {
-      "enabled": true,
+      "enabled": false,
       "key": "/etc/ssl/private/privkey.pem",
       "cert": "/etc/ssl/private/fullchain.pem",
       "verify_client": false,
