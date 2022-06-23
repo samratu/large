@@ -103,9 +103,9 @@ systemctl daemon-reload
 systemctl enable autosett
 echo " "
 echo "Installation has been completed!!"echo " "
-echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "\E[44;1;41m           🔰 SETUP SERVER BY ZEROSSL 🔰            \E[0m"
-echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" 
+echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"  |tee -a log-install.txt
+echo -e "\E[44;1;41m           🔰 SETUP SERVER BY ZEROSSL 🔰            \E[0m"   |tee -a log-install.txt
+echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"  |tee -a log-install.txt
 echo " 🔰 >>> Service & Port" |tee -a log-install.txt
 echo " 🔰 PORT OPENSSH : 22" |tee -a log-install.txt
 echo " 🔰 PORT OPENVPN TCP : 1194" |tee -a log-install.txt
@@ -166,7 +166,7 @@ echo " 🔰 SHADOWSOCKS WS TLS: 501" |tee -a log-install.txt
 echo " 🔰 SHADOWSOCKS WS NON TLS : 502" |tee -a log-install.txt
 echo " 🔰 SHADOWSOCKS 2022 : 212" |tee -a log-install.txt
 echo " 🔰 XRAY MT PROTO : 111" |tee -a log-install.txt
-echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" |tee -a log-install.txt 
 echo " 🔰 >> Server Information & Other Features"                 |tee -a log-install.txt
 echo " 🔰 Timezone                : Asia/Jakarta"                 |tee -a log-install.txt
 echo " 🔰 Fail2Ban                : [ON]"                         |tee -a log-install.txt
