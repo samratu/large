@@ -65,10 +65,10 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "port": "${vmgrpc}",
       "id": "${uuid}",
       "aid": "0",
-      "net": "grpc",
+      "net": "gun",
       "path": "/shanumgrpc",
       "type": "none",
-      "sni": "${domain}",
+      "host": "${domain}",
       "tls": "tls"
 }
 EOF
@@ -80,7 +80,7 @@ cat>/etc/xray/vmess-$user-nontls.json<<EOF
       "port": "${vmgrpcnon}",
       "id": "${uuid}",
       "aid": "0",
-      "net": "grpc",
+      "net": "gun",
       "path": "/shanumgrpc",
       "type": "none",
       "sni": "${domain}",
