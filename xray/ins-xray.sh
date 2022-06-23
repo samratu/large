@@ -1499,7 +1499,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
                         "xver": 1
                     },
                     {
-                        "serviceName": "/gandringgrpc",
+                        "path": "/gandringgrpc",
                         "dest": 1340,
                         "xver": 1
                     },
@@ -1514,7 +1514,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
                         "xver": 1
                     },
                     {
-                        "serviceName": "/wisnugrpc",
+                        "path": "/wisnugrpc",
                         "dest": 1370,
                         "xver": 1
                     },
@@ -1534,7 +1534,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
                         "xver": 1
                     },
                     {
-                        "serviceName": "/shanumgrpc",
+                        "path": "/shanumgrpc",
                         "dest": 1410,
                         "xver": 1
                     },
@@ -1589,7 +1589,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
                 "network": "tcp",
                 "security": "none",
                 "tcpSettings": {
-                    "acceptProxyProtocol": true
+                  "acceptProxyProtocol": true
                 }
             }
         },
@@ -1644,6 +1644,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
         "network": "http",
         "security": "none",
         "httpSettings": {
+        "acceptProxyProtocol": true,
           "path": "/gandringhttp"
          }
       }
@@ -1668,11 +1669,11 @@ cat > /usr/local/etc/xray/xvmess.json << END
      ]
   },
       "streamSettings": {
-        "network": "gun",
+        "network": "grpc",
         "security": "none",
-        "gunSettings": {
-              "acceptProxyProtocol": true,
-              "serviceName": "/gandringgrpc"
+        "grpcSettings": {
+          "acceptProxyProtocol": true,
+          "path": "/gandringgrpc"
            }
         }
     },
@@ -1695,8 +1696,8 @@ cat > /usr/local/etc/xray/xvmess.json << END
                 "network": "ws",
                 "security": "none",
                 "wsSettings": {
-                    "acceptProxyProtocol": true,
-                    "path": "/wisnu"
+                  "acceptProxyProtocol": true,
+                  "path": "/wisnu"
                 }
             }
         },
@@ -1719,8 +1720,8 @@ cat > /usr/local/etc/xray/xvmess.json << END
                 "network": "http",
                 "security": "none",
                 "httpSettings": {
-                    "acceptProxyProtocol": true,
-                    "path": "/wisnuhttp"
+                  "acceptProxyProtocol": true,
+                  "path": "/wisnuhttp"
                 }
             }
         },
@@ -1740,13 +1741,13 @@ cat > /usr/local/etc/xray/xvmess.json << END
                 "decryption": "none"
             },
             "streamSettings": {
-                "network": "gun",
-                "security": "none",
-                "gunSettings": {
-                    "acceptProxyProtocol": true,
-                    "serviceName": "/wisnugrpc"
-                }
+            "network": "grpc",
+            "security": "none",
+            "grpcSettings": {
+              "acceptProxyProtocol": true,
+              "serviceName": "/wisnugrpc"
             }
+          }
         },
         {
             "port": 1380,
@@ -1793,13 +1794,13 @@ cat > /usr/local/etc/xray/xvmess.json << END
                 ]
             },
             "streamSettings": {
-                "network": "ws",
-                "security": "none",
-                "wsSettings": {
-                    "acceptProxyProtocol": true,
-                    "path": "/shanum"
-                }
-        }
+             "network": "ws",
+             "security": "none",
+              "wsSettings": {
+                "acceptProxyProtocol": true,
+                "path": "/shanum"
+            }
+       }
   },
   {
             "port": 1400,
@@ -1816,13 +1817,13 @@ cat > /usr/local/etc/xray/xvmess.json << END
                 ]
             },
             "streamSettings": {
-                "network": "http",
-                "security": "none",
-                "httpSettings": {
-                "acceptProxyProtocol": true,
-                    "path": "/shanumhttp"
-                }
-        }
+             "network": "http",
+             "security": "none",
+             "httpSettings": {
+               "acceptProxyProtocol": true,
+               "path": "/shanumhttp"
+            }
+       }
   },
   {
             "port": 1410,
@@ -1839,13 +1840,13 @@ cat > /usr/local/etc/xray/xvmess.json << END
                 ]
             },
             "streamSettings": {
-                "network": "gun",
-                "security": "none",
-                "gunSettings": {
-                    "acceptProxyProtocol": true,
-                    "gun": "/shanumgrpc"
-                }
-        }
+             "network": "grpc",
+             "security": "none",
+             "grpcSettings": {
+               "acceptProxyProtocol": true,
+               "path": "/shanumgrpc"
+            }
+       }
   },
   {
       "port": 1420,
