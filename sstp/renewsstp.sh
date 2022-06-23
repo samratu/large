@@ -47,10 +47,12 @@ exp4=`date -d "$exp3 days" +"%Y-%m-%d"`
 sed -i "s/### $user $exp/### $user $exp4/g" /var/lib/wisnucs/data-user-sstp
 clear
 echo ""
-echo "========================"
-echo "  SSTP Account Renewed  "
-echo "========================"
-echo "Username  : $user"
-echo "Expired   : $exp4"
-echo "========================"
-echo "Script By @zerossl"
+echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo " Perpanjangan Akun SSTP "
+echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo " Client Name : $user"
+echo " Expired On  : $exp4"
+echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo ""
+read -n 1 -s -r -p "Press any key to back on menu"
+menu
