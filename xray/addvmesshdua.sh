@@ -45,7 +45,7 @@ sed -i '/#vmess-hdua$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 #sed -i '/#none$/a\### '"$user $exp"'\
 #},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
-cat>/etc/xray/vmess-$user-tls.json<<EOF
+cat>/etc/xray/vmess-hdua-$user-tls.json<<EOF
       {
       "v": "0",
       "ps": "🔰VMESS H2C TLS ${user}",
@@ -64,8 +64,8 @@ vmesshdua=$( base64 -w 0 <<< $vmess_json1)
 #vmess_base642=$( base64 -w 0 <<< $vmess_json2)
 vmesshdua="vmess://$(base64 -w 0 /etc/xray/vmess-$user-tls.json)"
 #vmessgrpclink2="vmess://$(base64 -w 0 /etc/xray/$user-none.json)"
-rm -rf /etc/xray/vmess-$user-tls.json
-rm -rf /etc/xray/vmess-$user-nontls.json
+rm -rf /etc/xray/vmess-hdua-$user-tls.json
+rm -rf /etc/xray/vmess-hdua-$user-nontls.json
 
 systemctl daemon-reload
 systemctl restart xvless
