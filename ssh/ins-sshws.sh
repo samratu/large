@@ -75,7 +75,7 @@ elif [[ "$num" = "2" ]]; then
 stop
 else
 clear
-ssh-menu
+menu
 fi
 read -n 1 -s -r -p "Press any key to back on menu"
 
