@@ -382,13 +382,17 @@ socket = a:SO_REUSEADDR=1
 socket = l:TCP_NODELAY=1
 socket = r:TCP_NODELAY=1
 
+[wsstunennel]
+accept = 2087
+connect = 127.0.0.1:80
+
 [dropbear]
 accept = 600
 connect = 127.0.0.1:300
 
 [openssh]
 accept = 500
-connect = 127.0.0.1:2087
+connect = 127.0.0.1:23
 
 [openvpn]
 accept = 990
