@@ -53,7 +53,7 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "port": "${vmhdua}",
       "id": "${uuid}",
       "aid": "0",
-      "net": "h2",
+      "net": "http",
       "path": "/shanumhttp",
       "type": "none",
       "host": "",
