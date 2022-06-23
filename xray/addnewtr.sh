@@ -104,7 +104,7 @@ echo -e "### $user $exp" >> /etc/trojan-go/akun.conf
 systemctl restart trojan-go.service
 trojango="trojan-go://${uuid}@${domain}:${trgo}/?sni=${domain}&type=ws&host=${domain}&path=/gandring&encryption=none#%F0%9F%94%B0TROJAN+GO+$user"
 trojanhdua="trojan://${uuid}@${domain}:$thdua?sni=jambualas.net&type=http&security=tls&path=/gandringhttp#%F0%9F%94%B0TROJAN+H2C+${user}"
-trojangrpc="trojan://${uuid}@${domain}:$tgrpc?mode=gun&security=tls&type=grpc&serviceName=/gandringgrpc&sni=${domain}#%F0%9F%94%B0TROJAN+GRPC+${user}"
+trojangrpc="trojan://${uuid}@${domain}:$tgrpc?mode=gun&security=tls&type=gun&serviceName=/gandringgrpc&sni=${domain}#%F0%9F%94%B0TROJAN+GRPC+${user}"
 trojanxtls="trojan://${uuid}@${domain}:$txtls?sni=kimcil.kepolen.com&security=xtls&type=tcp&headerType=none&flow=xtls-rprx-splice-udp443#%F0%9F%94%B0TROJAN+XTLS+${user}"
 trojangfw="trojan://$uuid@$domain:$tgfw?sni=pemetikbunga.com&type=tcp&security=tls&headerType=none#%F0%9F%94%B0TROJAN+GFW+$user"
 trojantls="trojan://${uuid}@${domain}:$ttls?type=ws&security=tls&host=$domain&path=%2fgandring&sni=$domain#%F0%9F%94%B0TROJAN+WS+TLS+${user}"
