@@ -325,7 +325,7 @@ RUN=yes
 # systemd users: don't forget to modify /lib/systemd/system/sslh.service
 DAEMON=/usr/sbin/sslh
 
-DAEMON_OPTS="--user sslh --listen 0.0.0.0:2087 --ssh 127.0.0.1:22 --ssl 127.0.0.1:500 --ssh 127.0.0.1:300 --openvpn 127.0.0.1:1194 --http 127.0.0.1:80 --pidfile /var/run/sslh/sslh.pid"
+DAEMON_OPTS="--user sslh --listen 0.0.0.0:1443 --ssh 127.0.0.1:22 --ssl 127.0.0.1:500 --ssh 127.0.0.1:300 --openvpn 127.0.0.1:1194 --http 127.0.0.1:2086 --pidfile /var/run/sslh/sslh.pid"
 
 END
 
@@ -382,9 +382,9 @@ socket = a:SO_REUSEADDR=1
 socket = l:TCP_NODELAY=1
 socket = r:TCP_NODELAY=1
 
-[wsstunennel]
+[ws-tls]
 accept = 2087
-connect = 127.0.0.1:80
+connect = 127.0.0.1:1443
 
 [dropbear]
 accept = 600
@@ -392,7 +392,7 @@ connect = 127.0.0.1:300
 
 [openssh]
 accept = 500
-connect = 127.0.0.1:23
+connect = 127.0.0.1:22
 
 [openvpn]
 accept = 990
