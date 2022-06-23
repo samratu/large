@@ -17,6 +17,8 @@ MYIP6=$(wget -qO- https://ipv6.icanhazip.com);
 clear
 Password=$Username
 domain=$(cat /etc/xray/domain)
+vmgrpc="$(cat ~/log-install.txt | grep -w "VMESS GRPC TLS" | cut -d: -f2|sed 's/ //g')"
+vmhdua="$(cat ~/log-install.txt | grep -w "VMESS H2C TLS" | cut -d: -f2|sed 's/ //g')"
 vmhttp="$(cat ~/log-install.txt | grep -w "VMESS HTTP TLS" | cut -d: -f2|sed 's/ //g')"
 vmhttpnon="$(cat ~/log-install.txt | grep -w "VMESS HTTP NON TLS" | cut -d: -f2|sed 's/ //g')"
 tls="$(cat ~/log-install.txt | grep -w "VMESS WS TLS" | cut -d: -f2|sed 's/ //g')"
@@ -98,19 +100,26 @@ sed -i '/#vless-tls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#vless-http-tls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
-
+sed -i '/#vless-grpc-tls$/a\#### '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
+sed -i '/#vless-hdua$/a\#### '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#trojan-tls$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#trojan-gfw$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#trojan-http-tls$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
-
+sed -i '/#trojan-hdua$/a\#&# '"$user $exp"'\
+},{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
+sed -i '/#trojan-grpc-tls$/a\#&# '"$user $exp"'\
+},{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#vmess-tls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'"' /usr/local/etc/xray/xvmess.json
+
 cat>/etc/xray/vmess-$user-tls.json<<EOF
       {
-      "v": "2",
+      "v": "5",
       "ps": "🔰VMESS WS TLS ${user}",
       "add": "${domain}",
       "port": "${tls}",
@@ -127,11 +136,32 @@ vmess_base641=$( base64 -w 0 <<< $vmess_json1)
 vmess1="vmess://$(base64 -w 0 /etc/xray/vmess-$user-tls.json)"
 rm -rf /etc/xray/vmess-$user-tls.json
 
+sed -i '/#vmess-grpc-tls$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'"' /usr/local/etc/xray/xvmess.json
+cat>/etc/xray/vmess-grpc-$user-tls.json<<EOF
+      {
+      "v": "5",
+      "ps": "🔰VMESS HTTP TLS ${user}",
+      "add": "${domain}",
+      "port": "${vmgrpc}",
+      "id": "${uuid}",
+      "aid": "0",
+      "net": "grpc",
+      "path": "/shanumgrpc",
+      "type": "none",
+      "host": "${domain}",
+      "tls": "tls"
+}
+EOF
+vmessgrpc_base641=$( base64 -w 0 <<< $vmess_json1)
+vmessgrpc="vmess://$(base64 -w 0 /etc/xray/vmess-$user-tls.json)"
+rm -rf /etc/xray/vmess-$user-tls.json
+
 sed -i '/#vmess-http-tls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'"' /usr/local/etc/xray/xvmess.json
-cat>/etc/xray/vmess-$user-tls.json<<EOF
+cat>/etc/xray/vmess-http-$user-tls.json<<EOF
       {
-      "v": "2",
+      "v": "5",
       "ps": "🔰VMESS HTTP TLS ${user}",
       "add": "${domain}",
       "port": "${vmhttp}",
@@ -139,14 +169,35 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "aid": "0",
       "net": "tcp",
       "path": "/shanumtcp",
-      "type": "http",
+      "type": "none",
       "host": "${domain}",
       "tls": "tls"
 }
 EOF
 vmesshttp_base641=$( base64 -w 0 <<< $vmess_json1)
 vmesshttp="vmess://$(base64 -w 0 /etc/xray/vmess-$user-tls.json)"
-rm -rf /etc/xray/vmess-$user-tls.json
+rm -rf /etc/xray/vmess-http-$user-tls.json
+
+sed -i '/#vmess-hdua$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'"' /usr/local/etc/xray/xvmess.json
+cat>/etc/xray/vmess-hdua-$user-tls.json<<EOF
+      {
+      "v": "5",
+      "ps": "🔰VMESS H2C TLS ${user}",
+      "add": "${domain}",
+      "port": "${vmhdua}",
+      "id": "${uuid}",
+      "aid": "0",
+      "net": "http",
+      "path": "/shanumhttp",
+      "type": "none",
+      "host": "",
+      "tls": "tls"
+}
+EOF
+vmesshdua_base641=$( base64 -w 0 <<< $vmess_json1)
+vmesshdua="vmess://$(base64 -w 0 /etc/xray/vmess-$user-tls.json)"
+rm -rf /etc/xray/vmess-hdua-$user-tls.json
 
 vlesshttpnon="vless://${uuid}@${domain}:$vlhttpnon?host=${domain}&security=none&type=tcp&headerType=http&encryption=none#%F0%9F%94%B0VLESS+HTTP+NONTLS+${user}"
 vlesshttp="vless://${uuid}@${domain}:$vlhttp?sni=${domain}&host=${domain}&type=tcp&security=tls&path=/wisnutcp&headerType=http&encryption=none#%F0%9F%94%B0VLESS+HTTP+TLS+${user}"
@@ -162,7 +213,8 @@ trojanxtls="trojan://${uuid}@${domain}:$txtls?security=xtls&type=tcp&headerType=
 trojangfw="trojan://$uuid@$domain:$tgfw?type=tcp&security=tls&headerType=none#%F0%9F%94%B0TROJAN+GFW+TLS+$user"
 trojantls="trojan://${uuid}@${domain}:$ttls?type=ws&security=tls&host=$domain&path=%2fgandring&sni=$domain#%F0%9F%94%B0TROJAN+WS+TLS+$user"
 trojanhttp="trojan://${uuid}@${domain}:$thttp?sni=${domain}&type=tcp&security=tls&host=$domain&path=/gandringtcp&headerType=http#%F0%9F%94%B0TROJAN+HTTP+TLS+${user}"
-
+trojanhdua="trojan://$uuid@$domain:$thttp?sni=angilangilgamping.com&type=http&security=tls&path=%2Fgandringhttp#%F0%9F%94%B0TROJAN+H2C+TLS+$user"
+trojangrpc="trojan://$uuid@$domain:$tgrpc?serviceName=/gandringgrpc&sni=$domain&mode=gun&security=tls&type=grpc#%F0%9F%94%B0TROJAN+GRPC+TLS+$user"
 systemctl restart xvless.service
 systemctl restart xray.service
 systemctl restart xtrojan.service
