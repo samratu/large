@@ -57,30 +57,30 @@ sed -i '/#vmess-grpc-tls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#vmess-grpc-nontls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
-cat>/etc/xray/vmess-$user-tls.json<<EOF
+cat>/etc/xray/vmess-grpc-$user-tls.json<<EOF
       {
-      "v": "2",
+      "v": "5",
       "ps": "🔰VMESS GRPC TLS ${user}",
       "add": "${domain}",
       "port": "${vmgrpc}",
       "id": "${uuid}",
       "aid": "0",
-      "net": "gun",
+      "net": "grpc",
       "path": "/shanumgrpc",
       "type": "none",
       "host": "${domain}",
       "tls": "tls"
 }
 EOF
-cat>/etc/xray/vmess-$user-nontls.json<<EOF
+cat>/etc/xray/vmess-grpc-$user-nontls.json<<EOF
       {
-      "v": "2",
+      "v": "5",
       "ps": "🔰VMESS GRPC NONTLS ${user}",
       "add": "${domain}",
       "port": "${vmgrpcnon}",
       "id": "${uuid}",
       "aid": "0",
-      "net": "gun",
+      "net": "grpc",
       "path": "/shanumgrpc",
       "type": "none",
       "sni": "${domain}",
@@ -91,6 +91,8 @@ vmessgrpc_base641=$( base64 -w 0 <<< vmess_json1)
 vmessgrpcnon_base642=$( base64 -w 0 <<< $vmess_json2)
 vmessgrpc="vmess://$(base64 -w 0 /etc/xray/vmess-$user-tls.json)"
 vmessgrpcnon="vmess://$(base64 -w 0 /etc/xray/vmess-$user-nontls.json)"
+
+
 systemctl restart xvless
 systemctl restart xray
 systemctl restart xvmess
