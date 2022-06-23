@@ -83,7 +83,7 @@ cat>/etc/xray/vmess-grpc-$user-nontls.json<<EOF
       "net": "grpc",
       "path": "/shanumgrpc",
       "type": "none",
-      "sni": "${domain}",
+      "host": "${domain}",
       "tls": "none"
 }
 EOF
@@ -92,7 +92,8 @@ vmessgrpcnon_base642=$( base64 -w 0 <<< $vmess_json2)
 vmessgrpc="vmess://$(base64 -w 0 /etc/xray/vmess-$user-tls.json)"
 vmessgrpcnon="vmess://$(base64 -w 0 /etc/xray/vmess-$user-nontls.json)"
 
-
+rm -rf /etc/xray/vmess-grpc-$user-tls.json
+rm -rf /etc/xray/vmess-grpc-$user-nontls.json
 systemctl restart xvless
 systemctl restart xray
 systemctl restart xvmess
