@@ -55,7 +55,7 @@ sed -i '/#vmess-http-nontls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /usr/local/etc/xray/satrio.json
 sed -i '/#vmess-http-nontls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
-cat>/etc/xray/vmess-$user-tls.json<<EOF
+cat>/etc/xray/vmess-http-$user-tls.json<<EOF
       {
       "v": "2",
       "ps": "🔰VMESS HTTP TLS ${user}",
@@ -70,7 +70,7 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "tls": "tls"
 }
 EOF
-cat>/etc/xray/vmess-$user-nontls.json<<EOF
+cat>/etc/xray/vmess-http-$user-nontls.json<<EOF
       {
       "v": "2",
       "ps": "🔰VMESS HTTP NONTLS ${user}",
@@ -89,8 +89,8 @@ vmesshttp_base641=$( base64 -w 0 <<< $vmess_json1)
 vmesshttp_base642=$( base64 -w 0 <<< $vmess_json2)
 vmesshttp="vmess://$(base64 -w 0 /etc/xray/vmess-$user-tls.json)"
 vmesshttpnon="vmess://$(base64 -w 0 /etc/xray/vmess-$user-nontls.json)"
-rm -rf /etc/xray/vmess-$user-tls.json
-rm -rf /etc/xray/vmess-$user-nontls.json
+rm -rf /etc/xray/vmess-http-$user-tls.json
+rm -rf /etc/xray/vmess-http-$user-nontls.json
 systemctl restart satrio
 systemctl restart  xvmess
 systemctl restart xray
