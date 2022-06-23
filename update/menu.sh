@@ -69,7 +69,7 @@ setmenu
 ;;
 0)
 clear
-exit
+status
 ;;
 k)
 clear
