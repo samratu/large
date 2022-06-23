@@ -178,13 +178,12 @@ echo " 🔰 Autoreboot On 04.00 GMT +7"                             |tee -a log-
 echo " 🔰 Autobackup Data"                                        |tee -a log-install.txt
 echo " 🔰 Restore Data"                                           |tee -a log-install.txt
 echo " 🔰 Auto Delete Expired Account"                            |tee -a log-install.txt
-echo " 🔰 NGUTER,CENTRAL JAVA,INDONESIA"                          |tee -a log-install.txt
+echo " 🔰 NGUTER CENTRAL JAVA INDONESIA"                          |tee -a log-install.txt
 echo " 🔰 Editing and Scan Typo by GANDRING"                      |tee -a log-install.txt
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\E[44;1;41m           🔰 SOLO THE SPIRIT OF JAVA 🔰            \E[0m"
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo " 🔰 Installation Log --> /root/log-install.txt"             |tee -a log-install.txt
 echo " Reboot 5 Sec"
-sleep 1
 rm -f setup.sh
 reboot
