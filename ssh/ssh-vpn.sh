@@ -388,7 +388,7 @@ connect = 127.0.0.1:1443
 
 [dropbear]
 accept = 600
-connect = 127.0.0.1:300
+connect = 127.0.0.1:200
 
 [openssh]
 accept = 500
