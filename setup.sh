@@ -174,14 +174,14 @@ echo " 🔰 Dflate                  : [ON]"                         |tee -a log-
 echo " 🔰 IPtables                : [ON]"                         |tee -a log-install.txt
 echo " 🔰 Auto-Reboot             : [ON]"                         |tee -a log-install.txt
 echo " 🔰 IPv6                    : [OFF]"                        |tee -a log-install.txt
-echo "   - Autoreboot On 05.00 GMT +7" | tee -a log-install.txt
-echo "   - Autobackup Data" | tee -a log-install.txt
-echo "   - Restore Data" | tee -a log-install.txt
-echo "   - Auto Delete Expired Account" | tee -a log-install.txt
-echo "   - Full Orders For Various Services" | tee -a log-install.txt
-echo "   - White Label" | tee -a log-install.txt
-echo "   - Installation Log --> /root/log-install.txt"  | tee -a log-install.txt
-echo " Reboot 5 Sec"
-sleep 1
+echo " 🔰 Autoreboot On 05.00 GMT +7" | tee -a log-install.txt
+echo " 🔰 Autobackup Data" | tee -a log-install.txt
+echo " 🔰 Restore Data" | tee -a log-install.txt
+echo " 🔰 Auto Delete Expired Account" | tee -a log-install.txt
+echo " 🔰 Full Orders For Various Services" | tee -a log-install.txt
+echo " 🔰 White Label" | tee -a log-install.txt
+echo " 🔰 Installation Log --> /root/log-install.txt"  | tee -a log-install.txt
+reboot 5 Sec
+sleep 5
 rm -f setup.sh
 reboot
