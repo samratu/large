@@ -51,7 +51,7 @@ fi
 function stop() {
 PID=`ps -ef |grep -v grep | grep sshws |awk '{print $2}'`
 if [[ ! -z "${PID}" ]]; then
-systemctl stop scvpssshws.service
+systemctl stop sshws.service
 tmux kill-session -t sshws
 sed -i "/SSH Websocket/c\   - SSH Websocket           : $portsshws [OFF]" /root/log-install.txt
 echo -e "${red}SSH Websocket Stopped${NC}"
