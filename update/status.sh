@@ -26,7 +26,7 @@ declare ingfo=()
 #=====================================
 status01=$(systemctl status dropbear         | grep -i "active (running)")
 status02=$(systemctl status sshd             | grep -i "active (running)")
-status03=$(systemctl status stunnel5         | grep -i "active (running)")
+status03=$(systemctl status stunnel         | grep -i "active (running)")
 status04=$(systemctl status openvpn          | grep -i "active (exited)")
 status05=$(systemctl status dropbear-ohp     | grep -i "active (running)")
 status06=$(systemctl status openvpn-ohp      | grep -i "active (running)")
@@ -40,7 +40,7 @@ status13=$(systemctl status squid            | grep -i "active (running)")
 status14=$(systemctl status cron             | grep -i "active (running)")
 status15=$(systemctl status fail2ban         | grep -i "active (running)")
 status16=$(systemctl status vnstat           | grep -i "active (running)")
-status17=$(systemctl status sslh             | grep -i "active (running)")
+status17=$(systemctl status ws-tls           | grep -i "active (running)")
 status18=$(systemctl status privoxy          | grep -i "active (running)")
 status19=$(systemctl status ws-tls           | grep -i "active (running)")
 status19=$(systemctl status ws-nontls        | grep -i "active (running)")
@@ -104,7 +104,7 @@ else
 fi
 if [[ $status03 == "" ]]; then
       sstatus03=$ERROR
-      ingfo+=("STUNNEL5")
+      ingfo+=("STUNNEL")
       dahlah+=("err3")
 else
       sstatus03=$AKTIF
@@ -719,4 +719,3 @@ echo -e "  ⚠️ JUMLAH LAYANAN RUNNING TROUBLE [ ${red}$jumlah_error${off} ]"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\E[43;1;46m             🔰 LUXURY EDITION ZEROSSL 🔰               \E[0m"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e ""
