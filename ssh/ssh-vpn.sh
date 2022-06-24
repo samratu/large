@@ -36,12 +36,12 @@ source /etc/os-release
 ver=$VERSION_ID
 
 #detail nama perusahaan
-country=US
-state=California
-locality=San-Fransisco
-organization=Cloudflare
-organizationalunit=www.cloudflare.com
-commonname=Cloudflare-Inc.
+country=ID
+state=Jawa-Tengah
+locality=SURAKARTA
+organization=GANDRING
+organizationalunit=GANDRING Inc.
+commonname=GANDRING
 email=djarumpentol01@gmail.com
 
 # simple password minimal
@@ -323,7 +323,7 @@ socket = r:TCP_NODELAY=1
 
 [dropbear]
 accept = 600
-connect = 127.0.0.1:200
+connect = 127.0.0.1:300
 
 [openssh]
 accept = 500
@@ -332,6 +332,10 @@ connect = 127.0.0.1:1443
 [openvpn]
 accept = 990
 connect = 127.0.0.1:1194
+
+[stunnelws]
+accept = 2087
+connect = 127.0.0.1:200
 
 END
 
@@ -781,8 +785,8 @@ chown -R www-data:www-data /home/vps/public_html
 /etc/init.d/ssh restart
 /etc/init.d/dropbear restart
 /etc/init.d/fail2ban restart
-#/etc/init.d/sslh restart
-/etc/init.d/stunnel4 restart
+/etc/init.d/sslh restart
+/etc/init.d/stunnel5 restart
 /etc/init.d/vnstat restart
 #/etc/init.d/fail2ban restart
 #/etc/init.d/squid restart
