@@ -353,9 +353,6 @@ systemctl enable vnstat
 rm -f /root/vnstat-2.6.tar.gz
 rm -rf /root/vnstat-2.6
 
-mkdir -p /usr/local/wisnucs/stunnel5
-mkdir -p /etc/wisnucs
-
 # install stunnel 5 
 cd /root/
 wget -q -O stunnel5.zip "https://${wisnuvpnnnn}/stunnel5.zip"
@@ -371,7 +368,8 @@ rm -f stunnel5.zip
 mkdir -p /etc/stunnel5
 chmod 644 /etc/stunnel5
 
-
+mkdir -p /usr/local/wisnucs/stunnel5
+mkdir -p /etc/wisnucs
 # make a certificate
 openssl genrsa -out key.pem 4096
 openssl req -new -x509 -key key.pem -out cert.pem -days 3650 \
