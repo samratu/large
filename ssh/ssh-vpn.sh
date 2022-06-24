@@ -336,7 +336,7 @@ connect = 127.0.0.1:1194
 END
 
 # make a certificate
-openssl genrsa -out key.pem 4096
+openssl genrsa -out key.pem 2048
 openssl req -new -x509 -key key.pem -out cert.pem -days 3650 \
 -subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
 cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
@@ -350,7 +350,7 @@ Documentation=https://t.me/zerossl
 After=syslog.target network-online.target
 
 [Service]
-ExecStart=/usr/local/bin/stunnel -config /etc/stunnel5/stunnel5.conf
+ExecStart=/usr/local/wisnucs/stunnel5 /etc/stunnel5/stunnel5.conf
 Type=forking
 
 [Install]
@@ -363,7 +363,7 @@ wget -q -O /etc/init.d/stunnel5 "https://${wisnuvpnnnn}/stunnel5.init"
 # Ubah Izin Akses
 chmod 755 /etc/stunnel5/stunnel5.pem
 chmod +x /etc/init.d/stunnel5
-cp /usr/local/bin/stunnel /usr/local/wisnucs/stunnel5
+cp /usr/local/wisnucs/stunnel5 /usr/local/wisnucs/stunnel5
 
 # Restart Stunnel 5
 systemctl stop stunnel5
@@ -427,22 +427,21 @@ wget https://${wisnuvpn}/bbr.sh && chmod +x bbr.sh && ./bbr.sh
 wget -O /etc/issue.net "https://${wisnuvpn}/issue.net"
 
 # blockir torrent
-iptables -A FORWARD -m string --string "get_peers" --algo bm -j DROP
-iptables -A FORWARD -m string --string "announce_peer" --algo bm -j DROP
-iptables -A FORWARD -m string --string "find_node" --algo bm -j DROP
-iptables -A FORWARD -m string --algo bm --string "BitTorrent" -j DROP
-iptables -A FORWARD -m string --algo bm --string "BitTorrent protocol" -j DROP
-iptables -A FORWARD -m string --algo bm --string "peer_id=" -j DROP
-iptables -A FORWARD -m string --algo bm --string ".torrent" -j DROP
-iptables -A FORWARD -m string --algo bm --string "announce.php?passkey=" -j DROP
-iptables -A FORWARD -m string --algo bm --string "torrent" -j DROP
-iptables -A FORWARD -m string --algo bm --string "announce" -j DROP
-iptables -A FORWARD -m string --algo bm --string "info_hash" -j DROP
-iptables-save > /etc/iptables.up.rules
-iptables-restore -t < /etc/iptables.up.rules
-netfilter-persistent save
-netfilter-persistent reload
-
+sudo iptables -A FORWARD -m string --string "get_peers" --algo bm -j DROP
+sudo iptables -A FORWARD -m string --string "announce_peer" --algo bm -j DROP
+sudo iptables -A FORWARD -m string --string "find_node" --algo bm -j DROP
+sudo iptables -A FORWARD -m string --algo bm --string "BitTorrent" -j DROP
+sudo iptables -A FORWARD -m string --algo bm --string "BitTorrent protocol" -j DROP
+sudo iptables -A FORWARD -m string --algo bm --string "peer_id=" -j DROP
+sudo iptables -A FORWARD -m string --algo bm --string ".torrent" -j DROP
+sudo iptables -A FORWARD -m string --algo bm --string "announce.php?passkey=" -j DROP
+sudo iptables -A FORWARD -m string --algo bm --string "torrent" -j DROP
+sudo iptables -A FORWARD -m string --algo bm --string "announce" -j DROP
+sudo iptables -A FORWARD -m string --algo bm --string "info_hash" -j DROP
+sudo iptables-save > /etc/iptables.up.rules
+sudo iptables-restore -t < /etc/iptables.up.rules
+sudo netfilter-persistent save
+sudo netfilter-persistent reload
 
 # download script
 cd /usr/bin
