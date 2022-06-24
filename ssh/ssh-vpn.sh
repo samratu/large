@@ -370,7 +370,7 @@ rm -f stunnel5.zip
 mkdir -p /etc/stunnel
 chmod 644 /etc/stunnel
 
-apt install stunnel -y
+apt install stunnel4 -y
 # make a certificate
 openssl genrsa -out key.pem 4096
 openssl req -new -x509 -key key.pem -out cert.pem -days 3650 \
@@ -378,15 +378,15 @@ openssl req -new -x509 -key key.pem -out cert.pem -days 3650 \
 cat key.pem cert.pem >> /etc/stunnel/stunnel.pem
 cat /etc/ssl/private/privkey.pem /etc/ssl/private/fullchain.pem >> /etc/stunnel5/stunnel5.pem
 # Service Stunnel5 systemctl restart stunnel5
-cat > /etc/systemd/system/stunnel.service << END
+cat > /etc/systemd/system/stunnel4.service << END
 [Unit]
-Description=Stunnel Service
+Description=Stunnel4 Service
 Documentation=https://stunnel.org
 Documentation=https://t.me/zerossl
 After=syslog.target network-online.target
 
 [Service]
-ExecStart=/usr/local/wisnucs/stunnel /etc/stunnel/stunnel.conf
+ExecStart=/usr/local/wisnucs/stunnel4 /etc/stunnel/stunnel.conf
 Type=forking
 
 [Install]
@@ -398,17 +398,17 @@ END
 
 # Ubah Izin Akses
 chmod 755 /etc/stunnel/stunnel.pem
-chmod +x /etc/init.d/stunnel
-cp /usr/local/bin/stunnel /usr/local/wisnucs/stunnel
+chmod +x /etc/init.d/stunnel4
+cp /usr/local/bin/stunnel4 /usr/local/wisnucs/stunnel4
 
 # Restart Stunnel 5
-systemctl stop stunnel
-systemctl enable stunnel
-systemctl start stunnel
-systemctl restart stunnel
-/etc/init.d/stunnel restart
-/etc/init.d/stunnel status
-/etc/init.d/stunnel restart
+systemctl stop stunnel4
+systemctl enable stunnel4
+systemctl start stunnel4
+systemctl restart stunnel4
+/etc/init.d/stunnel restart4
+/etc/init.d/stunnel status4
+/etc/init.d/stunnel restart4
 
 domain_ecc=$(cat /root/.acme.sh)
 domain=$(cat /root/domain)
