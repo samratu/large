@@ -575,7 +575,13 @@ wget -O addnewtr "https://${wisnuvpnn}/addnewtr.sh"
 wget -O addnewvmess "https://${wisnuvpnn}/addnewvmess.sh"
 wget -O addnewvless "https://${wisnuvpnn}/addnewvless.sh"
 wget -O addxtreme "https://${wisnuvpnn}/addxtreme.sh"
+wget -O addvmesskcp "https://${wisnuvpnn}/addvmesskcp.sh"
+wget -O addvlesskcp "https://${wisnuvpnn}/addvlesskcp.sh"
+wget -O addtrojankcp "https://${wisnuvpnn}/addtrojankcp.sh"
 
+wget -O delvmesskcp "https://${wisnuvpnn}/delvmesskcp.sh"
+wget -O delvlesskcp "https://${wisnuvpnn}/delvlesskcp.sh"
+wget -O deltrojankcp "https://${wisnuvpnn}/deltrojankcp.sh"
 wget -O delxrayss "https://${wisnuvpnn}/delxrayss.sh"
 wget -O delvmess "https://${wisnuvpnn}/delvmess.sh"
 wget -O delnewvmess "https://${wisnuvpnn}/delnewvmess.sh"
@@ -598,6 +604,9 @@ wget -O deltrojanhdua "https://${wisnuvpnn}/deltrojanhdua.sh"
 wget -O deltrojanhttp "https://${wisnuvpnn}/deltrojanhttp.sh"
 wget -O delxtreme "https://${wisnuvpnn}/delxtreme.sh"
 
+wget -O cekvmesskcp "https://${wisnuvpnn}/cekvmesskcp.sh"
+wget -O cekvlesskcp "https://${wisnuvpnn}/cekvlesskcp.sh"
+wget -O cektrojankcp "https://${wisnuvpnn}/cektrojankcp.sh"
 wget -O cekvmess "https://${wisnuvpnn}/cekvmess.sh"
 wget -O cekvmessgrpc "https://${wisnuvpnn}/cekvmessgrpc.sh"
 wget -O cekvmesshdua "https://${wisnuvpnn}/cekvmesshdua.sh"
@@ -617,6 +626,9 @@ wget -O ceknewtr "https://${wisnuvpnn}/ceknewtr.sh"
 wget -O cekxrayss "https://${wisnuvpnn}/cekxrayss.sh"
 wget -O cektrojanhdua "https://${wisnuvpnn}/cektrojanhdua.sh"
 
+wget -O renewvmesskcp "https://${wisnuvpnn}/renewvmesskcp.sh"
+wget -O renewvlesskcp "https://${wisnuvpnn}/renewvlesskcp.sh"
+wget -O renewtrojankcp "https://${wisnuvpnn}/renewtrojankcp.sh"
 wget -O renewxrayss "https://${wisnuvpnn}/renewxrayss.sh"
 wget -O renewvmess "https://${wisnuvpnn}/renewvmess.sh"
 wget -O renewvmessgrpc "https://${wisnuvpnn}/renewvmessgrpc.sh"
@@ -745,6 +757,9 @@ chmod +x addtrojanhttp
 chmod +x addtrojanhdua
 chmod +x renewxrayss
 chmod +x addxtreme
+chmod +x addvmesskcp
+chmod +x addvlesskcp
+chmod +x addtrojankcp
 
 chmod +x delxtreme
 chmod +x cekxrayss
@@ -765,6 +780,9 @@ chmod +x delgrpctrojan
 chmod +x deltrojanwss
 chmod +x deltrojanhttp
 chmod +x deltrojanhdua
+chmod +x delvmesskcp
+chmod +x delvlesskcp
+chmod +x deltrojankcp
 
 chmod +x renewvmess
 chmod +x renewvmessgrpc
@@ -782,7 +800,13 @@ chmod +x renewgrpctrojan
 chmod +x renewtrojanwss
 chmod +x renewtrojanhttp
 chmod +x renewtrojanhdua
+chmod +x renewvmesskcp
+chmod +x renewtrojankcp
+chmod +x renewvlesskcp
 
+chmod +x cekvmesskcp
+chmod +x cektrojankcp
+chmod +x cekvlesskcp
 chmod +x cekvmesshdua
 chmod +x cekvmesshttp
 chmod +x cekvlesshttp
@@ -824,8 +848,8 @@ chown -R www-data:www-data /home/vps/public_html
 /etc/init.d/ssh restart
 /etc/init.d/dropbear restart
 /etc/init.d/fail2ban restart
-/etc/init.d/sslh restart
-/etc/init.d/stunnel5 restart
+#/etc/init.d/sslh restart
+/etc/init.d/stunnel4 restart
 /etc/init.d/vnstat restart
 #/etc/init.d/fail2ban restart
 #/etc/init.d/squid restart
