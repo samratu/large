@@ -167,12 +167,15 @@ netfilter-persistent save
 netfilter-persistent reload
 
 # Restart service openvpn
+systemctl enable --now openvpn-server@server-tcp-1194 >/dev/null 2>&1
+systemctl enable --now openvpn-server@server-udp-1195 >/dev/null 2>&1
+/etc/init.d/openvpn restart >/dev/null 2>&1
+/etc/init.d/openvpn status >/dev/null 2>&1
 systemctl enable openvpn
 systemctl start openvpn
-/etc/init.d/openvpn restart
 
 cd /home/vps/public_html/
-zip cfg.zip Tcp.ovpn Udp.ovpn SSL.ovpn > /dev/null 2>&1
+zip cfg.zip tcp.ovpn udp.ovpn ssl.ovpn > /dev/null 2>&1
 cd
 cat <<'mySiteOvpn' > /home/vps/public_html/index.html
 <!DOCTYPE html>
