@@ -293,91 +293,41 @@ rm -rf /root/vnstat-2.6
 
 mkdir -p /usr/local/wisnucs
 mkdir -p /etc/wisnucs
-
-# install stunnel 5 
-cd /root/
-wget -q -O stunnel5.zip "https://${wisnuvpnnnn}/stunnel5.zip"
-unzip -o stunnel5.zip
-cd /root/stunnel
-chmod +x configure
-./configure
-make
-make install
-cd /root
-rm -r -f stunnel
-rm -f stunnel5.zip
-mkdir -p /etc/stunnel5
-chmod 644 /etc/stunnel5
-domain_ecc=$(cat /root/.acme.sh)
-domain=$(cat /root/domain)
-fullchain=$(cat /root/.acme.sh/$domain_ecc/fullchain.cer)
-domainkey=$(cat /root/.acme.sh/$domain_ecc/$domain.key)
-#cat $domainkey $fullchain >> etc/stunnel5/stunnel5.pem
-# Download Config Stunnel5
-cat > /etc/stunnel5/stunnel5.conf <<-END
-cert = /etc/stunnel5/stunnel5.pem
+apt install stunnel4 -y
+# install stunnel
+cat > /etc/stunnel/stunnel.conf <<-END
+cert = /etc/stunnel/stunnel.pem
 client = no
 socket = a:SO_REUSEADDR=1
 socket = l:TCP_NODELAY=1
 socket = r:TCP_NODELAY=1
 
 [dropbear]
-accept = 600
-connect = 127.0.0.1:300
-
-[openssh]
 accept = 500
-connect = 127.0.0.1:1443
+connect = 127.0.0.1:200
+
+[dropbear]
+accept = 600
+connect = 127.0.0.1:22
 
 [openvpn]
 accept = 990
 connect = 127.0.0.1:1194
 
 [stunnelws]
-accept = 2087
-connect = 127.0.0.1:200
-
+accept = 222
+connect = 700
 END
 
 # make a certificate
-openssl genrsa -out key.pem 2048
-openssl req -new -x509 -key key.pem -out cert.pem -days 3650 \
--subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
-cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
+openssl genrsa -out key.pem 2048  >/dev/null 2>&1
+openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
+-subj "/C=ID/ST=JAWA-TENGAH/L=SUKOHARJO/O=GANDRING/OU=GANDRING/CN=GANDRING/emailAddress=djarumsuper@gmail.co.id"  >/dev/null 2>&1
+cat key.pem cert.pem >> /etc/stunnel/stunnel.pem
 
-# Service Stunnel5 systemctl restart stunnel5
-cat > /etc/systemd/system/stunnel5.service << END
-[Unit]
-Description=Stunnel5 Service
-Documentation=https://stunnel.org
-Documentation=https://t.me/zerossl
-After=syslog.target network-online.target
-
-[Service]
-ExecStart=/usr/local/wisnucs/stunnel5 /etc/stunnel5/stunnel5.conf
-Type=forking
-
-[Install]
-WantedBy=multi-user.target
-END
-
-# Service Stunnel5 /etc/init.d/stunnel5
-wget -q -O /etc/init.d/stunnel5 "https://${wisnuvpnnnn}/stunnel5.init"
-
-# Ubah Izin Akses
-chmod 755 /etc/stunnel5/stunnel5.pem
-chmod +x /etc/init.d/stunnel5
-cp /usr/local/wisnucs/stunnel5 /usr/local/wisnucs/stunnel5
-
-# Restart Stunnel 5
-systemctl stop stunnel5
-systemctl enable stunnel5
-systemctl start stunnel5
-systemctl restart stunnel5
-/etc/init.d/stunnel5 restart
-/etc/init.d/stunnel5 status
-/etc/init.d/stunnel5 restart
-
+# konfigurasi stunnel
+sed -i 's/ENABLED=0/ENABLED=1/g' /etc/default/stunnel4
+/etc/init.d/stunnel4 restart >/dev/null 2>&1
 #OpenVP
 wget https://${wisnuvpn}/vpn.sh &&  chmod +x vpn.sh && ./vpn.sh
 
@@ -786,7 +736,7 @@ chown -R www-data:www-data /home/vps/public_html
 /etc/init.d/dropbear restart
 /etc/init.d/fail2ban restart
 /etc/init.d/sslh restart
-/etc/init.d/stunnel5 restart
+/etc/init.d/stunnel4 restart
 /etc/init.d/vnstat restart
 #/etc/init.d/fail2ban restart
 #/etc/init.d/squid restart
