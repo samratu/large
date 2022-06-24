@@ -353,34 +353,56 @@ systemctl enable vnstat
 rm -f /root/vnstat-2.6.tar.gz
 rm -rf /root/vnstat-2.6
 
+# mkdir -p /usr/local/wisnucs
+mkdir -p /etc/wisnucs
+
 # install stunnel 5 
 cd /root/
 wget -q -O stunnel5.zip "https://${wisnuvpnnnn}/stunnel5.zip"
 unzip -o stunnel5.zip
-cd /root/stunnel5
+cd /root/stunnel
 chmod +x configure
 ./configure
 make
 make install
 cd /root
-rm -r -f stunnel5
+rm -r -f stunnel
 rm -f stunnel5.zip
 mkdir -p /etc/stunnel5
 chmod 644 /etc/stunnel5
+domain_ecc=$(cat /root/.acme.sh)
+domain=$(cat /root/domain)
+fullchain=$(cat /root/.acme.sh/$domain_ecc/fullchain.cer)
+domainkey=$(cat /root/.acme.sh/$domain_ecc/$domain.key)
+#cat $domainkey $fullchain >> etc/stunnel5/stunnel5.pem
+# Download Config Stunnel5
+cat > /etc/stunnel5/stunnel5.conf <<-END
+cert = /etc/stunnel5/stunnel5.pem
+client = no
+socket = a:SO_REUSEADDR=1
+socket = l:TCP_NODELAY=1
+socket = r:TCP_NODELAY=1
 
-mkdir -p /usr/local/wisnucs/stunnel5
-mkdir -p /etc/wisnucs
+[dropbear]
+accept = 600
+connect = 127.0.0.1:200
+
+[openssh]
+accept = 500
+connect = 127.0.0.1:1443
+
+[openvpn]
+accept = 990
+connect = 127.0.0.1:1194
+
+END
+
 # make a certificate
-openssl genrsa -out key.pem 4096
-openssl req -new -x509 -key key.pem -out cert.pem -days 3650 \
+openssl genrsa -out key.pem 2048
+openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
 -subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
-cat key.pem cert.pem >> /etc/stunnel/stunnel.pem
-cat /etc/ssl/private/privkey.pem /etc/ssl/private/fullchain.pem >> /etc/stunnel5/stunnel5.pem
+cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
 
-# Ubah Izin Akses
-chmod 755 /etc/stunnel5/stunnel5.pem
-chmod +x /etc/init.d/stunnel5
-cp /usr/local/bin/stunnel5 /usr/local/wisnucs/stunnel5
 # Service Stunnel5 systemctl restart stunnel5
 cat > /etc/systemd/system/stunnel5.service << END
 [Unit]
@@ -400,48 +422,22 @@ END
 # Service Stunnel5 /etc/init.d/stunnel5
 wget -q -O /etc/init.d/stunnel5 "https://${wisnuvpnnnn}/stunnel5.init"
 
+# Ubah Izin Akses
+chmod 755 /etc/stunnel5/stunnel5.pem
+chmod +x /etc/init.d/stunnel5
+cp /usr/local/bin/stunnel /usr/local/wisnucs/stunnel5
+
 # Restart Stunnel 5
 systemctl stop stunnel5
-systemctl enable stunnel
+systemctl enable stunnel5
 systemctl start stunnel5
 systemctl restart stunnel5
-/etc/init.d/stunnel restart5
-/etc/init.d/stunnel status5
-/etc/init.d/stunnel restart5
+/etc/init.d/stunnel5 restart
+/etc/init.d/stunnel5 status
+/etc/init.d/stunnel5 restart
 
-domain_ecc=$(cat /root/.acme.sh)
-domain=$(cat /root/domain)
-fullchain=$(cat /root/.acme.sh/$domain_ecc/fullchain.cer)
-domainkey=$(cat /root/.acme.sh/$domain_ecc/$domain.key)
-#cat $domainkey $fullchain >> etc/stunnel5/stunnel5.pem
-# Download Config Stunnel5
-cat > /etc/stunnel5/stunnel5.conf <<-END
-cert = /etc/stunnel5/stunnel5.pem
-client = no
-socket = a:SO_REUSEADDR=1
-socket = l:TCP_NODELAY=1
-socket = r:TCP_NODELAY=1
-
-[stunnelws]
-accept = 2087
-connect = 127.0.0.1:700
-
-[dropbear]
-accept = 600
-connect = 127.0.0.1:200
-
-[openssh]
-accept = 500
-connect = 127.0.0.1:1443
-
-[openvpn]
-accept = 990
-connect = 127.0.0.1:1194
-
-END
-
-#OpenVPN
-wget https://${wisnuvpn}/vpn.sh && chmod +x vpn.sh && ./vpn.sh
+#OpenVP
+wget https://${wisnuvpn}/vpn.sh &&  chmod +x vpn.sh && ./vpn.sh
 
 # install fail2ban
 apt -y install fail2ban
@@ -488,9 +484,6 @@ sed -i 's@DROPBEAR_BANNER=""@DROPBEAR_BANNER="/etc/issue.net"@g' /etc/default/dr
 
 # Install BBR
 wget https://${wisnuvpn}/bbr.sh && chmod +x bbr.sh && ./bbr.sh
-
-# Ganti Banner
-wget -O /etc/issue.net "https://${wisnuvpn}/issue.net"
 
 # blockir torrent
 sudo iptables -A FORWARD -m string --string "get_peers" --algo bm -j DROP
