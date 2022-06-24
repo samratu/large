@@ -51,7 +51,7 @@ sed -i '/#trojan-grpc$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
 sed -i '/#trojan-kcp$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
-trojankcp="trojan://${uuid}@${domain}:$tkcp?mode=&security=tls&type=grpc&serviceName=/gandringgrpc&sni=${domain}#%F0%9F%94%B0TROJAN+GRPC+TLS+${user}"
+trojankcp="trojan://${uuid}@${domain}:$tkcp?sni=${domain}&type=kcp&security=tls&path=/gandringkcp#%F0%9F%94%B0TROJAN+KCP+TLS+${user}"
 systemctl restart xray.service
 systemctl restart xtrojan.service
 systemctl restart xvless
