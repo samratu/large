@@ -922,6 +922,80 @@ cat > /etc/xray/xtrojan.json << END
       }
     },
     {
+      "listen": "0.0.0.0",
+      "port": 515,
+      "protocol": "trojan",
+      "settings": {
+        "clients": [
+          {
+            "password": "gandring",
+            "level": 0,
+            "email": "gandring@p0x.smule.my.id"
+#trojan-quic
+          }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "quic",
+        "quicSettings": {
+          "security": "none",
+          "key": "/gandringquic",
+          "header": {
+            "type": "wechat-video"
+          }
+        },
+        "security": "tls",
+        "tlsSettings": {
+          "minVersion": "1.3",
+          "certificates": [
+           {
+              "certificateFile": "/etc/ssl/private/fullchain.pem",
+              "keyFile": "/etc/ssl/private/privkey.pem"
+            }
+          ],
+          "rejectUnknownSni": true
+        }
+      }
+    },
+    {
+      "listen": "0.0.0.0",
+      "port": 414,
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "gandring",
+            "level": 0,
+            "email": "gandring@p0x.smule.my.id"
+#vless-quic
+          }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "quic",
+        "quicSettings": {
+          "security": "none",
+          "key": "/wisnuquic",
+          "header": {
+            "type": "wechat-video"
+          }
+        },
+        "security": "tls",
+        "tlsSettings": {
+          "minVersion": "1.3",
+          "certificates": [
+           {
+              "certificateFile": "/etc/ssl/private/fullchain.pem",
+              "keyFile": "/etc/ssl/private/privkey.pem"
+            }
+          ],
+          "rejectUnknownSni": true
+        }
+      }
+    },
+    {
       "port": 40,
       "protocol": "shadowsocks",
       "settings": {
