@@ -16,7 +16,7 @@ MYIP=$(wget -qO- https://ipv4.icanhazip.com);
 MYIP6=$(wget -qO- https://ipv6.icanhazip.com);
 clear
 domain=$(cat /etc/xray/domain)
-
+vquic="$(cat ~/log-install.txt | grep -w "VLESS QUIC" | cut -d: -f2|sed 's/ //g')"
 vlgrpc="$(cat ~/log-install.txt | grep -w "VLESS GRPC TLS" | cut -d: -f2|sed 's/ //g')"
 vlgrpcnon="$(cat ~/log-install.txt | grep -w "VLESS GRPC NON TLS" | cut -d: -f2|sed 's/ //g')"
 vlxtls="$(cat ~/log-install.txt | grep -w "VLESS XTLS" | cut -d: -f2|sed 's/ //g')"
@@ -94,6 +94,8 @@ sed -i '/#vless-hdua$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#vless-hdua$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvless.json
+sed -i '/#vless-quic$/a\#### '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
 sed -i '/#vless-hdua-nontls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvless.json
 sed -i '/#vless-tls$/a\#### '"$user $exp"'\
@@ -116,6 +118,7 @@ vlesshdua="vless://${uuid}@${domain}:$vlhdua?sni=pemburu.rondoanyaran.yes&type=h
 #vlesshduanon="vless://${uuid}@${domain}:$vlhduanon?type=http&security=none&path=/bagus&encryption=none#${user}"
 vlessxtls="vless://${uuid}@${domain}:$vlxtls?sni=remang-remang.night&security=xtls&encryption=none&flow=xtls-rprx-splice-udp443#%F0%9F%94%B0VLESS+XTLS+${user}"
 vlessgfw="vless://${uuid}@${domain}:$vlxtls?sni=istimiwir.co.id&security=tls&encryption=none#%F0%9F%94%B0VLESS+GFW+${user}"
+vlessquic="vless://$uuid@$domain:$vquic?sni=$domain&key=%2Fwisnuquic&security=tls&encryption=none&headerType=none&quicSecurity=$domain&type=quic#%F0%9F%94%B0VLESS+QUIC+TLS+$user"
 systemctl restart xvless.service
 systemctl restart xray.service
 systemctl restart xtrojan.service
@@ -127,12 +130,13 @@ echo -e "\033[1;46m 🔰 AKUN VLESS TESTER 🔰  \e[m"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "IP:${MYIP} / $domain"
 echo -e "UserID :${uuid}"
-echo -e "Protokol :GRPC,HTTP,H2C,GFW,XTLS,WS"
+echo -e "Protokol :WS, GRPC, HTTP, H2C, GFW, XTLS, QUIC"
 echo -e "NAMA             :${user}"
 echo -e "Flow :ONLY ORIGIN TYPE NOT ALLOWED"
 echo -e "Port GRPC        :$vlgrpc/ $vlgrpcnon"
 echo -e "Port HTTP        :$vlhttp/ $vlhttpnon"
 echo -e "Port H2C         :$vlhdua"
+echo -e "Port QUIC        :$vquic"
 echo -e "Port XTLS        :$vlxtls"
 echo -e "Port WS          :$vltls / $vlnontls "
 echo -e "Satpam           :tls,xtls"
@@ -140,28 +144,29 @@ echo -e "serviceName      :/wisnugrpc"
 echo -e "Path HTTP        :/wisnutcp"
 echo -e "Path H2C         :/wisnuhttp"
 echo -e "Path WS          :/wisnu"
+echo -e "Path QUIC        :/wisnuquic"
 echo -e "Dibuat           :$hariini"
 echo -e "Kadaluarsa       :$exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Link gRPC TLS:  ${vlessgrpc}"
+echo -e "Link VLESS gRPC TLS:  ${vlessgrpc}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Link gRPC NONTLS:  ${vlessgrpcnon}"
+echo -e "Link VLESS gRPC NONTLS:  ${vlessgrpcnon}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Link GFW:  ${vlessgfw}"
+echo -e "Link VLESS GFW:  ${vlessgfw}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Link XTLS:  ${vlessxtls}"
+echo -e "Link VLESS XTLS:  ${vlessxtls}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Link WS TLS:  ${vlesstls}"
+echo -e "Link VLESS WS TLS:  ${vlesstls}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Link WS NONTLS:  ${vlessnontls}"
+echo -e "Link VLESS WS NONTLS:  ${vlessnontls}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Link HTTP/2:  ${vlesshdua}"
+echo -e "Link VLESS H2C:  ${vlesshdua}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-#echo -e "H2C NONTLS :  ${vlesshduanon}"
-#echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Link HTTP TLS :  ${vlesshttp}"
+echo -e "Link VLESS QUIC:  ${vlessquic}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Link HTTP NONTLS:  ${vlesshttpnon}"
+echo -e "Link VLESS HTTP TLS:  ${vlesshttp}"
+echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "Link VLESS HTTP NONTLS:  ${vlesshttpnon}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m🔰LUXURY EDITION ZEROSSL🔰\e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
