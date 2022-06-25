@@ -138,7 +138,7 @@ rm -rf /etc/xray/vmess-$user-tls.json
 
 sed -i '/#vmess-grpc-tls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'"' /usr/local/etc/xray/xvmess.json
-cat>/etc/xray/vmess-grpc-$user-tls.json<<EOF
+cat>/etc/xray/vmess-$user-tls.json<<EOF
       {
       "v": "5",
       "ps": "🔰VMESS HTTP TLS ${user}",
@@ -159,7 +159,7 @@ rm -rf /etc/xray/vmess-$user-tls.json
 
 sed -i '/#vmess-http-tls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'"' /usr/local/etc/xray/xvmess.json
-cat>/etc/xray/vmess-http-$user-tls.json<<EOF
+cat>/etc/xray/vmess-$user-tls.json<<EOF
       {
       "v": "5",
       "ps": "🔰VMESS HTTP TLS ${user}",
@@ -176,11 +176,11 @@ cat>/etc/xray/vmess-http-$user-tls.json<<EOF
 EOF
 vmesshttp_base641=$( base64 -w 0 <<< $vmess_json1)
 vmesshttp="vmess://$(base64 -w 0 /etc/xray/vmess-$user-tls.json)"
-rm -rf /etc/xray/vmess-http-$user-tls.json
+rm -rf /etc/xray/vmess-$user-tls.json
 
 sed -i '/#vmess-hdua$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'"' /usr/local/etc/xray/xvmess.json
-cat>/etc/xray/vmess-hdua-$user-tls.json<<EOF
+cat>/etc/xray/vmess-$user-tls.json<<EOF
       {
       "v": "5",
       "ps": "🔰VMESS H2C TLS ${user}",
@@ -197,7 +197,7 @@ cat>/etc/xray/vmess-hdua-$user-tls.json<<EOF
 EOF
 vmesshdua_base641=$( base64 -w 0 <<< $vmess_json1)
 vmesshdua="vmess://$(base64 -w 0 /etc/xray/vmess-$user-tls.json)"
-rm -rf /etc/xray/vmess-hdua-$user-tls.json
+rm -rf /etc/xray/vmess-$user-tls.json
 
 vlesshttpnon="vless://${uuid}@${domain}:$vlhttpnon?host=${domain}&security=none&type=tcp&headerType=http&encryption=none#%F0%9F%94%B0VLESS+HTTP+NONTLS+${user}"
 vlesshttp="vless://${uuid}@${domain}:$vlhttp?sni=${domain}&host=${domain}&type=tcp&security=tls&path=/wisnutcp&headerType=http&encryption=none#%F0%9F%94%B0VLESS+HTTP+TLS+${user}"
