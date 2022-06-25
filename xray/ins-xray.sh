@@ -669,6 +669,7 @@ cat > /etc/xray/config.json << END
     ]
   },
   "routing": {
+  "domainStrategy": "AsIs",
     "rules": [
       {
         "type": "field",
@@ -1194,6 +1195,7 @@ cat > /etc/xray/xtrojan.json << END
     ]
   },
   "routing": {
+  "domainStrategy": "AsIs",
     "rules": [
       {
         "type": "field",
@@ -1455,6 +1457,7 @@ cat > /etc/xray/xvless.json << END
     ]
   },
   "routing": {
+  "domainStrategy": "AsIs",
     "rules": [
       {
         "type": "field",
@@ -2007,6 +2010,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
     ]
   },
   "routing": {
+  "domainStrategy": "AsIs",
     "rules": [
       {
         "type": "field",
@@ -2224,24 +2228,28 @@ cat > /usr/local/etc/xray/satrio.json << END
     ]
   },
   "routing": {
+  "domainStrategy": "AsIs",
     "rules": [
       {
         "type": "field",
-        "ip": [
-          "0.0.0.0/8",
-          "10.0.0.0/8",
-          "100.64.0.0/10",
-          "169.254.0.0/16",
-          "172.16.0.0/12",
-          "192.0.0.0/24",
-          "192.0.2.0/24",
-          "192.168.0.0/16",
-          "198.18.0.0/15",
-          "198.51.100.0/24",
-          "203.0.113.0/24",
-          "::1/128",
-          "fc00::/7",
-          "fe80::/10"
+        "inboundTag": [
+          "TROJAN-XTLS-in",
+          "TROJAN-gRPC-in",
+          "TROJAN-WSTLS-in",
+          "TROJAN-QUIC-in",
+          "TROJAN-H2C-in",
+          "TROJAN-HTTP-in",
+          "VLESS-XTLS-in",
+          "VLESS-gRPC-in",
+          "VLESS-WSTLS-in",
+          "VLESS-QUIC-in",
+          "VLESS-H2C-in",
+          "VLESS-HTTP-in",
+          "VMESS-gRPC-in",
+          "VMESS-WSTLS-in",
+          "VMESS-WS-in",
+          "VMESS-H2C-in",
+          "VMESS-HTTP-in"
         ],
         "outboundTag": "blocked"
       },
