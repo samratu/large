@@ -1,4 +1,3 @@
-
 #!/bin/bash
 # My Telegram : https://t.me/zerossl
 # ==========================================
