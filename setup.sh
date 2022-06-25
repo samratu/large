@@ -185,24 +185,8 @@ echo " 🔰 Full Orders For Various Services" | tee -a log-install.txt
 echo " 🔰 GANDRING & WISNU SCRIPT" | tee -a log-install.txt
 echo " 🔰 Installation Log --> /root/log-install.txt"  | tee -a log-install.txt
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" |tee -a log-install.txt
-echo -e ""
-echo ""
-echo "" | tee -a log-install.txt
-systemctl restart ohp-ssh > /dev/null 2>&1
-systemctl restart ohp-db > /dev/null 2>&1
-systemctl restart ohp-opn > /dev/null 2>&1
-rm /root/cf.sh >/dev/null 2>&1
-rm /root/setup.sh >/dev/null 2>&1
-rm /usr/bin/port-vless >/dev/null 2>&1
-secs_to_human "$(($(date +%s) - ${start}))" | tee -a log-install.txt
-echo -e "
-"
-systemctl restart ssrmu > /dev/null 2>&1
-echo -ne "[ ${yell}WARNING${NC} ] Do you want to reboot now ? (y/n)? "
-read answer
-if [ "$answer" == "${answer#[Yy]}" ] ;then
-exit 0
-else
+echo " 🔰 Installation Log --> /root/log-install.txt"             |tee -a log-install.txt
+echo " Reboot 5 Sec"
+sleep 5
+rm -f setup.sh
 reboot
-fi
-
