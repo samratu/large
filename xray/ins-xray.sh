@@ -430,7 +430,7 @@ cat > /etc/xray/config.json << END
         "tcpSettings": {},
         "httpSettings": {
         "acceptProxyProtocol": true,
-          "path": "/shanumhttp"
+          "path": "shanumhttp"
         },
         "kcpSettings": {},
         "wsSettings": {},
@@ -1920,7 +1920,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
              "network": "http",
              "security": "none",
              "httpSettings": {
-               "path": "/shanumhttp"
+               "path": "shanumhttp"
             }
        }
   },
