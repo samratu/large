@@ -47,7 +47,7 @@ RESULT=$(curl -sLX PUT "https://api.cloudflare.com/client/v4/zones/${ZONE}/dns_r
      -H "Content-Type: application/json" \
      --data '{"type":"A","name":"'${SUB_DOMAIN}'","content":"'${IP}'","ttl":300,"proxied":false}')
 
-WILD_DOMAIN="*.$sub"
+WILD_DOMAIN="*$sub"
 set -euo pipefail
 echo ""
 echo "Updating DNS for ${WILD_DOMAIN}..."
