@@ -35,6 +35,11 @@ echo -e "18\e[1;33m)  Hapus Akun VLESS HTTP \e[m"
 echo -e "19\e[1;33m)  Perpanjang Masa Aktif Akun VLESS HTTP \e[m"
 echo -e "20\e[1;33m)  Cek User Login VLESS HTTP \e[m"
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "21\e[1;33m)  Buat Akun VLESS QUIC \e[m"
+echo -e "22\e[1;33m)  Hapus Akun VLESS QUIC \e[m"
+echo -e "23\e[1;33m)  Perpanjang Masa Aktif Akun VLESS QUIC \e[m"
+echo -e "24\e[1;33m)  Cek User Login VLESS QUIC \e[m"
+echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "00\e[1;31m)  Menu Utama \e[m"
 echo -e "xx\e[1;31m)  Keluar \e[m"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
@@ -102,6 +107,18 @@ renewvlesshttp
 ;;
 20)
 cekvlesshttp
+;;
+21)
+addvlessquic
+;;
+22)
+delvlessquic
+;;
+23)
+renewvlessquic
+;;
+24)
+cekvlessquic
 ;;
 0)
 clear
