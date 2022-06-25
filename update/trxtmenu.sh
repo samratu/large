@@ -41,6 +41,11 @@ echo -e "22\e[1;33m) Hapus Akun TROJAN GO \e[m"
 echo -e "23\e[1;33m) Perpanjang Masa Aktif Akun TROJAN GO \e[m"
 echo -e "24\e[1;33m) Cek User Login TROJAN GO \e[m"
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "25\e[1;33m) Buat Akun TROJAN QUIC \e[m"
+echo -e "26\e[1;33m) Hapus Akun TROJAN QUIC \e[m"
+echo -e "27\e[1;33m) Perpanjang Masa Aktif Akun TROJAN QUIC \e[m"
+echo -e "28\e[1;33m) Cek User Login TROJAN QUIC \e[m"
+echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "00\e[1;31m) Menu Utama \e[m"
 echo -e "xx\e[1;31m) Keluar \e[m"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
@@ -121,6 +126,18 @@ renewtrgo
 ;;
 24)
 cektrgo
+;;
+25)
+addtrojanquic
+;;
+26)
+deltrojanquic
+;;
+27)
+renewtrojanquic
+;;
+28)
+cektrojanquic
 ;;
 0)
 clear
