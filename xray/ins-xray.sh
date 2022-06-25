@@ -333,7 +333,7 @@ cat > /etc/xray/config.json << END
         "kcpSettings": {},
         "httpSettings": {},
         "wsSettings": {
-          "path": "/satrio",
+          "path": "satrio",
           "headers": {
             "Host": "${domain}"
           }
@@ -399,7 +399,7 @@ cat > /etc/xray/config.json << END
         "httpSettings": {},
         "quicSettings": {},
         "grpcSettings": {
-          "serviceName": "/shanumgrpc",
+          "serviceName": "shanumgrpc",
           "multiMode": true
         }
       }
@@ -541,7 +541,7 @@ cat > /etc/xray/config.json << END
         "httpSettings": {},
         "quicSettings": {},
         "grpcSettings": {
-          "serviceName": "/wisnugrpc"
+          "serviceName": "wisnugrpc"
         }
       }
     },
@@ -828,7 +828,7 @@ cat > /etc/xray/xtrojan.json << END
           ]
         },
         "grpcSettings": {
-          "serviceName": "/gandringgrpc"
+          "serviceName": "gandringgrpc"
         }
       }
     },
@@ -906,7 +906,7 @@ cat > /etc/xray/xtrojan.json << END
         "network": "h2",
         "security": "tls",
         "httpSettings": {
-          "path": "/gandringhttp"
+          "path": "gandringhttp"
          },
          "tlsSettings": {
           "alpn": [
@@ -941,21 +941,21 @@ cat > /etc/xray/xtrojan.json << END
         "network": "quic",
         "quicSettings": {
           "security": "none",
-          "key": "/gandringquic",
+          "key": "gandringquic",
           "header": {
-            "type": "wechat-video"
+            "type": "none"
           }
         },
         "security": "tls",
         "tlsSettings": {
-          "minVersion": "1.3",
+          "minVersion": "1.2",
           "certificates": [
            {
               "certificateFile": "/etc/ssl/private/fullchain.pem",
               "keyFile": "/etc/ssl/private/privkey.pem"
             }
           ],
-          "rejectUnknownSni": true
+          "rejectUnknownSni": false
         }
       }
     },
@@ -978,21 +978,21 @@ cat > /etc/xray/xtrojan.json << END
         "network": "quic",
         "quicSettings": {
           "security": "none",
-          "key": "/wisnuquic",
+          "key": "wisnuquic",
           "header": {
-            "type": "wechat-video"
+            "type": "none"
           }
         },
         "security": "tls",
         "tlsSettings": {
-          "minVersion": "1.3",
+          "minVersion": "1.2",
           "certificates": [
            {
               "certificateFile": "/etc/ssl/private/fullchain.pem",
               "keyFile": "/etc/ssl/private/privkey.pem"
             }
           ],
-          "rejectUnknownSni": true
+          "rejectUnknownSni": false
         }
       }
     },
@@ -1305,7 +1305,8 @@ cat > /etc/xray/xvless.json << END
                     ]
                 },
                 "grpcSettings": {
-                    "serviceName": "/shanumgrpc"
+                    "acceptProxyProtocol": true,
+                    "serviceName": "shanumgrpc"
                 }
             }
         },
@@ -1360,7 +1361,8 @@ cat > /etc/xray/xvless.json << END
                     ]
                 },
                 "grpcSettings": {
-                    "serviceName": "/wisnugrpc"
+                     "acceptProxyProtocol": true,
+                     "serviceName": "wisnugrpc"
                 }
             }
         },
@@ -1410,7 +1412,7 @@ cat > /etc/xray/xvless.json << END
                     ]
                 },
                 "httpSettings": {
-                    "path": "/wisnuhttp"
+                    "path": "wisnuhttp"
                 }
             }
         },
@@ -1562,6 +1564,26 @@ cat > /usr/local/etc/xray/xvmess.json << END
                 "decryption": "none",
                 "fallbacks": [
                     {
+                        "alpn": h2,
+                        "dest": 81,
+                        "xver": 1
+                    },
+                    {
+                        "alpn": h1,
+                        "dest": 81,
+                        "xver": 1
+                    },
+                    {
+                        "alpn": h2,
+                        "dest"; 88,
+                        "xver": 1
+                    },
+                    {
+                        "alpn": h1,
+                        "dest": 88,
+                        "xver": 1
+                    },
+                    {
                         "dest": 1310,
                         "xver": 1
                     },
@@ -1571,12 +1593,13 @@ cat > /usr/local/etc/xray/xvmess.json << END
                         "xver": 1
                     },
                     {
-                        "path": "/gandringhttp",
+                        "path": "gandringhttp",
                         "dest": 1330,
+                        "alpn": h2,
                         "xver": 1
                     },
                     {
-                        "path": "/gandringgrpc",
+                        "serviceName": "gandringgrpc",
                         "dest": 1340,
                         "xver": 1
                     },
@@ -1586,12 +1609,12 @@ cat > /usr/local/etc/xray/xvmess.json << END
                         "xver": 1
                     },
                     {
-                        "path": "/wisnuhttp",
+                        "path": "wisnuhttp",
                         "dest": 1360,
                         "xver": 1
                     },
                     {
-                        "path": "/wisnugrpc",
+                        "serviceName": "wisnugrpc",
                         "dest": 1370,
                         "xver": 1
                     },
@@ -1606,12 +1629,12 @@ cat > /usr/local/etc/xray/xvmess.json << END
                         "xver": 1
                     },
                     {
-                        "path": "/shanumhttp",
+                        "path": "shanumhttp",
                         "dest": 1400,
                         "xver": 1
                     },
                     {
-                        "path": "/shanumgrpc",
+                        "serviceName": "shanumgrpc",
                         "dest": 1410,
                         "xver": 1
                     },
@@ -1658,7 +1681,8 @@ cat > /usr/local/etc/xray/xvmess.json << END
                 ],
                 "fallbacks": [
                     {
-                        "dest": 81
+                        "dest": 88,
+                        "alpn": h2
                     }
                 ]
             },
@@ -1685,7 +1709,8 @@ cat > /usr/local/etc/xray/xvmess.json << END
       ],
            "fallbacks": [
        {
-           "dest": 88
+           "dest": 88,
+           "alpn": h2
        }
      ]
   },
@@ -1713,7 +1738,8 @@ cat > /usr/local/etc/xray/xvmess.json << END
       ],
            "fallbacks": [
        {
-           "dest": 88
+           "dest": 88,
+           "alpn": h2
        }
      ]
   },
@@ -1721,8 +1747,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
         "network": "http",
         "security": "none",
         "httpSettings": {
-        "acceptProxyProtocol": true,
-          "path": "/gandringhttp"
+          "path": "gandringhttp"
          }
       }
     },
@@ -1741,7 +1766,8 @@ cat > /usr/local/etc/xray/xvmess.json << END
       ],
            "fallbacks": [
         {
-           "dest": 88
+           "dest": 88,
+           "alpn": h2
         }
      ]
   },
@@ -1749,8 +1775,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
         "network": "grpc",
         "security": "none",
         "grpcSettings": {
-          "acceptProxyProtocol": true,
-          "path": "/gandringgrpc"
+          "serviceName": "gandringgrpc"
            }
         }
     },
@@ -1797,8 +1822,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
                 "network": "http",
                 "security": "none",
                 "httpSettings": {
-                  "acceptProxyProtocol": true,
-                  "path": "/wisnuhttp"
+                  "path": "wisnuhttp"
                 }
             }
         },
@@ -1821,8 +1845,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
             "network": "grpc",
             "security": "none",
             "grpcSettings": {
-              "acceptProxyProtocol": true,
-              "serviceName": "/wisnugrpc"
+              "serviceName": "wisnugrpc"
             }
           }
         },
@@ -1897,7 +1920,6 @@ cat > /usr/local/etc/xray/xvmess.json << END
              "network": "http",
              "security": "none",
              "httpSettings": {
-               "acceptProxyProtocol": true,
                "path": "/shanumhttp"
             }
        }
@@ -1920,8 +1942,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
              "network": "grpc",
              "security": "none",
              "grpcSettings": {
-               "acceptProxyProtocol": true,
-               "path": "/shanumgrpc"
+               "serviceName": "shanumgrpc"
             }
        }
   },
