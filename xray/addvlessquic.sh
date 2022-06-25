@@ -60,7 +60,7 @@ sed -i '/#vless-hdua$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#vless-hdua-nontls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvless.json
-vlessquic="vless://$uuid@$domain:$vquic?sni=$domain&key=%2Fwisnuquic&security=tls&encryption=none&headerType=none&quicSecurity=$domain&type=quic#%F0%9F%94%B0VLESS+QUIC+TLS+$user"
+vlessquic="vless://$uuid@$domain:$vquic?sni=$domain&key=wisnuquic&security=tls&encryption=none&headerType=none&quicSecurity=$domain&type=quic#%F0%9F%94%B0VLESS+QUIC+TLS+$user"
 vlessquicnon="vless://${uuid}@${domain}:$vlhduanon?type=http&security=none&path=gandring&encryption=none#${user}"
 systemctl restart xvless.service
 systemctl restart xray.service
@@ -71,17 +71,17 @@ clear
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m   🔰 AKUN VLESS QUIC 🔰  \e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Nama         :${user}"
-echo -e "IP/Host      :${MYIP}"
-echo -e "Address      :${domain}"
-echo -e "Port         :$vquic"
+echo -e "Nama :${user}"
+echo -e "IP/Host :${MYIP}"
+echo -e "Address :${domain}"
+echo -e "Port :$vquic"
+echo -e "Protokol :QUIC"
+echo -e "Path :/wisnuquic"
 echo -e "UserID :${uuid}"
-echo -e "Protokol     :QUIC"
-echo -e "Path         :/wisnuquic"
-echo -e "Dibuat       :$hariini"
-echo -e "Kadaluarsa   :$exp"
+echo -e "Dibuat :$hariini"
+echo -e "Kadaluarsa :$exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Link VLESS QUIC: ${vlessquic}"
+echo -e "VLESS QUIC: ${vlessquic}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 #echo -e "H2C NONTLS: ${vlesshduanon}"
 #echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
