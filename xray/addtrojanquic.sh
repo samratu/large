@@ -12,16 +12,15 @@ CYAN='\033[0;36m'
 LIGHT='\033[0;37m'
 # ==========================================
 # Getting
-MYIP=$(wget -qO- https://ipv4.icanhazip.com);
-MYIP6=$(wget -qO- https://ipv6.icanhazip.com);
+MYIP=$(wget -qO- ipinfo.io/ip);
 clear
 domain=$(cat /etc/xray/domain)
 
 uuid=$(cat /proc/sys/kernel/random/uuid)
-tkcp="$(cat ~/log-install.txt | grep -w "TROJAN mKCP" | cut -d: -f2|sed 's/ //g')"
+twuic="$(cat ~/log-install.txt | grep -w "TROJAN H2C" | cut -d: -f2|sed 's/ //g')"
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${user_EXISTS} == '0' ]]; do
 		read -rp "Password : " -e user
-		user_EXISTS=$(grep -w $user /etc/xray/xvless.json | wc -l)
+		user_EXISTS=$(grep -w $user /etc/xray/xtrojan.json | wc -l)
 
 		if [[ ${user_EXISTS} == '1' ]]; then
 			echo ""
@@ -30,7 +29,7 @@ until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${user_EXISTS} == '0' ]]; do
 		fi
 	done
 uuid=$(cat /proc/sys/kernel/random/uuid)
-tkcp="$(cat ~/log-install.txt | grep -w "TROJAN mKCP" | cut -d: -f2|sed 's/ //g')"
+tquic="$(cat ~/log-install.txt | grep -w "TROJAN H2C" | cut -d: -f2|sed 's/ //g')"
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${user_EXISTS} == '0' ]]; do
 		read -rp "Password : " -e user
 		user_EXISTS=$(grep -w $user /usr/local/etc/xray/xvmess.json | wc -l)
@@ -43,37 +42,33 @@ until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${user_EXISTS} == '0' ]]; do
 	done
 uuid=$(cat /proc/sys/kernel/random/uuid)
 read -p "Expired (Days) : " masaaktif
-#read -p "Expired (Seconds) : " masaaktif
 hariini=`date -d "0 days" +"%Y-%m-%d"`
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
-#exp2=`date -d "$masaaktif seconds" +"%Y-%m-%d"`
-sed -i '/#trojan-grpc$/a\#&# '"$user $exp"'\
+sed -i '/#trojan-quic$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
-sed -i '/#trojan-kcp$/a\#&# '"$user $exp"'\
+sed -i '/#trojan-hdua$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
-trojankcp="trojan://${uuid}@${domain}:$tkcp?sni=${domain}&type=kcp&security=tls&path=/gandringkcp#%F0%9F%94%B0TROJAN+KCP+TLS+${user}"
+trojanquic="trojan://$uuid@$domain:$tquic?sni=$domain&quicSecurity=$domain&key=%2Fgandringquic&security=tls&type=quic&headerType=none#%F0%9F%94%B0TROJAN+QUIC+TLS+$user"
 systemctl restart xray.service
 systemctl restart xtrojan.service
-systemctl restart xvless
-systemctl restart xvmess
+systemctl restart xvmess.service
 service cron restart
 clear
 echo -e ""
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "\033[1;46m  🔰 AKUN TROJAN GRPC 🔰  \e[m"       
+echo -e "\033[1;46m   🔰 AKUN TROJAN QUIC 🔰 \e[m"       
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Remarks     :${user}"
-echo -e "IP/Host     :${MYIP}"
-echo -e "Address     :${domain}"
-echo -e "Protocol    :grpc"
-echo -e "ServiceName :/gandringkcp"
-echo -e "Port        :${tkcp}"
-echo -e "Password    :${uuid}"
-echo -e "Created     :$hariini"
-echo -e "Expired     :$exp"
-#echo -e "Expired     :$exp2"
+echo -e "Nama       :${user}"
+echo -e "IP/Host    :${MYIP}"
+echo -e "Address    :${domain}"
+echo -e "Protocol   :QUIC"
+echo -e "Path       :/gandringquic"
+echo -e "Port       :${tquic}"
+echo -e "Password :${uuid}"
+echo -e "Dibuat     :$hariini"
+echo -e "Kadaluarsa :$exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Link GRPC  : ${trojankcp}"
+echo -e "Link TROJAN QUIC:  ${trojanquic}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m🔰LUXURY EDITION ZEROSSL🔰\e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
