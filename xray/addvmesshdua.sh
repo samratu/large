@@ -54,7 +54,7 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "http",
-      "path": "/shanumhttp",
+      "path": "shanumhttp",
       "type": "none",
       "host": "",
       "tls": "tls"
@@ -77,18 +77,18 @@ echo -e ""
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m  🔰 AKUN VMESS HTTP/2 🔰 \e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Nama       :${user}"
-echo -e "Host       :${domain}"
-echo -e "IP         :${MYIP}"
-echo -e "Port TLS   :${vmhdua}"
-echo -e "Id :${uuid}"
-echo -e "Network    :h2"
-echo -e "Host       :${domain}"
-echo -e "Path       :/shanumhttp"
-echo -e "Dibuat     :$hariini"
+echo -e "Nama :${user}"
+echo -e "Host :${domain}"
+echo -e "IP :${MYIP}"
+echo -e "Port TLS :${vmhdua}"
+echo -e "Network :h2"
+echo -e "Host :${domain}"
+echo -e "Path :shanumhttp"
+echo -e "Uuid :${uuid}"
+echo -e "Dibuat :$hariini"
 echo -e "Kadaluarsa :$exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Link H2C TLS : ${vmesshdua}"   
+echo -e "VMESS H2C TLS : ${vmesshdua}"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 #echo -e "H2C NONTLS : ${vmesshduanon}"   
 #echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
