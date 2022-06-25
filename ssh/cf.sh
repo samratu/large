@@ -22,7 +22,7 @@ CF_ID=djarumpentol01@gmail.com
 CF_KEY=380be704eee4db9f74f71565e4e52f0042a4b
 set -euo pipefail
 IP=$(wget -qO- ipinfo.io/ip);
-echo "Updating DNS for ${DOMAIN}..."
+echo "Updating DNS for ${SUB_DOMAIN}..."
 ZONE=$(curl -sLX GET "https://api.cloudflare.com/client/v4/zones?name=${DOMAIN}&status=active" \
      -H "X-Auth-Email: ${CF_ID}" \
      -H "X-Auth-Key: ${CF_KEY}" \
@@ -78,6 +78,7 @@ echo "Host : $SUB_DOMAIN"
 echo $SUB_DOMAIN > /root/domain
 # / / Make Main Directory
 mkdir -p /usr/bin/xray
+mkdir -p /usr/local/etc/xray
 mkdir -p /etc/xray
 cp /root/domain /etc/xray
 cp /root/domain /usr/local/etc/xray
