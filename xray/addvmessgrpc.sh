@@ -66,7 +66,7 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "grpc",
-      "path": "/shanumgrpc",
+      "path": "shanumgrpc",
       "type": "none",
       "host": "${domain}",
       "tls": "tls"
@@ -81,7 +81,7 @@ cat>/etc/xray/vmess-$user-nontls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "grpc",
-      "path": "/shanumgrpc",
+      "path": "shanumgrpc",
       "type": "none",
       "host": "${domain}",
       "tls": "none"
@@ -102,21 +102,20 @@ clear
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m  🔰 AKUN VMESS GRPC 🔰   \e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Nama        :${user}"
-echo -e "Host        :${domain}"
-echo -e "IP          :${MYIP}"
-echo -e "Port TLS    :${vmgrpc}"
+echo -e "Nama :${user}"
+echo -e "Host :${domain}"
+echo -e "IP :${MYIP}"
+echo -e "Port TLS :${vmgrpc}"
 echo -e "Port no TLS :${vmgrpcnon}"
+echo -e "Protokol :grpc"
+echo -e "serviceName :shanumgrpc"
 echo -e "UserId :${uuid}"
-echo -e "Protokol     :grpc"
-echo -e "Host        :${domain}"
-echo -e "serviceName :/shanumgrpc"
 echo -e "Dibuat      :$hariini"
 echo -e "Kadaluarsa  :$exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Link GRPC TLS: ${vmessgrpc}"
+echo -e "VMESS GRPC TLS: ${vmessgrpc}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Link GRPC NONTLS: ${vmessgrpcnon}"
+echo -e "VMESS GRPC NONTLS: ${vmessgrpcnon}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m🔰LUXURY EDITION ZEROSSL🔰\e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
