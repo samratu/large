@@ -147,25 +147,25 @@ sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
 rm -f /etc/xray/vmess-$user-nontls.json /etc/xray/vmess-$user-nontls.json
 sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
 sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
-rm -f /etc/xray/vmess-grpc-$user-tls.json /etc/xray/vmess-grpc-$user-tls.json
+rm -f /etc/xray/vmess-$user-tls.json /etc/xray/vmess-grpc-$user-tls.json
 sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
 sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
-rm -f /etc/xray/vmess-grpc-$user-nontls.json /etc/xray/vmess-grpc-$user-nontls.json
+rm -f /etc/xray/vmess-$user-nontls.json /etc/xray/vmess-grpc-$user-nontls.json
 sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
 sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
-rm -f /etc/xray/vmess-http-$user-tls.json /etc/xray/vmess-http-$user-tls.json
+rm -f /etc/xray/vmess-$user-tls.json /etc/xray/vmess-http-$user-tls.json
 sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
 sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
-rm -f /etc/xray/vmess-http-$user-nontls.json /etc/xray/vmess-http-$user-nontls.json
+rm -f /etc/xray/vmess-$user-nontls.json /etc/xray/vmess-http-$user-nontls.json
 sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
 sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
-rm -f /etc/xray/vmess-hdua-$user-tls.json /etc/xray/vmess-hdua-$user-tls.json
+rm -f /etc/xray/vmess-$user-tls.json /etc/xray/vmess-hdua-$user-tls.json
 sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
 sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
-rm -f /etc/xray/vmess-kcp-$user-tls.json /etc/xray/vmess-kcp-$user-tls.json
+rm -f /etc/xray/vmess-$user-tls.json /etc/xray/vmess-kcp-$user-tls.json
 sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
 sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
-rm -f /etc/xray/vmess-kcp-$user-nontls.json /etc/xray/vmess-kcp-$user-nontls.json
+rm -f /etc/xray/vmess-$user-nontls.json /etc/xray/vmess-kcp-$user-nontls.json
 fi
 done
 systemctl restart xray.service
@@ -267,3 +267,30 @@ systemctl stop xss.service
 systemctl start xss.service
 systemctl enable xss.service
 systemctl restart xss.service
+
+exp=$(grep -w "^#### $user" "/etc/xray/trojangrpc.json" | cut -d ' ' -f 3)
+exp=$(grep -w "^#### $user" "/etc/xray/vlessquic.json" | cut -d ' ' -f 3)
+#exp=$(grep -w "^#### $user" "/etc/v2ray/config.json" | cut -d ' ' -f 3)
+d1=$(date -d "$exp" +%s)
+d2=$(date -d "$now" +%s)
+exp2=$(( (d1 - d2) / 86400 ))
+if [[ "$exp2" = "0" ]]; then
+sed -i "/^#### $user $exp/,/^},{/d" /etc/xray/trojangrpc.json
+sed -i "/^#### $user $exp/,/^},{/d" /etc/xray/vlessquic.json
+#sed -i "/^#### $user $exp/,/^},{/d" /etc/v2ray/config.json
+#sed -i "/^#### $user $exp/,/^},{/d" /etc/v2ray/config.json
+fi
+done
+##restart&start service
+systemctl daemon-reload
+systemctl stop trojangrpc.service
+systemctl start trojangrpc.service
+systemctl enable trojangrpc.service
+systemctl restart trojangrpc.service
+
+##restart&start service
+systemctl daemon-reload
+systemctl stop vlessquic.service
+systemctl start vlessquic.service
+systemctl enable vlessquic.service
+systemctl restart vlessquic.service
