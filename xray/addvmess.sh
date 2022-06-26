@@ -39,16 +39,6 @@ until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 			exit 1
 		fi
 	done
-until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
-		read -rp "Username : " -e user
-		CLIENT_EXISTS=$(grep -w $user /usr/local/etc/xray/satrio.json | wc -l)
-
-		if [[ ${CLIENT_EXISTS} == '1' ]]; then
-			echo ""
-			echo -e "Username ${RED}${CLIENT_NAME}${NC} Already On VPS Please Choose Another"
-			exit 1
-		fi
-	done
 uuid=$(cat /proc/sys/kernel/random/uuid)
 read -p "Expired (Days) : " masaaktif
 hariini=`date -d "0 days" +"%Y-%m-%d"`
@@ -56,12 +46,10 @@ exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#vmess-tls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#vmess-nontls$/a\### '"$user $exp"'\
-},{"id": "'""$uuid""'"' /usr/local/etc/xray/satrio.json
-sed -i '/#vmess-nontls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'"' /etc/xray/config.json
 cat>/etc/xray/vmess-$user-tls.json<<EOF
       {
-      "v": "2",
+      "v": "4",
       "ps": "🔰VMESS WS TLS ${user}",
       "add": "${domain}",
       "port": "${tls}",
@@ -76,7 +64,7 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
 EOF
 cat>/etc/xray/vmess-$user-nontls.json<<EOF
       {
-      "v": "2",
+      "v": "4",
       "ps": "🔰VMESS WS NONTLS ${user}",
       "add": "${domain}",
       "port": "${nontls}",
