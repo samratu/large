@@ -132,8 +132,10 @@ sed -i '/#trojan-http-tls$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#trojan-hdua$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
-sed -i '/#trojan-grpc-tls$/a\#&# '"$user $exp"'\
+sed -i '/#trojan-grpc$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
+sed -i '/#trojan-grpc$/a\#&# '"$user $exp"'\
+},{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/trojangrpc.json
 sed -i '/#vmess-tls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'"' /usr/local/etc/xray/xvmess.json
 
@@ -239,6 +241,7 @@ trojangrpc="trojan://$uuid@$domain:$tgrpc?serviceName=/gandringgrpc&sni=$domain&
 systemctl restart xvless.service
 systemctl restart xray.service
 systemctl restart xtrojan.service
+systemctl restart trojangrpc
 systemctl restart xvmess
 service cron restart
 clear
