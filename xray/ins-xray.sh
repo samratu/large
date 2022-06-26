@@ -295,7 +295,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 2083,
+      "port": 27291,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -799,153 +799,6 @@ path_key="/etc/xray/xray.key"
 #path_crt="/root/.acme.sh/$domain_ecc/fullchain.cer"
 #path_key="/root/.acme.sh/$domain_ecc/$domain.key"
 # Buat Config Xray
-cat > /etc/xray/vlessgrpc.json << END
-{
-  "log": {
-    "access": "/var/log/xray/access.log",
-    "error": "/var/log/xray/error.log",
-    "loglevel": "info"
-  },
-  "inbounds": [
-    {
-      "listen": "127.0.0.1",
-      "port": 10808,
-      "protocol": "dokodemo-door",
-      "settings": {
-        "address": "127.0.0.1"
-      },
-      "tag": "api"
-    },
-    {
-      "port": 443,
-      "listen": "0.0.0.0",
-      "protocol": "vless",
-      "settings": {
-        "clients": [
-          {
-            "id": "gandring",
-            "email": "gandring@p0x.smule.my.id"
-#vless-grpc-tls
-          }
-        ],
-        "decryption": "none"
-      },
-      "streamSettings": {
-        "network": "grpc",
-        "security": "tls",
-        "tlsSettings": {
-          "serverName": "",
-          "alpn": [
-            "h2",
-            "http/1.1"
-          ],
-          "certificates": [
-            {
-              "certificateFile": "/etc/ssl/private/fullchain.pem",
-              "keyFile": "/etc/ssl/private/privkey.pem"
-            }
-          ]
-        },
-        "grpcSettings": {
-        "acceptProxyProtocol": true,
-          "serviceName": "/wisnugrpc"
-        }
-      }
-    }
-  ],
-  "outbounds": [
-    {
-      "protocol": "freedom",
-      "tag": "direct"
-    },
-    {
-      "protocol": "blackhole",
-      "tag": "blocked"
-    }
-  ],
-  "dns": {
-    "servers": [
-      "8.8.8.8",
-      "8.8.4.4",
-      "1.1.1.1",
-      "1.0.0.1",
-      "localhost",
-      "localhost://dns.google/dns-query",
-      "localhost://1.1.1.1/dns-query"
-    ]
-  },
-  "routing": {
-    "rules": [
-      {
-        "type": "field",
-        "ip": [
-          "0.0.0.0/8",
-          "10.0.0.0/8",
-          "100.64.0.0/10",
-          "169.254.0.0/16",
-          "172.16.0.0/12",
-          "192.0.0.0/24",
-          "192.0.2.0/24",
-          "192.168.0.0/16",
-          "198.18.0.0/15",
-          "198.51.100.0/24",
-          "203.0.113.0/24",
-          "::1/128",
-          "fc00::/7",
-          "fe80::/10"
-        ],
-        "outboundTag": "direct"
-      },
-      {
-        "inboundTag": [
-          "api"
-        ],
-        "outboundTag": "api",
-        "type": "field"
-      },
-      {
-        "type": "field",
-        "outboundTag": "blocked",
-        "protocol": [
-          "bittorrent"
-        ]
-      }
-    ]
-  },
-  "stats": {},
-  "api": {
-    "services": [
-      "StatsService"
-    ],
-    "tag": "api"
-  },
-  "policy": {
-    "levels": {
-      "0": {
-        "statsUserDownlink": true,
-        "statsUserUplink": true
-      }
-    },
-    "system": {
-      "statsInboundUplink": true,
-      "statsInboundDownlink": true,
-      "statsOutboundUplink" : true,
-      "statsOutboundDownlink" : true
-    }
-  }
-}
-END
-
-uuid=$(cat /proc/sys/kernel/random/uuid)
-domain=$(cat /root/domain)
-# // Certificate File
-path_crt="/etc/xray/xray.crt"
-path_key="/etc/xray/xray.key"
-#domain_ecc=$(cat /root/.acme.sh)
-#domain.key=$(cat /root/.acme.sh/$domain_ecc)
-#path_crt="/root/.acme.sh/$domain_ecc/fullchain.cer"
-#path_key="/root/.acme.sh/$domain_ecc/$domain.key"
-# Buat Config Xray
 cat > /etc/xray/xtrojan.json << END
 {
   "log": {
@@ -1128,7 +981,7 @@ cat > /etc/xray/xtrojan.json << END
       }
     },
     {
-      "port": 515,
+      "port": 443,
       "listen": "0.0.0.0",
       "protocol": "trojan",
       "settings": {
