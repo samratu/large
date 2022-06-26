@@ -26,7 +26,7 @@ timedatectl set-timezone Asia/Jakarta
 chronyc sourcestats -v
 chronyc tracking -v
 date
-
+bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install-geodata
 # / / Ambil Xray Core Version Terbaru
 latest_version="$(curl -s https://api.github.com/repos/XTLS/Xray-core/releases | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
 #bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install-geodata
@@ -57,7 +57,7 @@ curl https://get.acme.sh | sh
 alias acme.sh=~/.acme.sh/acme.sh
 /root/.acme.sh/acme.sh --upgrade --auto-upgrade
 /root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
-/root/.acme.sh/acme.sh --issue -d "${domain}" --standalone --keylength ec-384
+/root/.acme.sh/acme.sh --issue -d "${domain}" --standalone --keylength ec-256
 /root/.acme.sh/acme.sh --install-cert -d "${domain}" --ecc \
 --fullchain-file /etc/ssl/private/fullchain.pem \
 --key-file /etc/ssl/private/privkey.pem
@@ -113,19 +113,7 @@ cat > /etc/xray/config.json << END
         "decryption": "none",
         "fallbacks": [
           {
-            "dest": 60000,
-            "alpn": "",
-            "xver": 1
-          },
-          {
-            "dest": 60001,
-            "alpn": "h2",
-            "xver": 1
-          },
-          {
-            "dest": 2053,
-            "path": "shanumgrpc",
-            "xver": 1
+            "dest": 88
           }
         ]
       },
@@ -160,7 +148,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 3030,
+      "port": 3367,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -267,7 +255,7 @@ cat > /etc/xray/config.json << END
                 "/"
               ],
               "headers": {
-                "Host": "$domain",
+                "Host": "${domain}",
                 "User-Agent": [
                   "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.75 Safari/537.36",
                   "Mozilla/5.0 (iPhone; CPU iPhone OS 10_0_2 like Mac OS X) AppleWebKit/601.1 (KHTML, like Gecko) CriOS/53.0.2785.109 Mobile/14A456 Safari/601.1.46"
@@ -307,7 +295,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 2007,
+      "port": 2025,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -333,14 +321,14 @@ cat > /etc/xray/config.json << END
         "kcpSettings": {},
         "httpSettings": {},
         "wsSettings": {
-          "path": "/satrio",
+          "path": "gandring",
           "headers": {
             "Host": "${domain}"
           }
         },
         "quicSettings": {}
       },
-      "domain": "$domain"
+      "domain": "${domain}"
     },
     {
       "port": 2052,
@@ -378,33 +366,6 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 2082,
-      "protocol": "vmess",
-      "settings": {
-        "clients": [
-          {
-            "id": "${uuid}",
-            "alterId": 0
-#vmess-grpc-nontls
-          }
-        ]
-      },
-      "streamSettings": {
-        "network": "grpc",
-        "security": "none",
-        "tlsSettings": {},
-        "tcpSettings": {},
-        "kcpSettings": {},
-        "wsSettings": {},
-        "httpSettings": {},
-        "quicSettings": {},
-        "grpcSettings": {
-          "serviceName": "/shanumgrpc",
-          "multiMode": true
-        }
-      }
-    },
-    {
       "port": 1000,
       "protocol": "vmess",
       "settings": {
@@ -429,7 +390,6 @@ cat > /etc/xray/config.json << END
         },
         "tcpSettings": {},
         "httpSettings": {
-        "acceptProxyProtocol": true,
           "path": "/shanumhttp"
         },
         "kcpSettings": {},
@@ -446,7 +406,79 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 20003,
+      "port": 4578,
+      "protocol": "vmess",
+      "settings": {
+        "clients": [
+          {
+            "id": "${uuid}",
+            "alterId": 0
+#vmess-grpc-tls
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "grpc",
+        "security": "tls",
+        "tlsSettings": {
+          "certificates": [
+            {
+              "certificateFile": "/etc/ssl/private/fullchain.pem",
+              "keyFile": "/etc/ssl/private/privkey.pem"
+            }
+          ],
+          "alpn": [
+            "h2"
+          ]
+        },
+        "tcpSettings": {},
+        "kcpSettings": {},
+        "wsSettings": {},
+        "httpSettings": {},
+        "quicSettings": {},
+        "grpcSettings": {
+          "serviceName": "/shanumgrpc",
+          "multiMode": true
+        }
+      },
+      "domain": "${domain}",
+      "sniffing": {
+        "enabled": true,
+        "destOverride": [
+          "http",
+          "tls"
+        ]
+      }
+    },
+    {
+      "port": 2082,
+      "protocol": "vmess",
+      "settings": {
+        "clients": [
+          {
+            "id": "${uuid}",
+            "alterId": 0
+#vmess-grpc-nontls
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "grpc",
+        "security": "none",
+        "tlsSettings": {},
+        "tcpSettings": {},
+        "kcpSettings": {},
+        "wsSettings": {},
+        "httpSettings": {},
+        "quicSettings": {},
+        "grpcSettings": {
+          "serviceName": "/ahanumgrpc",
+          "multiMode": true
+        }
+      }
+    },
+    {
+      "port": 4143,
       "protocol": "vless",
       "settings": {
         "clients": [
@@ -475,7 +507,7 @@ cat > /etc/xray/config.json << END
         "kcpSettings": {},
         "httpSettings": {},
         "wsSettings": {
-          "path": "/gandring",
+          "path": "gandring",
           "headers": {
             "Host": "${domain}"
           }
@@ -517,6 +549,50 @@ cat > /etc/xray/config.json << END
           }
         },
         "quicSettings": {}
+      }
+    },
+    {
+      "port": 4143,
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "${uuid}"
+#vless-grpc-tls
+          }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "grpc",
+        "security": "tls",
+        "tlsSettings": {
+          "certificates": [
+            {
+              "certificateFile": "/etc/ssl/private/fullchain.pem",
+              "keyFile": "/etc/ssl/private/privkey.pem"
+            }
+          ],
+          "alpn": [
+            "h2"
+          ]
+        },
+        "tcpSettings": {},
+        "kcpSettings": {},
+        "wsSettings": {},
+        "httpSettings": {},
+        "quicSettings": {},
+        "grpcSettings": {
+          "serviceName": "gandring"
+        }
+      },
+      "domain": "${domain}",
+      "sniffing": {
+        "enabled": true,
+        "destOverride": [
+          "http",
+          "tls"
+        ]
       }
     },
     {
@@ -569,7 +645,7 @@ cat > /etc/xray/config.json << END
       "settings": {
         "users": [
           {
-            "secret": "0f5138e946244020a5163e2be12fa8f2"
+            "secret": "abdff3490fe6bb16fbd57f4f45d7215a"
 #xray-mtproto
           }
         ]
@@ -583,29 +659,38 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 999,
+      "port": 1080,
       "protocol": "socks",
       "settings": {
         "auth": "password",
         "accounts": [
           {
             "user": "gandring",
-            "pass": "gandring"
+            "pass": "g"
+#xray-socks
           }
         ],
         "udp": true
       },
       "streamSettings": {
         "network": "tcp",
-        "security": "none",
-        "tlsSettings": {},
+        "security": "tls",
+        "tlsSettings": {
+          "certificates": [
+            {
+              "certificateFile": "/etc/ssl/private/fullchain.pem",
+              "keyFile": "/etc/ssl/private/privkey.pem"
+            }
+          ]
+        },
         "tcpSettings": {},
         "kcpSettings": {},
         "wsSettings": {},
         "httpSettings": {},
         "quicSettings": {},
         "grpcSettings": {}
-      }
+      },
+      "domain": "${domain}"
     },
     {
       "port": 1080,
@@ -650,24 +735,19 @@ cat > /etc/xray/config.json << END
   "outbounds": [
     {
       "protocol": "freedom",
-      "tag": "direct"
+      "settings": {}
     },
     {
       "protocol": "blackhole",
+      "settings": {},
       "tag": "blocked"
+    },
+    {
+      "tag": "tg-out",
+      "protocol": "mtproto",
+      "settings": {}
     }
   ],
-  "dns": {
-    "servers": [
-      "8.8.8.8",
-      "8.8.4.4",
-      "1.1.1.1",
-      "1.0.0.1",
-      "localhost",
-      "https+local://dns.google/dns-query",
-      "https+local://1.1.1.1/dns-query"
-    ]
-  },
   "routing": {
     "rules": [
       {
@@ -688,14 +768,14 @@ cat > /etc/xray/config.json << END
           "fc00::/7",
           "fe80::/10"
         ],
-        "outboundTag": "blocked"
+        "outboundTag": "direct"
       },
       {
+        "type": "field",
         "inboundTag": [
-          "api"
+          "K"
         ],
-        "outboundTag": "api",
-        "type": "field"
+        "outboundTag": "tg-out"
       },
       {
         "type": "field",
@@ -705,27 +785,6 @@ cat > /etc/xray/config.json << END
         ]
       }
     ]
-  },
-  "stats": {},
-  "api": {
-    "services": [
-      "StatsService"
-    ],
-    "tag": "api"
-  },
-  "policy": {
-    "levels": {
-      "0": {
-        "statsUserDownlink": true,
-        "statsUserUplink": true
-      }
-    },
-    "system": {
-      "statsInboundUplink": true,
-      "statsInboundDownlink": true,
-      "statsOutboundUplink" : true,
-      "statsOutboundDownlink" : true
-    }
   }
 }
 END
@@ -1207,7 +1266,7 @@ cat > /etc/xray/xtrojan.json << END
           "fc00::/7",
           "fe80::/10"
         ],
-        "outboundTag": "blocked"
+        "outboundTag": "direct"
       },
       {
         "inboundTag": [
@@ -1469,7 +1528,7 @@ cat > /etc/xray/xvless.json << END
           "fc00::/7",
           "fe80::/10"
         ],
-        "outboundTag": "blocked"
+        "outboundTag": "direct"
       },
       {
         "inboundTag": [
@@ -2021,7 +2080,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
           "fc00::/7",
           "fe80::/10"
         ],
-        "outboundTag": "blocked"
+        "outboundTag": "direct"
       },
       {
         "inboundTag": [
@@ -2238,7 +2297,7 @@ cat > /usr/local/etc/xray/satrio.json << END
           "fc00::/7",
           "fe80::/10"
         ],
-        "outboundTag": "blocked"
+        "outboundTag": "direct"
       },
       {
         "inboundTag": [
