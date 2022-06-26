@@ -2301,6 +2301,8 @@ cat > /etc/xray/vlessquic.json << END
 END
 
 uuid=$(cat /proc/sys/kernel/random/uuid)
+uuidv5=$(cat openssl rand -base64 32)
+password=$openssl rand -base64 32
 domain=$(cat /root/domain)
 # // Certificate File
 path_crt="/etc/xray/xray.crt"
@@ -2323,7 +2325,7 @@ cat > /etc/xray/xss.json << END
         "protocol":"shadowsocks",
         "settings":{
           "method":"2022-blake3-aes-128-gcm",
-          "password": "fvRKCJ683/9WY0L7SHaNUmAyT3WcGEXBxVUvPV7BQms=",
+          "password": "$uuidv5",
           "network":"tcp,udp"
         }
       }
