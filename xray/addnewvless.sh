@@ -58,7 +58,7 @@ until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 	done
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 		read -rp "Username : " -e user
-		CLIENT_EXISTS=$(grep -w $user /usr/local/etc/xray/satrio.json | wc -l)
+		CLIENT_EXISTS=$(grep -w $user /etc/xray/vlessquic.json | wc -l)
 
 		if [[ ${CLIENT_EXISTS} == '1' ]]; then
 			echo ""
@@ -96,6 +96,8 @@ sed -i '/#vless-hdua$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvless.json
 sed -i '/#vless-quic$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
+sed -i '/#vless-quic$/a\#### '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/vlessquic.json
 sed -i '/#vless-hdua-nontls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvless.json
 sed -i '/#vless-tls$/a\#### '"$user $exp"'\
@@ -118,7 +120,7 @@ vlesshdua="vless://${uuid}@${domain}:$vlhdua?sni=pemburu.rondoanyaran.yes&type=h
 #vlesshduanon="vless://${uuid}@${domain}:$vlhduanon?type=http&security=none&path=/bagus&encryption=none#${user}"
 vlessxtls="vless://${uuid}@${domain}:$vlxtls?sni=remang-remang.night&security=xtls&encryption=none&flow=xtls-rprx-splice-udp443#%F0%9F%94%B0VLESS+XTLS+${user}"
 vlessgfw="vless://${uuid}@${domain}:$vlxtls?sni=istimiwir.co.id&security=tls&encryption=none#%F0%9F%94%B0VLESS+GFW+${user}"
-vlessquic="vless://$uuid@$domain:$vquic?sni=$domain&key=wisnuquic&security=tls&encryption=none&headerType=none&quicSecurity=$domain&type=quic#%F0%9F%94%B0VLESS+QUIC+TLS+$user"
+vlessquic="vless://$uuid@$MYIP:$vquic?sni=$domain&key=wisnuquic&security=tls&encryption=none&headerType=none&quicSecurity=$domain&type=quic#%F0%9F%94%B0VLESS+QUIC+TLS+$user"
 systemctl restart xvless.service
 systemctl restart xray.service
 systemctl restart xtrojan.service
