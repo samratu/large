@@ -81,12 +81,14 @@ sed -i '/#trojan-grpc$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
 sed -i '/#trojan-grpc$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
-sed -i '/#trojan-grpc$/a\#&# '"$user $exp"'\
-},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/trojangrpc.json
+#sed -i '/#trojan-grpc$/a\#&# '"$user $exp"'\
+#},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/trojangrpc.json
 sed -i '/#trojan-xtls$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","flow": "'""xtls-rprx-direct""'", "email": "'""$user""'"' /etc/xray/xtrojan.json
 sed -i '/#trojan-hdua$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
+sed -i '/#trojan-hdua$/a\#&# '"$user $exp"'\
+},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/trojangrpc.json
 sed -i '/#trojan-hdua$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#trojan-tls$/a\#&# '"$user $exp"'\
