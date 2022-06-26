@@ -36,7 +36,7 @@ xraycore_link="https://github.com/XTLS/Xray-core/releases/download/v$latest_vers
 # / / Make Main Directory
 mkdir -p /usr/bin/xray
 mkdir -p /etc/xray
-mkdir -p /usr/local/etc/xray
+
 # / / Unzip Xray Linux 64
 cd `mktemp -d`
 curl -sL "$xraycore_link" -o xray.zip
@@ -124,7 +124,7 @@ cat > /etc/xray/config.json << END
           },
           {
             "dest": 2053,
-            "path": "/shanumgrpc",
+            "path": "shanumgrpc",
             "xver": 1
           }
         ]
@@ -333,7 +333,7 @@ cat > /etc/xray/config.json << END
         "kcpSettings": {},
         "httpSettings": {},
         "wsSettings": {
-          "path": "satrio",
+          "path": "/satrio",
           "headers": {
             "Host": "${domain}"
           }
@@ -399,7 +399,7 @@ cat > /etc/xray/config.json << END
         "httpSettings": {},
         "quicSettings": {},
         "grpcSettings": {
-          "serviceName": "shanumgrpc",
+          "serviceName": "/shanumgrpc",
           "multiMode": true
         }
       }
@@ -430,7 +430,7 @@ cat > /etc/xray/config.json << END
         "tcpSettings": {},
         "httpSettings": {
         "acceptProxyProtocol": true,
-          "path": "shanumhttp"
+          "path": "/shanumhttp"
         },
         "kcpSettings": {},
         "wsSettings": {},
@@ -541,7 +541,7 @@ cat > /etc/xray/config.json << END
         "httpSettings": {},
         "quicSettings": {},
         "grpcSettings": {
-          "serviceName": "wisnugrpc"
+          "serviceName": "/wisnugrpc"
         }
       }
     },
@@ -669,7 +669,6 @@ cat > /etc/xray/config.json << END
     ]
   },
   "routing": {
-  "domainStrategy": "AsIs",
     "rules": [
       {
         "type": "field",
@@ -765,7 +764,7 @@ cat > /etc/xray/xtrojan.json << END
         "decryption": "none",
         "fallbacks": [
           {
-            "dest": 81,
+            "dest": 88,
             "xver": 0
           },
           {
@@ -828,7 +827,7 @@ cat > /etc/xray/xtrojan.json << END
           ]
         },
         "grpcSettings": {
-          "serviceName": "gandringgrpc"
+          "serviceName": "/gandringgrpc"
         }
       }
     },
@@ -906,7 +905,7 @@ cat > /etc/xray/xtrojan.json << END
         "network": "h2",
         "security": "tls",
         "httpSettings": {
-          "path": "gandringhttp"
+          "path": "/gandringhttp"
          },
          "tlsSettings": {
           "alpn": [
@@ -923,14 +922,13 @@ cat > /etc/xray/xtrojan.json << END
       }
     },
     {
+      "port": 443,
       "listen": "0.0.0.0",
-      "port": 515,
       "protocol": "trojan",
       "settings": {
         "clients": [
           {
             "password": "gandring",
-            "level": 0,
             "email": "gandring@p0x.smule.my.id"
 #trojan-quic
           }
@@ -939,35 +937,32 @@ cat > /etc/xray/xtrojan.json << END
       },
       "streamSettings": {
         "network": "quic",
-        "quicSettings": {
-          "security": "none",
-          "key": "gandringquic",
-          "header": {
-            "type": "none"
-          }
-        },
         "security": "tls",
         "tlsSettings": {
-          "minVersion": "1.2",
           "certificates": [
-           {
+            {
               "certificateFile": "/etc/ssl/private/fullchain.pem",
               "keyFile": "/etc/ssl/private/privkey.pem"
             }
-          ],
-          "rejectUnknownSni": false
+          ]
+        },
+        "quicSettings": {
+          "security": "none",
+          "key": "",
+          "header": {
+            "type": "none"
+          }
         }
       }
     },
     {
+      "port": 443,
       "listen": "0.0.0.0",
-      "port": 414,
       "protocol": "vless",
       "settings": {
         "clients": [
           {
             "id": "gandring",
-            "level": 0,
             "email": "gandring@p0x.smule.my.id"
 #vless-quic
           }
@@ -976,23 +971,21 @@ cat > /etc/xray/xtrojan.json << END
       },
       "streamSettings": {
         "network": "quic",
-        "quicSettings": {
-          "security": "none",
-          "key": "wisnuquic",
-          "header": {
-            "type": "none"
-          }
-        },
         "security": "tls",
         "tlsSettings": {
-          "minVersion": "1.2",
           "certificates": [
-           {
+            {
               "certificateFile": "/etc/ssl/private/fullchain.pem",
               "keyFile": "/etc/ssl/private/privkey.pem"
             }
-          ],
-          "rejectUnknownSni": false
+          ]
+        },
+        "quicSettings": {
+          "security": "none",
+          "key": "",
+          "header": {
+            "type": "none"
+          }
         }
       }
     },
@@ -1195,7 +1188,6 @@ cat > /etc/xray/xtrojan.json << END
     ]
   },
   "routing": {
-  "domainStrategy": "AsIs",
     "rules": [
       {
         "type": "field",
@@ -1305,8 +1297,7 @@ cat > /etc/xray/xvless.json << END
                     ]
                 },
                 "grpcSettings": {
-                    "acceptProxyProtocol": true,
-                    "serviceName": "shanumgrpc"
+                    "serviceName": "/shanumgrpc"
                 }
             }
         },
@@ -1361,8 +1352,7 @@ cat > /etc/xray/xvless.json << END
                     ]
                 },
                 "grpcSettings": {
-                     "acceptProxyProtocol": true,
-                     "serviceName": "wisnugrpc"
+                    "serviceName": "/wisnugrpc"
                 }
             }
         },
@@ -1384,7 +1374,7 @@ cat > /etc/xray/xvless.json << END
                 "serverName": "$domain",
                 "grpcSettings": {
                 "acceptProxyProtocol": true,
-                    "serviceName": "gandring"
+                    "serviceName": "/gandringgrpc"
                 }
             }
         },
@@ -1412,7 +1402,7 @@ cat > /etc/xray/xvless.json << END
                     ]
                 },
                 "httpSettings": {
-                    "path": "wisnuhttp"
+                    "path": "/wisnuhttp"
                 }
             }
         },
@@ -1432,7 +1422,7 @@ cat > /etc/xray/xvless.json << END
                 "network": "h2",
                 "security": "none",
                 "httpSettings": {
-                    "path": "gandring"
+                    "path": "/gandring"
                 }
             }
         }
@@ -1564,88 +1554,67 @@ cat > /usr/local/etc/xray/xvmess.json << END
                 "decryption": "none",
                 "fallbacks": [
                     {
-                        "alpn": h2,
-                        "dest": 81,
-                        "xver": 1
-                    },
-                    {
-                        "alpn": h1,
-                        "dest": 81,
-                        "xver": 1
-                    },
-                    {
-                        "alpn": h2,
-                        "dest"; 88,
-                        "xver": 1
-                    },
-                    {
-                        "alpn": h1,
-                        "dest": 88,
-                        "xver": 1
-                    },
-                    {
-                        "dest": 1310,
+                        "dest": 1100,
                         "xver": 1
                     },
                     {
                         "path": "/gandring",
-                        "dest": 1320,
+                        "dest": 1110,
                         "xver": 1
                     },
                     {
-                        "path": "gandringhttp",
-                        "dest": 1330,
-                        "alpn": h2,
+                        "path": "/gandringhttp",
+                        "dest": 1120,
                         "xver": 1
                     },
                     {
-                        "serviceName": "gandringgrpc",
-                        "dest": 1340,
+                        "serviceName": "/gandringgrpc",
+                        "dest": 1130,
                         "xver": 1
                     },
                     {
                         "path": "/wisnu",
-                        "dest": 1350,
+                        "dest": 1140,
                         "xver": 1
                     },
                     {
-                        "path": "wisnuhttp",
-                        "dest": 1360,
+                        "path": "/wisnuhttp",
+                        "dest": 1150,
                         "xver": 1
                     },
                     {
-                        "serviceName": "wisnugrpc",
-                        "dest": 1370,
+                        "serviceName": "/wisnugrpc",
+                        "dest": 1160,
                         "xver": 1
                     },
                     {
                         "path": "/shanumtcp",
-                        "dest": 1380,
+                        "dest": 1170,
                         "xver": 1
                     },
                     {
                         "path": "/shanum",
-                        "dest": 1390,
+                        "dest": 1180,
                         "xver": 1
                     },
                     {
-                        "path": "shanumhttp",
-                        "dest": 1400,
+                        "path": "/shanumhttp",
+                        "dest": 1190,
                         "xver": 1
                     },
                     {
-                        "serviceName": "shanumgrpc",
-                        "dest": 1410,
+                        "serviceName": "/shanumgrpc",
+                        "dest": 1200,
                         "xver": 1
                     },
                     {
                         "path": "/gandringtcp",
-                        "dest": 1420,
+                        "dest": 1210,
                         "xver": 1
                     },
                     {
                         "path": "/wisnutcp",
-                        "dest": 1430,
+                        "dest": 1220,
                         "xver": 1
                     }
                 ]
@@ -1667,7 +1636,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
             }
         },
         {
-            "port": 1310,
+            "port": 1100,
             "listen": "127.0.0.1",
             "protocol": "trojan",
             "settings": {
@@ -1681,8 +1650,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
                 ],
                 "fallbacks": [
                     {
-                        "dest": 88,
-                        "alpn": h2
+                        "dest": 81
                     }
                 ]
             },
@@ -1695,7 +1663,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
             }
         },
         {
-          "port": 1320,
+          "port": 1110,
           "listen": "127.0.0.1",
           "protocol": "trojan",
           "settings": {
@@ -1709,8 +1677,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
       ],
            "fallbacks": [
        {
-           "dest": 88,
-           "alpn": h2
+           "dest": 88
        }
      ]
   },
@@ -1724,7 +1691,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
       }
     },
     {
-          "port": 1330,
+          "port": 1120,
           "listen": "127.0.0.1",
           "protocol": "trojan",
           "settings": {
@@ -1738,8 +1705,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
       ],
            "fallbacks": [
        {
-           "dest": 88,
-           "alpn": h2
+           "dest": 88
        }
      ]
   },
@@ -1747,12 +1713,13 @@ cat > /usr/local/etc/xray/xvmess.json << END
         "network": "http",
         "security": "none",
         "httpSettings": {
-          "path": "gandringhttp"
+        "acceptProxyProtocol": true,
+          "path": "/gandringhttp"
          }
       }
     },
     {
-          "port": 1340,
+          "port": 1130,
           "listen": "127.0.0.1",
           "protocol": "trojan",
           "settings": {
@@ -1766,8 +1733,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
       ],
            "fallbacks": [
         {
-           "dest": 88,
-           "alpn": h2
+           "dest": 88
         }
      ]
   },
@@ -1775,12 +1741,13 @@ cat > /usr/local/etc/xray/xvmess.json << END
         "network": "grpc",
         "security": "none",
         "grpcSettings": {
-          "serviceName": "gandringgrpc"
+          "acceptProxyProtocol": true,
+          "serviceName": "/gandringgrpc"
            }
         }
     },
     {
-            "port": 1350,
+            "port": 1140,
             "listen": "127.0.0.1",
             "protocol": "vless",
             "settings": {
@@ -1804,7 +1771,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
             }
         },
         {
-            "port": 1360,
+            "port": 1150,
             "listen": "127.0.0.1",
             "protocol": "vless",
             "settings": {
@@ -1822,12 +1789,13 @@ cat > /usr/local/etc/xray/xvmess.json << END
                 "network": "http",
                 "security": "none",
                 "httpSettings": {
-                  "path": "wisnuhttp"
+                  "acceptProxyProtocol": true,
+                  "path": "/wisnuhttp"
                 }
             }
         },
         {
-            "port": 1370,
+            "port": 1160,
             "listen": "127.0.0.1",
             "protocol": "vless",
             "settings": {
@@ -1845,12 +1813,13 @@ cat > /usr/local/etc/xray/xvmess.json << END
             "network": "grpc",
             "security": "none",
             "grpcSettings": {
-              "serviceName": "wisnugrpc"
+              "acceptProxyProtocol": true,
+              "serviceName": "/wisnugrpc"
             }
           }
         },
         {
-            "port": 1380,
+            "port": 1170,
             "listen": "127.0.0.1",
             "protocol": "vmess",
             "settings": {
@@ -1880,7 +1849,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
             }
         },
         {
-            "port": 1390,
+            "port": 1180,
             "listen": "127.0.0.1",
             "protocol": "vmess",
             "settings": {
@@ -1903,7 +1872,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
        }
   },
   {
-            "port": 1400,
+            "port": 1190,
             "listen": "127.0.0.1",
             "protocol": "vmess",
             "settings": {
@@ -1920,12 +1889,13 @@ cat > /usr/local/etc/xray/xvmess.json << END
              "network": "http",
              "security": "none",
              "httpSettings": {
-               "path": "shanumhttp"
+               "acceptProxyProtocol": true,
+               "path": "/shanumhttp"
             }
        }
   },
   {
-            "port": 1410,
+            "port": 1200,
             "listen": "127.0.0.1",
             "protocol": "vmess",
             "settings": {
@@ -1942,12 +1912,13 @@ cat > /usr/local/etc/xray/xvmess.json << END
              "network": "grpc",
              "security": "none",
              "grpcSettings": {
-               "serviceName": "shanumgrpc"
+               "acceptProxyProtocol": true,
+               "serviceName": "/shanumgrpc"
             }
        }
   },
   {
-      "port": 1420,
+      "port": 1210,
       "listen": "127.0.0.1",
       "protocol": "trojan",
       "settings": {
@@ -1978,7 +1949,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
       }
     },
     {
-      "port": 1430,
+      "port": 1220,
       "listen": "127.0.0.1",
       "protocol": "vless",
       "settings": {
@@ -2031,7 +2002,6 @@ cat > /usr/local/etc/xray/xvmess.json << END
     ]
   },
   "routing": {
-  "domainStrategy": "AsIs",
     "rules": [
       {
         "type": "field",
@@ -2249,28 +2219,24 @@ cat > /usr/local/etc/xray/satrio.json << END
     ]
   },
   "routing": {
-  "domainStrategy": "AsIs",
     "rules": [
       {
         "type": "field",
-        "inboundTag": [
-          "TROJAN-XTLS-in",
-          "TROJAN-gRPC-in",
-          "TROJAN-WSTLS-in",
-          "TROJAN-QUIC-in",
-          "TROJAN-H2C-in",
-          "TROJAN-HTTP-in",
-          "VLESS-XTLS-in",
-          "VLESS-gRPC-in",
-          "VLESS-WSTLS-in",
-          "VLESS-QUIC-in",
-          "VLESS-H2C-in",
-          "VLESS-HTTP-in",
-          "VMESS-gRPC-in",
-          "VMESS-WSTLS-in",
-          "VMESS-WS-in",
-          "VMESS-H2C-in",
-          "VMESS-HTTP-in"
+        "ip": [
+          "0.0.0.0/8",
+          "10.0.0.0/8",
+          "100.64.0.0/10",
+          "169.254.0.0/16",
+          "172.16.0.0/12",
+          "192.0.0.0/24",
+          "192.0.2.0/24",
+          "192.168.0.0/16",
+          "198.18.0.0/15",
+          "198.51.100.0/24",
+          "203.0.113.0/24",
+          "::1/128",
+          "fc00::/7",
+          "fe80::/10"
         ],
         "outboundTag": "blocked"
       },
@@ -2670,7 +2636,7 @@ cat > /etc/trojan-go/config.json << END
   "password": [
       "$uuid"
   ],
-  "disable_http_check": false,
+  "disable_http_check": true,
   "udp_timeout": 60,
   "ssl": {
     "verify": true,
