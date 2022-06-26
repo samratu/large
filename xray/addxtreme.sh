@@ -110,14 +110,14 @@ sed -i '/#vless-xtls$/a\#&# '"$user $exp"'\
 },{"id": "'""$uuid""'","flow": "'""xtls-rprx-direct""'", "email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#vless-tls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
-sed -i '/#vless-quic$/a\#### '"$user $exp"'\
-},{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/vlessquic.json
-sed -i '/#vless-grpc-tls$/a\#### '"$user $exp"'\
-},{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvless.json
+#sed -i '/#vless-grpc-tls$/a\#### '"$user $exp"'\
+#},{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvless.json
 sed -i '/#vless-http-tls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
-sed -i '/#vless-grpc-tls$/a\#### '"$user $exp"'\
-},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
+#sed -i '/#vless-grpc-tls$/a\#### '"$user $exp"'\
+#},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
+sed -i '/#vless-hdua$/a\#### '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvless.json
 sed -i '/#vless-hdua$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#trojan-tls$/a\#&# '"$user $exp"'\
@@ -126,7 +126,7 @@ sed -i '/#trojan-gfw$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#trojan-quic$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
-sed -i '/#trojan-grpc$/a\#&# '"$user $exp"'\
+sed -i '/#trojan-hdua$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/trojangrpc.json
 sed -i '/#trojan-http-tls$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
@@ -134,8 +134,8 @@ sed -i '/#trojan-hdua$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#trojan-grpc$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
-sed -i '/#trojan-grpc$/a\#&# '"$user $exp"'\
-},{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/trojangrpc.json
+#sed -i '/#trojan-grpc$/a\#&# '"$user $exp"'\
+#},{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xtrojan.json
 sed -i '/#vmess-tls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'"' /usr/local/etc/xray/xvmess.json
 
@@ -158,27 +158,6 @@ vmess_base641=$( base64 -w 0 <<< $vmess_json1)
 vmess1="vmess://$(base64 -w 0 /etc/xray/vmess-$user-tls.json)"
 rm -rf /etc/xray/vmess-$user-tls.json
 
-sed -i '/#vmess-grpc-tls$/a\### '"$user $exp"'\
-},{"id": "'""$uuid""'"' /usr/local/etc/xray/xvmess.json
-cat>/etc/xray/vmess-$user-tls.json<<EOF
-      {
-      "v": "5",
-      "ps": "🔰VMESS HTTP TLS ${user}",
-      "add": "${domain}",
-      "port": "${vmgrpc}",
-      "id": "${uuid}",
-      "aid": "0",
-      "net": "grpc",
-      "path": "/shanumgrpc",
-      "type": "none",
-      "host": "${domain}",
-      "tls": "tls"
-}
-EOF
-vmessgrpc_base641=$( base64 -w 0 <<< $vmess_json1)
-vmessgrpc="vmess://$(base64 -w 0 /etc/xray/vmess-$user-tls.json)"
-rm -rf /etc/xray/vmess-$user-tls.json
-
 sed -i '/#vmess-http-tls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'"' /usr/local/etc/xray/xvmess.json
 cat>/etc/xray/vmess-$user-tls.json<<EOF
@@ -198,27 +177,6 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
 EOF
 vmesshttp_base641=$( base64 -w 0 <<< $vmess_json1)
 vmesshttp="vmess://$(base64 -w 0 /etc/xray/vmess-$user-tls.json)"
-rm -rf /etc/xray/vmess-$user-tls.json
-
-sed -i '/#vmess-hdua$/a\### '"$user $exp"'\
-},{"id": "'""$uuid""'"' /usr/local/etc/xray/xvmess.json
-cat>/etc/xray/vmess-$user-tls.json<<EOF
-      {
-      "v": "5",
-      "ps": "🔰VMESS H2C TLS ${user}",
-      "add": "${domain}",
-      "port": "${vmhdua}",
-      "id": "${uuid}",
-      "aid": "0",
-      "net": "http",
-      "path": "/shanumhttp",
-      "type": "none",
-      "host": "",
-      "tls": "tls"
-}
-EOF
-vmesshdua_base641=$( base64 -w 0 <<< $vmess_json1)
-vmesshdua="vmess://$(base64 -w 0 /etc/xray/vmess-$user-tls.json)"
 rm -rf /etc/xray/vmess-$user-tls.json
 
 vlessquic="vless://$uuid@$MYIP:$vquic?sni=$domain&key=wisnuquic&security=tls&encryption=none&headerType=none&quicSecurity=$domain&type=quic#%F0%9F%94%B0VLESS+QUIC+TLS+$user"
@@ -243,15 +201,14 @@ systemctl restart xvless.service
 systemctl restart xray.service
 systemctl restart xtrojan.service
 systemctl restart trojangrpc
-systemctl restart vlessquic
 systemctl restart xvmess
 service cron restart
 clear
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "\033[1;46m 🔰 AKUN VLESS TESTER 🔰  \e[m"   
+echo -e "\033[1;46m🔰 AKUN AIO PORT TESTER 🔰\e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "IP:${MYIP} / $domain"
-echo -e "Protokol :GRPC, HTTP, H2C, GFW, XTLS, WS, QUIC"
+echo -e "Protokol :GRPC,HTTP,H2C,GFW,XTLS,WS,QUIC"
 echo -e "NAMA :${user}"
 echo -e "Port SERVICE :$vlxtls"
 echo -e "Satpam :tls,xtls"
