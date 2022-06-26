@@ -53,7 +53,17 @@ until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${user_EXISTS} == '0' ]]; do
 	done
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${user_EXISTS} == '0' ]]; do
 		read -rp "Password : " -e user
-		user_EXISTS=$(grep -w $user /usr/local/etc/xray/satrio.json | wc -l)
+		user_EXISTS=$(grep -w $user /usr/local/etc/xray/vlessquic.json | wc -l)
+
+		if [[ ${user_EXISTS} == '1' ]]; then
+			echo ""
+			echo -e "Username ${RED}${user}${NC} Already On VPS Please Choose Another"
+			exit 1
+		fi
+	done
+until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${user_EXISTS} == '0' ]]; do
+		read -rp "Password : " -e user
+		user_EXISTS=$(grep -w $user /etc/xray/trojangrpc.json | wc -l)
 
 		if [[ ${user_EXISTS} == '1' ]]; then
 			echo ""
@@ -71,6 +81,8 @@ sed -i '/#trojan-grpc$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
 sed -i '/#trojan-grpc$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
+sed -i '/#trojan-grpc$/a\#&# '"$user $exp"'\
+},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/trojangrpc.json
 sed -i '/#trojan-xtls$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","flow": "'""xtls-rprx-direct""'", "email": "'""$user""'"' /etc/xray/xtrojan.json
 sed -i '/#trojan-hdua$/a\#&# '"$user $exp"'\
@@ -114,7 +126,7 @@ trojantls="trojan://${uuid}@${domain}:$ttls?type=ws&security=tls&host=$domain&pa
 trojannontls="trojan://${uuid}@${domain}:$tnontls?type=ws&security=none&host=$domain&path=%2fgandring#%F0%9F%94%B0TROJAN+WS+NONTLS+${user}"
 trojanhttp="trojan://${uuid}@${domain}:$thttp?sni=gesekan.penghancur-janda.com&type=tcp&security=tls&host=$domain&path=/gandringtcp&headerType=http#%F0%9F%94%B0+HTTP+TLS+${user}"
 trojanhttpnon="trojan://${uuid}@${domain}:$thttpnon?sni=gesekan.penghancur-janda.com&type=tcp&security=none&host=$domain&headerType=http#%F0%9F%94%B0TROJAN+HTTP+NONTLS+${user}"
-trojanquic="trojan://$uuid@$domain:$tquic?sni=$domain&quicSecurity=$domain&key=gandringquic&security=tls&type=quic&headerType=none#%F0%9F%94%B0TROJAN+QUIC+TLS+$user"
+trojanquic="trojan://$uuid@$MYIP:$tquic?sni=$domain&quicSecurity=$domain&key=gandringquic&security=tls&type=quic&headerType=none#%F0%9F%94%B0TROJAN+QUIC+TLS+$user"
 systemctl restart xray.service
 
 systemctl restart xtrojan.service
