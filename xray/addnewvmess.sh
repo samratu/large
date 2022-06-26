@@ -146,7 +146,7 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "grpc",
-      "path": "shanumgrpc",
+      "path": "/shanumgrpc",
       "type": "none",
       "host": "${domain}",
       "tls": "tls"
@@ -161,7 +161,7 @@ cat>/etc/xray/vmess-$user-nontls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "grpc",
-      "path": "shanumgrpc",
+      "path": "/shanumgrpc",
       "type": "none",
       "host": "${domain}",
       "tls": "none"
@@ -211,7 +211,7 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "http",
-      "path": "shanumhttp",
+      "path": "/shanumhttp",
       "type": "none",
       "host": "",
       "tls": "tls"
@@ -312,9 +312,9 @@ echo -e "Port GRPC :${vmgrpc}/${vmgrpcnon}"
 echo -e "Port H2C :${vmhdua}"
 echo -e "Port HTTP :${vmhttp}/${vmhttpnon}"
 echo -e "Protokol :WS,GRPC,H2C,HTTP"
-echo -e "Path GRPC :shanumgrpc"
+echo -e "Path GRPC :/shanumgrpc"
 echo -e "Path HTTP :/shanumgtcp"
-echo -e "Path H2C :shanumhttp"
+echo -e "Path H2C :/shanumhttp"
 echo -e "Path WS :/shanum"
 echo -e "UserID :${uuid}"
 echo -e "Dibuat           :$hariini"
