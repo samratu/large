@@ -17,6 +17,11 @@ clear
 echo -n > /tmp/other.txt
 data=( `cat /etc/xray/xtrojan.json | grep '^####' | cut -d ' ' -f 2`);
 data=( `cat /usr/local/etc/xray/xvmess.json | grep '^####' | cut -d ' ' -f 2`);
+data=( `cat /etc/xray/xtrojan.json | grep '^#&#' | cut -d ' ' -f 2`);
+data=( `cat /etc/xray/trojangrpc.json | grep '^#&#' | cut -d ' ' -f 2`);
+data=( `cat /usr/local/etc/xray/xvmess.json | grep '^#&#' | cut -d ' ' -f 2`);
+data=( `cat /etc/xray/xvless.json | grep '^#&#' | cut -d ' ' -f 2`);
+data=( `cat /etc/xray/config.json | grep '^#&#' | cut -d ' ' -f 2`);
 echo "----------------------------------------";
 echo "---------=[ TROJAN User Login ]=---------";
 echo "----------------------------------------";
