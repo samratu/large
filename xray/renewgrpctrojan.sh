@@ -152,7 +152,7 @@ exp=$(grep -E "^#&# " "/etc/xray/config.json" | cut -d ' ' -f 3 | sed -n "${CLIE
 user=$(grep -E "^### " "/etc/xray/trojangrpcjson" | cut -d ' ' -f 2 | sed -n "${CLIENT_NUMBER}"p)
 exp=$(grep -E "^### " "/etc/xray/trojangrpc.json" | cut -d ' ' -f 3 | sed -n "${CLIENT_NUMBER}"p)
 sed -i "/^### $user $exp/,/^},{/d" /etc/xray/trojangrpc.json
-user=$(grep -E "^### " "/etc/xray/vlessquicjson" | cut -d ' ' -f 2 | sed -n "${CLIENT_NUMBER}"p)
+user=$(grep -E "^### " "/etc/xray/vlessquic.json" | cut -d ' ' -f 2 | sed -n "${CLIENT_NUMBER}"p)
 exp=$(grep -E "^### " "/etc/xray/vlessquic.json" | cut -d ' ' -f 3 | sed -n "${CLIENT_NUMBER}"p)
 sed -i "/^### $user $exp/,/^},{/d" /etc/xray/vlessquic.json
 now=$(date +%Y-%m-%d)
