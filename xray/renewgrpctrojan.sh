@@ -98,6 +98,27 @@ NUMBER_OF_CLIENTS=$(grep -c -E "^#&# " "/etc/xray/config.json")
 			read -rp "Select one client [1-${NUMBER_OF_CLIENTS}]: " CLIENT_NUMBER
 		fi
 	done
+NUMBER_OF_CLIENTS=$(grep -c -E "^#&# " "/etc/xray/trojangrpc.json")
+	if [[ ${NUMBER_OF_CLIENTS} == '0' ]]; then
+		clear
+		echo ""
+		echo "You have no existing clients!"
+		exit 1
+	fi
+
+	clear
+	echo ""
+	echo "Select the existing client you want to renew"
+	echo " Press CTRL+C to return"
+	echo -e "==============================="
+	grep -E "^#&# " "/etc/xray/trojangrpc.json" | cut -d ' ' -f 2-3 | nl -s ') '
+	until [[ ${CLIENT_NUMBER} -ge 1 && ${CLIENT_NUMBER} -le ${NUMBER_OF_CLIENTS} ]]; do
+		if [[ ${CLIENT_NUMBER} == '1' ]]; then
+			read -rp "Select one client [1]: " CLIENT_NUMBER
+		else
+			read -rp "Select one client [1-${NUMBER_OF_CLIENTS}]: " CLIENT_NUMBER
+		fi
+	done
 read -p "Expired (Days) : " masaaktif
 user=$(grep -E "^#&# " "/etc/xray/xtrojan.json" | cut -d ' ' -f 2 | sed -n "${CLIENT_NUMBER}"p)
 exp=$(grep -E "^#&# " "/etc/xray/xtrojan.json" | cut -d ' ' -f 3 | sed -n "${CLIENT_NUMBER}"p)
@@ -117,6 +138,7 @@ sed -i "s/#&# $user $exp/#&# $user $exp4/g" /etc/xray/xtrojan.json
 sed -i "s/#&# $user $exp/#&# $user $exp4/g" /usr/local/etc/xray/xvmess.json
 sed -i "s/#&# $user $exp/#&# $user $exp4/g" /etc/xray/xvless.json
 sed -i "s/#&# $user $exp/#&# $user $exp4/g" /etc/xray/config.json
+sed -i "s/#&# $user $exp/#&# $user $exp4/g" /etc/xray/trojangrpc.json
 clear
 echo ""
 echo "================================"
