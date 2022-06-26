@@ -131,7 +131,7 @@ systemctl restart xray.service
 
 systemctl restart xtrojan.service
 systemctl restart xvmess
-systemctl restart satrio
+systemctl restart trojangrpc
 service cron restart
 clear
 echo -e ""
