@@ -113,7 +113,7 @@ sed -i "/^### $user $exp/,/^},{/d" /usr/local/etc/xray/xvmess.json
 user=$(grep -E "^### " "/etc/xray/trojangrpcjson" | cut -d ' ' -f 2 | sed -n "${CLIENT_NUMBER}"p)
 exp=$(grep -E "^### " "/etc/xray/trojangrpc.json" | cut -d ' ' -f 3 | sed -n "${CLIENT_NUMBER}"p)
 sed -i "/^### $user $exp/,/^},{/d" /etc/xray/trojangrpc.json
-user=$(grep -E "^### " "/etc/xray/vlessquicjson" | cut -d ' ' -f 2 | sed -n "${CLIENT_NUMBER}"p)
+user=$(grep -E "^### " "/etc/xray/vlessquic.json" | cut -d ' ' -f 2 | sed -n "${CLIENT_NUMBER}"p)
 exp=$(grep -E "^### " "/etc/xray/vlessquic.json" | cut -d ' ' -f 3 | sed -n "${CLIENT_NUMBER}"p)
 sed -i "/^### $user $exp/,/^},{/d" /etc/xray/vlessquic.json
 rm -f /etc/xray/vmess-$user-tls.json /etc/xray/vmess-$user-tls.json
