@@ -147,25 +147,25 @@ sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
 rm -f /etc/xray/vmess-$user-nontls.json /etc/xray/vmess-$user-nontls.json
 sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
 sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
-rm -f /etc/xray/vmess-$user-tls.json /etc/xray/vmess-grpc-$user-tls.json
+rm -f /etc/xray/vmess-$user-tls.json /etc/xray/vmess-$user-tls.json
 sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
 sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
-rm -f /etc/xray/vmess-$user-nontls.json /etc/xray/vmess-grpc-$user-nontls.json
+rm -f /etc/xray/vmess-$user-nontls.json /etc/xray/vmess-$user-nontls.json
 sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
 sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
-rm -f /etc/xray/vmess-$user-tls.json /etc/xray/vmess-http-$user-tls.json
+rm -f /etc/xray/vmess-$user-tls.json /etc/xray/vmess-$user-tls.json
 sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
 sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
-rm -f /etc/xray/vmess-$user-nontls.json /etc/xray/vmess-http-$user-nontls.json
+rm -f /etc/xray/vmess-$user-nontls.json /etc/xray/vmess-$user-nontls.json
 sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
 sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
-rm -f /etc/xray/vmess-$user-tls.json /etc/xray/vmess-hdua-$user-tls.json
+rm -f /etc/xray/vmess-$user-tls.json /etc/xray/vmess-$user-tls.json
 sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
 sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
-rm -f /etc/xray/vmess-$user-tls.json /etc/xray/vmess-kcp-$user-tls.json
+rm -f /etc/xray/vmess-$user-tls.json /etc/xray/vmess-$user-tls.json
 sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
 sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
-rm -f /etc/xray/vmess-$user-nontls.json /etc/xray/vmess-kcp-$user-nontls.json
+rm -f /etc/xray/vmess-$user-nontls.json /etc/xray/vmess-$user-nontls.json
 fi
 done
 systemctl restart xray.service
