@@ -40,16 +40,6 @@ until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 	done
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 		read -rp "Username : " -e user
-		CLIENT_EXISTS=$(grep -w $user /usr/local/etc/xray/satrio.json | wc -l)
-
-		if [[ ${CLIENT_EXISTS} == '1' ]]; then
-			echo ""
-			echo -e "Username ${RED}${user}${NC} Already On VPS Please Choose Another"
-			exit 1
-		fi
-	done
-until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
-		read -rp "Username : " -e user
 		CLIENT_EXISTS=$(grep -w $user /etc/xray/xtrojan.json | wc -l)
 
 		if [[ ${CLIENT_EXISTS} == '1' ]]; then
@@ -62,10 +52,9 @@ uuid=$(cat /proc/sys/kernel/random/uuid)
 read -p "Expired (Days) : " masaaktif
 hariini=`date -d "0 days" +"%Y-%m-%d"`
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
-sed -i '/#vless-http-tls$/a\#### '"$user $exp"'\
-},{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvless.json
-sed -i '/#vless-http-tls$/a\#### '"$user $exp"'\
-},{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
+
+#sed -i '/#vless-http-tls$/a\#### '"$user $exp"'\
+#},{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
 sed -i '/#vless-http-tls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#vless-http-nontls$/a\#### '"$user $exp"'\
@@ -78,7 +67,7 @@ systemctl restart xtrojan.service
 systemctl restart xvless.service
 systemctl restart xvmess
 systemctl restart xray.service
-systemctl restart satrio.service
+
 service cron restart
 clear
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
