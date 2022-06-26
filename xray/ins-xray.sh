@@ -406,7 +406,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 4578,
+      "port": 2083,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -472,7 +472,7 @@ cat > /etc/xray/config.json << END
         "httpSettings": {},
         "quicSettings": {},
         "grpcSettings": {
-          "serviceName": "/ahanumgrpc",
+          "serviceName": "/shanumgrpc",
           "multiMode": true
         }
       }
@@ -552,7 +552,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 4143,
+      "port": 2096,
       "protocol": "vless",
       "settings": {
         "clients": [
@@ -583,7 +583,7 @@ cat > /etc/xray/config.json << END
         "httpSettings": {},
         "quicSettings": {},
         "grpcSettings": {
-          "serviceName": "gandring"
+          "serviceName": "/wisnugrpc"
         }
       },
       "domain": "${domain}",
@@ -2164,7 +2164,7 @@ path_key="/etc/xray/xray.key"
 #path_crt="/root/.acme.sh/$domain_ecc/fullchain.cer"
 #path_key="/root/.acme.sh/$domain_ecc/$domain.key"
 # Buat Config Xray
-cat > /usr/local/etc/xray/vlessquic.json << END
+cat > /etc/xray/vlessquic.json << END
 {
   "log": {
     "access": "/var/log/xray/access.log",
