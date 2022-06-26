@@ -234,6 +234,7 @@ trojangfw="trojan://$uuid@$domain:$tgfw?type=tcp&security=tls&headerType=none#%F
 trojantls="trojan://${uuid}@${domain}:$ttls?type=ws&security=tls&host=$domain&path=%2fgandring&sni=$domain#%F0%9F%94%B0TROJAN+WS+TLS+$user"
 trojanhttp="trojan://${uuid}@${domain}:$thttp?sni=${domain}&type=tcp&security=tls&host=$domain&path=/gandringtcp&headerType=http#%F0%9F%94%B0TROJAN+HTTP+TLS+${user}"
 trojanhdua="trojan://$uuid@$domain:$thttp?sni=angilangilgamping.com&type=http&security=tls&path=/gandringhttp#%F0%9F%94%B0TROJAN+H2C+TLS+$user"
+trojanquic="trojan://$uuid@$MYIP:$tquic?sni=$domain&quicSecurity=$domain&key=gandringquic&security=tls&type=quic&headerType=none#%F0%9F%94%B0TROJAN+QUIC+TLS+$user"
 trojangrpc="trojan://$uuid@$domain:$tgrpc?serviceName=/gandringgrpc&sni=$domain&mode=gun&security=tls&type=grpc#%F0%9F%94%B0TROJAN+GRPC+TLS+$user"
 systemctl restart xvless.service
 systemctl restart xray.service
