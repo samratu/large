@@ -114,8 +114,8 @@ sed -i '/#vless-grpc-tls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvless.json
 sed -i '/#vless-http-tls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
-#sed -i '/#vless-grpc-tls$/a\#### '"$user $exp"'\
-#},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
+sed -i '/#vless-grpc-tls$/a\#### '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#vless-hdua$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvless.json
 sed -i '/#vless-hdua$/a\#### '"$user $exp"'\
@@ -132,10 +132,10 @@ sed -i '/#trojan-http-tls$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#trojan-hdua$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
-#sed -i '/#trojan-grpc$/a\#&# '"$user $exp"'\
-#},{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
-#sed -i '/#trojan-grpc$/a\#&# '"$user $exp"'\
-#},{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xtrojan.json
+sed -i '/#trojan-grpc$/a\#&# '"$user $exp"'\
+},{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
+sed -i '/#trojan-grpc$/a\#&# '"$user $exp"'\
+},{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xtrojan.json
 sed -i '/#vmess-tls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'"' /usr/local/etc/xray/xvmess.json
 
@@ -170,7 +170,7 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "aid": "0",
       "net": "tcp",
       "path": "/shanumtcp",
-      "type": "none",
+      "type": "http",
       "host": "${domain}",
       "tls": "tls"
 }
@@ -224,7 +224,7 @@ echo -e "Kadaluarsa :$exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "VLESS XTLS:  ${vlessxtls}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "VLESS QUIC TLS:  ${vlessquic}"
+echo -e "VLESS GRPC TLS:  ${vlessgrpc}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "VLESS GFW TLS:  ${vlessgfw}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
@@ -232,17 +232,19 @@ echo -e "VLESS WS TLS:  ${vlesstls}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "VLESS HTTP TLS:  ${vlesshttp}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "TROJAN QUIC TLS:  ${trojanquic}"
+echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "TROJAN GFW TLS:  ${trojangfw}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "TROJAN WS TLS:  ${trojantls}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "TROJAN HTTP TLS:  ${trojanhttp}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "TROJAN GRPC TLS:  ${trojangrpc}"
+echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "VMESS WS TLS:  ${vmess1}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "VMESS HTTP TLS:  ${vmesshttp}"
-echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "TROJAN QUIC TLS:  ${trojanquic}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 #echo -e "TROJAN H2C TLS:  ${trojanhdua}"
 #echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
