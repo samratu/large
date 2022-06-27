@@ -93,8 +93,8 @@ sed -i '/#trojan-hdua$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#trojan-tls$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
-sed -i '/#trojan-nontls$/a\#&# '"$user $exp"'\
-},{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/satrio.json
+#sed -i '/#trojan-nontls$/a\#&# '"$user $exp"'\
+#},{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/satrio.json
 sed -i '/#trojan-gfw$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#trojan-nontls$/a\#&# '"$user $exp"'\
@@ -130,8 +130,9 @@ trojanhttp="trojan://${uuid}@${domain}:$thttp?sni=gesekan.penghancur-janda.com&t
 trojanhttpnon="trojan://${uuid}@${domain}:$thttpnon?sni=gesekan.penghancur-janda.com&type=tcp&security=none&host=$domain&headerType=http#%F0%9F%94%B0TROJAN+HTTP+NONTLS+${user}"
 trojanquic="trojan://$uuid@$MYIP:$tquic?sni=$domain&quicSecurity=$domain&key=gandringquic&security=tls&type=quic&headerType=none#%F0%9F%94%B0TROJAN+QUIC+TLS+$user"
 systemctl restart xray.service
-
+systemctl restart vlessquic
 systemctl restart xtrojan.service
+systemctl restart xvless
 systemctl restart xvmess
 systemctl restart trojangrpc
 service cron restart
@@ -140,45 +141,45 @@ echo -e ""
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m 🔰 AKUN TROJAN TESTER 🔰 \e[m"       
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "IP :${MYIP} / $domain"
-echo -e "NAMA :${user}"
-echo -e "Protokol :GRPC,H2C,GFW,XTLS,WS,HTTP,GO"
-echo -e "Flow xtls :only origin type not supported"
-echo -e "ServiceName :/gandringrpc"
-echo -e "Path HTTP :/gandringtcp"
-echo -e "Path H2C :/gandringhttp"
-echo -e "Path WS :/gandring"
-echo -e "Path QUIC :gandringquic"
-echo -e "Port GRPC :${tgrpc}"
-echo -e "Port WSTLS :${ttls} , $tnontls"
-echo -e "Port H2C :${thdua}"
-echo -e "Port HTTP TLS :${thttp} , $thttpnon"
-echo -e "Port GFW :${tgfw}"
-echo -e "Port XTLS :${txtls}"
-echo -e "Port QUIC :${tquic}"
+echo -e "IP  :${MYIP} / $domain"
+echo -e "NAMA  :${user}"
+echo -e "Protokol  :GRPC,H2C,GFW,XTLS,WS,HTTP,GO"
+echo -e "Flow xtls  :only origin type not supported"
+echo -e "ServiceName  :/gandringrpc"
+echo -e "Path HTTP  :/gandringtcp"
+echo -e "Path H2C  :/gandringhttp"
+echo -e "Path WS  :/gandring"
+echo -e "Path QUIC  :gandringquic"
+echo -e "Port GRPC  :${tgrpc}"
+echo -e "Port WSTLS  :${ttls} , $tnontls"
+echo -e "Port H2C  :${thdua}"
+echo -e "Port HTTP TLS  :${thttp} , $thttpnon"
+echo -e "Port GFW  :${tgfw}"
+echo -e "Port XTLS  :${txtls}"
+echo -e "Port QUIC  :${tquic}"
 echo -e "Sandi :${uuid}"
-echo -e "Dibuat :$hariini"
-echo -e "Kadaluarsa :$exp"
+echo -e "Dibuat  :$hariini"
+echo -e "Kadaluarsa  :$exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "TROJAN GRPC:  ${trojangrpc}"
+echo -e "TROJAN GRPC: ${trojangrpc}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "TROJAN XTLS:  ${trojanxtls}"
+echo -e "TROJAN XTLS: ${trojanxtls}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "TROJAN GFW:  ${trojangfw}"
+echo -e "TROJAN GFW: ${trojangfw}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "TROJAN H2C:  ${trojanhdua}"
+echo -e "TROJAN H2C: ${trojanhdua}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "TROJAN WS TLS:  ${trojantls}"
+echo -e "TROJAN WS TLS: ${trojantls}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "TROJAN WS NONTLS:  ${trojannontls}"
+echo -e "TROJAN WS NONTLS: ${trojannontls}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "TROJAN HTTP TLS:  ${trojanhttp}"
+echo -e "TROJAN HTTP TLS: ${trojanhttp}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "TROJAN HTTP NONTLS:  ${trojanhttpnon}"
+echo -e "TROJAN HTTP NONTLS: ${trojanhttpnon}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "TROJAN QUIC:  ${trojanquic}"
+echo -e "TROJAN QUIC: ${trojanquic}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "TROJAN GO:  ${trojango}"
+echo -e "TROJAN GO: ${trojango}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m🔰LUXURY EDITION ZEROSSL🔰\e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
