@@ -1646,450 +1646,447 @@ cat > /usr/local/etc/xray/xvmess.json << END
   },
   "inbounds": [
     {
-      "listen": "127.0.0.1",
-      "port": 10808,
-      "protocol": "dokodemo-door",
-      "settings": {
-        "address": "127.0.0.1"
-      },
-      "tag": "api"
+     "listen": "127.0.0.1",
+     "port": 10808,
+     "protocol": "dokodemo-door",
+     "settings": {
+          "address": "127.0.0.1"
+         },
+         "tag": "api"
     },
     {
-            "port": 443,
-            "protocol": "vless",
-            "settings": {
-                "clients": [
-                    {
-                        "id": "gandring",
-                        "flow": "xtls-rprx-direct",
-                        "level": 0,
-                        "email": "gandring@p0x.smule.my.id"
+     "port": 443,
+     "protocol": "vless",
+     "settings": {
+       "clients": [
+         {
+          "id": "gandring",
+          "flow": "xtls-rprx-direct",
+          "level": 0,
+          "email": "gandring@p0x.smule.my.id"
 #vless-xtls
-                    }
-                ],
-                "decryption": "none",
-                "fallbacks": [
-                    {
-                        "dest": 1100,
-                        "xver": 1
-                    },
-                    {
-                        "path": "/gandring",
-                        "dest": 1110,
-                        "xver": 1
-                    },
-                    {
-                        "path": "/gandringhttp",
-                        "dest": 1120,
-                        "xver": 1
-                    },
-                    {
-                        "path": "/gandringgrpc",
-                        "dest": 1130,
-                        "xver": 1
-                    },
-                    {
-                        "path": "/wisnu",
-                        "dest": 1140,
-                        "xver": 1
-                    },
-                    {
-                        "path": "/wisnuhttp",
-                        "dest": 1150,
-                        "xver": 1
-                    },
-                    {
-                        "path": "/wisnugrpc",
-                        "dest": 1160,
-                        "xver": 1
-                    },
-                    {
-                        "path": "/shanumtcp",
-                        "dest": 1170,
-                        "xver": 1
-                    },
-                    {
-                        "path": "/shanum",
-                        "dest": 1180,
-                        "xver": 1
-                    },
-                    {
-                        "path": "/shanumhttp",
-                        "dest": 1190,
-                        "xver": 1
-                    },
-                    {
-                        "path": "/shanumgrpc",
-                        "dest": 1200,
-                        "xver": 1
-                    },
-                    {
-                        "path": "/gandringtcp",
-                        "dest": 1210,
-                        "xver": 1
-                    },
-                    {
-                        "path": "/wisnutcp",
-                        "dest": 1220,
-                        "xver": 1
-                    }
-                ]
-            },
-            "streamSettings": {
-                "network": "tcp",
-                "security": "xtls",
-                "xtlsSettings": {
-                    "alpn": [
-                        "http/1.1"
-                    ],
-                    "certificates": [
-                        {
-                            "certificateFile": "/etc/ssl/private/fullchain.pem",
-                            "keyFile": "/etc/ssl/private/privkey.pem"
-                        }
-                    ]
-                }
-            }
-        },
-        {
-            "port": 1100,
-            "listen": "127.0.0.1",
-            "protocol": "trojan",
-            "settings": {
-                "clients": [
-                    {
-                        "password": "gandring",
-                        "level": 0,
-                        "email": "gandring@p0x.smule.my.id"
-#trojan-gfw
-                    }
-                ],
-                "fallbacks": [
-                    {
-                        "dest": 81
-                    }
-                ]
-            },
-            "streamSettings": {
-                "network": "tcp",
-                "security": "none",
-                "tcpSettings": {
-                  "acceptProxyProtocol": true
-                }
-            }
-        },
-        {
-          "port": 1110,
-          "listen": "127.0.0.1",
-          "protocol": "trojan",
-          "settings": {
-           "clients": [
-       {
-           "password": "gandring",
-           "level": 0,
-           "email": "gandring@p0x.smule.my.id"
-#trojan-tls
-       }
+         }
+       ],
+       "decryption": "none",
+       "fallbacks": [
+         {
+          "dest": 1100,
+          "xver": 1
+         },
+         {
+          "path": "/gandring",
+          "dest": 1110,
+          "xver": 1
+         },
+         {
+          "path": "/gandringhttp",
+          "dest": 1120,
+          "xver": 1
+         },
+         {
+          "path": "/gandringgrpc",
+          "dest": 1130,
+          "xver": 1
+         },
+         {
+          "path": "/wisnu",
+          "dest": 1140,
+          "xver": 1
+         },
+         {
+          "path": "/wisnuhttp",
+          "dest": 1150,
+          "xver": 1
+         },
+         {
+          "path": "/wisnugrpc",
+          "dest": 1160,
+          "xver": 1
+         },
+         {
+          "path": "/shanum",
+          "dest": 1170,
+          "xver": 1
+         },
+         {
+          "path": "/shanumhttp",
+          "dest": 1180,
+          "xver": 1
+         },
+         {
+          "path": "/shanumgrpc",
+          "dest": 1190,
+          "xver": 1
+         },
+         {
+          "path": "/gandringtcp",
+          "dest": 1200,
+          "xver": 1
+         },
+         {
+          "path": "/wisnutcp",
+          "dest": 1210,
+          "xver": 1
+         },
+         {
+          "path": "/shanumtcp",
+          "dest": 1220,
+          "xver": 1
+         }
+       ]
+     },
+     "streamSettings": {
+     "network": "tcp",
+     "security": "xtls",
+     "xtlsSettings": {
+       "alpn": [
+       "http/1.1"
       ],
-           "fallbacks": [
-       {
-           "dest": 88
+      "certificates": [
+         {
+          "certificateFile": "/etc/ssl/private/fullchain.pem",
+          "keyFile": "/etc/ssl/private/privkey.pem"
+         }
+       ]
+      }
+     }
+    },
+    {
+     "port": 1100,
+     "listen": "127.0.0.1",
+     "protocol": "trojan",
+     "settings": {
+       "clients": [
+         {
+          "password": "gandring",
+          "level": 0,
+          "email": "gandring@p0x.smule.my.id"
+#trojan-gfw
+         }
+        ],
+        "fallbacks": [
+         {
+          "dest": 81
+         }
+        ]
+       },
+       "streamSettings": {
+       "network": "tcp",
+       "security": "none",
+         "tcpSettings": {
+         "acceptProxyProtocol": true
        }
-     ]
-  },
-      "streamSettings": {
-        "network": "ws",
-        "security": "none",
-        "wsSettings": {
-          "acceptProxyProtocol": true,
-          "path": "/gandring"
+     }
+    },
+    {
+     "port": 1110,
+     "listen": "127.0.0.1",
+     "protocol": "trojan",
+     "settings": {
+       "clients": [
+         {
+          "password": "gandring",
+          "level": 0,
+          "email": "gandring@p0x.smule.my.id"
+#trojan-tls
+         }
+        ],
+        "fallbacks": [
+         {
+          "dest": 88
+         }
+        ]
+       },
+       "streamSettings": {
+       "network": "ws",
+       "security": "none",
+         "wsSettings": {
+           "acceptProxyProtocol": true,
+           "path": "/gandring"
          }
       }
     },
     {
-          "port": 1120,
-          "listen": "127.0.0.1",
-          "protocol": "trojan",
-          "settings": {
-           "clients": [
+     "port": 1120,
+     "listen": "127.0.0.1",
+     "protocol": "trojan",
+     "settings": {
+       "clients": [
          {
-           "password": "gandring",
-           "level": 0,
-           "email": "gandring@p0x.smule.my.id"
+          "password": "gandring",
+          "level": 0,
+          "email": "gandring@p0x.smule.my.id"
 #trojan-hdua
          }
-      ],
-           "fallbacks": [
-       {
-           "dest": 88
-       }
-     ]
-  },
-      "streamSettings": {
-        "network": "http",
-        "security": "none",
+        ],
+        "fallbacks": [
+         {
+          "dest": 88
+         }
+        ]
+       },
+       "streamSettings": {
+       "network": "h2",
+       "security": "none",
         "httpSettings": {
-        "acceptProxyProtocol": true,
           "path": "/gandringhttp"
          }
       }
     },
     {
-          "port": 1130,
-          "listen": "127.0.0.1",
-          "protocol": "trojan",
-          "settings": {
-           "clients": [
+     "port": 1130,
+     "listen": "127.0.0.1",
+     "protocol": "trojan",
+     "settings": {
+       "clients": [
          {
-           "password": "gandring",
-           "level": 0,
-           "email": "gandring@p0x.smule.my.id"
-#trojan-grpc
+          "password": "gandring",
+          "level": 0,
+          "email": "gandring@p0x.smule.my.id"
+#trojan-grpcp
          }
-      ],
-           "fallbacks": [
-        {
-           "dest": 88
-        }
-     ]
-  },
-      "streamSettings": {
-        "network": "grpc",
-        "security": "none",
-        "grpcSettings": {
-          "acceptProxyProtocol": true,
-          "path": "/gandringgrpc"
-           }
-        }
+        ],
+        "fallbacks": [
+         {
+          "dest": 88
+         }
+        ]
+       },
+       "streamSettings": {
+       "network": "grpc",
+       "security": "none",
+         "grpcSettings": {
+         "path": "/gandringgrpc"
+         }
+       }
     },
     {
-            "port": 1140,
-            "listen": "127.0.0.1",
-            "protocol": "vless",
-            "settings": {
-                "clients": [
-                    {
-                        "id": "gandring",
-                        "level": 0,
-                        "email": "gandring@p0x.smule.my.id"
+     "port": 1140,
+     "listen": "127.0.0.1",
+     "protocol": "vless",
+     "settings": {
+       "clients": [
+         {
+          "id": "gandring",
+          "level": 0,
+          "email": "gandring@p0x.smule.my.id"
 #vless-tls
-                     }
-                ],
-                "decryption": "none"
-            },
-            "streamSettings": {
-                "network": "ws",
-                "security": "none",
-                "wsSettings": {
-                  "acceptProxyProtocol": true,
-                  "path": "/wisnu"
-                }
-            }
-        },
-        {
-            "port": 1150,
-            "listen": "127.0.0.1",
-            "protocol": "vless",
-            "settings": {
-                "clients": [
-                    {
-                        "id": "gandring",
-                        "level": 0,
-                        "email": "gandring@p0x.smule.my.id"
+         }
+       ],
+       "decryption": "none"
+      },
+      "streamSettings": {
+      "network": "ws",
+      "security": "none",
+        "wsSettings": {
+        "acceptProxyProtocol": true,
+        "path": "/wisnu"
+       }
+     }
+    },
+    {
+     "port": 1150,
+     "listen": "127.0.0.1",
+     "protocol": "vless",
+     "settings": {
+       "clients": [
+         {
+          "id": "gandring",
+          "level": 0,
+          "email": "gandring@p0x.smule.my.id"
 #vless-hdua
-                    }
-                ],
-                "decryption": "none"
-            },
-            "streamSettings": {
-                "network": "http",
-                "security": "none",
-                "httpSettings": {
-                  "acceptProxyProtocol": true,
-                  "path": "/wisnuhttp"
-                }
-            }
-        },
-        {
-            "port": 1160,
-            "listen": "127.0.0.1",
-            "protocol": "vless",
-            "settings": {
-                "clients": [
-                    {
-                        "id": "gandring",
-                        "level": 0,
-                        "email": "gandring@p0x.smule.my.id"
+         }
+       ],
+       "decryption": "none"
+      },
+      "streamSettings": {
+      "network": "h2",
+      "security": "none",
+        "httpSettings": {
+        "path": "/wisnuhttp"
+        }
+      }
+    },
+    {
+     "port": 1160,
+     "listen": "127.0.0.1",
+     "protocol": "vless",
+     "settings": {
+       "clients": [
+         {
+          "id": "gandring",
+          "level": 0,
+          "email": "gandring@p0x.smule.my.id"
 #vless-grpc-tls
-                    }
-                ],
-                "decryption": "none"
-            },
-            "streamSettings": {
-            "network": "grpc",
-            "security": "none",
-            "grpcSettings": {
-              "acceptProxyProtocol": true,
-              "path": "/wisnugrpc"
-            }
-          }
-        },
-        {
-            "port": 1170,
-            "listen": "127.0.0.1",
-            "protocol": "vmess",
-            "settings": {
-                "clients": [
-                    {
-                        "id": "gandring",
-                        "level": 0,
-                        "email": "gandring@p0x.smule.my.id"
-#vmess-http-tls
-                    }
-                ]
-            },
-            "streamSettings": {
-                "network": "tcp",
-                "security": "none",
-                "tcpSettings": {
-                    "acceptProxyProtocol": true,
-                    "header": {
-                        "type": "http",
-                        "request": {
-                            "path": [
-                                "/shanumtcp"
-                            ]
-                        }
-                    }
-                }
-            }
-        },
-        {
-            "port": 1180,
-            "listen": "127.0.0.1",
-            "protocol": "vmess",
-            "settings": {
-                "clients": [
-                    {
-                        "id": "gandring",
-                        "level": 0,
-                        "email": "gandring@p0x.smule.my.id"
+         }
+       ],
+       "decryption": "none"
+      },
+      "streamSettings": {
+      "network": "grpc",
+      "security": "none",
+        "grpcSettings": {
+        "path": "/wisnugrpc"
+      }
+     }
+    },
+    {
+     "port": 1170,
+     "listen": "127.0.0.1",
+     "protocol": "vmess",
+     "settings": {
+       "clients": [
+         {
+          "id": "gandring",
+          "level": 0,
+          "email": "gandring@p0x.smule.my.id"
 #vmess-tls
-                     }
-                ]
-            },
-            "streamSettings": {
-             "network": "ws",
-             "security": "none",
-              "wsSettings": {
-                "acceptProxyProtocol": true,
-                "path": "/shanum"
-            }
-       }
-  },
-  {
-            "port": 1190,
-            "listen": "127.0.0.1",
-            "protocol": "vmess",
-            "settings": {
-                "clients": [
-                    {
-                        "id": "gandring",
-                        "level": 0,
-                        "email": "gandring@p0x.smule.my.id"
+         }
+       ]
+      },
+      "streamSettings": {
+      "network": "ws",
+      "security": "none",
+        "wsSettings": {
+        "acceptProxyProtocol": true,
+        "path": "/shanum"
+      }
+     }
+    },
+    {
+     "port": 1180,
+     "listen": "127.0.0.1",
+     "protocol": "vmess",
+     "settings": {
+       "clients": [
+         {
+          "id": "gandring",
+          "level": 0,
+          "email": "gandring@p0x.smule.my.id"
 #vmess-hdua
-                     }
-                ]
-            },
-            "streamSettings": {
-             "network": "http",
-             "security": "none",
-             "httpSettings": {
-               "acceptProxyProtocol": true,
-               "path": "/shanumhttp"
-            }
-       }
-  },
-  {
-            "port": 1200,
-            "listen": "127.0.0.1",
-            "protocol": "vmess",
-            "settings": {
-                "clients": [
-                     {
-                        "id": "gandring",
-                        "level": 0,
-                        "email": "gandring@p0x.smule.my.id"
+         }
+       ]
+      },
+      "streamSettings": {
+      "network": "h2",
+      "security": "none",
+        "httpSettings": {
+        "acceptProxyProtocol": true,
+        "path": "/shanumhttp"
+      }
+     }
+    },
+    {
+     "port": 1190,
+     "listen": "127.0.0.1",
+     "protocol": "vmess",
+     "settings": {
+      "clients": [
+        {
+         "id": "gandring",
+         "level": 0,
+         "email": "gandring@p0x.smule.my.id"
 #vmess-grpc-tls
-                     }
-                ]
-            },
-            "streamSettings": {
-             "network": "grpc",
-             "security": "none",
-             "grpcSettings": {
-               "acceptProxyProtocol": true,
-               "path": "/shanumgrpc"
-            }
-       }
-  },
-  {
-      "port": 1210,
-      "listen": "127.0.0.1",
-      "protocol": "trojan",
-      "settings": {
-        "clients": [
-          {
-            "password": "gandring",
-            "level": 0,
-            "email": "gandring@p0x.smule.my.id"
+        }
+       ]
+      },
+      "streamSettings": {
+      "network": "grpc",
+      "security": "none",
+        "grpcSettings": {
+        "acceptProxyProtocol": true,
+        "serviceName": "/shanum"
+      }
+     }
+    },
+    {
+     "port": 1200,
+     "listen": "127.0.0.1",
+     "protocol": "trojan",
+     "settings": {
+       "clients": [
+         {
+          "password": "gandring",
+          "level": 0,
+          "email": "gandring@p0x.smule.my.id"
 #trojan-http-tls
-           }
+         }
         ],
         "decryption": "none"
       },
       "streamSettings": {
-        "network": "tcp",
-        "security": "none",
+      "network": "tcp",
+       "security": "none",
         "tcpSettings": {
          "acceptProxyProtocol": true,
-          "header": {
+           "header": {
             "type": "http",
-             "request": {
-             "path": [
-              "/gandringtcp"
-             ]
+              "request": {
+               "path": [
+               "/gandringtcp"
+              ]
             }
           }
         }
       }
     },
     {
-      "port": 1220,
-      "listen": "127.0.0.1",
-      "protocol": "vless",
-      "settings": {
-        "clients": [
-          {
-            "id": "gandring",
-            "level": 0,
-            "email": "gandring@p0x.smule.my.id"
+     "port": 1210,
+     "listen": "127.0.0.1",
+     "protocol": "vless",
+     "settings": {
+       "clients": [
+         {
+          "id": "gandring",
+          "level": 0,
+          "email": "gandring@p0x.smule.my.id"
 #vless-http-tls
-           }
+         }
         ],
         "decryption": "none"
       },
       "streamSettings": {
-        "network": "tcp",
-        "security": "none",
-        "tcpSettings": {
-         "acceptProxyProtocol": true,
-          "header": {
-            "type": "http",
-             "request": {
-             "path": [
-              "/wisnutcp"
-             ]
+      "network": "tcp",
+       "security": "none",
+         "tcpSettings": {
+          "acceptProxyProtocol": true,
+            "header": {
+             "type": "http",
+              "request": {
+               "path": [
+               "/wisnutcp"
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+     "port": 1220,
+     "listen": "127.0.0.1",
+     "protocol": "vmess",
+     "settings": {
+       "clients": [
+         {
+          "id": "gandring",
+          "level": 0,
+          "email": "gandring@p0x.smule.my.id"
+#vmess-http-tls
+         }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+      "network": "tcp",
+       "security": "none",
+         "tcpSettings": {
+          "acceptProxyProtocol": true,
+           "header": {
+             "type": "http",
+              "request": {
+               "path": [
+               "/shanumtcp"
+              ]
             }
           }
         }
@@ -2199,7 +2196,7 @@ cat > /usr/local/etc/xray/vlessquic.json << END
   "inbounds": [
     {
       "listen": "127.0.0.1",
-      "port": 10808,
+      "port": 10805,
       "protocol": "dokodemo-door",
       "settings": {
         "address": "127.0.0.1"
@@ -2207,7 +2204,7 @@ cat > /usr/local/etc/xray/vlessquic.json << END
       "tag": "api"
     },
     {
-      "port": 344,
+      "port": 443,
       "listen": "0.0.0.0",
       "protocol": "vless",
       "settings": {
@@ -2232,9 +2229,8 @@ cat > /usr/local/etc/xray/vlessquic.json << END
           ]
         },
         "quicSettings": {
-        "acceptProxyProtocol": true,
           "security": "none",
-          "key": "/wisnuquic",
+          "key": "wisnuquic",
           "header": {
             "type": "none"
           }
@@ -2326,6 +2322,7 @@ cat > /usr/local/etc/xray/vlessquic.json << END
 END
 
 uuid=$(cat /proc/sys/kernel/random/uuid)
+uuid5=$openssl rand -base64 16
 domain=$(cat /root/domain)
 # // Certificate File
 path_crt="/etc/xray/xray.crt"
@@ -2348,7 +2345,8 @@ cat > /etc/xray/xss.json << END
         "protocol":"shadowsocks",
         "settings":{
           "method":"2022-blake3-aes-128-gcm",
-          "password": "fvRKCJ683/9WY0L7SHaNUmAyT3WcGEXBxVUvPV7BQms=",
+          "password": "$uuid5",
+#xray-ss-new
           "network":"tcp,udp"
         }
       }
@@ -2789,10 +2787,10 @@ END
 
 sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2053 -j ACCEPT
 sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2053 -j ACCEPT
-iptables-save > /etc/iptables.up.rules
-iptables-restore -t < /etc/iptables.up.rules
-netfilter-persistent save
-netfilter-persistent reload
+sudo iptables-save > /etc/iptables.up.rules
+sudo iptables-restore -t < /etc/iptables.up.rules
+sudo netfilter-persistent save
+sudo netfilter-persistent reload
 systemctl daemon-reload
 systemctl stop trojan-go
 systemctl start trojan-go
