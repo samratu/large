@@ -2337,59 +2337,80 @@ cat > /etc/xray/xss.json << END
   "log": {
     "access": "/var/log/xray/access.log",
     "error": "/var/log/xray/error.log",
-    "loglevel": "info"
+    "loglevel": "warning"
   },
   "inbounds": [
     {
-        "port":212,
-        "protocol":"shadowsocks",
-        "settings":{
-          "method":"2022-blake3-aes-128-gcm",
-          "password": "$uuid5",
-#xray-ss-new
-          "network":"tcp,udp"
+      "port": 515,
+      "protocol": "shadowsocks",
+      "settings": {
+        "method": "2022-blake3-aes-128-gcm",
+        "password": "A0V67P0jN7wOSRkSsQiqww==",
+        "clients": [
+          {
+            "password": "A0V67P0jN7wOSRkSsQiqqq==:,
+            "email": "gandring@p0x.smule.my.id"
+          },
+          {
+            "password": "A0V78P0jN7wOSRkSsQiqww==",
+            "email": "gandring@p0x.smule.my.id"
+          }
+        ],
+        "network": "tcp",
+        "security": "tls",
+        "tlsSettings": {
+         "certificates": [
+             {
+               "certificateFile": "/etc/ssl/private/fullchain.pem",
+               "keyFile": "/etc/ssl/private/privkey.pem"
+            }
+          ]
+        },
+        "tcpSettings": {
+          "header": {
+            "type": "none"
+          }
         }
       }
+    },
+    {
+      "port": 443,
+      "protocol": "shadowsocks",
+      "settings": {
+        "method": "2022-blake3-aes-128-gcm",
+        "password": "A0V67P0jN7wOSRkSsQiqww==",
+            "email": "gandring@p0x.smule.my.id"
+          },
+          {
+            "password": "A0V67P0jN7wOSRkSsQiqqq==",
+            "email": "gandring@p0x.smule.my.id"
+          }
+        ],
+        "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+         "certificates": [
+             {
+               "certificateFile": "/etc/ssl/private/fullchain.pem",
+               "keyFile": "/etc/ssl/private/privkey.pem"
+            }
+          ]
+        },
+        "wsSettings": {
+          "path": "/ssws",
+          "header": {
+            "type": "none"
+          }
+        }
+      }
+    }
   ],
   "outbounds": [
     {
-      "protocol": "freedom",
-      "tag": "direct"
-    },
-    {
-      "protocol": "blackhole",
-      "tag": "blocked"
+      "protocol": "freedom"
     }
-  ],
-  "dns": {
-    "servers": [
-      "8.8.8.8",
-      "8.8.4.4",
-      "1.1.1.1",
-      "1.0.0.1",
-      "localhost",
-      "https+local://dns.google/dns-query",
-      "https+local://1.1.1.1/dns-query"
-    ]
-  },
-  "routing": {
-    "domainStrategy": "AsIs",
-    "rules": [
-      {
-        "type": "field",
-        "inboundTag": [
-          "TROJAN-XTLS-in",
-          "TROJAN-gRPC-in",
-          "TROJAN-WSTLS-in",
-          "TROJAN-WS-in",
-          "TROJAN-H2C-in",
-          "TROJAN-HTTP-in"
-        ],
-        "outboundTag": "blackhole-out",
-        "protocol": [ "bittorrent" ]
-      }
-    ]
-  }
+  ]
 }
 END
 
