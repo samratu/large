@@ -366,7 +366,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 1000,
+      "port": 1190,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -847,13 +847,12 @@ cat > /etc/xray/xvless.json << END
           ]
         },
         "grpcSettings": {
-        "acceptProxyProtocol": true,
           "serviceName": "/wisnugrpc"
         }
       }
     },
     {
-      "port": 443,
+      "port": 1150,
       "listen": "0.0.0.0",
       "protocol": "vless",
       "settings": {
@@ -883,7 +882,6 @@ cat > /etc/xray/xvless.json << END
           ]
         },
         "httpSettings": {
-        "acceptProxyProtocol": true,
           "path": "/wisnuhttp"
         }
       }
@@ -1510,7 +1508,7 @@ cat > /etc/xray/trojangrpc.json << END
   },
   "inbounds": [
     {
-      "port": 443,
+      "port": 1120,
       "listen": "0.0.0.0",
       "protocol": "trojan",
       "settings": {
@@ -2189,7 +2187,7 @@ path_key="/etc/xray/xray.key"
 #path_crt="/root/.acme.sh/$domain_ecc/fullchain.cer"
 #path_key="/root/.acme.sh/$domain_ecc/$domain.key"
 # Buat Config Xray
-cat > /usr/local/etc/xray/vlessquic.json << END
+cat > /etc/xray/vlessquic.json << END
 {
   "log": {
     "access": "/var/log/xray/access.log",
@@ -2570,32 +2568,43 @@ sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 888 -j ACCEPT
 sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 888 -j ACCEPT
 sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 808 -j ACCEPT
 sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 808 -j ACCEPT
-sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 4443 -j ACCEPT
-sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 4443 -j ACCEPT
-sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 8888 -j ACCEPT
-sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 8888 -j ACCEPT
-sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 5443 -j ACCEPT
-sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 5443 -j ACCEPT
-sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 3443 -j ACCEPT
-sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 3443 -j ACCEPT
-sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2443 -j ACCEPT
-sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2443 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 1130 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 1130 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 1140 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 1140 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 1150 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 1150 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 1160 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 1160 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 1170 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 1170 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 1180 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 1180 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 1190 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 1190 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 1200 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 1200 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 1210 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 1210 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 1220 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 1220 -j ACCEPT
+
 sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 888 -j ACCEPT
 sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 888 -j ACCEPT
-sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 3443 -j ACCEPT
-sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 3443 -j ACCEPT
-sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 3444 -j ACCEPT
-sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 3444 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 700 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 700 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 1100 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 1100 -j ACCEPT
 sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2082 -j ACCEPT
 sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2082 -j ACCEPT
 sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2087 -j ACCEPT
 sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2087 -j ACCEPT
 sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 8080 -j ACCEPT
 sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 8080 -j ACCEPT
-sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 441 -j ACCEPT
-sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 441 -j ACCEPT
-sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 442 -j ACCEPT
-sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 442 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 1110 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 1110 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 1120 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 1120 -j ACCEPT
 sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 212 -j ACCEPT
 sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 212 -j ACCEPT
 sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 501 -j ACCEPT
@@ -2620,6 +2629,8 @@ sudo iptables -A OUTPUT -p tcp --sport 10805 -m conntrack --ctstate ESTABLISHED 
 sudo iptables -A OUTPUT -p udp --sport 10805 -m conntrack --ctstate ESTABLISHED -j ACCEPT
 sudo iptables -A OUTPUT -p tcp --sport 10808 -m conntrack --ctstate ESTABLISHED -j ACCEPT
 sudo iptables -A OUTPUT -p udp --sport 10808 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+sudo iptables -A OUTPUT -p tcp --sport 10809 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+sudo iptables -A OUTPUT -p udp --sport 10809 -m conntrack --ctstate ESTABLISHED -j ACCEPT
 sudo iptables-save > /etc/iptables.up.rules
 sudo iptables-restore -t < /etc/iptables.up.rules
 sudo netfilter-persistent save
