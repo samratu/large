@@ -2382,7 +2382,7 @@ cat > /etc/xray/xss.json << END
             "email": "gandring@p0x.smule.my.id"
           },
           {
-            "password": "A0V67P0jN7wOSRkSsQiqqq==",
+            "password": "A0V78P0jN7wOSRkSsQiqqq==",
             "email": "gandring@p0x.smule.my.id"
           }
         ],
