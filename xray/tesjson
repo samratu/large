@@ -30,67 +30,67 @@
        "decryption": "none",
        "fallbacks": [
          {
-          "dest": 1310,
+          "dest": 1100,
           "xver": 1
          },
          {
           "path": "/gandring",
-          "dest": 1320,
+          "dest": 1110,
           "xver": 1
          },
          {
           "path": "/gandringhttp",
-          "dest": 1330,
+          "dest": 1120,
           "xver": 1
          },
          {
           "path": "/gandringgrpc",
-          "dest": 1340,
+          "dest": 1130,
           "xver": 1
          },
          {
           "path": "/wisnu",
-          "dest": 1350,
+          "dest": 1140,
           "xver": 1
          },
          {
           "path": "/wisnuhttp",
-          "dest": 1360,
+          "dest": 1150,
           "xver": 1
          },
          {
           "path": "/wisnugrpc",
-          "dest": 1370,
+          "dest": 1160,
           "xver": 1
          },
          {
           "path": "/shanum",
-          "dest": 1380,
+          "dest": 1170,
           "xver": 1
          },
          {
           "path": "/shanumhttp",
-          "dest": 1390,
+          "dest": 1180,
           "xver": 1
          },
          {
           "path": "/shanumgrpc",
-          "dest": 1400,
+          "dest": 1190,
           "xver": 1
          },
          {
           "path": "/gandringtcp",
-          "dest": 1410,
+          "dest": 1200,
           "xver": 1
          },
          {
           "path": "/wisnutcp",
-          "dest": 1420,
+          "dest": 1210,
           "xver": 1
          },
          {
           "path": "/shanumtcp",
-          "dest": 1430,
+          "dest": 1220,
           "xver": 1
          }
        ]
@@ -112,7 +112,7 @@
      }
     },
     {
-     "port": 1310,
+     "port": 1100,
      "listen": "127.0.0.1",
      "protocol": "trojan",
      "settings": {
@@ -139,7 +139,7 @@
      }
     },
     {
-     "port": 1320,
+     "port": 1110,
      "listen": "127.0.0.1",
      "protocol": "trojan",
      "settings": {
@@ -167,7 +167,7 @@
       }
     },
     {
-     "port": 1330,
+     "port": 1120,
      "listen": "127.0.0.1",
      "protocol": "trojan",
      "settings": {
@@ -194,7 +194,7 @@
       }
     },
     {
-     "port": 1340,
+     "port": 1130,
      "listen": "127.0.0.1",
      "protocol": "trojan",
      "settings": {
@@ -203,7 +203,7 @@
           "password": "gandring",
           "level": 0,
           "email": "gandring@p0x.smule.my.id"
-#trojan-grpc
+#trojan-grpcp
          }
         ],
         "fallbacks": [
@@ -221,7 +221,7 @@
        }
     },
     {
-     "port": 1350,
+     "port": 1140,
      "listen": "127.0.0.1",
      "protocol": "vless",
      "settings": {
@@ -245,7 +245,7 @@
      }
     },
     {
-     "port": 1360,
+     "port": 1150,
      "listen": "127.0.0.1",
      "protocol": "vless",
      "settings": {
@@ -268,7 +268,7 @@
       }
     },
     {
-     "port": 1370,
+     "port": 1160,
      "listen": "127.0.0.1",
      "protocol": "vless",
      "settings": {
@@ -291,7 +291,7 @@
      }
     },
     {
-     "port": 1380,
+     "port": 1170,
      "listen": "127.0.0.1",
      "protocol": "vmess",
      "settings": {
@@ -314,7 +314,7 @@
      }
     },
     {
-     "port": 1390,
+     "port": 1180,
      "listen": "127.0.0.1",
      "protocol": "vmess",
      "settings": {
@@ -337,7 +337,7 @@
      }
     },
     {
-     "port": 1400,
+     "port": 1190,
      "listen": "127.0.0.1",
      "protocol": "vmess",
      "settings": {
@@ -360,7 +360,7 @@
      }
     },
     {
-     "port": 1410,
+     "port": 1200,
      "listen": "127.0.0.1",
      "protocol": "trojan",
      "settings": {
@@ -391,7 +391,7 @@
       }
     },
     {
-     "port": 1420,
+     "port": 1210,
      "listen": "127.0.0.1",
      "protocol": "vless",
      "settings": {
@@ -422,7 +422,7 @@
       }
     },
     {
-     "port": 1430,
+     "port": 1220,
      "listen": "127.0.0.1",
      "protocol": "vmess",
      "settings": {
