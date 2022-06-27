@@ -135,7 +135,7 @@ echo " 🔰 VMESS WS TLS : 443" |tee -a log-install.txt
 echo " 🔰 VMESS WS NON TLS : 2052" |tee -a log-install.txt
 echo " 🔰 VMESS GRPC TLS: 2083" |tee -a log-install.txt
 echo " 🔰 VMESS GRPC NON TLS: 2082" |tee -a log-install.txt
-echo " 🔰 VMESS H2C TLS : 1000" |tee -a log-install.txt
+echo " 🔰 VMESS H2C TLS : 1190" |tee -a log-install.txt
 #echo " 🔰 VMESS H2C NON TLS : 3444" |tee -a log-install.txt
 echo " 🔰 VMESS HTTP TLS : 443" |tee -a log-install.txt
 echo " 🔰 VMESS HTTP NON TLS : 808" |tee -a log-install.txt
@@ -145,7 +145,7 @@ echo " 🔰 VLESS WS TLS : 443" |tee -a log-install.txt
 echo " 🔰 VLESS WS NON TLS : 8880" |tee -a log-install.txt
 echo " 🔰 VLESS GRPC TLS : 2096" |tee -a log-install.txt
 echo " 🔰 VLESS GRPC NON TLS: 2082" |tee -a log-install.txt
-echo " 🔰 VLESS H2C TLS : 443" |tee -a log-install.txt
+echo " 🔰 VLESS H2C TLS : 1150" |tee -a log-install.txt
 echo " 🔰 VLESS QUIC : 414" |tee -a log-install.txt
 #echo " 🔰 VLESS QUIC NON TLS: 141" |tee -a log-install.txt
 echo " 🔰 VLESS HTTP TLS : 443" |tee -a log-install.txt
@@ -154,7 +154,7 @@ echo " 🔰 TROJAN GO : 2053" |tee -a log-install.txt
 echo " 🔰 TROJAN GRPC : 8443" |tee -a log-install.txt
 echo " 🔰 TROJAN HTTP TLS : 443" |tee -a log-install.txt
 echo " 🔰 TROJAN HTTP NON TLS : 880" |tee -a log-install.txt
-echo " 🔰 TROJAN H2C : 443" |tee -a log-install.txt
+echo " 🔰 TROJAN H2C : 1120" |tee -a log-install.txt
 echo " 🔰 TROJAN XTLS : 1440" |tee -a log-install.txt
 echo " 🔰 TROJAN QUIC : 443" |tee -a log-install.txt
 #echo " 🔰 TROJAN QUIC NON TLS: 151"
