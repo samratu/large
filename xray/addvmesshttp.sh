@@ -35,7 +35,7 @@ until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 	done
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 		read -rp "User: " -e user
-		CLIENT_EXISTS=$(grep -w $user /usr/local/etc/xray/satrio.json | wc -l)
+		CLIENT_EXISTS=$(grep -w $user /etc/xray/xtrojan.json | wc -l)
 
 		if [[ ${CLIENT_EXISTS} == '1' ]]; then
 			echo ""
@@ -52,7 +52,7 @@ exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#vmess-http-tls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#vmess-http-nontls$/a\### '"$user $exp"'\
-},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /usr/local/etc/xray/satrio.json
+},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/xtrojan.json
 sed -i '/#vmess-http-nontls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
 cat>/etc/xray/vmess-$user-tls.json<<EOF
@@ -100,17 +100,17 @@ echo -e ""
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m  🔰 AKUN VMESS HTTP 🔰   \e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Nama :${user}"
-echo -e "Host :${domain}"
-echo -e "IP :${MYIP}"
-echo -e "Port TLS :${vmhttp}"
-echo -e "Port NON TLS :${vmhttpnon}"
-echo -e "Network :tcp"
-echo -e "Host :${domain}"
-echo -e "Path :/shanumtcp"
-echo -e "uuId :${uuid}"
-echo -e "Dibuat :$hariini"
-echo -e "Kadaluarsa :$exp"
+echo -e "Nama  :${user}"
+echo -e "Host  :${domain}"
+echo -e "IP  :${MYIP}"
+echo -e "Port TLS  :${vmhttp}"
+echo -e "Port NON TLS  :${vmhttpnon}"
+echo -e "Network  :tcp"
+echo -e "Host  :${domain}"
+echo -e "Path  :/shanumtcp"
+echo -e "uuId  :${uuid}"
+echo -e "Dibuat  :$hariini"
+echo -e "Kadaluarsa  :$exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "VMESS HTTP TLS: ${vmesshttp}"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
