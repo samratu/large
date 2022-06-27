@@ -6,13 +6,13 @@
   },
   "inbounds": [
     {
-      "listen": "127.0.0.1",
-      "port": 10808,
-      "protocol": "dokodemo-door",
-      "settings": {
-        "address": "127.0.0.1"
-      },
-      "tag": "api"
+     "listen": "127.0.0.1",
+     "port": 10808,
+     "protocol": "dokodemo-door",
+     "settings": {
+          "address": "127.0.0.1"
+         },
+         "tag": "api"
     },
     {
      "port": 443,
@@ -93,20 +93,20 @@
           "dest": 1430,
           "xver": 1
          }
-        ]
-       },
-       "streamSettings": {
-       "network": "tcp",
-       "security": "xtls",
-         "xtlsSettings": {
-           "alpn": [
-           "http/1.1"
-        ],
-        "certificates": [
-        {
-         "certificateFile": "/etc/ssl/private/fullchain.pem",
-         "keyFile": "/etc/ssl/private/privkey.pem"
-        }
+       ]
+     },
+     "streamSettings": {
+     "network": "tcp",
+     "security": "xtls",
+     "xtlsSettings": {
+       "alpn": [
+       "http/1.1"
+      ],
+      "certificates": [
+         {
+          "certificateFile": "/etc/ssl/private/fullchain.pem",
+          "keyFile": "/etc/ssl/private/privkey.pem"
+         }
        ]
       }
      }
@@ -133,8 +133,8 @@
        "streamSettings": {
        "network": "tcp",
        "security": "none",
-       "tcpSettings": {
-       "acceptProxyProtocol": true
+         "tcpSettings": {
+         "acceptProxyProtocol": true
        }
      }
     },
@@ -158,11 +158,11 @@
         ]
        },
        "streamSettings": {
-        "network": "ws",
-        "security": "none",
-        "wsSettings": {
-          "acceptProxyProtocol": true,
-          "path": "/gandring"
+       "network": "ws",
+       "security": "none",
+         "wsSettings": {
+           "acceptProxyProtocol": true,
+           "path": "/gandring"
          }
       }
     },
@@ -186,8 +186,8 @@
         ]
        },
        "streamSettings": {
-        "network": "h2",
-        "security": "none",
+       "network": "h2",
+       "security": "none",
         "httpSettings": {
           "path": "/gandringhttp"
          }
@@ -232,15 +232,15 @@
           "email": "gandring@p0x.smule.my.id"
 #vless-tls
          }
-        ],
-        "decryption": "none"
-       },
-       "streamSettings": {
-       "network": "ws",
-       "security": "none",
-       "wsSettings": {
-       "acceptProxyProtocol": true,
-       "path": "/wisnu"
+       ],
+       "decryption": "none"
+      },
+      "streamSettings": {
+      "network": "ws",
+      "security": "none",
+        "wsSettings": {
+        "acceptProxyProtocol": true,
+        "path": "/wisnu"
        }
      }
     },
@@ -255,13 +255,13 @@
           "level": 0,
           "email": "gandring@p0x.smule.my.id"
 #vless-hdua
-          }
-         ],
-         "decryption": "none"
-        },
-        "streamSettings": {
-        "network": "h2",
-        "security": "none",
+         }
+       ],
+       "decryption": "none"
+      },
+      "streamSettings": {
+      "network": "h2",
+      "security": "none",
         "httpSettings": {
         "path": "/wisnuhttp"
         }
@@ -279,14 +279,14 @@
           "email": "gandring@p0x.smule.my.id"
 #vless-grpc-tls
          }
-        ],
-        "decryption": "none"
+       ],
+       "decryption": "none"
       },
       "streamSettings": {
       "network": "grpc",
       "security": "none",
-      "grpcSettings": {
-      "path": "/wisnugrpc"
+        "grpcSettings": {
+        "path": "/wisnugrpc"
       }
      }
     },
@@ -295,21 +295,21 @@
      "listen": "127.0.0.1",
      "protocol": "vmess",
      "settings": {
-      "clients": [
-        {
-         "id": "gandring",
-         "level": 0,
-         "email": "gandring@p0x.smule.my.id"
+       "clients": [
+         {
+          "id": "gandring",
+          "level": 0,
+          "email": "gandring@p0x.smule.my.id"
 #vmess-tls
-        }
+         }
        ]
       },
       "streamSettings": {
       "network": "ws",
       "security": "none",
-      "wsSettings": {
-      "acceptProxyProtocol": true,
-      "path": "/shanum"
+        "wsSettings": {
+        "acceptProxyProtocol": true,
+        "path": "/shanum"
       }
      }
     },
@@ -318,21 +318,21 @@
      "listen": "127.0.0.1",
      "protocol": "vmess",
      "settings": {
-      "clients": [
-        {
-         "id": "gandring",
-         "level": 0,
-         "email": "gandring@p0x.smule.my.id"
+       "clients": [
+         {
+          "id": "gandring",
+          "level": 0,
+          "email": "gandring@p0x.smule.my.id"
 #vmess-hdua
-        }
+         }
        ]
       },
       "streamSettings": {
       "network": "h2",
       "security": "none",
-      "httpSettings": {
-      "acceptProxyProtocol": true,
-      "path": "/shanumhttp"
+        "httpSettings": {
+        "acceptProxyProtocol": true,
+        "path": "/shanumhttp"
       }
      }
     },
@@ -353,9 +353,9 @@
       "streamSettings": {
       "network": "grpc",
       "security": "none",
-      "grpcSettings": {
-      "acceptProxyProtocol": true,
-      "serviceName": "/shanum"
+        "grpcSettings": {
+        "acceptProxyProtocol": true,
+        "serviceName": "/shanum"
       }
      }
     },
