@@ -100,6 +100,16 @@ until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 			exit 1
 		fi
 	done
+until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
+		read -rp "Username : " -e user
+		CLIENT_EXISTS=$(grep -w $user /etc/xray/vlessquic.json | wc -l)
+
+		if [[ ${CLIENT_EXISTS} == '1' ]]; then
+			echo ""
+			echo -e "Username ${RED}${user}${NC} Already On VPS Please Choose Another"
+			exit 1
+		fi
+	done
 uuid=$(cat /proc/sys/kernel/random/uuid)
 read -p "Expired (Days) : " masaaktif
 #read -p "Expired (Seconds) : " masaaktif
@@ -126,6 +136,12 @@ sed -i '/#trojan-gfw$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#trojan-quic$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
+sed -i '/#vless-quic$/a\#&# '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
+sed -i '/#vless-quic$/a\#&# '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/vlessquic.json
+sed -i '/#trojan-hdua$/a\#&# '"$user $exp"'\
+},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
 sed -i '/#trojan-hdua$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/trojangrpc.json
 sed -i '/#trojan-http-tls$/a\#&# '"$user $exp"'\
@@ -135,7 +151,7 @@ sed -i '/#trojan-hdua$/a\#&# '"$user $exp"'\
 sed -i '/#trojan-grpc$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#trojan-grpc$/a\#&# '"$user $exp"'\
-},{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xtrojan.json
+},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
 sed -i '/#vmess-tls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'"' /usr/local/etc/xray/xvmess.json
 
@@ -202,54 +218,57 @@ systemctl restart xray.service
 systemctl restart xtrojan.service
 systemctl restart trojangrpc
 systemctl restart xvmess
+systemctl restart vlessquic
 service cron restart
 clear
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m🔰 AKUN AIO PORT TESTER 🔰\e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "IP:${MYIP} / $domain"
-echo -e "Protokol :GRPC,HTTP,H2C,GFW,XTLS,WS,QUIC"
-echo -e "NAMA :${user}"
-echo -e "Port SERVICE :$vlxtls"
-echo -e "Satpam :tls,xtls"
-echo -e "Path VLESS WS :/wisnu"
-echo -e "Path VLESS HTTP :/wisnutcp"
-echo -e "Path VMESS WS :/shanum"
-echo -e "Path VMESS HTTP :/shanumtcp"
-echo -e "Path TROJAN WS :/gandring"
-echo -e "Path TROJAN HTTP :/gandringtcp"
-echo -e "UserID :${uuid}"
-echo -e "Dibuat :$hariini"
-echo -e "Kadaluarsa :$exp"
+echo -e "IP  :${MYIP} / $domain"
+echo -e "Protokol  :GRPC,HTTP,H2C,GFW,XTLS,WS,QUIC"
+echo -e "NAMA  :${user}"
+echo -e "Port SERVICE  :$vlxtls"
+echo -e "Satpam  :tls,xtls"
+echo -e "Path VLESS WS  :/wisnu"
+echo -e "Path VLESS HTTP  :/wisnutcp"
+echo -e "Path VMESS WS  :/shanum"
+echo -e "Path VMESS HTTP  :/shanumtcp"
+echo -e "Path TROJAN WS  :/gandring"
+echo -e "Path TROJAN HTTP  :/gandringtcp"
+echo -e "UserID  :${uuid}"
+echo -e "Dibuat  :$hariini"
+echo -e "Kadaluarsa  :$exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "VLESS XTLS:  ${vlessxtls}"
+echo -e "VLESS QUIC: ${vlessquic}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "VLESS GRPC TLS:  ${vlessgrpc}"
+echo -e "VLESS XTLS: ${vlessxtls}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "VLESS GFW TLS:  ${vlessgfw}"
+echo -e "VLESS GRPC TLS: ${vlessgrpc}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "VLESS WS TLS:  ${vlesstls}"
+echo -e "VLESS GFW TLS: ${vlessgfw}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "VLESS HTTP TLS:  ${vlesshttp}"
+echo -e "VLESS WS TLS: ${vlesstls}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "TROJAN QUIC TLS:  ${trojanquic}"
+echo -e "VLESS HTTP TLS: ${vlesshttp}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "TROJAN GFW TLS:  ${trojangfw}"
+echo -e "TROJAN QUIC TLS: ${trojanquic}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "TROJAN WS TLS:  ${trojantls}"
+echo -e "TROJAN GFW TLS: ${trojangfw}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "TROJAN HTTP TLS:  ${trojanhttp}"
+echo -e "TROJAN WS TLS: ${trojantls}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "TROJAN GRPC TLS:  ${trojangrpc}"
+echo -e "TROJAN HTTP TLS: ${trojanhttp}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "VMESS WS TLS:  ${vmess1}"
+echo -e "TROJAN GRPC TLS: ${trojangrpc}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "VMESS HTTP TLS:  ${vmesshttp}"
+echo -e "VMESS WS TLS: ${vmess1}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-#echo -e "TROJAN H2C TLS:  ${trojanhdua}"
+echo -e "VMESS HTTP TLS: ${vmesshttp}"
 #echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-#echo -e "VLESS H2C TLS:  ${vlesshdua}"
+#echo -e "TROJAN H2C TLS: ${trojanhdua}"
 #echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+#echo -e "VLESS H2C TLS: ${vlesshdua}"
+echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m🔰LUXURY EDITION ZEROSSL🔰\e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e ""
