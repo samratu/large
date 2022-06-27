@@ -54,21 +54,22 @@ vlesshdua="vless://${uuid}@${domain}:$vlhdua?type=http&security=tls&path=/wisnuh
 vlesshduanon="vless://${uuid}@${domain}:$vlhduanon?type=http&security=none&path=gandring&encryption=none#${user}"
 systemctl restart xvless.service
 systemctl restart xray.service
+systemctl restart xvmess
 #systemctl restart v2ray@.service
 service cron restart
 clear
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m 🔰 AKUN VLESS HTTP/2 🔰  \e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Nama : ${user}"
-echo -e "IP/Host :${MYIP}"
-echo -e "Address :${domain}"
-echo -e "Port :$vlhdua"
-echo -e "Protokol :H2"
-echo -e "Path :/wisnuhttp"
-echo -e "UserID :${uuid}"
-echo -e "Dibuat :$hariini"
-echo -e "Kadaluarsa :$exp"
+echo -e "Nama  :${user}"
+echo -e "IP/Host  :${MYIP}"
+echo -e "Address  :${domain}"
+echo -e "Port  :$vlhdua"
+echo -e "Protokol  :H2"
+echo -e "Path  :/wisnuhttp"
+echo -e "UserID  :${uuid}"
+echo -e "Dibuat  :$hariini"
+echo -e "Kadaluarsa  :$exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "VLESS H2C TLS: ${vlesshdua}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
