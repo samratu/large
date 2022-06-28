@@ -87,7 +87,7 @@ status52=$(systemctl status xray             | grep -i "active (running)")
 status53=$(systemctl status xray             | grep -i "active (running)")
 status54=$(systemctl status xray             | grep -i "active (running)")
 status55=$(systemctl status xray             | grep -i "active (running)")
-status56=$(systemctl status xray             | grep -i "active (running)")
+#status56=$(systemctl status xray             | grep -i "active (running)")
 #======================================
 if [[ $status01 == "" ]]; then
       sstatus01=$ERROR
@@ -539,20 +539,12 @@ else
       mantap+=("hore57")
 fi
 if [[ $status55 == "" ]]; then
-      sstatus56=$ERROR
-      ingfo+=("VMESS QUIC")
+      sstatus55=$ERROR
+      ingfo+=("SHADOWSOCKS 2022")
       dahlah+=("err58")
 else
       sstatus55=$AKTIF
       mantap+=("hore58")
-fi
-if [[ $status56 == "" ]]; then
-      sstatus56=$ERROR
-      ingfo+=("SHADOWSOCKS 2022")
-      dahlah+=("err59")
-else
-      sstatus56=$AKTIF
-      mantap+=("hore59")
 fi
 jumlah1="${#mantap[@]}"
 jumlah2="${#dahlah[@]}"
@@ -749,8 +741,8 @@ echo -e "$bl🔰 $off $bl SOCKS5 WEBSOCKET            $off : $sstatus49🔰"
 echo -e "$bl🔰 $off $bl SOCKS5 TCP                  $off : $sstatus52🔰"
 echo -e "$bl🔰 $off $bl TROJAN QUIC                 $off : $sstatus53🔰"
 echo -e "$bl🔰 $off $bl VLESS QUIC                  $off : $sstatus54🔰"
-echo -e "$bl🔰 $off $bl VMESS QUIC                  $off : $sstatus55🔰"
-echo -e "$bl🔰 $off $bl SHADOWSOCKS 2022 UDP        $off : $sstatus56🔰"
+#echo -e "$bl🔰 $off $bl VMESS QUIC                  $off : $sstatus55🔰"
+echo -e "$bl🔰 $off $bl SHADOWSOCKS 2022 UDP        $off : $sstatus55🔰"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\E[43;1;46m             🔰 SOLO THE SPIRIT OF JAVA 🔰              \E[0m"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
