@@ -1198,40 +1198,6 @@ cat > /etc/xray/xtrojan.json << END
       }
     },
     {
-      "port": 414,
-      "listen": "0.0.0.0",
-      "protocol": "vless",
-      "settings": {
-        "clients": [
-          {
-            "id": "gandring",
-            "email": "gandring@p0x.smule.my.id"
-#vless-quic
-          }
-        ],
-        "decryption": "none"
-      },
-      "streamSettings": {
-        "network": "quic",
-        "security": "tls",
-        "tlsSettings": {
-          "certificates": [
-            {
-              "certificateFile": "/etc/ssl/private/fullchain.pem",
-              "keyFile": "/etc/ssl/private/privkey.pem"
-            }
-          ]
-        },
-        "quicSettings": {
-          "security": "none",
-          "key": "wisnuquic",
-          "header": {
-            "type": "none"
-          }
-        }
-      }
-    },
-    {
       "port": 40,
       "protocol": "shadowsocks",
       "settings": {
@@ -2195,15 +2161,6 @@ cat > /etc/xray/vlessquic.json << END
   },
   "inbounds": [
     {
-      "listen": "127.0.0.1",
-      "port": 10805,
-      "protocol": "dokodemo-door",
-      "settings": {
-        "address": "127.0.0.1"
-      },
-      "tag": "api"
-    },
-    {
       "port": 443,
       "listen": "0.0.0.0",
       "protocol": "vless",
@@ -2322,7 +2279,7 @@ cat > /etc/xray/vlessquic.json << END
 END
 
 uuid=$(cat /proc/sys/kernel/random/uuid)
-uuid5=$(cat /openssl rand -base64 16)
+uuid5=$openssl rand -base64 16
 domain=$(cat /root/domain)
 # // Certificate File
 path_crt="/etc/xray/xray.crt"
