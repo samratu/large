@@ -294,6 +294,8 @@ rm -rf /root/vnstat-2.6
 mkdir -p /usr/local/wisnucs
 mkdir -p /etc/wisnucs
 apt install stunnel4 -y
+key.pem=/etc/ssl/private/privkey.pem
+cer.pem=/etc/ssl/private/fullchain.pem
 # install stunnel
 cat > /etc/stunnel/stunnel.conf <<-END
 cert = /etc/stunnel/stunnel.pem
@@ -320,10 +322,10 @@ connect = 700
 END
 
 # make a certificate
-openssl genrsa -out key.pem 2048  >/dev/null 2>&1
-openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
--subj "/C=ID/ST=JAWA-TENGAH/L=SUKOHARJO/O=GANDRING/OU=GANDRING/CN=GANDRING/emailAddress=djarumsuper@gmail.co.id"  >/dev/null 2>&1
-cat key.pem cert.pem >> /etc/stunnel/stunnel.pem
+#openssl genrsa -out key.pem 2048  >/dev/null 2>&1
+#openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
+#-subj "/C=ID/ST=JAWA-TENGAH/L=SUKOHARJO/O=GANDRING/OU=GANDRING/CN=GANDRING/emailAddress=djarumsuper@gmail.co.id"  >/dev/null 2>&1
+cat $key.pem cert.pem >> /etc/stunnel/stunnel.pem
 
 # konfigurasi stunnel
 sed -i 's/ENABLED=0/ENABLED=1/g' /etc/default/stunnel4
