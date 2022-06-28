@@ -58,7 +58,7 @@ until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 	done
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 		read -rp "Username : " -e user
-		CLIENT_EXISTS=$(grep -w $user /etc/xray/vlessquic.json | wc -l)
+		CLIENT_EXISTS=$(grep -w $user /usr/local/etc/xray/vlessquic.json | wc -l)
 
 		if [[ ${CLIENT_EXISTS} == '1' ]]; then
 			echo ""
@@ -97,7 +97,7 @@ sed -i '/#vless-hdua$/a\#### '"$user $exp"'\
 sed -i '/#vless-quic$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
 sed -i '/#vless-quic$/a\#### '"$user $exp"'\
-},{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/vlessquic.json
+},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vlessquic.json
 sed -i '/#vless-tls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
 sed -i '/#vless-nontls$/a\#### '"$user $exp"'\
