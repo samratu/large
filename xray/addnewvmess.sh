@@ -23,6 +23,7 @@ vmhttpnon="$(cat ~/log-install.txt | grep -w "VMESS HTTP NON TLS" | cut -d: -f2|
 vmgrpc="$(cat ~/log-install.txt | grep -w "VMESS GRPC TLS" | cut -d: -f2|sed 's/ //g')"
 vmgrpcnon="$(cat ~/log-install.txt | grep -w "VMESS GRPC NON TLS" | cut -d: -f2|sed 's/ //g')"
 vmhdua="$(cat ~/log-install.txt | grep -w "VMESS H2C TLS" | cut -d: -f2|sed 's/ //g')"
+vmquic="$(cat ~/log-install.txt | grep -w "VMESS QUICA" | cut -d: -f2|sed 's/ //g')"
 
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 		read -rp "Username : " -e user
@@ -54,7 +55,7 @@ sed -i '/#vmess-nontls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'"' /etc/xray/config.json
 cat>/etc/xray/vmess-$user-tls.json<<EOF
       {
-      "v": "5",
+      "v": "4",
       "ps": "🔰VMESS WS TLS ${user}",
       "add": "${domain}",
       "port": "${tls}",
@@ -69,7 +70,7 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
 EOF
 cat>/etc/xray/vmess-$user-nontls.json<<EOF
       {
-      "v": "5",
+      "v": "4",
       "ps": "🔰VMESS WS NONTLS ${user}",
       "add": "${domain}",
       "port": "${nontls}",
@@ -127,7 +128,7 @@ sed -i '/#vmess-grpc-nontls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
 cat>/etc/xray/vmess-$user-tls.json<<EOF
       {
-      "v": "5",
+      "v": "4",
       "ps": "🔰VMESS GRPC TLS ${user}",
       "add": "${domain}",
       "port": "${vmgrpc}",
@@ -142,7 +143,7 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
 EOF
 cat>/etc/xray/vmess-$user-nontls.json<<EOF
       {
-      "v": "5",
+      "v": "4",
       "ps": "🔰VMESS GRPC NONTLS ${user}",
       "add": "${domain}",
       "port": "${vmgrpcnon}",
@@ -184,6 +185,40 @@ until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 			exit 1
 		fi
 	done
+until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
+		read -rp "User: " -e user
+		CLIENT_EXISTS=$(grep -w $user /etc/xray/xvless.json | wc -l)
+
+		if [[ ${CLIENT_EXISTS} == '1' ]]; then
+			echo ""
+			echo "A Client Username Was Already Created, Please Enter New Username"
+			exit 1
+		fi
+	done
+sed -i '/#vmess-quic$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/xvless.json
+cat>/etc/xray/vmess-$user-tls.json<<EOF
+      {
+      "v": "4",
+      "ps": "🔰VMESS QUIC TLS ${user}",
+      "add": "${domain}",
+      "port": "${vmquic}",
+      "id": "${uuid}",
+      "aid": "0",
+      "net": "quic",
+      "path": "shanumquic",
+      "type": "none",
+      "host": "$domain",
+      "tls": "tls"
+}
+EOF
+vmessquic=$( base64 -w 0 <<< $vmess_json1)
+#vmess_base642=$( base64 -w 0 <<< $vmess_json2)
+vmessquic="vmess://$(base64 -w 0 /etc/xray/vmess-$user-tls.json)"
+#vmessgrpclink2="vmess://$(base64 -w 0 /etc/xray/$user-none.json)"
+rm -rf /etc/xray/vmess-$user-tls.json
+rm -rf /etc/xray/vmess-hdua-$user-nontls.json
+
 sed -i '/#vmess-hdua$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
 sed -i '/#vmess-hdua$/a\### '"$user $exp"'\
@@ -192,7 +227,7 @@ sed -i '/#vmess-hdua$/a\### '"$user $exp"'\
 #},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
 cat>/etc/xray/vmess-$user-tls.json<<EOF
       {
-      "v": "5",
+      "v": "4",
       "ps": "🔰VMESS H2C TLS ${user}",
       "add": "${domain}",
       "port": "${vmhdua}",
@@ -240,7 +275,7 @@ sed -i '/#vmess-http-nontls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
 cat>/etc/xray/vmess-$user-tls.json<<EOF
       {
-      "v": "5",
+      "v": "4",
       "ps": "🔰VMESS HTTP TLS ${user}",
       "add": "${domain}",
       "port": "${vmhttp}",
@@ -255,7 +290,7 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
 EOF
 cat>/etc/xray/vmess-$user-nontls.json<<EOF
       {
-      "v": "2",
+      "v": "4",
       "ps": "🔰VMESS HTTP NONTLS ${user}",
       "add": "${domain}",
       "port": "${vmhttpnon}",
@@ -289,14 +324,18 @@ echo -e "Port WS  :${tls}/${nontls}"
 echo -e "Port GRPC  :${vmgrpc}/${vmgrpcnon}"
 echo -e "Port H2C  :${vmhdua}"
 echo -e "Port HTTP  :${vmhttp}/${vmhttpnon}"
+echo -e "Port QUIC  :${vmquic}"
 echo -e "Protokol  :WS,GRPC,H2C,HTTP"
 echo -e "Path GRPC  :/shanumgrpc"
 echo -e "Path HTTP  :/shanumgtcp"
 echo -e "Path H2C  :/shanumhttp"
 echo -e "Path WS  :/shanum"
+echo -e "Path QUIC  :shanumquic"
 echo -e "UserID  :${uuid}"
 echo -e "Dibuat  :$hariini"
 echo -e "Kadaluarsa  :$exp"
+echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "VMESS QUIC TLS: ${vmessquic}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "VMESS WS TLS: ${vmess1}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
