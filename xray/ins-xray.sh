@@ -2124,7 +2124,6 @@ cat > /usr/local/etc/xray/xvmess.json << END
     ]
   },
   "routing": {
-    "domainStrategy": "AsIs",
     "rules": [
       {
         "type": "field",
