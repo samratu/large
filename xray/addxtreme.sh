@@ -103,7 +103,7 @@ until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 	done
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 		read -rp "Username : " -e user
-		CLIENT_EXISTS=$(grep -w $user /etc/xray/vlessquic.json | wc -l)
+		CLIENT_EXISTS=$(grep -w $user /usr/local/etc/xray/vlessquic.json | wc -l)
 
 		if [[ ${CLIENT_EXISTS} == '1' ]]; then
 			echo ""
@@ -140,7 +140,7 @@ sed -i '/#trojan-quic$/a\#&# '"$user $exp"'\
 sed -i '/#vless-quic$/a\#&# '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
 sed -i '/#vless-quic$/a\#&# '"$user $exp"'\
-},{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/vlessquic.json
+},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vlessquic.json
 sed -i '/#trojan-hdua$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
 sed -i '/#trojan-hdua$/a\#&# '"$user $exp"'\
@@ -172,27 +172,6 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
 EOF
 vmess_base641=$( base64 -w 0 <<< $vmess_json1)
 vmess1="vmess://$(base64 -w 0 /etc/xray/vmess-$user-tls.json)"
-rm -rf /etc/xray/vmess-$user-tls.json
-
-sed -i '/#vmess-quic$/a\### '"$user $exp"'\
-},{"id": "'""$uuid""'"' /etc/xray/xvless.json
-cat>/etc/xray/vmess-$user-tls.json<<EOF
-      {
-      "v": "5",
-      "ps": "🔰VMESS QUIC TLS ${user}",
-      "add": "${domain}",
-      "port": "${tls}",
-      "id": "${uuid}",
-      "aid": "0",
-      "net": "quic",
-      "path": "shanumquic",
-      "type": "none",
-      "host": "${domain}",
-      "tls": "tls"
-}
-EOF
-vmessquic_base641=$( base64 -w 0 <<< $vmess_json1)
-vmessquic="vmess://$(base64 -w 0 /etc/xray/vmess-$user-tls.json)"
 rm -rf /etc/xray/vmess-$user-tls.json
 
 sed -i '/#vmess-http-tls$/a\### '"$user $exp"'\
