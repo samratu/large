@@ -869,21 +869,23 @@ cat > /etc/xray/xvless.json << END
       },
       "streamSettings": {
         "network": "quic",
-        "security": "tls",
-        "tlsSettings": {
-          "certificates": [
-            {
-              "certificateFile": "/etc/ssl/private/fullchain.pem",
-              "keyFile": "/etc/ssl/private/privkey.pem"
-            }
-          ]
-        },
         "quicSettings": {
           "security": "$domain",
           "key": "shanumquic",
           "header": {
             "type": "none"
           }
+        },
+        "security": "tls",
+        "tlsSettings": {
+          "minVersion": "1.2",
+          "certificates": [
+           {
+              "certificateFile": "/etc/ssl/private/fullchain.pem",
+              "keyFile": "/etc/ssl/private/privkey.pem"
+            }
+          ],
+          "rejectUnknownSni": true
         }
       }
     },
@@ -1206,6 +1208,7 @@ cat > /etc/xray/xtrojan.json << END
         "clients": [
           {
             "password": "gandring",
+            "level": 0,
             "email": "gandring@p0x.smule.my.id"
 #trojan-quic
           }
@@ -1214,21 +1217,23 @@ cat > /etc/xray/xtrojan.json << END
       },
       "streamSettings": {
         "network": "quic",
-        "security": "tls",
-        "tlsSettings": {
-          "certificates": [
-            {
-              "certificateFile": "/etc/ssl/private/fullchain.pem",
-              "keyFile": "/etc/ssl/private/privkey.pem"
-            }
-          ]
-        },
         "quicSettings": {
-          "security": "none",
+          "security": "$domain",
           "key": "gandringquic",
           "header": {
             "type": "none"
           }
+        },
+        "security": "tls",
+        "tlsSettings": {
+          "minVersion": "1.2",
+          "certificates": [
+           {
+              "certificateFile": "/etc/ssl/private/fullchain.pem",
+              "keyFile": "/etc/ssl/private/privkey.pem"
+            }
+          ],
+          "rejectUnknownSni": true
         }
       }
     },
