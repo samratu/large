@@ -2186,7 +2186,7 @@ path_key="/etc/xray/xray.key"
 #path_crt="/root/.acme.sh/$domain_ecc/fullchain.cer"
 #path_key="/root/.acme.sh/$domain_ecc/$domain.key"
 # Buat Config Xray
-cat > /usr/local/etc/xray/vlessquic.json << END
+cat > /etc/xray/vlessquic.json << END
 {
   "log": {
     "access": "/var/log/xray/access.log",
@@ -2334,83 +2334,81 @@ path_key="/etc/xray/xray.key"
 # Buat Config Xray
 cat > /etc/xray/xss.json << END
 {
-  "log": {
-    "access": "/var/log/xray/access.log",
-    "error": "/var/log/xray/error.log",
-    "loglevel": "warning"
-  },
   "inbounds": [
     {
-      "port": 515,
-      "protocol": "shadowsocks",
-      "settings": {
-        "method": "2022-blake3-aes-128-gcm",
-        "password": "A0V67P0jN7wOSRkSsQiqww==",
-        "clients": [
-          {
-            "password": "A0V67P0jN7wOSRkSsQiqqq==:,
-            "email": "gandring@p0x.smule.my.id"
-          },
-          {
-            "password": "A0V78P0jN7wOSRkSsQiqww==",
-            "email": "gandring@p0x.smule.my.id"
-          }
-        ],
-        "network": "tcp",
-        "security": "tls",
-        "tlsSettings": {
-         "certificates": [
-             {
-               "certificateFile": "/etc/ssl/private/fullchain.pem",
-               "keyFile": "/etc/ssl/private/privkey.pem"
-            }
-          ]
-        },
-        "tcpSettings": {
-          "header": {
-            "type": "none"
-          }
+        "port":212,
+        "protocol":"shadowsocks",
+        "settings":{
+          "method":"2022-blake3-aes-128-gcm",
+          "password": "fvRKCJ683/9WY0L7SHaNUmAyT3WcGEXBxVUvPV7BQms=",
+          "network":"tcp,udp"
         }
-      }
-    },
-    {
-      "port": 443,
-      "protocol": "shadowsocks",
-      "settings": {
-        "method": "2022-blake3-aes-128-gcm",
-        "password": "A0V67P0jN7wOSRkSsQiqww==",
-            "email": "gandring@p0x.smule.my.id"
-          },
-          {
-            "password": "A0V78P0jN7wOSRkSsQiqqq==",
-            "email": "gandring@p0x.smule.my.id"
-          }
-        ],
-        "streamSettings": {
-        "network": "ws",
+      },
+      {
+        "port":441,
+        "protocol":"shadowsocks",
+        "settings":{
+          "method":"2022-blake3-aes-128-gcm",
+          "password": "fvRKCJ683/9WY0L7SHaNUmAyT3WcGEXBxVUvPV7BQms=",
+          "network": "ws",
         "security": "tls",
-        "tlsSettings": {
-         "certificates": [
-             {
-               "certificateFile": "/etc/ssl/private/fullchain.pem",
-               "keyFile": "/etc/ssl/private/privkey.pem"
+        "wsSettings": {
+          "path": "/gandring"
+         },
+         "tlsSettings": {
+          "alpn": [
+            "h2",
+            "http/1.1"
+          ],
+          "certificates": [
+            {
+              "certificateFile": "/etc/ssl/private/fullchain.pem",
+              "keyFile": "/etc/ssl/private/privkey.pem"
             }
           ]
-        },
-        "wsSettings": {
-          "path": "/ssws",
-          "header": {
-            "type": "none"
-          }
         }
       }
     }
   ],
   "outbounds": [
     {
-      "protocol": "freedom"
+      "protocol": "freedom",
+      "tag": "direct"
+    },
+    {
+      "protocol": "blackhole",
+      "tag": "blocked"
     }
-  ]
+  ],
+  "dns": {
+    "servers": [
+      "8.8.8.8",
+      "8.8.4.4",
+      "1.1.1.1",
+      "1.0.0.1",
+      "localhost",
+      "https+local://dns.google/dns-query",
+      "https+local://1.1.1.1/dns-query"
+    ]
+  },
+  "routing": {
+    "domainStrategy": "AsIs",
+    "rules": [
+      {
+        "type": "field",
+        "inboundTag": [
+          "TROJAN-XTLS-in",
+          "TROJAN-gRPC-in",
+          "TROJAN-WSTLS-in",
+          "TROJAN-WS-in",
+          "TROJAN-H2C-in",
+          "TROJAN-HTTP-in"
+        ],
+        "outboundTag": "blackhole-out",
+        "protocol": [ "bittorrent" ]
+      }
+    ]
+  }
 }
 END
 
