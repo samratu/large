@@ -864,28 +864,25 @@ cat > /etc/xray/xvless.json << END
             "email": "gandring@p0x.smule.my.id"
 #vmess-quic
           }
-        ],
-        "decryption": "none"
+        ]
       },
       "streamSettings": {
         "network": "quic",
+        "security": "tls",
+        "tlsSettings": {
+          "certificates": [
+            {
+              "certificateFile": "/etc/ssl/private/fullchain.pem",
+              "keyFile": "/etc/ssl/private/privkey.pem"
+            }
+          ]
+        },
         "quicSettings": {
           "security": "$domain",
           "key": "shanumquic",
           "header": {
             "type": "none"
           }
-        },
-        "security": "tls",
-        "tlsSettings": {
-          "minVersion": "1.2",
-          "certificates": [
-           {
-              "certificateFile": "/etc/ssl/private/fullchain.pem",
-              "keyFile": "/etc/ssl/private/privkey.pem"
-            }
-          ],
-          "rejectUnknownSni": true
         }
       }
     },
@@ -1208,7 +1205,6 @@ cat > /etc/xray/xtrojan.json << END
         "clients": [
           {
             "password": "gandring",
-            "level": 0,
             "email": "gandring@p0x.smule.my.id"
 #trojan-quic
           }
@@ -1217,23 +1213,21 @@ cat > /etc/xray/xtrojan.json << END
       },
       "streamSettings": {
         "network": "quic",
+        "security": "tls",
+        "tlsSettings": {
+          "certificates": [
+            {
+              "certificateFile": "/etc/ssl/private/fullchain.pem",
+              "keyFile": "/etc/ssl/private/privkey.pem"
+            }
+          ]
+        },
         "quicSettings": {
           "security": "$domain",
           "key": "gandringquic",
           "header": {
             "type": "none"
           }
-        },
-        "security": "tls",
-        "tlsSettings": {
-          "minVersion": "1.2",
-          "certificates": [
-           {
-              "certificateFile": "/etc/ssl/private/fullchain.pem",
-              "keyFile": "/etc/ssl/private/privkey.pem"
-            }
-          ],
-          "rejectUnknownSni": true
         }
       }
     },
@@ -2269,7 +2263,7 @@ cat > /etc/xray/vlessquic.json << END
           ]
         },
         "quicSettings": {
-          "security": "none",
+          "security": "$domain",
           "key": "wisnuquic",
           "header": {
             "type": "none"
@@ -2362,7 +2356,7 @@ cat > /etc/xray/vlessquic.json << END
 END
 
 uuid=$(cat /proc/sys/kernel/random/uuid)
-uuid5=$openssl rand -base64 16
+uuid5=$(cat /openssl rand -base64 16)
 domain=$(cat /root/domain)
 # // Certificate File
 path_crt="/etc/xray/xray.crt"
