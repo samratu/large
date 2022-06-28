@@ -43,7 +43,7 @@ curl -sL "$xraycore_link" -o xray.zip
 unzip -q xray.zip && rm -rf xray.zip
 mv xray /usr/local/bin/xray
 chmod +x /usr/local/bin/xray
-
+bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install-geodata
 # Make Folder XRay
 mkdir -p /var/log/xray/
 uuid=$(cat /proc/sys/kernel/random/uuid)
@@ -65,7 +65,7 @@ alias acme.sh=~/.acme.sh/acme.sh
 chown -R nobody:nogroup /etc/xray
 chmod 644 /etc/ssl/private/privkey.pem
 chmod 644 /etc/ssl/private/fullchain.pem
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install-geodata
+
 #sudo lsof -t -i tcp:80 -s tcp:listen | sudo xargs kill
 cd /root/
 #wget https://raw.githubusercontent.com/acmesh-official/acme.sh/master/acme.sh
@@ -1165,53 +1165,15 @@ cat > /etc/xray/xtrojan.json << END
       }
     },
     {
-      "{
       "port": 443,
       "listen": "0.0.0.0",
       "protocol": "trojan",
       "settings": {
         "clients": [
           {
-            "id": "gandring",
-            "level": 0,
+            "password": "gandring",
             "email": "gandring@p0x.smule.my.id"
 #trojan-quic
-          }
-        ],
-        "decryption": "none"
-      },
-      "streamSettings": {
-        "network": "quic",
-        "quicSettings": {
-          "security": "$domain",
-          "key": "wisnuquic",
-          "header": {
-            "type": "none"
-          }
-        },
-        "security": "tls",
-        "tlsSettings": {
-          "minVersion": "1.3",
-          "certificates": [
-           {
-              "certificateFile": "/etc/ssl/private/fullchain.pem",
-              "keyFile": "/etc/ssl/private/privkey.pem"
-            }
-          ],
-          "rejectUnknownSni": true
-        }
-      }
-    },
-    {
-      "port": 414,
-      "listen": "0.0.0.0",
-      "protocol": "vless",
-      "settings": {
-        "clients": [
-          {
-            "id": "gandring",
-            "email": "gandring@p0x.smule.my.id"
-#vless-quic
           }
         ],
         "decryption": "none"
@@ -1229,7 +1191,7 @@ cat > /etc/xray/xtrojan.json << END
         },
         "quicSettings": {
           "security": "$domain",
-          "key": "wisnuquic",
+          "key": "gandringquic",
           "header": {
             "type": "none"
           }
@@ -1676,67 +1638,67 @@ cat > /usr/local/etc/xray/xvmess.json << END
        "fallbacks": [
          {
           "dest": 1100,
-          "xver": 16
+          "xver": 1
          },
          {
           "path": "/gandring",
           "dest": 1110,
-          "xver": 16
+          "xver": 1
          },
          {
           "path": "/gandringhttp",
           "dest": 1120,
-          "xver": 16
+          "xver": 1
          },
          {
           "path": "/gandringgrpc",
           "dest": 1130,
-          "xver": 16
+          "xver": 1
          },
          {
           "path": "/wisnu",
           "dest": 1140,
-          "xver": 16
+          "xver": 1
          },
          {
           "path": "/wisnuhttp",
           "dest": 1150,
-          "xver": 16
+          "xver": 1
          },
          {
           "path": "/wisnugrpc",
           "dest": 1160,
-          "xver": 16
+          "xver": 1
          },
          {
           "path": "/shanum",
           "dest": 1170,
-          "xver": 16
+          "xver": 1
          },
          {
           "path": "/shanumhttp",
           "dest": 1180,
-          "xver": 16
+          "xver": 1
          },
          {
           "path": "/shanumgrpc",
           "dest": 1190,
-          "xver": 16
+          "xver": 1
          },
          {
           "path": "/gandringtcp",
           "dest": 1200,
-          "xver": 16
+          "xver": 1
          },
          {
           "path": "/wisnutcp",
           "dest": 1210,
-          "xver": 16
+          "xver": 1
          },
          {
           "path": "/shanumtcp",
           "dest": 1220,
-          "xver": 16
+          "xver": 1
          }
        ]
      },
@@ -1771,7 +1733,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
         ],
         "fallbacks": [
          {
-          "dest": 88
+          "dest": 81
          }
         ]
        },
@@ -1848,7 +1810,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
           "password": "gandring",
           "level": 0,
           "email": "gandring@p0x.smule.my.id"
-#trojan-grpc
+#trojan-grpcp
          }
         ],
         "fallbacks": [
@@ -2200,7 +2162,7 @@ cat > /usr/local/etc/xray/vlessquic.json << END
   },
   "inbounds": [
     {
-      "port": 515,
+      "port": 443,
       "listen": "0.0.0.0",
       "protocol": "vless",
       "settings": {
@@ -2318,7 +2280,7 @@ cat > /usr/local/etc/xray/vlessquic.json << END
 END
 
 uuid=$(cat /proc/sys/kernel/random/uuid)
-uuid5=$(cat /openssl rand -base64 32)
+uuid5=$openssl rand -base64 16
 domain=$(cat /root/domain)
 # // Certificate File
 path_crt="/etc/xray/xray.crt"
@@ -2346,22 +2308,20 @@ cat > /etc/xray/xss.json << END
         "settings":{
           "method":"2022-blake3-aes-128-gcm",
           "password": "fvRKCJ683/9WY0L7SHaNUmAyT3WcGEXBxVUvPV7BQms=",
-          "network": "ws",
+          "network": "tcp",
         "security": "tls",
-        "wsSettings": {
-          "path": "/gandring"
-         },
-         "tlsSettings": {
-          "alpn": [
-            "h2",
-            "http/1.1"
-          ],
-          "certificates": [
-            {
-              "certificateFile": "/etc/ssl/private/fullchain.pem",
-              "keyFile": "/etc/ssl/private/privkey.pem"
+        "tlsSettings": {
+         "certificates": [
+             {
+               "certificateFile": "/etc/ssl/private/fullchain.pem",
+               "keyFile": "/etc/ssl/private/privkey.pem"
             }
           ]
+        },
+        "tcpSettings": {
+          "header": {
+            "type": "none"
+          }
         }
       }
     }
@@ -2388,6 +2348,7 @@ cat > /etc/xray/xss.json << END
     ]
   },
   "routing": {
+    "domainStrategy": "AsIs",
     "rules": [
       {
         "type": "field",
@@ -2632,8 +2593,12 @@ sudo iptables -A OUTPUT -p tcp --sport 10805 -m conntrack --ctstate ESTABLISHED 
 sudo iptables -A OUTPUT -p udp --sport 10805 -m conntrack --ctstate ESTABLISHED -j ACCEPT
 sudo iptables -A OUTPUT -p tcp --sport 10808 -m conntrack --ctstate ESTABLISHED -j ACCEPT
 sudo iptables -A OUTPUT -p udp --sport 10808 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+sudo iptables -A OUTPUT -p tcp --sport 10853 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+sudo iptables -A OUTPUT -p udp --sport 10853 -m conntrack --ctstate ESTABLISHED -j ACCEPT
 sudo iptables -A OUTPUT -p tcp --sport 53 -m conntrack --ctstate ESTABLISHED -j ACCEPT
 sudo iptables -A OUTPUT -p udp --sport 53 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+sudo iptables -A OUTPUT -p tcp --sport 1080 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+sudo iptables -A OUTPUT -p udp --sport 1080 -m conntrack --ctstate ESTABLISHED -j ACCEPT
 sudo iptables-save > /etc/iptables.up.rules
 sudo iptables-restore -t < /etc/iptables.up.rules
 sudo netfilter-persistent save
