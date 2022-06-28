@@ -750,7 +750,6 @@ cat > /etc/xray/config.json << END
     }
   ],
   "routing": {
-    "domainStrategy": "AsIs",
     "rules": [
       {
         "type": "field",
@@ -1436,7 +1435,6 @@ cat > /etc/xray/xtrojan.json << END
     ]
   },
   "routing": {
-    "domainStrategy": "AsIs",
     "rules": [
       {
         "type": "field",
@@ -1573,7 +1571,6 @@ cat > /etc/xray/trojangrpc.json << END
     ]
   },
   "routing": {
-    "domainStrategy": "AsIs",
     "rules": [
       {
         "type": "field",
@@ -1851,7 +1848,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
           "password": "gandring",
           "level": 0,
           "email": "gandring@p0x.smule.my.id"
-#trojan-grpcp
+#trojan-grpc
          }
         ],
         "fallbacks": [
@@ -2259,7 +2256,6 @@ cat > /usr/local/etc/xray/vlessquic.json << END
     ]
   },
   "routing": {
-    "domainStrategy": "AsIs",
     "rules": [
       {
         "type": "field",
@@ -2392,7 +2388,6 @@ cat > /etc/xray/xss.json << END
     ]
   },
   "routing": {
-    "domainStrategy": "AsIs",
     "rules": [
       {
         "type": "field",
