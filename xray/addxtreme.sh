@@ -21,6 +21,7 @@ vmgrpc="$(cat ~/log-install.txt | grep -w "VMESS GRPC TLS" | cut -d: -f2|sed 's/
 vquic="$(cat ~/log-install.txt | grep -w "VLESS QUIC" | cut -d: -f2|sed 's/ //g')"
 tquic="$(cat ~/log-install.txt | grep -w "TROJAN QUIC" | cut -d: -f2|sed 's/ //g')"
 vmhdua="$(cat ~/log-install.txt | grep -w "VMESS H2C TLS" | cut -d: -f2|sed 's/ //g')"
+vmquic="$(cat ~/log-install.txt | grep -w "VMESS QUIC" | cut -d: -f2|sed 's/ //g')"
 vmhttp="$(cat ~/log-install.txt | grep -w "VMESS HTTP TLS" | cut -d: -f2|sed 's/ //g')"
 vmhttpnon="$(cat ~/log-install.txt | grep -w "VMESS HTTP NON TLS" | cut -d: -f2|sed 's/ //g')"
 tls="$(cat ~/log-install.txt | grep -w "VMESS WS TLS" | cut -d: -f2|sed 's/ //g')"
@@ -154,10 +155,9 @@ sed -i '/#trojan-grpc$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
 sed -i '/#vmess-tls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'"' /usr/local/etc/xray/xvmess.json
-
 cat>/etc/xray/vmess-$user-tls.json<<EOF
       {
-      "v": "5",
+      "v": "4",
       "ps": "🔰VMESS WS TLS ${user}",
       "add": "${domain}",
       "port": "${tls}",
@@ -172,6 +172,27 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
 EOF
 vmess_base641=$( base64 -w 0 <<< $vmess_json1)
 vmess1="vmess://$(base64 -w 0 /etc/xray/vmess-$user-tls.json)"
+rm -rf /etc/xray/vmess-$user-tls.json
+
+sed -i '/#vmess-quic$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'"' /etc/xray/xvless.json
+cat>/etc/xray/vmess-$user-tls.json<<EOF
+      {
+      "v": "5",
+      "ps": "🔰VMESS QUIC TLS ${user}",
+      "add": "${domain}",
+      "port": "${tls}",
+      "id": "${uuid}",
+      "aid": "0",
+      "net": "quic",
+      "path": "shanumquic",
+      "type": "none",
+      "host": "${domain}",
+      "tls": "tls"
+}
+EOF
+vmessquic_base641=$( base64 -w 0 <<< $vmess_json1)
+vmessquic="vmess://$(base64 -w 0 /etc/xray/vmess-$user-tls.json)"
 rm -rf /etc/xray/vmess-$user-tls.json
 
 sed -i '/#vmess-http-tls$/a\### '"$user $exp"'\
@@ -228,6 +249,8 @@ echo -e "IP  :${MYIP} / $domain"
 echo -e "Protokol  :GRPC,HTTP,H2C,GFW,XTLS,WS,QUIC"
 echo -e "NAMA  :${user}"
 echo -e "Port SERVICE  :$vlxtls"
+echo -e "Port Trojan grpc  :$tgrpc"
+echo -e "Port Vless grpc  :$vlgrpc"
 echo -e "Satpam  :tls,xtls"
 echo -e "Path VLESS WS  :/wisnu"
 echo -e "Path VLESS HTTP  :/wisnutcp"
@@ -264,8 +287,8 @@ echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━�
 echo -e "VMESS WS TLS: ${vmess1}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "VMESS HTTP TLS: ${vmesshttp}"
-#echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-#echo -e "TROJAN H2C TLS: ${trojanhdua}"
+echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "VMESS QUIC TLS: ${vmessquic}"
 #echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 #echo -e "VLESS H2C TLS: ${vlesshdua}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
