@@ -23,7 +23,7 @@ vmhttpnon="$(cat ~/log-install.txt | grep -w "VMESS HTTP NON TLS" | cut -d: -f2|
 vmgrpc="$(cat ~/log-install.txt | grep -w "VMESS GRPC TLS" | cut -d: -f2|sed 's/ //g')"
 vmgrpcnon="$(cat ~/log-install.txt | grep -w "VMESS GRPC NON TLS" | cut -d: -f2|sed 's/ //g')"
 vmhdua="$(cat ~/log-install.txt | grep -w "VMESS H2C TLS" | cut -d: -f2|sed 's/ //g')"
-vmquic="$(cat ~/log-install.txt | grep -w "VMESS QUICA" | cut -d: -f2|sed 's/ //g')"
+vmquic="$(cat ~/log-install.txt | grep -w "VMESS QUIC" | cut -d: -f2|sed 's/ //g')"
 
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 		read -rp "Username : " -e user
@@ -325,7 +325,7 @@ echo -e "Port GRPC  :${vmgrpc}/${vmgrpcnon}"
 echo -e "Port H2C  :${vmhdua}"
 echo -e "Port HTTP  :${vmhttp}/${vmhttpnon}"
 echo -e "Port QUIC  :${vmquic}"
-echo -e "Protokol  :WS,GRPC,H2C,HTTP"
+echo -e "Protokol  :WS,GRPC,H2C,HTTP,QUIC"
 echo -e "Path GRPC  :/shanumgrpc"
 echo -e "Path HTTP  :/shanumgtcp"
 echo -e "Path H2C  :/shanumhttp"
