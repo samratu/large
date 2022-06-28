@@ -853,40 +853,6 @@ cat > /etc/xray/xvless.json << END
       }
     },
     {
-      "port": 443,
-      "listen": "0.0.0.0",
-      "protocol": "vmess",
-      "settings": {
-        "clients": [
-          {
-            "id": "gandring",
-            "alterId": 0,
-            "email": "gandring@p0x.smule.my.id"
-#vmess-quic
-          }
-        ]
-      },
-      "streamSettings": {
-        "network": "quic",
-        "security": "tls",
-        "tlsSettings": {
-          "certificates": [
-            {
-              "certificateFile": "/etc/ssl/private/fullchain.pem",
-              "keyFile": "/etc/ssl/private/privkey.pem"
-            }
-          ]
-        },
-        "quicSettings": {
-          "security": "$domain",
-          "key": "shanumquic",
-          "header": {
-            "type": "none"
-          }
-        }
-      }
-    },
-    {
       "port": 1150,
       "listen": "0.0.0.0",
       "protocol": "vless",
