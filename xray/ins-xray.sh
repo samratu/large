@@ -913,7 +913,6 @@ cat > /etc/xray/xvless.json << END
     ]
   },
   "routing": {
-    "domainStrategy": "AsIs",
     "rules": [
       {
         "type": "field",
