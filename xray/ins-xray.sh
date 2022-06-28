@@ -26,7 +26,7 @@ timedatectl set-timezone Asia/Jakarta
 chronyc sourcestats -v
 chronyc tracking -v
 date
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install-geodata
+
 # / / Ambil Xray Core Version Terbaru
 latest_version="$(curl -s https://api.github.com/repos/XTLS/Xray-core/releases | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
 #bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install-geodata
@@ -57,14 +57,14 @@ curl https://get.acme.sh | sh
 alias acme.sh=~/.acme.sh/acme.sh
 /root/.acme.sh/acme.sh --upgrade --auto-upgrade
 /root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
-/root/.acme.sh/acme.sh --issue -d "${domain}" --standalone --keylength ec-384
+/root/.acme.sh/acme.sh --issue -d "${domain}" --standalone --keylength ec-256
 /root/.acme.sh/acme.sh --install-cert -d "${domain}" --ecc \
 --fullchain-file /etc/ssl/private/fullchain.pem \
 --key-file /etc/ssl/private/privkey.pem
 chown -R nobody:nogroup /etc/xray
 chmod 644 /etc/ssl/private/privkey.pem
 chmod 644 /etc/ssl/private/fullchain.pem
-
+bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install-geodata
 #sudo lsof -t -i tcp:80 -s tcp:listen | sudo xargs kill
 cd /root/
 #wget https://raw.githubusercontent.com/acmesh-official/acme.sh/master/acme.sh
@@ -1166,13 +1166,15 @@ cat > /etc/xray/xtrojan.json << END
       }
     },
     {
+      "{
       "port": 443,
       "listen": "0.0.0.0",
       "protocol": "trojan",
       "settings": {
         "clients": [
           {
-            "password": "gandring",
+            "id": "gandring",
+            "level": 0,
             "email": "gandring@p0x.smule.my.id"
 #trojan-quic
           }
@@ -1181,21 +1183,23 @@ cat > /etc/xray/xtrojan.json << END
       },
       "streamSettings": {
         "network": "quic",
-        "security": "tls",
-        "tlsSettings": {
-          "certificates": [
-            {
-              "certificateFile": "/etc/ssl/private/fullchain.pem",
-              "keyFile": "/etc/ssl/private/privkey.pem"
-            }
-          ]
-        },
         "quicSettings": {
-          "security": "none",
-          "key": "gandringquic",
+          "security": "$domain",
+          "key": "wisnuquic",
           "header": {
             "type": "none"
           }
+        },
+        "security": "tls",
+        "tlsSettings": {
+          "minVersion": "1.3",
+          "certificates": [
+           {
+              "certificateFile": "/etc/ssl/private/fullchain.pem",
+              "keyFile": "/etc/ssl/private/privkey.pem"
+            }
+          ],
+          "rejectUnknownSni": true
         }
       }
     },
@@ -1225,7 +1229,7 @@ cat > /etc/xray/xtrojan.json << END
           ]
         },
         "quicSettings": {
-          "security": "none",
+          "security": "$domain",
           "key": "wisnuquic",
           "header": {
             "type": "none"
@@ -1675,67 +1679,67 @@ cat > /usr/local/etc/xray/xvmess.json << END
        "fallbacks": [
          {
           "dest": 1100,
-          "xver": 1
+          "xver": 16
          },
          {
           "path": "/gandring",
           "dest": 1110,
-          "xver": 1
+          "xver": 16
          },
          {
           "path": "/gandringhttp",
           "dest": 1120,
-          "xver": 1
+          "xver": 16
          },
          {
           "path": "/gandringgrpc",
           "dest": 1130,
-          "xver": 1
+          "xver": 16
          },
          {
           "path": "/wisnu",
           "dest": 1140,
-          "xver": 1
+          "xver": 16
          },
          {
           "path": "/wisnuhttp",
           "dest": 1150,
-          "xver": 1
+          "xver": 16
          },
          {
           "path": "/wisnugrpc",
           "dest": 1160,
-          "xver": 1
+          "xver": 16
          },
          {
           "path": "/shanum",
           "dest": 1170,
-          "xver": 1
+          "xver": 16
          },
          {
           "path": "/shanumhttp",
           "dest": 1180,
-          "xver": 1
+          "xver": 16
          },
          {
           "path": "/shanumgrpc",
           "dest": 1190,
-          "xver": 1
+          "xver": 16
          },
          {
           "path": "/gandringtcp",
           "dest": 1200,
-          "xver": 1
+          "xver": 16
          },
          {
           "path": "/wisnutcp",
           "dest": 1210,
-          "xver": 1
+          "xver": 16
          },
          {
           "path": "/shanumtcp",
           "dest": 1220,
-          "xver": 1
+          "xver": 16
          }
        ]
      },
@@ -1770,7 +1774,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
         ],
         "fallbacks": [
          {
-          "dest": 81
+          "dest": 88
          }
         ]
        },
@@ -2200,7 +2204,7 @@ cat > /usr/local/etc/xray/vlessquic.json << END
   },
   "inbounds": [
     {
-      "port": 443,
+      "port": 515,
       "listen": "0.0.0.0",
       "protocol": "vless",
       "settings": {
@@ -2225,7 +2229,7 @@ cat > /usr/local/etc/xray/vlessquic.json << END
           ]
         },
         "quicSettings": {
-          "security": "none",
+          "security": "$domain",
           "key": "wisnuquic",
           "header": {
             "type": "none"
