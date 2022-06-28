@@ -749,6 +749,7 @@ cat > /etc/xray/config.json << END
     }
   ],
   "routing": {
+    "domainStrategy": "AsIs",
     "rules": [
       {
         "type": "field",
@@ -911,6 +912,7 @@ cat > /etc/xray/xvless.json << END
     ]
   },
   "routing": {
+    "domainStrategy": "AsIs",
     "rules": [
       {
         "type": "field",
@@ -1189,8 +1191,42 @@ cat > /etc/xray/xtrojan.json << END
           ]
         },
         "quicSettings": {
-          "security": "$domain",
+          "security": "none",
           "key": "gandringquic",
+          "header": {
+            "type": "none"
+          }
+        }
+      }
+    },
+    {
+      "port": 414,
+      "listen": "0.0.0.0",
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "gandring",
+            "email": "gandring@p0x.smule.my.id"
+#vless-quic
+          }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "quic",
+        "security": "tls",
+        "tlsSettings": {
+          "certificates": [
+            {
+              "certificateFile": "/etc/ssl/private/fullchain.pem",
+              "keyFile": "/etc/ssl/private/privkey.pem"
+            }
+          ]
+        },
+        "quicSettings": {
+          "security": "none",
+          "key": "wisnuquic",
           "header": {
             "type": "none"
           }
@@ -1396,6 +1432,7 @@ cat > /etc/xray/xtrojan.json << END
     ]
   },
   "routing": {
+    "domainStrategy": "AsIs",
     "rules": [
       {
         "type": "field",
@@ -1532,6 +1569,7 @@ cat > /etc/xray/trojangrpc.json << END
     ]
   },
   "routing": {
+    "domainStrategy": "AsIs",
     "rules": [
       {
         "type": "field",
@@ -2081,6 +2119,7 @@ cat > /usr/local/etc/xray/xvmess.json << END
     ]
   },
   "routing": {
+    "domainStrategy": "AsIs",
     "rules": [
       {
         "type": "field",
@@ -2152,7 +2191,7 @@ path_key="/etc/xray/xray.key"
 #path_crt="/root/.acme.sh/$domain_ecc/fullchain.cer"
 #path_key="/root/.acme.sh/$domain_ecc/$domain.key"
 # Buat Config Xray
-cat > /etc/xray/vlessquic.json << END
+cat > /usr/local/etc/xray/vlessquic.json << END
 {
   "log": {
     "access": "/var/log/xray/access.log",
@@ -2186,7 +2225,7 @@ cat > /etc/xray/vlessquic.json << END
           ]
         },
         "quicSettings": {
-          "security": "$domain",
+          "security": "none",
           "key": "wisnuquic",
           "header": {
             "type": "none"
@@ -2217,6 +2256,7 @@ cat > /etc/xray/vlessquic.json << END
     ]
   },
   "routing": {
+    "domainStrategy": "AsIs",
     "rules": [
       {
         "type": "field",
@@ -2500,7 +2540,7 @@ User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
-ExecStart=/usr/local/bin/xray -config /etc/xray/vlessquic.json
+ExecStart=/usr/local/bin/xray -config /usr/local/etc/xray/vlessquic.json
 Restart=on-failure
 RestartPreventExitStatus=23
 
