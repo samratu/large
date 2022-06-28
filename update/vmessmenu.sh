@@ -29,6 +29,11 @@ echo -e "14\e[1;33m) Hapus Akun VMESS HTTP \e[m"
 echo -e "15\e[1;33m) Perpanjang Masa Aktif Akun VMESS HTTP \e[m"
 echo -e "16\e[1;33m) Cek User Login VMESS HTTP \e[m"
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "17\e[1;33m) Buat Akun VMESS QUIC \e[m"
+echo -e "18\e[1;33m) Hapus Akun VMESS QUIC \e[m"
+echo -e "19\e[1;33m) Perpanjang Masa Aktif Akun VMESS QUIC \e[m"
+echo -e "20\e[1;33m) Cek User Login VMESS QUIC \e[m"
+echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "00\e[1;31m) Menu Utama \e[m"
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "xx\e[1;31m) Keluar \e[m"
@@ -85,6 +90,18 @@ renewvmesshttp
 ;;
 16)
 cekvmesshttp
+;;
+17)
+addvmessquic
+;;
+18)
+delvmessquic
+;;
+19)
+renewvmessquic
+;;
+20)
+cekvmessquic
 ;;
 0)
 clear
