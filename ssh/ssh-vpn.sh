@@ -313,7 +313,7 @@ socket = r:TCP_NODELAY=1
 accept = 500
 connect = 127.0.0.1:200
 
-[dropbear]
+[openssh]
 accept = 600
 connect = 127.0.0.1:22
 
@@ -322,15 +322,15 @@ accept = 990
 connect = 127.0.0.1:1194
 
 [stunnelws]
-accept = 222
+accept = 2087
 connect = 700
 END
 
 # make a certificate
-#openssl genrsa -out key.pem 2048  >/dev/null 2>&1
-#openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
-#-subj "/C=ID/ST=JAWA-TENGAH/L=SUKOHARJO/O=GANDRING/OU=GANDRING/CN=GANDRING/emailAddress=djarumsuper@gmail.co.id"  >/dev/null 2>&1
-cat $key.pem cert.pem >> /etc/stunnel/stunnel.pem
+openssl genrsa -out key.pem 2048  >/dev/null 2>&1
+openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
+-subj "/C=ID/ST=JAWA-TENGAH/L=SUKOHARJO/O=GANDRING/OU=GANDRING/CN=GANDRING/emailAddress=djarumsuper@gmail.co.id"  >/dev/null 2>&1
+cat key.pem cert.pem >> /etc/stunnel/stunnel.pem
 
 # konfigurasi stunnel
 sed -i 's/ENABLED=0/ENABLED=1/g' /etc/default/stunnel4
