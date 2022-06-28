@@ -23,7 +23,8 @@ systemctl restart xtrojan
 systemctl restart xvless
 systemctl restart xvmess
 systemctl restart xss
-systemctl restart satrio
+systemctl restart vlessquic
+systemctl restart trojangrpc
 systemctl restart shadowsocks-libev
 systemctl restart xl2tpd
 systemctl restart pptpd
@@ -37,7 +38,7 @@ systemctl restart openvpn-ohp
 systemctl restart trojan-go
 /etc/init.d/ssrmu restart
 /etc/init.d/dropbear restart
-#/etc/init.d/sslh restart
+/etc/init.d/sslh restart
 /etc/init.d/stunnel4 restart
 /etc/init.d/openvpn restart
 /etc/init.d/fail2ban restart
