@@ -190,6 +190,7 @@ mkdir /etc/ssl/zerossl.my.id/
 # install
 apt-get --reinstall --fix-missing install -y bzip2 gzip coreutils wget screen rsyslog iftop htop net-tools zip unzip wget net-tools curl nano sed screen gnupg gnupg1 bc apt-transport-https build-essential dirmngr libxml-parser-perl neofetch git lsof
 #echo "neofetch" >> .profile
+echo "PROUDED YOU BY WISNU & GANDRING" .profile
 echo "status" >> .profile
 
 # install webserver
