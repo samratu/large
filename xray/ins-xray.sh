@@ -2600,7 +2600,7 @@ User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
-ExecStart=/usr/local/bin/xray -config /etc/xray/vlessquic.json
+ExecStart=/usr/local/bin/xray -config /usr/local/etc/xray/vlessquic.json
 Restart=on-failure
 RestartPreventExitStatus=23
 
@@ -2782,7 +2782,7 @@ cat > /etc/trojan-go/config.json << END
   "password": [
       "$uuid"
   ],
-  "disable_http_check": true,
+  "disable_http_check": false,
   "udp_timeout": 60,
   "ssl": {
     "verify": true,
@@ -2805,8 +2805,8 @@ cat > /etc/trojan-go/config.json << END
     "fingerprint": "firefox"
   },
   "tcp": {
-    "no_delay": false,
-    "keep_alive": false,
+    "no_delay": true,
+    "keep_alive": true,
     "prefer_ipv4": false
   },
   "mux": {
