@@ -322,7 +322,7 @@ connect = 127.0.0.1:700
 END
 
 # make a certificate
-openssl genrsa -out key.pem 256  >/dev/null 2>&1
+openssl genrsa -out key.pem 2048  >/dev/null 2>&1
 openssl req -new -x509 -nodes -sha256 -key key.pem -out cert.pem -days 1095 \
 -subj "/C=ID/ST=JAWA-TENGAH/L=SUKOHARJO/O=GANDRING/OU=GANDRING/CN=GANDRING/emailAddress=djarumsuper@gmail.co.id"  >/dev/null 2>&1
 cat key.pem cert.pem >> /etc/stunnel/stunnel.pem
