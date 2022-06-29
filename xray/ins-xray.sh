@@ -473,7 +473,7 @@ cat > /etc/xray/config.json << END
         "httpSettings": {},
         "quicSettings": {},
         "grpcSettings": {
-          "serviceName": "/ahanumgrpc",
+          "serviceName": "/shanumgrpc",
           "multiMode": true
         }
       }
