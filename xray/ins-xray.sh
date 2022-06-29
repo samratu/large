@@ -58,7 +58,7 @@ alias acme.sh=~/.acme.sh/acme.sh
 /root/.acme.sh/acme.sh --upgrade --auto-upgrade
 /root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
 /root/.acme.sh/acme.sh --issue -d "${domain}" --standalone --keylength ec-2048
-/root/.acme.sh/acme.sh --issue -d "${domain}" --standalone --keylength ec-256
+/root/.acme.sh/acme.sh --issue -d "${domain}" --standalone --keylength ec-384
 /root/.acme.sh/acme.sh --install-cert -d "${domain}" --ecc \
 --fullchain-file /etc/ssl/private/fullchain.pem \
 --key-file /etc/ssl/private/privkey.pem
@@ -2162,7 +2162,7 @@ cat > /usr/local/etc/xray/vlessquic.json << END
   },
   "inbounds": [
     {
-      "port": 443,
+      "port": 414,
       "listen": "0.0.0.0",
       "protocol": "vless",
       "settings": {
@@ -2179,6 +2179,7 @@ cat > /usr/local/etc/xray/vlessquic.json << END
         "network": "quic",
         "security": "tls",
         "tlsSettings": {
+        "acceptProxyProtocol": true,
           "certificates": [
             {
               "certificateFile": "/etc/ssl/private/fullchain.pem",
@@ -2292,23 +2293,26 @@ path_key="/etc/xray/xray.key"
 # Buat Config Xray
 cat > /etc/xray/xss.json << END
 {
+  "log": {
+    "access": "/var/log/xray/access.log",
+    "error": "/var/log/xray/error.log",
+    "loglevel": "warning"
+  },
   "inbounds": [
     {
-        "port":212,
-        "protocol":"shadowsocks",
-        "settings":{
-          "method":"2022-blake3-aes-128-gcm",
-          "password": "fvRKCJ683/9WY0L7SHaNUmAyT3WcGEXBxVUvPV7BQms=",
-          "network":"tcp,udp"
-        }
-      },
-      {
-        "port":441,
-        "protocol":"shadowsocks",
-        "settings":{
-          "method":"2022-blake3-aes-128-gcm",
-          "password": "fvRKCJ683/9WY0L7SHaNUmAyT3WcGEXBxVUvPV7BQms=",
-          "network": "tcp",
+      "port": 515,
+      "protocol": "shadowsocks",
+      "settings": {
+        "method": "2022-blake3-aes-128-gcm",
+        "password": "7xlRE7d+BMxT6A123FHnMnth7npUT6b7HaGPaKLvo5B=",
+        "clients": [
+          {
+            "password": "adaC63kR2WENAk4wInYa4w3qBGvdorgXUz4bIylDKPM=",
+            "email": "wisnu@p0x.smule.my.id"
+#sstcp-tls
+          }
+        ],
+        "network": "tcp,udp",
         "security": "tls",
         "tlsSettings": {
          "certificates": [
@@ -2324,8 +2328,64 @@ cat > /etc/xray/xss.json << END
           }
         }
       }
+    },
+    {
+      "port": 212,
+      "protocol": "shadowsocks",
+      "settings": {
+        "method": "2022-blake3-aes-128-gcm",
+        "password": "7xlRE7d+BMxT6A123FHnMnth7npUT6b7HaGPaKLvo5B=",
+        "client": [
+           {
+            "password": "7Q15u87tHJjIrcyTCyt+5iTGZ8zpKAihiXy/LjkL5Kl=",
+            "email": "gandring@p0x.smule.my.id"
+#ssws-tls
+           }
+        ],
+        "network": "ws",
+        "security": "tls",
+        "wsSettings": {
+          "path": "/gandringws"
+         },
+         "tlsSettings": {
+          "certificates": [
+            {
+              "certificateFile": "/etc/ssl/private/fullchain.pem",
+              "keyFile": "/etc/ssl/private/privkey.pem"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "port": 121,
+      "protocol": "shadowsocks",
+      "settings": {
+        "method": "2022-blake3-aes-128-gcm",
+        "password": "q6z3GbLCkuiMepJfwf7kwQ==",
+        "client": [
+           {
+            "password": "0LTPuZS0LPi3x8Gp3UTA4g==",
+            "email": "gan@p0x.smule.my.id"
+#ssgrpc-tls
+           }
+        ],
+        "network": "grpc",
+        "security": "tls",
+        "grpcSettings": {
+          "serviceName": "/gandringgrpc"
+         },
+         "tlsSettings": {
+          "certificates": [
+            {
+              "certificateFile": "/etc/ssl/private/fullchain.pem",
+              "keyFile": "/etc/ssl/private/privkey.pem"
+            }
+          ]
+        }
+      }
     }
-  ],
+ ],
   "outbounds": [
     {
       "protocol": "freedom",
@@ -2343,27 +2403,68 @@ cat > /etc/xray/xss.json << END
       "1.1.1.1",
       "1.0.0.1",
       "localhost",
-      "https+local://dns.google/dns-query",
-      "https+local://1.1.1.1/dns-query"
+      "localhost://dns.google/dns-query",
+      "localhost://1.1.1.1/dns-query"
     ]
   },
   "routing": {
-    "domainStrategy": "AsIs",
     "rules": [
       {
         "type": "field",
-        "inboundTag": [
-          "TROJAN-XTLS-in",
-          "TROJAN-gRPC-in",
-          "TROJAN-WSTLS-in",
-          "TROJAN-WS-in",
-          "TROJAN-H2C-in",
-          "TROJAN-HTTP-in"
+        "ip": [
+          "0.0.0.0/8",
+          "10.0.0.0/8",
+          "100.64.0.0/10",
+          "169.254.0.0/16",
+          "172.16.0.0/12",
+          "192.0.0.0/24",
+          "192.0.2.0/24",
+          "192.168.0.0/16",
+          "198.18.0.0/15",
+          "198.51.100.0/24",
+          "203.0.113.0/24",
+          "::1/128",
+          "fc00::/7",
+          "fe80::/10"
         ],
-        "outboundTag": "blackhole-out",
-        "protocol": [ "bittorrent" ]
+        "outboundTag": "direct"
+      },
+      {
+        "inboundTag": [
+          "api"
+        ],
+        "outboundTag": "api",
+        "type": "field"
+      },
+      {
+        "type": "field",
+        "outboundTag": "blocked",
+        "protocol": [
+          "bittorrent"
+        ]
       }
     ]
+  },
+  "stats": {},
+  "api": {
+    "services": [
+      "StatsService"
+    ],
+    "tag": "api"
+  },
+  "policy": {
+    "levels": {
+      "0": {
+        "statsUserDownlink": true,
+        "statsUserUplink": true
+      }
+    },
+    "system": {
+      "statsInboundUplink": true,
+      "statsInboundDownlink": true,
+      "statsOutboundUplink" : true,
+      "statsOutboundDownlink" : true
+    }
   }
 }
 END
@@ -2499,7 +2600,7 @@ User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
-ExecStart=/usr/local/bin/xray -config /usr/local/etc/xray/vlessquic.json
+ExecStart=/usr/local/bin/xray -config /etc/xray/vlessquic.json
 Restart=on-failure
 RestartPreventExitStatus=23
 
@@ -2593,12 +2694,6 @@ sudo iptables -A OUTPUT -p tcp --sport 10805 -m conntrack --ctstate ESTABLISHED 
 sudo iptables -A OUTPUT -p udp --sport 10805 -m conntrack --ctstate ESTABLISHED -j ACCEPT
 sudo iptables -A OUTPUT -p tcp --sport 10808 -m conntrack --ctstate ESTABLISHED -j ACCEPT
 sudo iptables -A OUTPUT -p udp --sport 10808 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p tcp --sport 10853 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p udp --sport 10853 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p tcp --sport 53 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p udp --sport 53 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p tcp --sport 1080 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p udp --sport 1080 -m conntrack --ctstate ESTABLISHED -j ACCEPT
 sudo iptables-save > /etc/iptables.up.rules
 sudo iptables-restore -t < /etc/iptables.up.rules
 sudo netfilter-persistent save
