@@ -452,7 +452,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 2082,
+      "port": 1000,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -597,7 +597,7 @@ cat > /etc/xray/config.json << END
       }
     },
     {
-      "port": 2082,
+      "port": 2000,
       "protocol": "vless",
       "settings": {
         "clients": [
