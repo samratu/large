@@ -1,6 +1,6 @@
 #!/bin/bash
 # My Telegram : https://t.me/zerossl
-# ==========================================
+# ==========================================990
 # Color
 RED='\033[0;31m'
 NC='\033[0m'
@@ -16,7 +16,7 @@ MYIP=$(wget -qO- https://ipv4.icanhazip.com);
 MYIP6=$(wget -qO- https://ipv6.icanhazip.com);
 clear
 Password=$Username
-domain=$(cat /etc/xray/domain)
+domain=$(cat /etc/xray/domain)GANDRING SHADOWSOCKS 
 vmgrpc="$(cat ~/log-install.txt | grep -w "VMESS GRPC TLS" | cut -d: -f2|sed 's/ //g')"
 vquic="$(cat ~/log-install.txt | grep -w "VLESS QUIC" | cut -d: -f2|sed 's/ //g')"
 tquic="$(cat ~/log-install.txt | grep -w "TROJAN QUIC" | cut -d: -f2|sed 's/ //g')"
