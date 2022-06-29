@@ -242,6 +242,28 @@ cat > /etc/xray/xss.json << END
     
 END
 
+uuid=$(cat /proc/sys/kernel/random/uuid)
+uuid5=$openssl rand -base64 16
+domain=$(cat /root/domain)
+# // Certificate File
+path_crt="/etc/xray/xray.crt"
+path_key="/etc/xray/xray.key"
+#domain_ecc=$(cat /root/.acme.sh)
+#domain.key=$(cat /root/.acme.sh/$domain_ecc)
+#path_crt="/root/.acme.sh/$domain_ecc/fullchain.cer"
+#path_key="/root/.acme.sh/$domain_ecc/$domain.key"
+# Buat Config Xray
+cat > /etc/xray/sstcp.json << END
+{
+  "log": {
+    "access": "/var/log/xray/access.log",
+    "error": "/var/log/xray/error.log",
+    "loglevel": "warning"
+  },
+  "inbounds": [
+    
+END
+
 # / / Installation Xray Service
 cat > /etc/systemd/system/xray.service << END
 [Unit]
@@ -334,6 +356,26 @@ CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
 ExecStart=/usr/local/bin/xray -config /etc/xray/xss.json
+Restart=on-failure
+RestartPreventExitStatus=23
+
+[Install]
+WantedBy=multi-user.target
+END
+
+# / / Installation Xray Service
+cat > /etc/systemd/system/sstcp.service << END
+[Unit]
+Description=XSHADOWSOCKS ROUTING DAM COLO PENGKOL BY WISNU
+Documentation=https://t.me/zerossl
+After=network.target nss-lookup.target
+
+[Service]
+User=root
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+NoNewPrivileges=true
+ExecStart=/usr/local/bin/xray -config /etc/xray/sstcp.json
 Restart=on-failure
 RestartPreventExitStatus=23
 
@@ -501,6 +543,13 @@ systemctl restart xss
 
 ##restart&start service
 systemctl daemon-reload
+systemctl enable sstcp
+systemctl stop sstcp
+systemctl start sstcp
+systemctl restart sstcp
+
+##restart&start service
+systemctl daemon-reload
 systemctl enable xvmess
 systemctl stop xvmess
 systemctl start xvmess
@@ -546,10 +595,10 @@ path_key="/etc/xray/xray.key"
 cat > /etc/trojan-go/config.json << END
 {
   "run_type": "server",
-  "local_addr": "127.0.0.1",
+  "local_addr": "0.0.0.0",
   "local_port": 2053,
   "remote_addr": "127.0.0.1",
-  "remote_port": 443,
+  "remote_port": 88,
   "log_level": 1,
   "log_file": "/var/log/trojan-go/trojan-go.log",
   "password": [
@@ -574,7 +623,7 @@ cat > /etc/trojan-go/config.json << END
     "reuse_session": true,
     "plain_http_response": "",
     "fallback_addr": "127.0.0.1",
-    "fallback_port": 443,
+    "fallback_port": 88,
     "fingerprint": "firefox"
   },
   "tcp": {
