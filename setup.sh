@@ -125,7 +125,7 @@ echo " 🔰 SS-OBFS TLS : 2444-2943" |tee -a log-install.txt
 echo " 🔰 SS-OBFS HTTP : 2944-3442" |tee -a log-install.txt
 echo " 🔰 XRAY SHADOWSOCKS : 333" |tee -a log-install.txt
 echo " 🔰 XRAY MTPROTO : 111" |tee -a log-install.txt
-echo " 🔰 WEBSOCKET TLS : 2087" |tee -a log-install.txt
+echo " 🔰 WEBSOCKET TLS : 222" |tee -a log-install.txt
 echo " 🔰 WEBSOCKET NON TLS : 2086" |tee -a log-install.txt
 echo " 🔰 PORT OVPNWS : 8080" |tee -a log-install.txt
 echo " 🔰 OHP SSH : 8181" |tee -a log-install.txt
@@ -168,7 +168,10 @@ echo " 🔰 SHADOWSOCKS TCP : 333" |tee -a log-install.txt
 echo " 🔰 SHADOWSOCKS UDP : 503" |tee -a log-install.txt
 echo " 🔰 SHADOWSOCKS WS TLS: 501" |tee -a log-install.txt
 echo " 🔰 SHADOWSOCKS WS NON TLS : 502" |tee -a log-install.txt
-echo " 🔰 SHADOWSOCKS 2022 : 212" |tee -a log-install.txt
+echo " 🔰 SHADOWSOCKS 2022 TCP : 212" |tee -a log-install.txt
+echo " 🔰 SHADOWSOCKS 2022 WS NON TLS : 2086" |tee -a log-install.txt
+echo " 🔰 SHADOWSOCKS 2022 WS TLS : 2087" |tee -a log-install.txt
+echo " 🔰 SHADOWSOCKS 2022 GRPC : 2087" |tee -a log-install.txt
 echo " 🔰 XRAY MT PROTO : 111" |tee -a log-install.txt
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" |tee -a log-install.txt 
 echo " 🔰 >> Server Information & Other Features"                 |tee -a log-install.txt
