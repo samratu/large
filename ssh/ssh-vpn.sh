@@ -140,11 +140,6 @@ apt-get install tcpdump -y
 apt-get install dsniff -y
 apt install grepcidr -y
 
-openssl req -x509 -out localhost.crt -keyout localhost.key \ 
--newkey rsa:2048 -nodes -sha256 \ 
--subj '/CN=localhost' -extensions EXT -config <( \ 
-printf "[dn]\nCN=localhost\n[req]\ndistinguished_name = dn\n[EXT]\nsubjectAltName=DNS:localhost\nkeyUsage=digitalSignature\nextendedKeyUsage=serverAuth")
-
 # Privoxy Ports
 Privoxy_Port1='4000'
 Privoxy_Port2='5000'
@@ -322,12 +317,12 @@ accept = 990
 connect = 127.0.0.1:1194
 
 [stunnelws]
-accept = 2087
+accept = 222
 connect = 127.0.0.1:700
 END
 
 # make a certificate
-openssl genrsa -out key.pem 4096  >/dev/null 2>&1
+openssl genrsa -out key.pem 2048  >/dev/null 2>&1
 openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
 -subj "/C=ID/ST=JAWA-TENGAH/L=SUKOHARJO/O=GANDRING/OU=GANDRING/CN=GANDRING/emailAddress=djarumsuper@gmail.co.id"  >/dev/null 2>&1
 cat key.pem cert.pem >> /etc/stunnel/stunnel.pem
