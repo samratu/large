@@ -16,10 +16,10 @@
 
 . /lib/lsb/init-functions
 
-DEFAULTPIDFILE="/var/run/stunnel4.pid"
-DAEMON=/usr/local/stunnel/stunnel4
-NAME=stunnel
-DESC="Stunnel Service"
+DEFAULTPIDFILE="/var/run/stunnel5.pid"
+DAEMON=/usr/local/stunne5/stunnel5
+NAME=stunnel5
+DESC="Stunnel5 Service"
 OPTIONS=""
 
 get_opt() {
