@@ -342,8 +342,8 @@ accept = 990
 connect = 127.0.0.1:1194
 
 [stunnelws]
-accept = 222
-connect = 127.0.0.1:700
+accept = 700
+connect = 127.0.0.1:2082
 END
 
 # Remove File
