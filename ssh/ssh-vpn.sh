@@ -38,10 +38,10 @@ ver=$VERSION_ID
 #detail nama perusahaan
 country=ID
 state=Jawa-Tengah
-locality=SURAKARTA
-organization=GANDRING
-organizationalunit=GANDRING Inc.
-commonname=GANDRING
+locality=Sukoharjo
+organization=GANDRING-VPN
+organizationalunit=GANDRING
+commonname=GANDRING-VPN
 email=djarumpentol01@gmail.com
 
 # simple password minimal
@@ -53,6 +53,7 @@ cat > /etc/systemd/system/rc-local.service <<-END
 [Unit]
 Description=/etc/rc.local
 ConditionPathExists=/etc/rc.local
+
 [Service]
 Type=forking
 ExecStart=/etc/rc.local start
@@ -60,8 +61,10 @@ TimeoutSec=0
 StandardOutput=tty
 RemainAfterExit=yes
 SysVStartPriority=99
+
 [Install]
 WantedBy=multi-user.target
+
 END
 
 # nano /etc/rc.local
@@ -84,20 +87,22 @@ systemctl start rc-local.service
 apt update -y
 apt upgrade -y
 apt dist-upgrade -y
+apt install ssl-cert -y
+apt install ca-certificate -y
 apt-get remove --purge ufw firewalld -y
+apt-get install gawk -y &>/dev/null
 apt-get remove --purge exim4 -y
 apt-get purge apache2* -y
 rm -rf /etc/apache2
-
-apt install ca-certificate-y
-apt install -y libnss3-dev libnspr4-dev pkg-config libpam0g-dev libcap-ng-dev libcap-ng-utils libselinux1-dev libcurl4-nss-dev flex bison make libnss3-tools libevent-dev
-curl -sSL https://deb.nodesource.com/setup_16.x | bash - 
-apt-get install nodejs -y
+dpkg --configure -a &>/dev/null
 # install wget and curl
 apt -y install wget curl
-apt install ssl-cert -y
-apt install ca-certificate-y
+
 # Install Requirements Tools
+apt-get install grep -y &>/dev/null
+apt install python3-pip -y
+apt-add-repository universe -y &>/dev/null
+apt-get install software-properties-common -y &>/dev/null
 apt install ruby -y
 apt install python -y
 apt install privoxy -y
@@ -194,8 +199,8 @@ echo "status" >> .profile
 
 # install webserver
 apt -y install nginx php php-fpm php-cli php-mysql libxml-parser-perl
-rm /etc/nginx/sites-enabled/
-rm /etc/nginx/sites-available/
+rm /etc/nginx/sites-enabled
+rm /etc/nginx/sites-available
 curl https://${wisnuvpn}/nginx.conf > /etc/nginx/nginx.conf
 curl https://${wisnuvpn}/vps.conf > /etc/nginx/conf.d/vps.conf
 sed -i 's/listen = \/var\/run\/php-fpm.sock/listen = 127.0.0.1:9000/g' /etc/php/fpm/pool.d/www.conf
@@ -263,11 +268,13 @@ RUN=yes
 # systemd users: don't forget to modify /lib/systemd/system/sslh.service
 DAEMON=/usr/sbin/sslh
 
-DAEMON_OPTS="--user sslh --listen 0.0.0.0:700 --ssl 127.0.0.1:500 --ssh 127.0.0.1:300 --openvpn 127.0.0.1:1194 --http 127.0.0.1:2086 --pidfile /var/run/sslh/sslh.pid"
+DAEMON_OPTS="--user sslh --listen 0.0.0.0:2443 --ssl 127.0.0.1:500 --ssh 127.0.0.1:300 --openvpn 127.0.0.1:1194 --http 127.0.0.1:80 --pidfile /var/run/sslh/sslh.pid"
 
 END
 
 # Restart Service SSLH
+systemctl daemon-reload
+systemctl enable sslh
 service sslh restart
 systemctl restart sslh
 /etc/init.d/sslh restart
@@ -293,48 +300,70 @@ rm -rf /root/vnstat-2.6
 
 mkdir -p /usr/local/wisnucs
 mkdir -p /etc/wisnucs
-apt install stunnel4 -y
-# install stunnel
-cat > /etc/stunnel/stunnel.conf <<-END
-cert = /etc/stunnel/stunnel.pem
+
+# install stunnel 5 
+cd /root/
+wget -q -O stunnel5.zip "https://${wisnuvpnnnn}/stunnel5.zip"
+unzip -o stunnel5.zip
+cd /root/stunnel
+chmod +x configure
+./configure
+make
+make install
+cd /root
+rm -r -f stunnel
+rm -f stunnel5.zip
+mkdir -p /etc/stunnel5
+chmod 644 /etc/stunnel5
+
+# make a certificate
+
+openssl genrsa -out key.pem 2048
+openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
+-subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
+cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
+# Download Config Stunnel5
+cat > /etc/stunnel5/stunnel5.conf <<-END
+cert = /etc/stunnel5/stunnel5.pem
+#cert = /etc/xray/xray.cer
+#key = /etc/xray/xray.key
 client = no
 socket = a:SO_REUSEADDR=1
 socket = l:TCP_NODELAY=1
 socket = r:TCP_NODELAY=1
 
 [dropbear]
-accept = 2086
+accept = 800
 connect = 127.0.0.1:300
+
+[dropbear]
+accept = 700
+connect = 127.0.0.1:200
 
 [openssh]
 accept = 600
 connect = 127.0.0.1:22
 
+[openssh]
+accept = 500
+connect = 127.0.0.1:2443
+
 [openvpn]
 accept = 990
 connect = 127.0.0.1:1194
 
-[stunnelws]
-accept = 2087
-connect = 127.0.0.1:700
 END
 
-# make a certificate
-openssl genrsa -out key.pem 2048  >/dev/null 2>&1
-openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
--subj "/C=ID/ST=JAWA-TENGAH/L=SUKOHARJO/O=GANDRING/OU=GANDRING/CN=GANDRING/emailAddress=djarumsuper@gmail.co.id"  >/dev/null 2>&1
-cat key.pem cert.pem >> /etc/stunnel/stunnel.pem
-
 # Service Stunnel5 systemctl restart stunnel5
-cat > /etc/systemd/system/stunnel4.service << END
+cat > /etc/systemd/system/stunnel5.service << END
 [Unit]
-Description=Stunnel4 Service
+Description=Stunnel5 Service
 Documentation=https://stunnel.org
 Documentation=https://github.com/wisnucokrosatrio
 After=syslog.target network-online.target
 
 [Service]
-ExecStart=/usr/local/wisnucs/stunnel4 /etc/stunnel/stunnel.conf
+ExecStart=/usr/local/wisnucs/stunnel5 /etc/stunnel5/stunnel5.conf
 Type=forking
 
 [Install]
@@ -342,21 +371,30 @@ WantedBy=multi-user.target
 END
 
 # Service Stunnel5 /etc/init.d/stunnel5
-wget -q -O /etc/init.d/stunnel4 "https://${wisnuvpnnnn}/stunnel4.init"
+wget -q -O /etc/init.d/stunnel5 "https://${wisnuvpnnnn}/stunnel5.init"
 
 # Ubah Izin Akses
-chmod 600 /etc/stunnel/stunnel.pem
-chmod +x /etc/init.d/stunnel4
-cp /usr/local/bin/stunnel /usr/local/wisnucs/stunnel4
+chmod 600 /etc/stunnel5/stunnel5.pem
+chmod +x /etc/init.d/stunnel5
+cp /usr/local/bin/stunnel /usr/local/wisnucs/stunnel5
+
+# Remove File
+rm -r -f /usr/local/share/doc/stunnel/
+rm -r -f /usr/local/etc/stunnel/
+rm -f /usr/local/bin/stunnel
+rm -f /usr/local/bin/stunnel3
+rm -f /usr/local/bin/stunnel4
+#rm -f /usr/local/bin/stunnel5
+
 # Restart Stunnel 5
-systemctl daemon-reload
-systemctl stop stunnel4
-systemctl enable stunnel4
-systemctl start stunnel4
-systemctl restart stunnel4
-/etc/init.d/stunnel4 restart
-/etc/init.d/stunnel4 status
-/etc/init.d/stunnel4 restart
+systemctl stop stunnel5
+systemctl enable stunnel5
+systemctl start stunnel5
+systemctl restart stunnel5
+/etc/init.d/stunnel5 restart
+/etc/init.d/stunnel5 status
+/etc/init.d/stunnel5 restart
+
 #OpenVPN
 wget https://${wisnuvpn}/vpn.sh &&  chmod +x vpn.sh && ./vpn.sh
 
