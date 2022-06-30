@@ -190,7 +190,6 @@ mkdir /etc/ssl/zerossl.my.id/
 # install
 apt-get --reinstall --fix-missing install -y bzip2 gzip coreutils wget screen rsyslog iftop htop net-tools zip unzip wget net-tools curl nano sed screen gnupg gnupg1 bc apt-transport-https build-essential dirmngr libxml-parser-perl neofetch git lsof
 #echo "neofetch" >> .profile
-echo "PROUDED YOU BY WISNU & GANDRING" .profile
 echo "status" >> .profile
 
 # install webserver
@@ -299,7 +298,8 @@ key.pem=/etc/ssl/private/privkey.pem
 cer.pem=/etc/ssl/private/fullchain.pem
 # install stunnel
 cat > /etc/stunnel/stunnel.conf <<-END
-cert = /etc/stunnel/stunnel.pem
+cert = /etc/ssl/private/fullchain.pem
+key = /etc/ssl/private/privkey.pem
 client = no
 socket = a:SO_REUSEADDR=1
 socket = l:TCP_NODELAY=1
@@ -323,11 +323,11 @@ connect = 127.0.0.1:700
 END
 
 # make a certificate
-openssl genrsa -out key.pem 2048  >/dev/null 2>&1
-openssl req -new -x509 -nodes -sha256 -key key.pem -out cert.pem -days 1095 \
--subj "/C=ID/ST=JAWA-TENGAH/L=SUKOHARJO/O=GANDRING/OU=GANDRING/CN=GANDRING/emailAddress=djarumsuper@gmail.co.id"  >/dev/null 2>&1
-cat key.pem cert.pem >> /etc/stunnel/stunnel.pem
-
+#openssl genrsa -out key.pem 2048  >/dev/null 2>&1
+#openssl req -new -x509 -nodes -sha256 -key key.pem -out cert.pem -days 1095 \
+#-subj "/C=ID/ST=JAWA-TENGAH/L=SUKOHARJO/O=GANDRING/OU=GANDRING/CN=GANDRING/emailAddress=djarumsuper@gmail.co.id"  >/dev/null 2>&1
+cat $key.pem $cert.pem >> /etc/stunnel/stunnel.pem
+cat 
 # konfigurasi stunnel
 sed -i 's/ENABLED=0/ENABLED=1/g' /etc/default/stunnel4
 /etc/init.d/stunnel4 restart >/dev/null 2>&1
@@ -741,7 +741,7 @@ chown -R www-data:www-data /home/vps/public_html
 /etc/init.d/sslh restart
 /etc/init.d/stunnel4 restart
 /etc/init.d/vnstat restart
-#/etc/init.d/fail2ban restart
+/etc/init.d/fail2ban restart
 #/etc/init.d/squid restart
 
 sudo screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 500
