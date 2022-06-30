@@ -17,9 +17,9 @@
 . /lib/lsb/init-functions
 
 DEFAULTPIDFILE="/var/run/stunnel.pid"
-DAEMON=/usr/local/wisnucs/stunnel5
-NAME=stunnel5
-DESC="Stunnel5 Service"
+DAEMON=/usr/local/stunnel/stunnel
+NAME=stunnel
+DESC="Stunnel Service"
 OPTIONS=""
 
 get_opt() {
