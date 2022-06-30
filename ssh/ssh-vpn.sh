@@ -98,7 +98,6 @@ apt -y install wget curl
 apt install ssl-cert -y
 apt install ca-certificate-y
 # Install Requirements Tools
-apt install stunnel4 -y
 apt install ruby -y
 apt install python -y
 apt install privoxy -y
@@ -322,7 +321,7 @@ END
 
 # make a certificate
 openssl genrsa -out key.pem 2048  >/dev/null 2>&1
-openssl req -new -x509 -nodes -sha256 -key key.pem -out cert.pem -days 1095 \
+openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
 -subj "/C=ID/ST=JAWA-TENGAH/L=SUKOHARJO/O=GANDRING/OU=GANDRING/CN=GANDRING/emailAddress=djarumsuper@gmail.co.id"  >/dev/null 2>&1
 cat key.pem cert.pem >> /etc/stunnel/stunnel.pem
 
