@@ -326,22 +326,6 @@ openssl req -new -x509 -nodes -sha256 -key key.pem -out cert.pem -days 1095 \
 -subj "/C=ID/ST=JAWA-TENGAH/L=SUKOHARJO/O=GANDRING/OU=GANDRING/CN=GANDRING/emailAddress=djarumsuper@gmail.co.id"  >/dev/null 2>&1
 cat key.pem cert.pem >> /etc/stunnel/stunnel.pem
 
-# Service Stunnel5 systemctl restart stunnel5
-cat > /etc/systemd/system/stunnel4.service << END
-[Unit]
-Description=Stunnel4 Service
-Documentation=https://stunnel.org
-Documentation=https://github.com/wisnucokrosatrio
-After=syslog.target network-online.target
-
-[Service]
-ExecStart=/usr/local//etc/wisnucs/stunnel /etc/stunnel/stunnel.conf
-Type=forking
-
-[Install]
-WantedBy=multi-user.target
-END
-
 # Service Stunnel5 /etc/init.d/stunnel5
 wget -q -O /etc/init.d/stunnel4 "https://${wisnuvpnnnn}/stunnel4.init"
 
