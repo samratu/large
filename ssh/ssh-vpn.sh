@@ -296,7 +296,6 @@ mkdir -p /etc/wisnucs
 apt install stunnel4 -y
 # install stunnel
 cat > /etc/stunnel/stunnel.conf <<-END
-cert = /etc/stunnel/stunnel.pem
 client = no
 socket = a:SO_REUSEADDR=1
 socket = l:TCP_NODELAY=1
