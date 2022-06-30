@@ -294,8 +294,8 @@ rm -rf /root/vnstat-2.6
 mkdir -p /usr/local/wisnucs
 mkdir -p /etc/wisnucs
 apt install stunnel4 -y
-key.pem=/etc/ssl/private/privkey.pem
-cer.pem=/etc/ssl/private/fullchain.pem
+key.pem=$/etc/ssl/private/privkey.pem
+cer.pem=$/etc/ssl/private/fullchain.pem
 # install stunnel
 cat > /etc/stunnel/stunnel.conf <<-END
 cert = /etc/ssl/private/fullchain.pem
