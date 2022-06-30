@@ -297,7 +297,7 @@ mkdir -p /etc/stunnel5
 cd /root/
 wget -q -O stunnel5.zip "https://${wisnuvpnnnn}/stunnel5.zip"
 unzip -o stunnel5.zip
-cd /root/stunnel
+cd /root/stunnel5
 chmod +x configure
 ./configure
 make
@@ -307,6 +307,20 @@ rm -r -f stunnel
 rm -f stunnel5.zip
 mkdir -p /etc/stunnel5
 chmod 644 /etc/stunnel5
+
+# make a certificate
+openssl genrsa -out key.pem 2048  >/dev/null 2>&1
+openssl req -new -x509 -nodes -sha256 -key key.pem -out cert.pem -days 1095 \
+-subj "/C=ID/ST=JAWA-TENGAH/L=SUKOHARJO/O=GANDRING/OU=GANDRING/CN=GANDRING/emailAddress=djarumsuper@gmail.co.id"  >/dev/null 2>&1
+cat key.pem cert.pem >> /etc/stunnel/stunnel.pem
+
+# Service Stunnel5 /etc/init.d/stunnel5
+wget -q -O /etc/init.d/stunnel5 "https://${wisnuvpnnnn}/stunnel5.init"
+
+# Ubah Izin Akses
+chmod 600 /etc/stunnel5/stunnel.pem
+chmod +x /etc/init.d/stunnel5
+cp /usr/local/bin/stunnel5 /usr/local/stunnel5/stunnel5
 
 # install stunnel
 cat > /etc/stunnel5/stunnel5.conf <<-END
@@ -331,21 +345,6 @@ connect = 127.0.0.1:1194
 accept = 222
 connect = 127.0.0.1:700
 END
-
-# make a certificate
-openssl genrsa -out key.pem 2048  >/dev/null 2>&1
-openssl req -new -x509 -nodes -sha256 -key key.pem -out cert.pem -days 1095 \
--subj "/C=ID/ST=JAWA-TENGAH/L=SUKOHARJO/O=GANDRING/OU=GANDRING/CN=GANDRING/emailAddress=djarumsuper@gmail.co.id"  >/dev/null 2>&1
-cat key.pem cert.pem >> /etc/stunnel/stunnel.pem
-cat 
-
-# Service Stunnel5 /etc/init.d/stunnel5
-wget -q -O /etc/init.d/stunnel5 "https://${wisnuvpnnnn}/stunnel5.init"
-
-# Ubah Izin Akses
-chmod 600 /etc/stunnel5/stunnel.pem
-chmod +x /etc/init.d/stunnel5
-cp /usr/local/bin/stunnel5 /usr/local/stunnel5/stunnel5
 
 # Remove File
 rm -r -f /usr/local/share/doc/stunnel/
