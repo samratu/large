@@ -98,6 +98,7 @@ apt -y install wget curl
 apt install ssl-cert -y
 apt install ca-certificate-y
 # Install Requirements Tools
+apt install stunnel4 -y
 apt install ruby -y
 apt install python -y
 apt install privoxy -y
