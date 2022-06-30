@@ -16,7 +16,7 @@
 
 . /lib/lsb/init-functions
 
-DEFAULTPIDFILE="/var/run/stunnel.pid"
+DEFAULTPIDFILE="/var/run/stunnel4.pid"
 DAEMON=/usr/local/stunnel/stunnel4
 NAME=stunnel
 DESC="Stunnel Service"
