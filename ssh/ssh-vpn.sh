@@ -302,7 +302,7 @@ socket = l:TCP_NODELAY=1
 socket = r:TCP_NODELAY=1
 
 [dropbear]
-accept = 2082
+accept = 2086
 connect = 127.0.0.1:300
 
 [openssh]
@@ -314,7 +314,7 @@ accept = 990
 connect = 127.0.0.1:1194
 
 [stunnelws]
-accept = 2082
+accept = 2087
 connect = 127.0.0.1:700
 END
 
