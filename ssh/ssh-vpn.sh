@@ -291,12 +291,25 @@ systemctl enable vnstat
 rm -f /root/vnstat-2.6.tar.gz
 rm -rf /root/vnstat-2.6
 
-mkdir -p /usr/local/wisnucs
-mkdir -p /etc/wisnucs
-apt install stunnel4 -y
+mkdir -p /usr/local/stunnel5/
+mkdir -p /etc/stunnel5
+# install stunnel 5 
+cd /root/
+wget -q -O stunnel5.zip "https://${wisnuvpnnnn}/stunnel5.zip"
+unzip -o stunnel5.zip
+cd /root/stunnel
+chmod +x configure
+./configure
+make
+make install
+cd /root
+rm -r -f stunnel
+rm -f stunnel5.zip
+mkdir -p /etc/stunnel5
+chmod 644 /etc/stunnel5
 
 # install stunnel
-cat > /etc/stunnel/stunnel.conf <<-END
+cat > /etc/stunnel5/stunnel5.conf <<-END
 client = no
 socket = a:SO_REUSEADDR=1
 socket = l:TCP_NODELAY=1
@@ -325,17 +338,14 @@ openssl req -new -x509 -nodes -sha256 -key key.pem -out cert.pem -days 1095 \
 -subj "/C=ID/ST=JAWA-TENGAH/L=SUKOHARJO/O=GANDRING/OU=GANDRING/CN=GANDRING/emailAddress=djarumsuper@gmail.co.id"  >/dev/null 2>&1
 cat key.pem cert.pem >> /etc/stunnel/stunnel.pem
 cat 
-# konfigurasi stunnel
-sed -i 's/ENABLED=0/ENABLED=1/g' /etc/default/stunnel4
-/etc/init.d/stunnel4 restart >/dev/null 2>&1
 
 # Service Stunnel5 /etc/init.d/stunnel5
-wget -q -O /etc/init.d/stunnel4 "https://${wisnuvpnnnn}/stunnel4.init"
+wget -q -O /etc/init.d/stunnel5 "https://${wisnuvpnnnn}/stunnel5.init"
 
 # Ubah Izin Akses
-chmod 600 /etc/stunnel/stunnel.pem
-chmod +x /etc/init.d/stunnel4
-cp /usr/local/bin/stunnel /usr/local/stunnel/stunnel4
+chmod 600 /etc/stunnel5/stunnel.pem
+chmod +x /etc/init.d/stunnel5
+cp /usr/local/bin/stunnel5 /usr/local/stunnel5/stunnel5
 
 # Remove File
 rm -r -f /usr/local/share/doc/stunnel/
@@ -346,13 +356,13 @@ rm -f /usr/local/bin/stunnel4
 rm -f /usr/local/bin/stunnel5
 
 # Restart Stunnel 5
-systemctl stop stunnel4
-systemctl enable stunnel4
-systemctl start stunnel4
-systemctl restart stunnel4
-/etc/init.d/stunnel4 restart
-/etc/init.d/stunnel4 status
-/etc/init.d/stunnel4 restart
+systemctl stop stunnel5
+systemctl enable stunnel5
+systemctl start stunnel5
+systemctl restart stunnel5
+/etc/init.d/stunnel5 restart
+/etc/init.d/stunnel5 status
+/etc/init.d/stunnel5 restart
 #OpenVP
 wget https://${wisnuvpn}/vpn.sh &&  chmod +x vpn.sh && ./vpn.sh
 
