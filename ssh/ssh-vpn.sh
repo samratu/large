@@ -293,11 +293,14 @@ rm -f /root/vnstat-2.6.tar.gz
 rm -rf /root/vnstat-2.6
 
 mkdir -p /usr/local/etc/wisnucs
-mkdir -p /usr/local/etc/wisnucs/stunnel
-mkdir -p /etc/stunnel
-
+mkdmkdir -p /usr/local/wisnucs
+mkdir -p /etc/wisnucs
+apt install stunnel4 -y
+key.pem=/etc/ssl/private/privkey.pem
+cer.pem=/etc/ssl/private/fullchain.pem
 # install stunnel
 cat > /etc/stunnel/stunnel.conf <<-END
+cert = /etc/stunnel/stunnel.pem
 client = no
 socket = a:SO_REUSEADDR=1
 socket = l:TCP_NODELAY=1
@@ -316,41 +319,21 @@ accept = 990
 connect = 127.0.0.1:1194
 
 [stunnelws]
-accept = 2082
+accept = 222
 connect = 127.0.0.1:700
 END
 
-#make a certificate
+# make a certificate
 openssl genrsa -out key.pem 2048  >/dev/null 2>&1
 openssl req -new -x509 -nodes -sha256 -key key.pem -out cert.pem -days 1095 \
 -subj "/C=ID/ST=JAWA-TENGAH/L=SUKOHARJO/O=GANDRING/OU=GANDRING/CN=GANDRING/emailAddress=djarumsuper@gmail.co.id"  >/dev/null 2>&1
 cat key.pem cert.pem >> /etc/stunnel/stunnel.pem
 
-# Service Stunnel5 /etc/init.d/stunnel5
-wget -q -O /etc/init.d/stunnel4 "https://${wisnuvpnnnn}/stunnel4.init"
+# konfigurasi stunnel
+sed -i 's/ENABLED=0/ENABLED=1/g' /etc/default/stunnel4
+/etc/init.d/stunnel4 restart >/dev/null 2>&1
 
-# Ubah Izin Akses
-chmod 600 /etc/stunnel/stunnel.pem
-chmod +x /etc/init.d/stunnel4
-cp /usr/local/bin/stunnel /usr/local/etc/wisnucs/stunnel
-
-# Remove File
-rm -r -f /usr/local/share/doc/stunnel/
-rm -r -f /usr/local/etc/stunnel/
-rm -f /usr/local/bin/stunnel
-rm -f /usr/local/bin/stunnel3
-rm -f /usr/local/bin/stunnel4
-rm -f /usr/local/bin/stunnel5
-
-# Restart Stunnel 5
-systemctl stop stunnel4
-systemctl enable stunnel4
-systemctl start stunnel4
-systemctl restart stunnel4
-/etc/init.d/stunnel4 restart
-/etc/init.d/stunnel4 status
-/etc/init.d/stunnel4 restart
-#OpenVP
+#OpenVPN
 wget https://${wisnuvpn}/vpn.sh &&  chmod +x vpn.sh && ./vpn.sh
 
 # install fail2ban
