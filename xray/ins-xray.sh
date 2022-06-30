@@ -698,3 +698,5 @@ systemctl restart trojan-go
 cd
 cp /root/domain /etc/xray
 cp /root/domain /usr/local/etc/xray
+cp /root/.acme.sh/$domain_ecc/fullcain.cer /etc/stunnel/stunnel.pem
+cp /root/.acme.sh/$domain_ecc/$domain.key /etc/stunnel/stunnel.pem
