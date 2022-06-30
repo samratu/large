@@ -296,6 +296,7 @@ mkdir -p /etc/wisnucs
 apt install stunnel4 -y
 # install stunnel
 cat > /etc/stunnel/stunnel.conf <<-END
+cert = /etc/stunnel/stunnel.pem
 client = no
 socket = a:SO_REUSEADDR=1
 socket = l:TCP_NODELAY=1
@@ -324,13 +325,29 @@ openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
 -subj "/C=ID/ST=JAWA-TENGAH/L=SUKOHARJO/O=GANDRING/OU=GANDRING/CN=GANDRING/emailAddress=djarumsuper@gmail.co.id"  >/dev/null 2>&1
 cat key.pem cert.pem >> /etc/stunnel/stunnel.pem
 
-# konfigurasi stunnel
-sed -i 's/ENABLED=0/ENABLED=1/g' /etc/default/stunnel4
-/etc/init.d/stunnel4 restart >/dev/null 2>&1
+# Service Stunnel5 systemctl restart stunnel5
+cat > /etc/systemd/system/stunnel4.service << END
+[Unit]
+Description=Stunnel4 Service
+Documentation=https://stunnel.org
+Documentation=https://github.com/wisnucokrosatrio
+After=syslog.target network-online.target
+
+[Service]
+ExecStart=/usr/local/wisnucs/stunnel4 /etc/stunnel/stunnel.conf
+Type=forking
+
+[Install]
+WantedBy=multi-user.target
+END
 
 # Service Stunnel5 /etc/init.d/stunnel5
 wget -q -O /etc/init.d/stunnel4 "https://${wisnuvpnnnn}/stunnel4.init"
 
+# Ubah Izin Akses
+chmod 600 /etc/stunnel/stunnel.pem
+chmod +x /etc/init.d/stunnel4
+cp /usr/local/bin/stunnel /usr/local/wisnucs/stunnel4
 # Restart Stunnel 5
 systemctl daemon-reload
 systemctl stop stunnel4
