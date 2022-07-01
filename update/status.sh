@@ -781,29 +781,3 @@ echo -e "  ⚠️ JUMLAH LAYANAN SERVER RUNNING TROUBLE [ ${red}$jumlah_error${o
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\E[43;1;46m             🔰 LUXURY EDITION ZEROSSL 🔰               \E[0m"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "\e[0;31m   ⇱ PRESS K FOR ENGLISH VERSION MENU 🇺🇸⇲   \e[m"
-echo -e "\e[0;31m   ⇱ PRESS M UNTUK  MENU INDONESIAN VERSION 🇮🇩   \e[m"
-read -p "   ⇱ TEKAN A/I/U UNTUK REFRESH] ⇲: " menu
-echo -e ""
-case $menu in
-k)
-clear
-menuu
-;;
-m)
-clear
-menu
-;;
-a)
-clear
-status2
-;;
-i)
-clear
-status3
-;;
-u)
-clear
-status4
-;;
-essac
