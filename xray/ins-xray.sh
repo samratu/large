@@ -505,14 +505,14 @@ sudo iptables -A OUTPUT -p tcp --sport 22 -m conntrack --ctstate ESTABLISHED -j 
 sudo iptables -A OUTPUT -p udp --sport 22 -m conntrack --ctstate ESTABLISHED -j ACCEPT
 sudo iptables -A OUTPUT -p tcp --sport 300 -m conntrack --ctstate ESTABLISHED -j ACCEPT
 sudo iptables -A OUTPUT -p udp --sport 300 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p tcp --sport 10805 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p udp --sport 10805 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p tcp --sport 10808 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p udp --sport 10808 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-sudo iptables-save > /etc/iptables.up.rules
-sudo iptables-restore -t < /etc/iptables.up.rules
-sudo netfilter-persistent save
-sudo netfilter-persistent reload
+iptables -A OUTPUT -p tcp --sport 10805 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+iptables -A OUTPUT -p udp --sport 10805 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+iptables -A OUTPUT -p tcp --sport 10808 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+iptables -A OUTPUT -p udp --sport 10808 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+iptables-save > /etc/iptables.up.rules
+iptables-restore -t < /etc/iptables.up.rules
+netfilter-persistent save
+netfilter-persistent reload
 
 systemctl daemon-reload
 systemctl stop xray
@@ -598,7 +598,7 @@ cat > /etc/trojan-go/config.json << END
   "local_addr": "0.0.0.0",
   "local_port": 2053,
   "remote_addr": "127.0.0.1",
-  "remote_port": 88,
+  "remote_port": 443,
   "log_level": 1,
   "log_file": "/var/log/trojan-go/trojan-go.log",
   "password": [
@@ -647,8 +647,8 @@ cat > /etc/trojan-go/config.json << END
     "api_port": 0,
     "ssl": {
       "enabled": false,
-      "key": "/etc/ssl/private/privkey.pem",
-      "cert": "/etc/ssl/private/fullchain.pem",
+      "key": "",
+      "cert": "",
       "verify_client": false,
       "client_cert": []
     }
