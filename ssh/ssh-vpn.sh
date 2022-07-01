@@ -621,6 +621,10 @@ wget -O setmenu "https://${wisnuvpnnnnn}/setmenu.sh"
 wget -O testermenu "https://${wisnuvpnnnnn}/testermenu.sh"
 wget -O menu "https://${wisnuvpnnnnn}/menu.sh"
 wget -O status "https://${wisnuvpnnnnn}/status.sh"
+wget -O status2 "https://${wisnuvpnnnnn}/status2.sh"
+wget -O status3 "https://${wisnuvpnnnnn}/status3.sh"
+wget -O status4 "https://${wisnuvpnnnnn}/status4.sh"
+
 chmod +x testermenu
 chmod +x ceknewtr
 chmod +x addnewtr
@@ -635,6 +639,10 @@ chmod +x portdropbear
 chmod +x portopenssh
 chmod +x portstunnel5
 chmod +x status
+chmod +x status2
+chmod +x status3
+chmod +x status4
+
 chmod +x portsshnontls
 chmod +x portsshwstls
 chmod +x menuu
