@@ -434,65 +434,62 @@ sudo iptables -A INPUT -p tcp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED
 sudo iptables -A INPUT -p udp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
 sudo iptables -A OUTPUT -p tcp --sport 443 -m conntrack --ctstate ESTABLISHED -j ACCEPT
 sudo iptables -A OUTPUT -p udp --sport 443 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p tcp --sport 22 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p udp --sport 22 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p tcp --sport 300 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p udp --sport 300 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-iptables-save > /etc/iptables.up.rules
-iptables-restore -t < /etc/iptables.up.rules
-netfilter-persistent save
-netfilter-persistent reload
 
-systemctl daemon-reload
+sudo iptables-save > /etc/iptables.up.rules
+sudo iptables-restore -t < /etc/iptables.up.rules
+sudo netfilter-persistent save
+sudo netfilter-persistent reload
+
+sudo systemctl daemon-reload
 systemctl stop xray
 systemctl enable xray
 systemctl start xray
 systemctl restart xray
 
 ##restart&start service
-systemctl daemon-reload
+sudo systemctl daemon-reload
 systemctl enable xtrojan
 systemctl stop xtrojan
 systemctl start xtrojan
 systemctl restart xtrojan
 
 ##restart&start service
-systemctl daemon-reload
+sudo systemctl daemon-reload
 systemctl enable xvless
 systemctl stop xvless
 systemctl start xvless
 systemctl restart xvless
 
 ##restart&start service
-systemctl daemon-reload
+sudo systemctl daemon-reload
 systemctl enable xss
 systemctl stop xss
 systemctl start xss
 systemctl restart xss
 
 ##restart&start service
-systemctl daemon-reload
+sudo systemctl daemon-reload
 systemctl enable sstcp
 systemctl stop sstcp
 systemctl start sstcp
 systemctl restart sstcp
 
 ##restart&start service
-systemctl daemon-reload
+sudo systemctl daemon-reload
 systemctl enable xvmess
 systemctl stop xvmess
 systemctl start xvmess
 systemctl restart xvmess
 
 ##restart&start service
-systemctl daemon-reload
+sudo systemctl daemon-reload
 systemctl enable trojangrpc
 systemctl stop trojangrpc
 systemctl start trojangrpc
 systemctl restart trojangrpc
 
 ##restart&start service
-systemctl daemon-reload
+sudo systemctl daemon-reload
 systemctl enable vlessquic
 systemctl stop vlessquic
 systemctl start vlessquic
@@ -612,11 +609,11 @@ END
 
 # restart
 
-systemctl daemon-reload
-systemctl stop trojan-go
-systemctl start trojan-go
-systemctl enable trojan-go
-systemctl restart trojan-go
+sudo systemctl daemon-reload
+sudo systemctl stop trojan-go
+sudo systemctl start trojan-go
+sudo systemctl enable trojan-go
+sudo systemctl restart trojan-go
 
 cd
 cp /root/domain /etc/xray
