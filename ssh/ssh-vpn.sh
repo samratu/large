@@ -204,8 +204,8 @@ systemctl stop nginx
 sudo apt install gnupg2 ca-certificates lsb-release -y
 systemctl daemon-reload
 systemctl enable nginx
-touch /etc/nginx/conf.d/alone.conf
-cat <<EOF >>/etc/nginx/conf.d/alone.conf
+touch /etc/nginx/conf.d/default.conf
+cat <<EOF >>/etc/nginx/conf.d/default.conf
 server {
 	listen 81;
 	listen [::]:81;
@@ -271,15 +271,15 @@ systemctl daemon-reload
 service nginx restart
 cd
 rm -rf /usr/share/nginx/html
-wget -q -P /usr/share/nginx https://raw.githubusercontent.com/samratu/large/file/html.zip 
-unzip -o /usr/share/nginx/html.zip -d /usr/share/nginx/html 
-rm -f /usr/share/nginx/html.zip*
+#wget -q -P /usr/share/nginx https://raw.githubusercontent.com/samratu/large/file/html.zip 
+#unzip -o /usr/share/nginx/html.zip -d /usr/share/nginx/html 
+#rm -f /usr/share/nginx/html.zip*
 
 apt -y install nginx php php-fpm php-cli php-mysql libxml-parser-perl
-#rm /etc/nginx/sites-enabled
-#rm /etc/nginx/sites-available
-#curl https://${wisnuvpn}/nginx.conf > /etc/nginx/nginx.conf
-#curl https://${wisnuvpn}/vps.conf > /etc/nginx/conf.d/vps.conf
+rm /etc/nginx/sites-enabled
+rm /etc/nginx/sites-available
+curl https://${wisnuvpn}/nginx.conf > /etc/nginx/nginx.conf
+curl https://${wisnuvpn}/vps.conf > /etc/nginx/conf.d/vps.conf
 sed -i 's/listen = \/var\/run\/php-fpm.sock/listen = 127.0.0.1:9000/g' /etc/php/fpm/pool.d/www.conf
 useradd -m vps;
 mkdir -p /home/vps/public_html
