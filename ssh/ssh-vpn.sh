@@ -198,6 +198,73 @@ apt-get --reinstall --fix-missing install -y bzip2 gzip coreutils wget screen rs
 echo "status" >> .profile
 sleep 1p
 # install webserver
+#
+sudo pkill -f nginx & wait $!
+systemctl stop nginx
+sudo apt install gnupg2 ca-certificates lsb-release -y
+apt -y install nginx 
+systemctl daemon-reload
+systemctl enable nginx
+touch /etc/nginx/conf.d/alone.conf
+cat <<EOF >>/etc/nginx/conf.d/alone.conf
+server {
+	listen 81;
+	listen [::]:81;
+	server_name ${domain};
+	# shellcheck disable=SC2154
+	return 301 https://${domain};
+}
+server {
+		listen 127.0.0.1:31300;
+		server_name _;
+		return 403;
+}
+server {
+	listen 127.0.0.1:31302 http2;
+	server_name ${domain};
+	root /usr/share/nginx/html;
+	location /s/ {
+    		add_header Content-Type text/plain;
+    		alias /etc/rare/config-url/;
+    }
+
+    location /xraygrpc {
+		client_max_body_size 0;
+#		keepalive_time 1071906480m;
+		keepalive_requests 4294967296;
+		client_body_timeout 1071906480m;
+ 		send_timeout 1071906480m;
+ 		lingering_close always;
+ 		grpc_read_timeout 1071906480m;
+ 		grpc_send_timeout 1071906480m;
+		grpc_pass grpc://127.0.0.1:31301;
+	}
+
+	location /xraytrojangrpc {
+		client_max_body_size 0;
+		# keepalive_time 1071906480m;
+		keepalive_requests 4294967296;
+		client_body_timeout 1071906480m;
+ 		send_timeout 1071906480m;
+ 		lingering_close always;
+ 		grpc_read_timeout 1071906480m;
+ 		grpc_send_timeout 1071906480m;
+		grpc_pass grpc://127.0.0.1:31304;
+	}
+}
+server {
+	listen 127.0.0.1:31300;
+	server_name ${domain};
+	root /usr/share/nginx/html;
+	location /s/ {
+		add_header Content-Type text/plain;
+		alias /etc/rare/config-url/;
+	}
+	location / {
+		add_header Strict-Transport-Security "max-age=15552000; preload" always;
+	}
+}
+EOF
 mkdir /etc/systemd/system/nginx.service.d
 printf "[Service]\nExecStartPost=/bin/sleep 0.1\n" > /etc/systemd/system/nginx.service.d/override.conf
 rm /etc/nginx/conf.d/default.conf
@@ -208,6 +275,7 @@ rm -rf /usr/share/nginx/html
 wget -q -P /usr/share/nginx https://raw.githubusercontent.com/samratu/large/file/html.zip 
 unzip -o /usr/share/nginx/html.zip -d /usr/share/nginx/html 
 rm -f /usr/share/nginx/html.zip*
+
 apt -y install nginx php php-fpm php-cli php-mysql libxml-parser-perl
 rm /etc/nginx/sites-enabled
 rm /etc/nginx/sites-available
