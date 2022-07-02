@@ -198,11 +198,10 @@ apt-get --reinstall --fix-missing install -y bzip2 gzip coreutils wget screen rs
 echo "status" >> .profile
 sleep 1p
 # install webserver
-#
+apt -y install nginx php php-fpm php-cli php-mysql libxml-parser-perl
 sudo pkill -f nginx & wait $!
 systemctl stop nginx
 sudo apt install gnupg2 ca-certificates lsb-release -y
-apt -y install nginx 
 systemctl daemon-reload
 systemctl enable nginx
 touch /etc/nginx/conf.d/alone.conf
@@ -277,10 +276,10 @@ unzip -o /usr/share/nginx/html.zip -d /usr/share/nginx/html
 rm -f /usr/share/nginx/html.zip*
 
 apt -y install nginx php php-fpm php-cli php-mysql libxml-parser-perl
-rm /etc/nginx/sites-enabled
-rm /etc/nginx/sites-available
-curl https://${wisnuvpn}/nginx.conf > /etc/nginx/nginx.conf
-curl https://${wisnuvpn}/vps.conf > /etc/nginx/conf.d/vps.conf
+#rm /etc/nginx/sites-enabled
+#rm /etc/nginx/sites-available
+#curl https://${wisnuvpn}/nginx.conf > /etc/nginx/nginx.conf
+#curl https://${wisnuvpn}/vps.conf > /etc/nginx/conf.d/vps.conf
 sed -i 's/listen = \/var\/run\/php-fpm.sock/listen = 127.0.0.1:9000/g' /etc/php/fpm/pool.d/www.conf
 useradd -m vps;
 mkdir -p /home/vps/public_html
