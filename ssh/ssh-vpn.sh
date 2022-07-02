@@ -196,7 +196,7 @@ mkdir /etc/ssl/zerossl.my.id/
 apt-get --reinstall --fix-missing install -y bzip2 gzip coreutils wget screen rsyslog iftop htop net-tools zip unzip wget net-tools curl nano sed screen gnupg gnupg1 bc apt-transport-https build-essential dirmngr libxml-parser-perl neofetch git lsof
 #echo "neofetch" >> .profile
 echo "status" >> .profile
-
+sleep 1p
 # install webserver
 apt -y install nginx php php-fpm php-cli php-mysql libxml-parser-perl
 rm /etc/nginx/sites-enabled
@@ -318,10 +318,10 @@ chmod 644 /etc/stunnel5
 
 # make a certificate
 
-#openssl genrsa -out key.pem 2048
-#openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
-#-subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
-#cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
+openssl genrsa -out key.pem 2048
+openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
+-subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
+cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
 # Download Config Stunnel5
 cat > /etc/stunnel5/stunnel5.conf <<-END
 cert = /etc/stunnel5/stunnel5.pem
