@@ -221,7 +221,7 @@ cat > /usr/local/etc/xray/vlessquic.json << END
 END
 
 uuid=$(cat /proc/sys/kernel/random/uuid)
-uuid5=$openssl rand -base64 16
+psk=$(openssl rand -base64 32)
 domain=$(cat /root/domain)
 # // Certificate File
 path_crt="/etc/xray/xray.crt"
@@ -243,7 +243,7 @@ cat > /etc/xray/xss.json << END
 END
 
 uuid=$(cat /proc/sys/kernel/random/uuid)
-uuid5=$openssl rand -base64 16
+psk=$(openssl rand -base64 32)
 domain=$(cat /root/domain)
 # // Certificate File
 path_crt="/etc/xray/xray.crt"
