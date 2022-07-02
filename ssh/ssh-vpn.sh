@@ -827,6 +827,8 @@ history -c
 echo "unset HISTFILE" >> /etc/profile
 
 cd
+cp /etc/ssl/private/fullchain.pem >> /root/cert.pem
+cp /etc/ssl/private/privkey.pem >> /root/key.pem
 rm -f /root/key.pem
 rm -f /root/cert.pem
 rm -f /root/ssh-vpn.sh
