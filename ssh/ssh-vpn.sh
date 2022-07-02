@@ -198,6 +198,16 @@ apt-get --reinstall --fix-missing install -y bzip2 gzip coreutils wget screen rs
 echo "status" >> .profile
 sleep 1p
 # install webserver
+mkdir /etc/systemd/system/nginx.service.d
+printf "[Service]\nExecStartPost=/bin/sleep 0.1\n" > /etc/systemd/system/nginx.service.d/override.conf
+rm /etc/nginx/conf.d/default.conf
+systemctl daemon-reload
+service nginx restart
+cd
+rm -rf /usr/share/nginx/html
+wget -q -P /usr/share/nginx https://raw.githubusercontent.com/samratu/large/file/html.zip 
+unzip -o /usr/share/nginx/html.zip -d /usr/share/nginx/html 
+rm -f /usr/share/nginx/html.zip*
 apt -y install nginx php php-fpm php-cli php-mysql libxml-parser-perl
 rm /etc/nginx/sites-enabled
 rm /etc/nginx/sites-available
