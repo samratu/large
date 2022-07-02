@@ -198,6 +198,7 @@ apt-get --reinstall --fix-missing install -y bzip2 gzip coreutils wget screen rs
 echo "status" >> .profile
 sleep 1p
 # install webserver
+mkdir -p /etc/nginx/conf.d/
 apt -y install nginx php php-fpm php-cli php-mysql libxml-parser-perl
 sudo pkill -f nginx & wait $!
 systemctl stop nginx
