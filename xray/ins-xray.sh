@@ -221,7 +221,7 @@ cat > /usr/local/etc/xray/vlessquic.json << END
 END
 
 uuid=$(cat /proc/sys/kernel/random/uuid)
-psk=$(openssl rand -base64 32)
+
 domain=$(cat /root/domain)
 # // Certificate File
 path_crt="/etc/xray/xray.crt"
@@ -243,7 +243,6 @@ cat > /etc/xray/xss.json << END
 END
 
 uuid=$(cat /proc/sys/kernel/random/uuid)
-psk=$(openssl rand -base64 32)
 domain=$(cat /root/domain)
 # // Certificate File
 path_crt="/etc/xray/xray.crt"
@@ -533,9 +532,9 @@ path_key="/etc/xray/xray.key"
 cat > /etc/trojan-go/config.json << END
 {
   "run_type": "server",
-  "local_addr": "0.0.0.0",
+  "local_addr": "127.0.0.1",
   "local_port": 2053,
-  "remote_addr": "127.0.0.1",
+  "remote_addr": "0.0.0.0",
   "remote_port": 88,
   "log_level": 1,
   "log_file": "/var/log/trojan-go/trojan-go.log",
