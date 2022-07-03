@@ -26,7 +26,7 @@ cat > /etc/systemd/system/ws-nontls.service << END
 [Unit]
 Description=SSHWS BENDUNG COLO PENGKOL BY GANDRING
 Documentation=https://t.me/zerossl
-After=network.target nss-lookup.target
+After=network.target
 
 [Service]
 Type=simple
@@ -35,7 +35,9 @@ CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
 ExecStart=/usr/bin/python -O /usr/local/bin/ws-nontls 2086
-Restart=on-failure
+LimitNOFILE=51200 
+Restart=on-failure 
+RestartSec=1s
 
 [Install]
 WantedBy=multi-user.target
@@ -54,7 +56,7 @@ cat > /etc/systemd/system/ovpnws.service << END
 [Unit]
 Description=OVPNWS BENDUNG COLO PENGKOL BY GANDRING
 Documentation=https://t.me/zerossl
-After=network.target nss-lookup.target
+After=network.target
 
 [Service]
 Type=simple
@@ -63,10 +65,12 @@ CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
 ExecStart=/usr/bin/python -O /usr/local/bin/ovpnws 8080
-Restart=on-failure
+LimitNOFILE=51200 
+Restart=on-failure 
+RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=multi-user.target.wants
 END
 
 systemctl daemon-reload
@@ -82,7 +86,7 @@ cat > /etc/systemd/system/ws-tls.service << END
 [Unit]
 Description=SSHWS GAJAH DEMAK BY WISNUCOKROSATRIO
 Documentation=https://t.me/zerossl
-After=network.target nss-lookup.target
+After=network.target
 
 [Service]
 Type=simple
@@ -91,10 +95,12 @@ CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
 ExecStart=/usr/bin/python -O /usr/local/bin/ws-tls 2087
-Restart=on-failure
+LimitNOFILE=51200 
+Restart=on-failure 
+RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=multi-user.target.wants
 END
 
 systemctl daemon-reload
@@ -110,7 +116,7 @@ cat > /etc/systemd/system/wstunnel.service << END
 [Unit]
 Description=WSTUNNEL BENDUNG COLO PENGKOL BY GANDRING
 Documentation=https://t.me/zerossl
-After=network.target nss-lookup.target
+After=network.target
 
 [Service]
 Type=simple
@@ -119,10 +125,12 @@ CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
 ExecStart=/usr/bin/python -O /usr/local/bin/wstunnel
-Restart=on-failure
+LimitNOFILE=51200 
+Restart=on-failure 
+RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=multi-user.target.wants
 END
 
 systemctl daemon-reload
@@ -137,7 +145,7 @@ cat > /etc/systemd/system/sshws.service << END
 [Unit]
 Description=SSHWEBSOCKET BENDUNG COLO PENGKOL BY GANDRING
 Documentation=https://t.me/zerossl
-After=network.target nss-lookup.target
+After=network.target
 
 [Service]
 Type=simple
@@ -146,10 +154,12 @@ CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
 ExecStart=/usr/bin/python -O /usr/local/bin/sshws
-Restart=on-failure
+LimitNOFILE=51200 
+Restart=on-failure 
+RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=multi-user.target.wants
 END
 
 systemctl daemon-reload
