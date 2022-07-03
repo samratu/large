@@ -305,14 +305,19 @@ sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7700 --max-c
 sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7800 --max-clients 500' /etc/rc.local
 sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7900 --max-clients 500' /etc/rc.local
 
+
 # setting port ssh
 sed -i 's/Port 22/Port 22/g' /etc/ssh/sshd_config
+sed -i '/Port 22/a Port 2253' /etc/ssh/sshd_config
+echo "Port 22" >> /etc/ssh/sshd_config
+echo "Port 42" >> /etc/ssh/sshd_config
+/etc/init.d/ssh restart
 
 # install dropbear
 apt -y install dropbear
 sed -i 's/NO_START=1/NO_START=0/g' /etc/default/dropbear
-sed -i 's/DROPBEAR_PORT=22/DROPBEAR_PORT=200/g' /etc/default/dropbear
-sed -i 's/DROPBEAR_EXTRA_ARGS=/DROPBEAR_EXTRA_ARGS="-p 300"/g' /etc/default/dropbear
+sed -i 's/DROPBEAR_PORT=22/DROPBEAR_PORT=300/g' /etc/default/dropbear
+sed -i 's/DROPBEAR_EXTRA_ARGS=/DROPBEAR_EXTRA_ARGS="-p 200 -p 1153"/g' /etc/default/dropbear
 echo "/bin/false" >> /etc/shells
 echo "/usr/sbin/nologin" >> /etc/shells
 /etc/init.d/dropbear restart
@@ -402,7 +407,6 @@ openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
 cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
 # Download Config Stunnel5
 cat > /etc/stunnel5/stunnel5.conf <<-END
-cert = /etc/stunnel5/stunnel5.pem
 cert = /etc/ssl/private/fullchain.pem
 key = /etc/ssl/private/privkey.pem
 client = no
