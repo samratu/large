@@ -191,5 +191,4 @@ echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━�
 echo "Installation Log --> /root/log-install.txt" |tee -a log-install.txt
 echo "reboot setelah 5 detik"
 sleep 5
-rm -f setup.sh
 reboot
