@@ -20,7 +20,6 @@ wisnuvpn="raw.githubusercontent.com/samratu/large/file/websocket"
 # Getting Proxy Template
 wget -q -O /usr/local/bin/ws-nontls https://${wisnuvpn}/ws-nontls.py
 chmod +x /usr/local/bin/ws-nontls
-
 # Installing Service
 cd
 cat > /etc/systemd/system/ws-nontls.service << END
@@ -129,3 +128,30 @@ END
 systemctl daemon-reload
 systemctl enable wstunnel
 systemctl restart wstunnel
+
+wget -q -O /usr/local/bin/sshws https://${wisnuvpn}/websocket.py
+chmod +x /usr/local/bin/sshws
+
+# Installing Service
+cat > /etc/systemd/system/sshws.service << END
+[Unit]
+Description=SSHWEBSOCKET BENDUNG COLO PENGKOL BY GANDRING
+Documentation=https://t.me/zerossl
+After=network.target nss-lookup.target
+
+[Service]
+Type=simple
+User=root
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+NoNewPrivileges=true
+ExecStart=/usr/bin/python -O /usr/local/bin/sshws
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+END
+
+systemctl daemon-reload
+systemctl enable sshws
+systemctl restart sshws
