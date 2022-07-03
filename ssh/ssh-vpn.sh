@@ -796,6 +796,7 @@ chmod +x deltrojanhdua
 chmod +x delvmessquic
 chmod +x delvlessquic
 chmod +x deltrojanquic
+chmod +x limit-speed
 
 chmod +x renewvmess
 chmod +x renewvmessgrpc
