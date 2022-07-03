@@ -190,12 +190,9 @@ echo " 🔰 GANDRING & WISNU SCRIPT" | tee -a log-install.txt
 echo " 🔰 Installation Log --> /root/log-install.txt"  | tee -a log-install.txt
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" |tee -a log-install.txt
 echo " 🔰 Installation Log --> /root/log-install.txt"             |tee -a log-install.txt
-# Clearing all logs from installation
-rm -rf /root/.bash_history && history -c && echo '' > /var/log/syslog
-echo ""
-echo -e "\e[0;37m  Server will be reboot In 5 Sec"
+echo -e "\e[0;37mServer will be reboot In 5 detik \033[0m"
 sleep 5
-rm -f setup*
+rm -f setup.sh
 reboot
 exit 1
 
