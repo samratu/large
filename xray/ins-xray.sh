@@ -425,19 +425,26 @@ END
 # // Enable & Start Service
 # Accept port Xray
 
-sudo iptables -A INPUT -p tcp --dport 80 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
-sudo iptables -A INPUT -p udp --dport 80 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p tcp --sport 80 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p udp --sport 80 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+sudo iptables -I INPUT -p tcp --dport 80 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+sudo iptables -I INPUT -p udp --dport 80 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+sudo iptables -I OUTPUT -p tcp --sport 80 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+sudo iptables -I OUTPUT -p udp --sport 80 -m conntrack --ctstate ESTABLISHED -j ACCEPT
 sudo iptables -A INPUT -p tcp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
 sudo iptables -A INPUT -p udp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
 sudo iptables -A OUTPUT -p tcp --sport 443 -m conntrack --ctstate ESTABLISHED -j ACCEPT
 sudo iptables -A OUTPUT -p udp --sport 443 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+open_port() { 
+if [[ ${release} != "centos" ]]; then #iptables -I INPUT -p tcp --dport 80 -j ACCEPT #iptables -I INPUT -p tcp --dport 443 -j ACCEPT iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 80 -j ACCEPT iptables -I INPUT -m state --state NEW -m udp -p udp --dport 80 -j ACCEPT ip6tables -I INPUT -m state --state NEW -m tcp -p tcp --dport 80 -j ACCEPT ip6tables -I INPUT -m state --state NEW -m udp -p udp --dport 80 -j ACCEPT iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 443 -j ACCEPT iptables -I INPUT -m state --state NEW -m udp -p udp --dport 443 -j ACCEPT ip6tables -I INPUT -m state --state NEW -m tcp -p tcp --dport 443 -j ACCEPT ip6tables -I INPUT -m state --state NEW -m udp -p udp --dport 443 -j ACCEPT iptables-save >/etc/iptables.rules.v4 		ip6tables-save >/etc/iptables.rules.v6 netfilter-persistent save netfilter-persistent reload else firewall-cmd --zone=public --add-port=80/tcp --permanent firewall-cmd --zone=public --add-port=443/tcp --permanent 	fi } 
 
 sudo iptables-save > /etc/iptables.up.rules
 sudo iptables-restore -t < /etc/iptables.up.rules
 sudo netfilter-persistent save
 sudo netfilter-persistent reload
+firewall-cmd --zone=public --add-port=80/tcp --permanent 
+firewall-cmd --zone=public --add-port=443/tcp --permanent
+fi
+}
+END
 
 sudo systemctl daemon-reload
 systemctl stop xray
@@ -591,13 +598,16 @@ Documentation=https://t.me/zerossl
 After=network.target nss-lookup.target
 
 [Service]
-User=root
+Type=simple 
+StandardError=journal 
+PIDFile=/usr/src/trojan/trojan/trojan.pid 
+ExecStart=/usr/local/bin/trojan-go -config /etc/trojan-go/config.json
+ExecReload= ExecStop=/etc/trojan/bin/trojan-go 
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-NoNewPrivileges=true
-ExecStart=/usr/local/bin/trojan-go -config /etc/trojan-go/config.json
-Restart=on-failure
-RestartPreventExitStatus=23
+LimitNOFILE=51200 
+Restart=on-failure 
+RestartSec=1s
 
 [Install]
 WantedBy=multi-user.target
