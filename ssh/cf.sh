@@ -15,19 +15,10 @@ LIGHT='\033[0;37m'
 MYIP=$(wget -qO- ipinfo.io/ip);
 clear
 apt install jq curl -y
-rm -f /root/domain
-rm -f /etc/v2ray/domain
-rm -f /etc/xray/domain
-rm -rf /etc/xray/domain
-rm -rf /root/nsdomain
-rm -rf /var/lib/wisnucs/ipvps.conf
-rm nsdomain
-rm domain
 mkdir -p /usr/bin/xray
 mkdir -p /usr/bin/v2ray
 mkdir -p /etc/xray
 mkdir -p /etc/v2ray
-echo "$SUB_DOMAIN" >> /etc/v2ray/domain
 echo "$SUB_DOMAIN" >> /etc/xray/domain
 DOMAIN=zerossl.my.id
 sub=$(</dev/urandom tr -dc a-z0-9 | head -c2)
@@ -103,9 +94,6 @@ rm -rf /root/nsdomain
 echo "IP=""$SUB_DOMAIN" >> /var/lib/wisnucs/ipvps.conf
 echo "Host : $SUB_DOMAIN"
 echo $SUB_DOMAIN > /root/domain
-echo "Host SlowDNS : $NS_DOMAIN"
-echo "$NS_DOMAIN" >> /root/nsdomain
-echo "$SUB_DOMAIN" >> /etc/xray/domain
-echo "$SUB_DOMAIN" >> /usr/local/etc/xray/domain
-echo "$SUB_DOMAIN" >> /ssl/xray
+echo $SUB_DOMAIN > /usr/local/etc/xray/domain
+echo $SUB_DOMAIN > /etc/xray/domain
 cd
