@@ -71,7 +71,7 @@ restore
 wbmn
 ;;
 8)
-limitspeed
+limit-speed
 ;;
 9)
 ram
