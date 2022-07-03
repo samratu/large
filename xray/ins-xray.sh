@@ -519,21 +519,23 @@ path_key="/etc/xray/xray.key"
 # Buat Config Trojan Go
 cat > /etc/trojan-go/config.json << END
 {
+  "{
   "run_type": "server",
-  "local_addr": "127.0.0.1",
+  "local_addr": "0.0.0.0",
   "local_port": 2053,
   "remote_addr": "127.0.0.1",
   "remote_port": 88,
   "log_level": 1,
   "log_file": "/var/log/trojan-go/trojan-go.log",
   "password": [
-      "$uuid"
+        "$uuid"
+,"tes"
   ],
-  "disable_http_check": false,
+  "disable_http_check": true,
   "udp_timeout": 60,
   "ssl": {
-    "verify": true,
-    "verify_hostname": true,
+    "verify": false,
+    "verify_hostname": false,
     "cert": "/etc/ssl/private/fullchain.pem",
     "key": "/etc/ssl/private/privkey.pem",
     "key_password": "",
@@ -548,13 +550,13 @@ cat > /etc/trojan-go/config.json << END
     "reuse_session": true,
     "plain_http_response": "",
     "fallback_addr": "127.0.0.1",
-    "fallback_port": 88,
+    "fallback_port": 0,
     "fingerprint": "firefox"
   },
   "tcp": {
     "no_delay": true,
     "keep_alive": true,
-    "prefer_ipv4": false
+    "prefer_ipv4": true
   },
   "mux": {
     "enabled": false,
@@ -563,7 +565,7 @@ cat > /etc/trojan-go/config.json << END
   },
   "websocket": {
     "enabled": true,
-    "path": "/gandring",
+    "path": "/trojango",
     "host": "$domain"
   },
     "api": {
