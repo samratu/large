@@ -187,12 +187,9 @@ echo " 🔰 Restore Data" | tee -a log-install.txt
 echo " 🔰 Auto Delete Expired Account" | tee -a log-install.txt
 echo " 🔰 Full Orders For Various Services" | tee -a log-install.txt
 echo " 🔰 GANDRING & WISNU SCRIPT" | tee -a log-install.txt
-echo " 🔰 Installation Log --> /root/log-install.txt"  | tee -a log-install.txt
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" |tee -a log-install.txt
-echo " 🔰 Installation Log --> /root/log-install.txt"             |tee -a log-install.txt
-echo -e "\e[0;37mServer will be reboot In 5 detik \033[0m"
+echo "Installation Log --> /root/log-install.txt" |tee -a log-install.txt
+echo "reboot setelah 5 detik"
 sleep 5
 rm -f setup.sh
 reboot
-exit 1
-
