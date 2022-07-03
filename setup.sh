@@ -95,14 +95,14 @@ RemainAfterExit=yes
 WantedBy=multi-user.target
 EOF
 
-wget -O /etc/set.sh "https://${wisnuvpn}/set.sh"
-chmod +x /etc/set.sh
+#wget -O /etc/set.sh "https://${wisnuvpn}/set.sh"
+#chmod +x /etc/set.sh
 history -c
 echo "1.2" > /home/ver
 systemctl daemon-reload
 systemctl enable autosett
 echo " "
-echo "Instalasi Telah Selesai...Gas Tunneling.."
+echo "Instalasi Telah Selesai"
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"  |tee -a log-install.txt
 echo -e "\E[44;1;41m           🔰 SETUP SERVER BY ZEROSSL 🔰            \E[0m"   
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"  |tee -a log-install.txt
