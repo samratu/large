@@ -352,7 +352,7 @@ RUN=yes
 # systemd users: don't forget to modify /lib/systemd/system/sslh.service
 DAEMON=/usr/sbin/sslh
 
-DAEMON_OPTS="--user sslh --listen 0.0.0.0:2087 --ssl 127.0.0.1:500 --ssh 127.0.0.1:300 --openvpn 127.0.0.1:1194 --http 127.0.0.1:80 --pidfile /var/run/sslh/sslh.pid"
+DAEMON_OPTS="--user sslh --listen 0.0.0.0:443 --ssl 127.0.0.1:500 --ssh 127.0.0.1:300 --openvpn 127.0.0.1:1194 --http 127.0.0.1:80 --pidfile /var/run/sslh/sslh.pid"
 
 END
 
@@ -402,14 +402,14 @@ chmod 644 /etc/stunnel5
 
 # make a certificate
 
-openssl genrsa -out key.pem 2048
-openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
--subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
-cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
+#openssl genrsa -out key.pem 2048
+#openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
+#-subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
+#cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
 # Download Config Stunnel5
 cat > /etc/stunnel5/stunnel5.conf <<-END
-cert = /etc/ssl/private/fullchain.pem
-key = /etc/ssl/private/privkey.pem
+cert = /etc/xray/xray.crt
+key = /etc/xray/xray.key
 client = no
 socket = a:SO_REUSEADDR=1
 socket = l:TCP_NODELAY=1
@@ -421,7 +421,7 @@ connect = 127.0.0.1:200
 
 [openssh]
 accept = 500
-connect = 127.0.0.1:2087
+connect = 127.0.0.1:443
 
 [openvpn]
 accept = 990
@@ -435,21 +435,25 @@ cat > /etc/systemd/system/stunnel5.service << END
 Description=Stunnel5 Service
 Documentation=https://stunnel.org
 Documentation=https://github.com/wisnucokrosatrio
-After=syslog.target network-online.target
+After=network.target
 
 [Service]
+Type=simple
+User=root
 ExecStart=/usr/local/wisnucs/stunnel5 /etc/stunnel5/stunnel5.conf
-Type=forking
+LimitNOFILE=51200 
+Restart=on-failure 
+RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=multi-user.target.wants
 END
 
 # Service Stunnel5 /etc/init.d/stunnel5
 wget -q -O /etc/init.d/stunnel5 "https://${wisnuvpnnnn}/stunnel5.init"
 
 # Ubah Izin Akses
-chmod 600 /etc/stunnel5/stunnel5.pem
+chmod 644 /etc/stunnel5/stunnel5.pem
 chmod +x /etc/init.d/stunnel5
 cp /usr/local/bin/stunnel /usr/local/wisnucs/stunnel5
 
