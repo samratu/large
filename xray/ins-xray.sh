@@ -283,7 +283,7 @@ Restart=on-failure
 RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=multi-user.target.wants
 END
 
 # / / Installation Xray Service
@@ -306,7 +306,7 @@ Restart=on-failure
 RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=multi-user.target.wants
 END
 
 # / / Installation Xray Service
@@ -329,7 +329,7 @@ Restart=on-failure
 RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=multi-user.target.wants
 END
 
 cat > /etc/systemd/system/xvmess.service << END
@@ -351,7 +351,7 @@ Restart=on-failure
 RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=multi-user.target.wants
 END
 
 # / / Installation Xray Service
@@ -374,7 +374,7 @@ Restart=on-failure
 RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=multi-user.target.wants
 END
 
 # / / Installation Xray Service
@@ -397,7 +397,7 @@ Restart=on-failure
 RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=multi-user.target.wants
 END
 
 # / / Installation Xray Service
@@ -420,7 +420,7 @@ Restart=on-failure
 RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=multi-user.target.wants
 END
 
 # / / Installation Xray Service
@@ -443,7 +443,7 @@ Restart=on-failure
 RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=multi-user.target.wants
 END
 
 # // Enable & Start Service
@@ -634,7 +634,7 @@ Restart=on-failure
 RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=multi-user.target.wants
 END
 
 # Trojan Go Uuid
