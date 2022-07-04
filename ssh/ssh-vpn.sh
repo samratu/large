@@ -439,13 +439,13 @@ After=syslog.target network-online.target
 [Service]
 Type=forking
 User=root
-ExecStart=/usr/local/wisnucs/stunnel5 /etc/stunnel5/stunnel5.conf
+ExecStart=/usr/local/bin/stunnel5 /etc/stunnel5/stunnel5.conf
 LimitNOFILE=51200 
 Restart=on-failure 
 RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target.wants
+WantedBy=multi-user.target
 
 END
 
@@ -455,7 +455,7 @@ wget -q -O /etc/init.d/stunnel5 "https://${wisnuvpnnnn}/stunnel5.init"
 # Ubah Izin Akses
 chmod 644 /etc/stunnel5/stunnel5.pem
 chmod +x /etc/init.d/stunnel5
-cp /usr/local/bin/stunnel /usr/local/wisnucs/stunnel5
+cp /usr/local/bin/stunnel /usr/local/bin/stunnel5
 
 # Remove File
 rm -r -f /usr/local/share/doc/stunnel/
