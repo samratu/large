@@ -437,10 +437,8 @@ After=syslog.target network-online.target
 
 [Service]
 Type=forking
-User=root
 ExecStart=/usr/local/bin/stunnel5 /etc/stunnel5/stunnel5.conf
-LimitNOFILE=51200 
-Restart=on-failure 
+Restart=on-failure
 RestartSec=1s
 
 [Install]
@@ -452,6 +450,7 @@ END
 wget -q -O /etc/init.d/stunnel5 "https://${wisnuvpnnnn}/stunnel5.init"
 
 # Ubah Izin Akses
+chown -R nobody:nogroup /etc/stunnel5
 chmod 644 /etc/stunnel5/stunnel5.pem
 chmod +x /etc/init.d/stunnel5
 cp /usr/local/bin/stunnel /usr/local/bin/stunnel5
@@ -499,21 +498,21 @@ wget https://${wisnuvpn}/bbr.sh && chmod +x bbr.sh && ./bbr.sh
 wget -O /etc/issue.net "https://${wisnuvpn}/issue.net"
 
 # blockir torrent
-sudo iptables -A FORWARD -m string --string "get_peers" --algo bm -j DROP
-sudo iptables -A FORWARD -m string --string "announce_peer" --algo bm -j DROP
-sudo iptables -A FORWARD -m string --string "find_node" --algo bm -j DROP
-sudo iptables -A FORWARD -m string --algo bm --string "BitTorrent" -j DROP
-sudo iptables -A FORWARD -m string --algo bm --string "BitTorrent protocol" -j DROP
-sudo iptables -A FORWARD -m string --algo bm --string "peer_id=" -j DROP
-sudo iptables -A FORWARD -m string --algo bm --string ".torrent" -j DROP
-sudo iptables -A FORWARD -m string --algo bm --string "announce.php?passkey=" -j DROP
-sudo iptables -A FORWARD -m string --algo bm --string "torrent" -j DROP
-sudo iptables -A FORWARD -m string --algo bm --string "announce" -j DROP
-sudo iptables -A FORWARD -m string --algo bm --string "info_hash" -j DROP
-sudo iptables-save > /etc/iptables.up.rules
-sudo iptables-restore -t < /etc/iptables.up.rules
-sudo netfilter-persistent save
-sudo netfilter-persistent reload
+iptables -A FORWARD -m string --string "get_peers" --algo bm -j DROP
+iptables -A FORWARD -m string --string "announce_peer" --algo bm -j DROP
+iptables -A FORWARD -m string --string "find_node" --algo bm -j DROP
+iptables -A FORWARD -m string --algo bm --string "BitTorrent" -j DROP
+iptables -A FORWARD -m string --algo bm --string "BitTorrent protocol" -j DROP
+iptables -A FORWARD -m string --algo bm --string "peer_id=" -j DROP
+iptables -A FORWARD -m string --algo bm --string ".torrent" -j DROP
+iptables -A FORWARD -m string --algo bm --string "announce.php?passkey=" -j DROP
+iptables -A FORWARD -m string --algo bm --string "torrent" -j DROP
+iptables -A FORWARD -m string --algo bm --string "announce" -j DROP
+iptables -A FORWARD -m string --algo bm --string "info_hash" -j DROP
+iptables-save > /etc/iptables.up.rules
+iptables-restore -t < /etc/iptables.up.rules
+netfilter-persistent save
+netfilter-persistent reload
 
 # download script
 cd /usr/bin
