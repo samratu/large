@@ -283,7 +283,7 @@ Restart=on-failure
 RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target.wants
+WantedBy=multi-user.target
 END
 
 # / / Installation Xray Service
@@ -306,7 +306,7 @@ Restart=on-failure
 RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target.wants
+WantedBy=multi-user.target
 END
 
 # / / Installation Xray Service
@@ -329,7 +329,7 @@ Restart=on-failure
 RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target.wants
+WantedBy=multi-user.target
 END
 
 cat > /etc/systemd/system/xvmess.service << END
@@ -351,7 +351,7 @@ Restart=on-failure
 RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target.wants
+WantedBy=multi-user.target
 END
 
 # / / Installation Xray Service
@@ -374,7 +374,7 @@ Restart=on-failure
 RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target.wants
+WantedBy=multi-user.target
 END
 
 # / / Installation Xray Service
@@ -397,7 +397,7 @@ Restart=on-failure
 RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target.wants
+WantedBy=multi-user.target
 END
 
 # / / Installation Xray Service
@@ -420,7 +420,7 @@ Restart=on-failure
 RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target.wants
+WantedBy=multi-user.target
 END
 
 # / / Installation Xray Service
@@ -443,7 +443,7 @@ Restart=on-failure
 RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target.wants
+WantedBy=multi-user.target
 END
 
 # // Enable & Start Service
@@ -470,56 +470,56 @@ fi
 }
 END
 
-sudo systemctl daemon-reload
+systemctl daemon-reload
 systemctl stop xray
 systemctl enable xray
 systemctl start xray
 systemctl restart xray
 
 ##restart&start service
-sudo systemctl daemon-reload
+systemctl daemon-reload
 systemctl enable xtrojan
 systemctl stop xtrojan
 systemctl start xtrojan
 systemctl restart xtrojan
 
 ##restart&start service
-sudo systemctl daemon-reload
+systemctl daemon-reload
 systemctl enable xvless
 systemctl stop xvless
 systemctl start xvless
 systemctl restart xvless
 
 ##restart&start service
-sudo systemctl daemon-reload
+systemctl daemon-reload
 systemctl enable xss
 systemctl stop xss
 systemctl start xss
 systemctl restart xss
 
 ##restart&start service
-sudo systemctl daemon-reload
+systemctl daemon-reload
 systemctl enable sstcp
 systemctl stop sstcp
 systemctl start sstcp
 systemctl restart sstcp
 
 ##restart&start service
-sudo systemctl daemon-reload
+systemctl daemon-reload
 systemctl enable xvmess
 systemctl stop xvmess
 systemctl start xvmess
 systemctl restart xvmess
 
 ##restart&start service
-sudo systemctl daemon-reload
+systemctl daemon-reload
 systemctl enable trojangrpc
 systemctl stop trojangrpc
 systemctl start trojangrpc
 systemctl restart trojangrpc
 
 ##restart&start service
-sudo systemctl daemon-reload
+systemctl daemon-reload
 systemctl enable vlessquic
 systemctl stop vlessquic
 systemctl start vlessquic
@@ -634,7 +634,7 @@ Restart=on-failure
 RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target.wants
+WantedBy=multi-user.target
 END
 
 # Trojan Go Uuid
