@@ -48,13 +48,7 @@ chmod +x /usr/local/bin/xray
 mkdir -p /var/log/xray/
 uuid=$(cat /proc/sys/kernel/random/uuid)
 
-#bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u root
-
-
-#curl -sL "$xraycore_link" -o xray.zip
-#unzip -q xray.zip && rm -rf xray.zip
-#mv xray /usr/local/bin/xray
-#chmod +x /usr/local/bin/xray
+bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u root
 
 uuid=$(cat /proc/sys/kernel/random/uuid)
 
@@ -294,7 +288,7 @@ Restart=on-failure
 RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target.wants
+WantedBy=multi-user.target
 
 END
 
@@ -318,7 +312,7 @@ Restart=on-failure
 RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target.wants
+WantedBy=multi-user.target
 
 END
 
@@ -342,7 +336,7 @@ Restart=on-failure
 RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target.wants
+WantedBy=multi-user.target
 
 END
 
@@ -365,7 +359,7 @@ Restart=on-failure
 RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target.wants
+WantedBy=multi-user.target
 
 END
 
@@ -389,7 +383,7 @@ Restart=on-failure
 RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target.wants
+WantedBy=multi-user.target
 
 END
 
@@ -413,7 +407,7 @@ Restart=on-failure
 RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target.wants
+WantedBy=multi-user.target
 
 END
 
@@ -437,7 +431,7 @@ Restart=on-failure
 RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target.wants
+WantedBy=multi-user.target
 
 END
 
@@ -461,7 +455,7 @@ Restart=on-failure
 RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target.wants
+WantedBy=multi-user.target
 
 END
 
@@ -472,22 +466,10 @@ sudo iptables -I INPUT -p tcp --dport 80 -m conntrack --ctstate NEW,ESTABLISHED 
 sudo iptables -I INPUT -p udp --dport 80 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
 sudo iptables -I OUTPUT -p tcp --sport 80 -m conntrack --ctstate ESTABLISHED -j ACCEPT
 sudo iptables -I OUTPUT -p udp --sport 80 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-sudo iptables -A INPUT -p tcp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
-sudo iptables -A INPUT -p udp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p tcp --sport 443 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p udp --sport 443 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-open_port() { 
-if [[ ${release} != "centos" ]]; then #iptables -I INPUT -p tcp --dport 80 -j ACCEPT #iptables -I INPUT -p tcp --dport 443 -j ACCEPT iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 80 -j ACCEPT iptables -I INPUT -m state --state NEW -m udp -p udp --dport 80 -j ACCEPT ip6tables -I INPUT -m state --state NEW -m tcp -p tcp --dport 80 -j ACCEPT ip6tables -I INPUT -m state --state NEW -m udp -p udp --dport 80 -j ACCEPT iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 443 -j ACCEPT iptables -I INPUT -m state --state NEW -m udp -p udp --dport 443 -j ACCEPT ip6tables -I INPUT -m state --state NEW -m tcp -p tcp --dport 443 -j ACCEPT ip6tables -I INPUT -m state --state NEW -m udp -p udp --dport 443 -j ACCEPT iptables-save >/etc/iptables.rules.v4 		ip6tables-save >/etc/iptables.rules.v6 netfilter-persistent save netfilter-persistent reload else firewall-cmd --zone=public --add-port=80/tcp --permanent firewall-cmd --zone=public --add-port=443/tcp --permanent 	fi } 
-
-sudo iptables-save > /etc/iptables.up.rules
-sudo iptables-restore -t < /etc/iptables.up.rules
-sudo netfilter-persistent save
-sudo netfilter-persistent reload
-firewall-cmd --zone=public --add-port=80/tcp --permanent 
-firewall-cmd --zone=public --add-port=443/tcp --permanent
-fi
-}
-END
+#sudo iptables -A INPUT -p tcp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+#sudo iptables -A INPUT -p udp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+#sudo iptables -A OUTPUT -p tcp --sport 443 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+#sudo iptables -A OUTPUT -p udp --sport 443 -m conntrack --ctstate ESTABLISHED -j ACCEPT
 
 systemctl daemon-reload
 systemctl stop xray
@@ -562,7 +544,7 @@ touch /var/log/trojan-go/trojan-go.log
 cat > /etc/trojan-go/config.json << END
 {
   "run_type": "server",
-  "local_addr": "127.0.0.1",
+  "local_addr": "0.0.0.0",
   "local_port": 2053,
   "remote_addr": "127.0.0.1",
   "remote_port": 88,
@@ -576,8 +558,8 @@ cat > /etc/trojan-go/config.json << END
   "ssl": {
     "verify": false,
     "verify_hostname": false,
-    "cert": "/etc/xray/xray.crt",
-    "key": "/etc/xray/xray.key",
+    "cert": "/etc/ssl/private/fullchain.pem",
+    "key": "/etc/ssl/private/privkey.pem",
     "key_password": "",
     "cipher": "",
     "curves": "",
