@@ -134,6 +134,7 @@ apt install libz-dev -y
 apt install gcc -y
 apt install g++ -y
 apt install libreadline-dev -y
+apt install openssl -y
 apt install zlib1g-dev -y
 apt install libssl-dev -y
 gem install lolcat
