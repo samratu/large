@@ -655,11 +655,11 @@ END
 
 # restart
 
-sudo systemctl daemon-reload
-sudo systemctl stop trojan-go
-sudo systemctl start trojan-go
-sudo systemctl enable trojan-go
-sudo systemctl restart trojan-go
+systemctl daemon-reload
+systemctl stop trojan-go
+systemctl start trojan-go
+systemctl enable trojan-go
+systemctl restart trojan-go
 
 cd
 cp /root/domain /etc/xray
