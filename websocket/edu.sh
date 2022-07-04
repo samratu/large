@@ -70,7 +70,7 @@ Restart=on-failure
 RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target.wants
+WantedBy=multi-user.target
 END
 
 systemctl daemon-reload
@@ -100,7 +100,7 @@ Restart=on-failure
 RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target.wants
+WantedBy=multi-user.target
 END
 
 systemctl daemon-reload
@@ -130,7 +130,7 @@ Restart=on-failure
 RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target.wants
+WantedBy=multi-user.target
 END
 
 systemctl daemon-reload
@@ -159,7 +159,7 @@ Restart=on-failure
 RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target.wants
+WantedBy=multi-user.target
 END
 
 systemctl daemon-reload
