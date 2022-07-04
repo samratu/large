@@ -550,36 +550,26 @@ mkdir /var/log/trojan-go/
 touch /etc/trojan-go/akun.conf
 touch /var/log/trojan-go/trojan-go.log
 
-domain=$(cat /root/domain)
-# // Certificate File
-path_cer="/etc/xray/xray.crt"
-path_key="/etc/xray/xray.key"
-#domain_ecc=$(cat /root/.acme.sh)
-#domain.key=$(cat /root/.acme.sh/$domain_ecc)
-#path_crt="/root/.acme.sh/$domain_ecc/fullchain.cer"
-#path_key="/root/.acme.sh/$domain_ecc/$domain.key"
 # Buat Config Trojan Go
 cat > /etc/trojan-go/config.json << END
 {
-  "{
   "run_type": "server",
-  "local_addr": "0.0.0.0",
+  "local_addr": "127.0.0.1",
   "local_port": 2053,
   "remote_addr": "127.0.0.1",
   "remote_port": 88,
   "log_level": 1,
   "log_file": "/var/log/trojan-go/trojan-go.log",
   "password": [
-        "$uuid"
-,"tes"
+      "$uuid"
   ],
   "disable_http_check": true,
   "udp_timeout": 60,
   "ssl": {
     "verify": false,
     "verify_hostname": false,
-    "cert": "/etc/ssl/private/fullchain.pem",
-    "key": "/etc/ssl/private/privkey.pem",
+    "cert": "/etc/xray/xray.crt",
+    "key": "/etc/xray/xray.key",
     "key_password": "",
     "cipher": "",
     "curves": "",
@@ -607,7 +597,7 @@ cat > /etc/trojan-go/config.json << END
   },
   "websocket": {
     "enabled": true,
-    "path": "/trojango",
+    "path": "/gandring",
     "host": "$domain"
   },
     "api": {
@@ -630,19 +620,16 @@ cat > /etc/systemd/system/trojan-go.service << END
 [Unit]
 Description=Trojan-Go BENDUNG COLO PENGKOL BY GANDRING
 Documentation=https://t.me/zerossl
-After=network.target
+After=network.target nss-lookup.target
 
 [Service]
-Type=simple 
-StandardError=journal 
-PIDFile=/usr/src/trojan/trojan/trojan.pid 
-ExecStart=/usr/local/bin/trojan-go -config /etc/trojan-go/config.json
-ExecReload= ExecStop=/etc/trojan/bin/trojan-go 
+User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-LimitNOFILE=51200 
-Restart=on-failure 
-RestartSec=1s
+NoNewPrivileges=true
+ExecStart=/usr/local/bin/trojan-go -config /etc/trojan-go/config.json
+Restart=on-failure
+RestartPreventExitStatus=23
 
 [Install]
 WantedBy=multi-user.target
@@ -652,7 +639,6 @@ END
 cat > /etc/trojan-go/uuid.txt << END
 $uuid
 END
-
 # restart
 
 systemctl daemon-reload
