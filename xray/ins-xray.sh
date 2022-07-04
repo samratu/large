@@ -50,8 +50,7 @@ uuid=$(cat /proc/sys/kernel/random/uuid)
 
 #bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u root
 
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install-geodata
-cd `mktemp -d`
+
 #curl -sL "$xraycore_link" -o xray.zip
 #unzip -q xray.zip && rm -rf xray.zip
 #mv xray /usr/local/bin/xray
@@ -76,6 +75,7 @@ chown -R nobody:nogroup /etc/xray
 chown -R nobody:nogroup /usr/local/etc/xray
 chmod 644 /etc/ssl/private/privkey.pem
 chmod 644 /etc/ssl/private/fullchain.pem
+bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install-geodata
 
 #sudo lsof -t -i tcp:80 -s tcp:listen | sudo xargs kill
 cd /root/
@@ -294,7 +294,8 @@ Restart=on-failure
 RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=multi-user.target.wants
+
 END
 
 # / / Installation Xray Service
@@ -317,7 +318,8 @@ Restart=on-failure
 RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=multi-user.target.wants
+
 END
 
 # / / Installation Xray Service
@@ -340,7 +342,8 @@ Restart=on-failure
 RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=multi-user.target.wants
+
 END
 
 cat > /etc/systemd/system/xvmess.service << END
@@ -362,7 +365,8 @@ Restart=on-failure
 RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=multi-user.target.wants
+
 END
 
 # / / Installation Xray Service
@@ -385,7 +389,8 @@ Restart=on-failure
 RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=multi-user.target.wants
+
 END
 
 # / / Installation Xray Service
@@ -408,7 +413,8 @@ Restart=on-failure
 RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=multi-user.target.wants
+
 END
 
 # / / Installation Xray Service
@@ -431,7 +437,8 @@ Restart=on-failure
 RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=multi-user.target.wants
+
 END
 
 # / / Installation Xray Service
@@ -454,7 +461,8 @@ Restart=on-failure
 RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=multi-user.target.wants
+
 END
 
 # // Enable & Start Service
@@ -638,7 +646,7 @@ END
 # Trojan Go Uuid
 cat > /etc/trojan-go/uuid.txt << END
 $uuid
-END
+
 # restart
 
 systemctl daemon-reload
