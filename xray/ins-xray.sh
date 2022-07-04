@@ -13,7 +13,7 @@ LIGHT='\033[0;37m'
 MYIP=$(wget -qO- ipinfo.io/ip);
 clear
 domain=$(cat /root/domain)
-apt install iptables iptables-persistent -y
+#apt install iptables iptables-persistent -y
 apt install curl socat xz-utils wget apt-transport-https gnupg gnupg2 gnupg1 dnsutils lsb-release -y 
 apt install socat cron bash-completion ntpdate -y
 ntpdate pool.ntp.org
@@ -28,28 +28,29 @@ chronyc tracking -v
 date
 
 # / / Ambil Xray Core Version Terbaru
-latest_version="$(curl -s https://api.github.com/repos/XTLS/Xray-core/releases | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
+#latest_version="$(curl -s https://api.github.com/repos/XTLS/Xray-core/releases | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
 #bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install-geodata
 # / / Installation Xray Core
-xraycore_link="https://github.com/XTLS/Xray-core/releases/download/v$latest_version/xray-linux-64.zip"
+#xraycore_link="https://github.com/XTLS/Xray-core/releases/download/v$latest_version/xray-linux-64.zip"
 #xraycore_link="https://raw.githubusercontent.com/samratu/large/file/Xray-linux-64.zip"
 # / / Make Main Directory
-mkdir -p /usr/bin/xray
-mkdir -p /etc/xray
-
-# / / Unzip Xray Linux 64
-cd `mktemp -d`
-curl -sL "$xraycore_link" -o xray.zip
-unzip -q xray.zip && rm -rf xray.zip
-mv xray /usr/local/bin/xray
-chmod +x /usr/local/bin/xray
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install-geodata
+mkdir -p /usr/local/bin/xray
 # Make Folder XRay
 mkdir -p /var/log/xray/
+# / / Unzip Xray Linux 64
+
+bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u root
+
+bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install-geodata
+cd `mktemp -d`
+#curl -sL "$xraycore_link" -o xray.zip
+#unzip -q xray.zip && rm -rf xray.zip
+#mv xray /usr/local/bin/xray
+#chmod +x /usr/local/bin/xray
+
 uuid=$(cat /proc/sys/kernel/random/uuid)
-#bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u root
+
 cd /root/
-#wget https://raw.githubusercontent.com/acmesh-official/acme.sh/master/acme.sh
 mkdir -p /usr/local/etc/xray
 sudo lsof -t -i tcp:80 -s tcp:listen | sudo xargs kill
 ##Generate acme certificate
@@ -63,6 +64,7 @@ alias acme.sh=~/.acme.sh/acme.sh
 --fullchain-file /etc/ssl/private/fullchain.pem \
 --key-file /etc/ssl/private/privkey.pem
 chown -R nobody:nogroup /etc/xray
+chown -R nobody:nogroup /usr/local/etc/xray
 chmod 644 /etc/ssl/private/privkey.pem
 chmod 644 /etc/ssl/private/fullchain.pem
 
