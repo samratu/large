@@ -86,16 +86,16 @@ PrivateKey = $SERVER_PRIV_KEY
 PostUp = iptables -A FORWARD -i wg0 -j ACCEPT; iptables -t nat -A POSTROUTING -o $SERVER_PUB_NIC -j MASQUERADE;
 PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -D POSTROUTING -o $SERVER_PUB_NIC -j MASQUERADE;" >>"/etc/wireguard/wg0.conf"
 
-sudo iptables -t nat -I POSTROUTING -s 10.11.11.1 -o $SERVER_PUB_NIC -j MASQUERADE
-sudo iptables -I INPUT 1 -i wg0 -j ACCEPT
-sudo iptables -I FORWARD 1 -i $SERVER_PUB_NIC -o wg0 -j ACCEPT
-sudo iptables -I FORWARD 1 -i wg0 -o $SERVER_PUB_NIC -j ACCEPT
-sudo iptables -I INPUT 1 -i $SERVER_PUB_NIC -p udp --dport 591 -j ACCEPT
-sudo iptables -I INPUT 1 -i $SERVER_PUB_NIC -p tcp --dport 591 -j ACCEPT
-sudo iptables-save > /etc/iptables.up.rules
-sudo iptables-restore -t < /etc/iptables.up.rules
+iptables -t nat -I POSTROUTING -s 10.11.11.1 -o $SERVER_PUB_NIC -j MASQUERADE
+iptables -I INPUT 1 -i wg0 -j ACCEPT
+iptables -I FORWARD 1 -i $SERVER_PUB_NIC -o wg0 -j ACCEPT
+iptables -I FORWARD 1 -i wg0 -o $SERVER_PUB_NIC -j ACCEPT
+iptables -I INPUT 1 -i $SERVER_PUB_NIC -p udp --dport 591 -j ACCEPT
+iptables -I INPUT 1 -i $SERVER_PUB_NIC -p tcp --dport 591 -j ACCEPT
+iptables-save > /etc/iptables.up.rules
+iptables-restore -t < /etc/iptables.up.rules
 sudo netfilter-persistent save
-sudo netfilter-persistent reload
+netfilter-persistent reload
 
 systemctl start "wg-quick@wg0"
 systemctl enable "wg-quick@wg0"
