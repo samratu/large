@@ -460,10 +460,6 @@ sudo iptables-save > /etc/iptables.up.rules
 sudo iptables-restore -t < /etc/iptables.up.rules
 sudo netfilter-persistent save
 sudo netfilter-persistent reload
-firewall-cmd --zone=public --add-port=80/tcp --permanent 
-firewall-cmd --zone=public --add-port=443/tcp --permanent
-firewall-cmd --zone=public --add-port=80/udpp --permanent 
-firewall-cmd --zone=public --add-port=443/udp --permanent
 systemctl daemon-reload
 systemctl stop xray
 systemctl enable xray
