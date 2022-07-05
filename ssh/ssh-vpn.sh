@@ -419,7 +419,7 @@ accept = 600
 connect = 127.0.0.1:200
 
 [openssh]
-accept = 443
+accept = 500
 connect = 127.0.0.1:2087
 
 [openvpn]
