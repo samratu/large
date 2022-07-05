@@ -314,8 +314,7 @@ echo "Port 42" >> /etc/ssh/sshd_config
 
 # install dropbear
 suxo apt-get update -y
-sudo apt-get install dropbear-initramfs -y
-sudo apt-get install dropbear-run -y
+apt install dropbear -y
 sed -i 's/NO_START=1/NO_START=0/g' /etc/default/dropbear
 sed -i 's/DROPBEAR_PORT=22/DROPBEAR_PORT=300/g' /etc/default/dropbear
 sed -i 's/DROPBEAR_EXTRA_ARGS=/DROPBEAR_EXTRA_ARGS="-p 200 -p 1153"/g' /etc/default/dropbear
