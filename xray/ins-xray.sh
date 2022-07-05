@@ -272,7 +272,7 @@ cat > /etc/systemd/system/xray.service << END
 [Unit]
 Description=XRAY ROUTING DAM COLO PENGKOL BY ZEROSSL
 Documentation=https://t.me/zerossl
-After=network.target
+After=network.target nss-lookup.target
 
 [Service]
 User=root
@@ -280,11 +280,11 @@ Type=simple
 StandardError=journal
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-NoNewPrivileges=true
-ExecStart=/usr/local/bin/xray -config /etc/xray/config.json
-LimitNOFILE=65535
+ExecStart=/usr/local/bin/xray run -config /etc/xray/xray.json
 Restart=on-failure
-RestartSec=1s
+RestartPreventExitStatus=23
+LimitNPROC=10000
+LimitNOFILE=1000000
 
 [Install]
 WantedBy=multi-user.target
@@ -296,7 +296,7 @@ cat > /etc/systemd/system/xtrojan.service << END
 [Unit]
 Description=XTROJAN ROUTING DAM COLO PENGKOL BY ZEROSSL
 Documentation=https://t.me/zerossl
-After=network.target
+After=network.target nss-lookup.target
 
 [Service]
 User=root
@@ -304,11 +304,11 @@ Type=simple
 StandardError=journal
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-NoNewPrivileges=true
-ExecStart=/usr/local/bin/xray -config /etc/xray/xtrojan.json
-LimitNOFILE=65535
+ExecStart=/usr/local/bin/xray run -config /etc/xray/xtrojan.json
 Restart=on-failure
-RestartSec=1s
+RestartPreventExitStatus=23
+LimitNPROC=10000
+LimitNOFILE=1000000
 
 [Install]
 WantedBy=multi-user.target
@@ -320,7 +320,7 @@ cat > /etc/systemd/system/xvless.service << END
 [Unit]
 Description=XVLESS ROUTING DAM COLO PENGKOL BY SHANUM
 Documentation=https://t.me/zerossl
-After=network.target
+After=network.target nss-lookup.target
 
 [Service]
 User=root
@@ -328,11 +328,11 @@ Type=simple
 StandardError=journal
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-NoNewPrivileges=true
-ExecStart=/usr/local/bin/xray -config /etc/xray/xvless.json
-LimitNOFILE=65535
+ExecStart=/usr/local/bin/xray run -config /etc/xray/xvless.json
 Restart=on-failure
-RestartSec=1s
+RestartPreventExitStatus=23
+LimitNPROC=10000
+LimitNOFILE=1000000
 
 [Install]
 WantedBy=multi-user.target
@@ -343,7 +343,7 @@ cat > /etc/systemd/system/xvmess.service << END
 [Unit]
 Description=XVMESS ROUTING GAJAH DEMAK BY GANDRING
 Documentation=https://t.me/zerossl
-After=network.target
+After=network.target nss-lookup.target
 
 [Service]
 User=root
@@ -351,11 +351,11 @@ Type=simple
 StandardError=journal
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-NoNewPrivileges=true
-ExecStart=/usr/local/bin/xray -config /usr/local/etc/xray/xvmess.json
-LimitNOFILE=65535
+ExecStart=/usr/local/bin/xray run -config /usr/local/etc/xray/xvmess.json
 Restart=on-failure
-RestartSec=1s
+RestartPreventExitStatus=23
+LimitNPROC=10000
+LimitNOFILE=1000000
 
 [Install]
 WantedBy=multi-user.target
@@ -367,7 +367,7 @@ cat > /etc/systemd/system/xss.service << END
 [Unit]
 Description=XSHADOWSOCKS ROUTING DAM COLO PENGKOL BY WISNU
 Documentation=https://t.me/zerossl
-After=network.target
+After=network.target nss-lookup.target
 
 [Service]
 User=root
@@ -375,11 +375,11 @@ Type=simple
 StandardError=journal
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-NoNewPrivileges=true
-ExecStart=/usr/local/bin/xray -config /etc/xray/xss.json
-LimitNOFILE=65535
+ExecStart=/usr/local/bin/xray run -config /etc/xray/xss.json
 Restart=on-failure
-RestartSec=1s
+RestartPreventExitStatus=23
+LimitNPROC=10000
+LimitNOFILE=1000000
 
 [Install]
 WantedBy=multi-user.target
@@ -391,7 +391,7 @@ cat > /etc/systemd/system/sstcp.service << END
 [Unit]
 Description=XSHADOWSOCKS ROUTING DAM COLO PENGKOL BY WISNU
 Documentation=https://t.me/zerossl
-After=network.target
+After=network.target nss-lookup.target
 
 [Service]
 User=root
@@ -399,11 +399,11 @@ Type=simple
 StandardError=journal
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-NoNewPrivileges=true
-ExecStart=/usr/local/bin/xray -config /etc/xray/sstcp.json
-LimitNOFILE=65535
+ExecStart=/usr/local/bin/xray run -config /etc/xray/sstcp.json
 Restart=on-failure
-RestartSec=1s
+RestartPreventExitStatus=23
+LimitNPROC=10000
+LimitNOFILE=1000000
 
 [Install]
 WantedBy=multi-user.target
@@ -415,7 +415,7 @@ cat > /etc/systemd/system/trojangrpc.service << END
 [Unit]
 Description=XTROJAN ROUTING DAM COLO PENGKOL BY zerossl
 Documentation=https://t.me/zerossl
-After=network.target
+After=network.target nss-lookup.target
 
 [Service]
 User=root
@@ -423,11 +423,11 @@ Type=simple
 StandardError=journal
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-NoNewPrivileges=true
-ExecStart=/usr/local/bin/xray -config /etc/xray/trojangrpc.json
-LimitNOFILE=65535
+ExecStart=/usr/local/bin/xray run -config /etc/xray/trojangrpc.json
 Restart=on-failure
-RestartSec=1s
+RestartPreventExitStatus=23
+LimitNPROC=10000
+LimitNOFILE=1000000
 
 [Install]
 WantedBy=multi-user.target
@@ -439,7 +439,7 @@ cat > /etc/systemd/system/vlessquic.service << END
 [Unit]
 Description=XVLESS ROUTING DAM COLO PENGKOL BY zerossl
 Documentation=https://t.me/zerossl
-After=network.target
+After=network.target nss-lookup.target
 
 [Service]
 User=root
@@ -447,11 +447,11 @@ Type=simple
 StandardError=journal
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-NoNewPrivileges=true
-ExecStart=/usr/local/bin/xray -config /usr/local/etc/xray/vlessquic.json
-LimitNOFILE=65535
+ExecStart=/usr/local/bin/xray run -config /usr/local/etc/xray/vlessquic.json
 Restart=on-failure
-RestartSec=1s
+RestartPreventExitStatus=23
+LimitNPROC=10000
+LimitNOFILE=1000000
 
 [Install]
 WantedBy=multi-user.target
