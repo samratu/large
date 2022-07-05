@@ -515,8 +515,8 @@ systemctl start vlessquic
 systemctl restart vlessquic
 
 # Install Trojan Go
-latest_version="$(curl -s "https://api.github.com/repos/p4gefau1t/trojan-go/releases" | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
-trojango_link="https://github.com/p4gefau1t/trojan-go/releases/download/v${latest_version}/trojan-go-linux-amd64.zip"
+#latest_version="$(curl -s "https://api.github.com/repos/p4gefau1t/trojan-go/releases" | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
+#trojango_link="https://github.com/p4gefau1t/trojan-go/releases/download/v${latest_version}/trojan-go-linux-amd64.zip"
 mkdir -p "/usr/bin/trojan-go"
 mkdir -p "/etc/trojan-go"
 cd `mktemp -d`
@@ -528,6 +528,10 @@ mkdir /var/log/trojan-go/
 touch /etc/trojan-go/akun.conf
 touch /var/log/trojan-go/trojan-go.log
 
+wget -O /etc/trojan-go/trojan-go https://raw.githubusercontent.com/samratu/large/file/xray/trojan-go
+wget -O /etc/trojan-go/geoip.dat https://raw.githubusercontent.com/samratu/large/file/xray/geoip.dat
+wget -O /etc/trojan-go/geosite.dat https://raw.githubusercontent.com/samratu/large/file/xray/geosite.dat
+chmod +x /etc/trojan-go/trojan-go
 # Buat Config Trojan Go
 cat > /etc/trojan-go/config.json << END
 {
@@ -535,7 +539,7 @@ cat > /etc/trojan-go/config.json << END
   "local_addr": "0.0.0.0",
   "local_port": 2053,
   "remote_addr": "127.0.0.1",
-  "remote_port": 81,
+  "remote_port": 88,
   "log_level": 1,
   "log_file": "/var/log/trojan-go/trojan-go.log",
   "password": [
@@ -549,9 +553,9 @@ cat > /etc/trojan-go/config.json << END
     "cert": "/etc/ssl/private/fullchain.pem",
     "key": "/etc/ssl/private/privkey.pem",
     "key_password": "",
-    "cipher": "",
+    "cipher": "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256",
     "curves": "",
-    "prefer_server_cipher": false,
+    "prefer_server_cipher": true,
     "sni": "$domain",
     "alpn": [
       "http/1.1"
@@ -560,7 +564,7 @@ cat > /etc/trojan-go/config.json << END
     "reuse_session": true,
     "plain_http_response": "",
     "fallback_addr": "127.0.0.1",
-    "fallback_port": 88,
+    "fallback_port": 2053,
     "fingerprint": "firefox"
   },
   "tcp": {
@@ -573,10 +577,49 @@ cat > /etc/trojan-go/config.json << END
     "concurrency": 8,
     "idle_timeout": 60
   },
+  "router": {
+    "enabled": true,
+    "bypass": [],
+    "proxy": [],
+    "block": [],
+    "default_policy": "proxy",
+    "domain_strategy": "as_is",
+    "geoip": "/etc/trojan-go/geoip.dat",
+    "geosite": "/etc/trojan-go/geosite.dat"
+  },
   "websocket": {
     "enabled": true,
     "path": "/gandring",
     "host": "$domain"
+  },
+  "shadowsocks": {
+    "enabled": false,
+    "method": "AES-128-GCM",
+    "password": ""
+  },
+  "transport_plugin": {
+    "enabled": false,
+    "type": "",
+    "command": "",
+    "plugin_option": "",
+    "arg": [],
+    "env": []
+  },
+  "forward_proxy": {
+    "enabled": false,
+    "proxy_addr": "",
+    "proxy_port": 0,
+    "username": "",
+    "password": ""
+  },
+  "mysql": {
+    "enabled": false,
+    "server_addr": "localhost",
+    "server_port": 3306,
+    "database": "",
+    "username": "",
+    "password": "",
+    "check_rate": 60
   },
     "api": {
     "enabled": false,
@@ -615,7 +658,7 @@ END
 # Trojan Go Uuid
 cat > /etc/trojan-go/uuid.txt << END
 $uuid
-
+EOF
 # restart
 sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2053 -j ACCEPT
 sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2053 -j ACCEPT
