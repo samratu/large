@@ -95,17 +95,17 @@ RemainAfterExit=yes
 WantedBy=multi-user.target
 EOF
 
-#wget -O /etc/set.sh "https://${wisnuvpn}/set.sh"
-#chmod +x /etc/set.sh
+wget -O /etc/set.sh "https://${wisnuvpn}/set.sh"
+chmod +x /etc/set.sh
 history -c
 echo "1.2" > /home/ver
 systemctl daemon-reload
 systemctl enable autosett
 echo " "
-echo "Instalasi Telah Selesai"
-echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"  |tee -a log-install.txt
-echo -e "\E[44;1;41m           🔰 SETUP SERVER BY ZEROSSL 🔰            \E[0m"   
-echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"  |tee -a log-install.txt
+echo "Instalasi Telah Selesai"echo""
+echo "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" |tee -a log-install.txt 
+echo "\E[44;1;41m           🔰 SETUP SERVER BY ZEROSSL 🔰            \E[0m"   |tee -a log-install.txt
+echo "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" |tee -a log-install.txt
 echo " 🔰 >>> Service & Port" |tee -a log-install.txt
 echo " 🔰 PORT OPENSSH : 22" |tee -a log-install.txt
 echo " 🔰 PORT OPENVPN TCP : 1194" |tee -a log-install.txt
@@ -136,7 +136,6 @@ echo " 🔰 VMESS WS NON TLS : 2052" |tee -a log-install.txt
 echo " 🔰 VMESS GRPC TLS: 2083" |tee -a log-install.txt
 echo " 🔰 VMESS GRPC NON TLS: 2082" |tee -a log-install.txt
 echo " 🔰 VMESS H2C TLS : 1190" |tee -a log-install.txt
-#echo " 🔰 VMESS H2C NON TLS : 3444" |tee -a log-install.txt
 echo " 🔰 VMESS HTTP TLS : 443" |tee -a log-install.txt
 echo " 🔰 VMESS QUIC : 443" |tee -a log-install.txt
 echo " 🔰 VMESS HTTP NON TLS : 808" |tee -a log-install.txt
@@ -148,7 +147,6 @@ echo " 🔰 VLESS GRPC TLS : 2096" |tee -a log-install.txt
 echo " 🔰 VLESS GRPC NON TLS: 2082" |tee -a log-install.txt
 echo " 🔰 VLESS H2C TLS : 1150" |tee -a log-install.txt
 echo " 🔰 VLESS QUIC : 414" |tee -a log-install.txt
-#echo " 🔰 VLESS QUIC NON TLS: 141" |tee -a log-install.txt
 echo " 🔰 VLESS HTTP TLS : 443" |tee -a log-install.txt
 echo " 🔰 VLESS HTTP NON TLS : 8088" |tee -a log-install.txt
 echo " 🔰 TROJAN GO : 2053" |tee -a log-install.txt
@@ -158,7 +156,6 @@ echo " 🔰 TROJAN HTTP NON TLS : 880" |tee -a log-install.txt
 echo " 🔰 TROJAN H2C : 1120" |tee -a log-install.txt
 echo " 🔰 TROJAN XTLS : 1440" |tee -a log-install.txt
 echo " 🔰 TROJAN QUIC : 443" |tee -a log-install.txt
-#echo " 🔰 TROJAN QUIC NON TLS: 151"
 echo " 🔰 TROJAN GFW : 443" |tee -a log-install.txt
 echo " 🔰 TROJAN WS TLS : 443" |tee -a log-install.txt
 echo " 🔰 TROJAN WS NON TLS : 2095" |tee -a log-install.txt
@@ -173,7 +170,7 @@ echo " 🔰 SHADOWSOCKS 2022 WS NON TLS : 2086" |tee -a log-install.txt
 echo " 🔰 SHADOWSOCKS 2022 WS TLS : 2087" |tee -a log-install.txt
 echo " 🔰 SHADOWSOCKS 2022 GRPC : 2087" |tee -a log-install.txt
 echo " 🔰 XRAY MT PROTO : 111" |tee -a log-install.txt
-echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" |tee -a log-install.txt 
+echo "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"  |tee -a log-install.txt
 echo " 🔰 >> Server Information & Other Features"                 |tee -a log-install.txt
 echo " 🔰 Timezone                : Asia/Jakarta"                 |tee -a log-install.txt
 echo " 🔰 Fail2Ban                : [ON]"                         |tee -a log-install.txt
@@ -187,8 +184,8 @@ echo " 🔰 Restore Data" | tee -a log-install.txt
 echo " 🔰 Auto Delete Expired Account" | tee -a log-install.txt
 echo " 🔰 Full Orders For Various Services" | tee -a log-install.txt
 echo " 🔰 GANDRING & WISNU SCRIPT" | tee -a log-install.txt
-echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" |tee -a log-install.txt
 echo "Installation Log --> /root/log-install.txt" |tee -a log-install.txt
-echo "reboot setelah 5 detik"
-sleep 5
+echo "reboot setelah 15 detik"
+sleep 15
+rm -f setup.sh
 reboot
