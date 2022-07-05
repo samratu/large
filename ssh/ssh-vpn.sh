@@ -146,8 +146,8 @@ apt install grepcidr -y
 apt install libssl1.0-dev -y
 apt install dos2unix -y
 # Privoxy Ports
-Privoxy_Port1='4000'
-Privoxy_Port2='5000'
+Privoxy_Port1=4000
+Privoxy_Port2=5000
 
  # Creating Privoxy server config using cat eof tricks
 cd
@@ -158,8 +158,8 @@ confdir /etc/privoxy
 logdir /var/log/privoxy
 filterfile default.filter
 logfile logfile
-listen-address 0.0.0.0:4000
-listen-address 0.0.0.0:5000
+listen-address 127.0.0.1:4000
+listen-address 127.0.0.1:5000
 toggle 1
 enable-remote-toggle 0
 enable-remote-http-toggle 0
