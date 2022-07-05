@@ -33,10 +33,11 @@ Pass=1
 clear
 systemctl restart ws-tls
 systemctl restart ws-nontls
+systemctl restart ws-ovpn
 systemctl restart ssh-ohp
 systemctl restart dropbear-ohp
 systemctl restart openvpn-ohp
-systemctl restart stunnel4
+systemctl restart stunnel5
 useradd -e `date -d "$masaaktif days" +"%Y-%m-%d"` -s /bin/false -M $Login
 exp="$(chage -l $Login | grep "Account expires" | awk -F": " '{print $2}')"
 hariini=`date -d "0 days" +"%Y-%m-%d"`
