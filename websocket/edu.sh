@@ -22,14 +22,13 @@ Type=simple
 User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-ExecStart=/usr/bin/python run -config /usr/local/bin/ws-nontls 2086
+NoNewPrivileges=true
+ExecStart=/usr/bin/python -O /usr/local/bin/ws-nontls 2086
 Restart=on-failure
-RestartPreventExitStatus=23
-LimitNPROC=10000
-LimitNOFILE=1000000
 
 [Install]
 WantedBy=multi-user.target
+
 END
 
 systemctl daemon-reload
@@ -52,14 +51,13 @@ Type=simple
 User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-ExecStart=/usr/bin/python run -config /usr/local/bin/ws-ovpn 8080
+NoNewPrivileges=true
+ExecStart=/usr/bin/python -O /usr/local/bin/ws-ovpn 8080
 Restart=on-failure
-RestartPreventExitStatus=23
-LimitNPROC=10000
-LimitNOFILE=1000000
 
 [Install]
 WantedBy=multi-user.target
+
 END
 
 systemctl daemon-reload
@@ -82,14 +80,13 @@ Type=simple
 User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-ExecStart=/usr/bin/python run -config /usr/local/bin/ws-tls 2087
+NoNewPrivileges=true
+ExecStart=/usr/bin/python -O /usr/local/bin/ws-tls 443
 Restart=on-failure
-RestartPreventExitStatus=23
-LimitNPROC=10000
-LimitNOFILE=1000000
 
 [Install]
 WantedBy=multi-user.target
+
 END
 
 systemctl daemon-reload
