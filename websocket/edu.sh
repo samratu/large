@@ -13,8 +13,8 @@ chmod +x /usr/local/bin/ws-nontls
 # Installing Service
 cat > /etc/systemd/system/ws-nontls.service << END
 [Unit]
-Description=Python Proxy Mod By gandring
-Documentation=https://nekopi.care
+Description=SSHWEBSOCKET ROUTING DAM COLO BY GANDRING
+Documentation=https://t.me/zerossl
 After=network.target nss-lookup.target
 
 [Service]
@@ -41,8 +41,8 @@ chmod +x /usr/local/bin/ws-ovpn
 # Installing Service
 cat > /etc/systemd/system/ws-ovpn.service << END
 [Unit]
-Description=Python Proxy Mod By shanum
-Documentation=https://nekopoi.care
+Description=OVPN WEBSOCKET ROUTING GAJAH BY WISNU
+Documentation=https://t.mezerossl
 After=network.target nss-lookup.target
 
 [Service]
@@ -69,8 +69,8 @@ chmod +x /usr/local/bin/ws-tls
 # Installing Service
 cat > /etc/systemd/system/ws-tls.service << END
 [Unit]
-Description=Python Proxy Mod By wisnu
-Documentation=https://nekopoi.care
+Description=SSHWEBSOCKET TLS ROUTING PENGKOL BY SHANUM
+Documentation=https://t.me/zerossl
 After=network.target nss-lookup.target
 
 [Service]
@@ -79,7 +79,7 @@ User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
-ExecStart=/usr/bin/python -O /usr/local/bin/ws-tls 443
+ExecStart=/usr/bin/python -O /usr/local/bin/ws-tls 2087
 Restart=on-failure
 
 [Install]
