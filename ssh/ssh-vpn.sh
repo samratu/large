@@ -327,13 +327,26 @@ cd
 apt -y install squid3
 wget -O /etc/squid/squid.conf "https://${wisnuvpn}/squid3.conf"
 sed -i $MYIP2 /etc/squid/squid.conf
+cd /root/
+wget -q -O sslh.zip "https://${wisnuvpn}/sslh.zip"
+unzip -o sslh.zip
+cd /root/sslh
+chmod +x configure
+./configure
+make
+make install
+cd /root
+rm -r -f sslh
+rm -f sslh.zip
+mkdir -p /etc/default/sslh
+chmod 644 /etc/default/sslh
 
 # Install SSLH
-apt -y install sslh
-rm -f /etc/default/sslh
+#apt -y install sslh
+#rm -f /etc/default/sslh
 
 # Settings SSLH
-cat > /etc/default/sslh <<-END
+#cat > /etc/default/sslh <<-END
 # Default options for sslh initscript
 # sourced by /etc/init.d/sslh
 
@@ -345,15 +358,15 @@ cat > /etc/default/sslh <<-END
 # Once configuration ready, you *must* set RUN to yes here
 # and try to start sslh (standalone mode only)
 
-RUN=yes
+#RUN=yes
 
 # binary to use: forked (sslh) or single-thread (sslh-select) version
 # systemd users: don't forget to modify /lib/systemd/system/sslh.service
 DAEMON=/usr/sbin/sslh
 
-DAEMON_OPTS="--user sslh --listen 0.0.0.0:42 --ssl 127.0.0.1:500 --ssh 127.0.0.1:42 --dropbear 127.0.0.1:300 --openvpn 127.0.0.1:1194 --http 127.0.0.1:80 --pidfile /var/run/sslh/sslh.pid -n"
+#DAEMON_OPTS="--user sslh --listen 0.0.0.0:42 --ssl 127.0.0.1:500 --ssh 127.0.0.1:42 --dropbear 127.0.0.1:300 --openvpn 127.0.0.1:1194 --http 127.0.0.1:80 --pidfile /var/run/sslh/sslh.pid -n"
 
-END
+#END
 
 # Restart Service SSLH
 systemctl daemon-reload
@@ -421,7 +434,7 @@ connect = 127.0.0.1:200
 
 [openssh]
 accept = 500
-connect = 127.0.0.1:42
+connect = 127.0.0.1:22
 
 [openvpn]
 accept = 990
@@ -438,14 +451,9 @@ Documentation=https://t.me/zerossl
 After=syslog.target network-online.target
 
 [Service]
-User=roit
+User=root
 Type=forking
-ExecStart= 
 ExecStart=/usr/local/bin/stunnel5 run -config /etc/stunnel5/stunnel5.conf
-Restart=on-failure
-RestartPreventExitStatus=23
-LimitNPROC=10000
-LimitNOFILE=1000000
 
 [Install]
 WantedBy=multi-user.target
