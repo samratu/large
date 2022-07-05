@@ -28,10 +28,10 @@ chronyc tracking -v
 date
 
 # / / Ambil Xray Core Version Terbaru
-#latest_version="$(curl -s https://api.github.com/repos/XTLS/Xray-core/releases | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
+latest_version="$(curl -s https://api.github.com/repos/XTLS/Xray-core/releases | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
 
 # / / Installation Xray Core
-#xraycore_link="https://github.com/XTLS/Xray-core/releases/download/v$latest_version/xray-linux-64.zip"
+xraycore_link="https://github.com/XTLS/Xray-core/releases/download/v$latest_version/xray-linux-64.zip"
 
 # / / Make Main Directory
 mkdir -p /usr/bin/xray
@@ -40,16 +40,16 @@ mkdir -p /etc/xray
 
 # / / Unzip Xray Linux 64
 cd `mktemp -d`
-#curl -sL "$xraycore_link" -o xray.zip
-#unzip -q xray.zip && rm -rf xray.zip
-#mv xray /usr/local/bin/xray
+curl -sL "$xraycore_link" -o xray.zip
+unzip -q xray.zip && rm -rf xray.zip
+mv xray /usr/local/bin/xray
 chmod +x /usr/local/bin/xray
 
 # Make Folder XRay
 mkdir -p /var/log/xray/
 uuid=$(cat /proc/sys/kernel/random/uuid)
 
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u root
+#bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u root
 
 cd /root/
 mkdir -p /usr/local/etc/xray
@@ -68,7 +68,7 @@ chown -R nobody:nogroup /etc/xray
 chown -R nobody:nogroup /usr/local/etc/xray
 chmod 644 /etc/ssl/private/privkey.pem
 chmod 644 /etc/ssl/private/fullchain.pem
-#+bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install-geodata
+bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install-geodata
 
 #sudo lsof -t -i tcp:80 -s tcp:listen | sudo xargs kill
 cd /root/
@@ -276,8 +276,6 @@ After=network.target nss-lookup.target
 
 [Service]
 User=root
-Type=simple 
-StandardError=journal
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 ExecStart=/usr/local/bin/xray run -config /etc/xray/xray.json
@@ -300,8 +298,6 @@ After=network.target nss-lookup.target
 
 [Service]
 User=root
-Type=simple 
-StandardError=journal
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 ExecStart=/usr/local/bin/xray run -config /etc/xray/xtrojan.json
@@ -324,8 +320,6 @@ After=network.target nss-lookup.target
 
 [Service]
 User=root
-Type=simple 
-StandardError=journal
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 ExecStart=/usr/local/bin/xray run -config /etc/xray/xvless.json
@@ -347,8 +341,6 @@ After=network.target nss-lookup.target
 
 [Service]
 User=root
-Type=simple 
-StandardError=journal
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 ExecStart=/usr/local/bin/xray run -config /usr/local/etc/xray/xvmess.json
@@ -371,8 +363,6 @@ After=network.target nss-lookup.target
 
 [Service]
 User=root
-Type=simple 
-StandardError=journal
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 ExecStart=/usr/local/bin/xray run -config /etc/xray/xss.json
@@ -395,8 +385,6 @@ After=network.target nss-lookup.target
 
 [Service]
 User=root
-Type=simple 
-StandardError=journal
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 ExecStart=/usr/local/bin/xray run -config /etc/xray/sstcp.json
@@ -419,8 +407,6 @@ After=network.target nss-lookup.target
 
 [Service]
 User=root
-Type=simple 
-StandardError=journal
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 ExecStart=/usr/local/bin/xray run -config /etc/xray/trojangrpc.json
@@ -443,8 +429,6 @@ After=network.target nss-lookup.target
 
 [Service]
 User=root
-Type=simple 
-StandardError=journal
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 ExecStart=/usr/local/bin/xray run -config /usr/local/etc/xray/vlessquic.json
@@ -460,7 +444,10 @@ END
 
 # // Enable & Start Service
 # Accept port Xray
-
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 443 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 443 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 80 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 80 -j ACCEPT
 sudo iptables -I INPUT -p tcp --dport 80 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
 sudo iptables -I INPUT -p udp --dport 80 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
 sudo iptables -I OUTPUT -p tcp --sport 80 -m conntrack --ctstate ESTABLISHED -j ACCEPT
@@ -620,12 +607,11 @@ After=network.target nss-lookup.target
 
 [Service]
 User=root
-CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-NoNewPrivileges=true
-ExecStart=/usr/local/bin/trojan-go -config /etc/trojan-go/config.json
+ExecStart=/usr/local/bin/trojan-go run -config /etc/trojan-go/config.json
 Restart=on-failure
 RestartPreventExitStatus=23
+LimitNPROC=10000
+LimitNOFILE=1000000
 
 [Install]
 WantedBy=multi-user.target
@@ -636,14 +622,13 @@ cat > /etc/trojan-go/uuid.txt << END
 $uuid
 
 # restart
-sudo iptables -A INPUT -p tcp --dport 2053 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
-sudo iptables -A INPUT -p udp --dport 2053 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2053 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2053 -j ACCEPT
 sudo iptables-save > /etc/iptables.up.rules
 sudo iptables-restore -t < /etc/iptables.up.rules
 sudo netfilter-persistent save
 sudo netfilter-persistent reload
-firewall-cmd --zone=public --add-port=80/tcp --permanent 
-firewall-cmd --zone=public --add-port=443/tcp --permanent
+
 systemctl daemon-reload
 systemctl stop trojan-go
 systemctl start trojan-go
