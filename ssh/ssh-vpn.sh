@@ -346,7 +346,7 @@ chmod 644 /etc/default/sslh
 #rm -f /etc/default/sslh
 
 # Settings SSLH
-#cat > /etc/default/sslh <<-END
+cat > /etc/default/sslh <<-END
 # Default options for sslh initscript
 # sourced by /etc/init.d/sslh
 
@@ -358,15 +358,31 @@ chmod 644 /etc/default/sslh
 # Once configuration ready, you *must* set RUN to yes here
 # and try to start sslh (standalone mode only)
 
-#RUN=yes
+RUN=yes
 
 # binary to use: forked (sslh) or single-thread (sslh-select) version
 # systemd users: don't forget to modify /lib/systemd/system/sslh.service
 DAEMON=/usr/sbin/sslh
 
-#DAEMON_OPTS="--user sslh --listen 0.0.0.0:42 --ssl 127.0.0.1:500 --ssh 127.0.0.1:42 --dropbear 127.0.0.1:300 --openvpn 127.0.0.1:1194 --http 127.0.0.1:80 --pidfile /var/run/sslh/sslh.pid -n"
+DAEMON_OPTS="--user sslh --listen 0.0.0.0:42 --ssl 127.0.0.1:500 --ssh 127.0.0.1:42 --dropbear 127.0.0.1:300 --openvpn 127.0.0.1:1194 --http 127.0.0.1:80 --pidfile /var/run/sslh/sslh.pid -n"
 
-#END
+END
+
+# Service SSLH systemctl restart sslh
+cat > /lib/systemd/system/sslh.service << END
+[Unit]
+Description=SSH MULTIPLEXLER 
+After=network.target
+Documentation=http://t.me/zerossl
+
+[Service]
+EnvironmentFile=/etc/default/sslh
+ExecStart=/usr/sbin/sslh --foreground $DAEMON_OPTS
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target
+END
 
 # Restart Service SSLH
 systemctl daemon-reload
