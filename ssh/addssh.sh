@@ -42,8 +42,9 @@ hariini=`date -d "0 days" +"%Y-%m-%d"`
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 systemctl restart ws-tls
 systemctl restart ws-nontls
+systemctl restartws-ovpn
 systemctl restart ssh-ohp
-systemctl restart stunnel4
+systemctl restart stunnel5
 systemctl restart dropbear-ohp
 systemctl restart openvpn-ohp
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
