@@ -465,11 +465,18 @@ sudo iptables -I INPUT -p tcp --dport 80 -m conntrack --ctstate NEW,ESTABLISHED 
 sudo iptables -I INPUT -p udp --dport 80 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
 sudo iptables -I OUTPUT -p tcp --sport 80 -m conntrack --ctstate ESTABLISHED -j ACCEPT
 sudo iptables -I OUTPUT -p udp --sport 80 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-#sudo iptables -A INPUT -p tcp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
-#sudo iptables -A INPUT -p udp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
-#sudo iptables -A OUTPUT -p tcp --sport 443 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-#sudo iptables -A OUTPUT -p udp --sport 443 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-
+sudo iptables -I INPUT -p tcp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+sudo iptables -I INPUT -p udp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+sudo iptables -I OUTPUT -p tcp --sport 443 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+sudo iptables -I OUTPUT -p udp --sport 443 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+sudo iptables-save > /etc/iptables.up.rules
+sudo iptables-restore -t < /etc/iptables.up.rules
+sudo netfilter-persistent save
+sudo netfilter-persistent reload
+firewall-cmd --zone=public --add-port=80/tcp --permanent 
+firewall-cmd --zone=public --add-port=443/tcp --permanent
+firewall-cmd --zone=public --add-port=80/udpp --permanent 
+firewall-cmd --zone=public --add-port=443/udp --permanent
 systemctl daemon-reload
 systemctl stop xray
 systemctl enable xray
@@ -629,7 +636,14 @@ cat > /etc/trojan-go/uuid.txt << END
 $uuid
 
 # restart
-
+sudo iptables -A INPUT -p tcp --dport 2053 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+sudo iptables -A INPUT -p udp --dport 2053 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+sudo iptables-save > /etc/iptables.up.rules
+sudo iptables-restore -t < /etc/iptables.up.rules
+sudo netfilter-persistent save
+sudo netfilter-persistent reload
+firewall-cmd --zone=public --add-port=80/tcp --permanent 
+firewall-cmd --zone=public --add-port=443/tcp --permanent
 systemctl daemon-reload
 systemctl stop trojan-go
 systemctl start trojan-go
