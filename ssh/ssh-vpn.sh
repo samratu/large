@@ -322,28 +322,9 @@ echo "/bin/false" >> /etc/shells
 echo "/usr/sbin/nologin" >> /etc/shells
 /etc/init.d/dropbear restart
 
-# install squid
-cd
-apt -y install squid3
-wget -O /etc/squid/squid.conf "https://${wisnuvpn}/squid3.conf"
-sed -i $MYIP2 /etc/squid/squid.conf
-cd /root/
-wget -q -O sslh.zip "https://${wisnuvpn}/sslh.zip"
-unzip -o sslh.zip
-cd /root/sslh
-chmod +x configure
-./configure
-make
-make install
-cd /root
-rm -r -f sslh
-rm -f sslh.zip
-mkdir -p /etc/default/sslh
-chmod 644 /etc/default/sslh
-
 # Install SSLH
-#apt -y install sslh
-#rm -f /etc/default/sslh
+apt -y install sslh
+rm -f /etc/default/sslh
 
 # Settings SSLH
 cat > /etc/default/sslh <<-END
@@ -364,7 +345,7 @@ RUN=yes
 # systemd users: don't forget to modify /lib/systemd/system/sslh.service
 DAEMON=/usr/sbin/sslh
 
-DAEMON_OPTS="--user sslh --listen 0.0.0.0:42 --ssl 127.0.0.1:500 --ssh 127.0.0.1:42 --dropbear 127.0.0.1:300 --openvpn 127.0.0.1:1194 --http 127.0.0.1:80 --pidfile /var/run/sslh/sslh.pid -n"
+DAEMON_OPTS="--user sslh --listen 0.0.0.0:2087 --ssl 127.0.0.1:500 --ssh 127.0.0.1:22 --ssh 127.0.0.1:300 --openvpn 127.0.0.1:1194 --ssh 127.0.0.1:200 --pidfile /var/run/sslh/sslh.pid -n"
 
 END
 
@@ -372,7 +353,7 @@ END
 cat > /lib/systemd/system/sslh.service << END
 [Unit]
 Description=SSH MULTIPLEXLER 
-After=network.target
+After=syslog.target network-online.target
 Documentation=http://t.me/zerossl
 
 [Service]
@@ -469,7 +450,7 @@ After=syslog.target network-online.target
 [Service]
 User=root
 Type=forking
-ExecStart=/usr/local/bin/stunnel5 run -config /etc/stunnel5/stunnel5.conf
+ExecStart=/usr/local/bin/stunnel5 run /etc/stunnel5/stunnel5.conf
 
 [Install]
 WantedBy=multi-user.target
