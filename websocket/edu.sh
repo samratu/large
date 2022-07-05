@@ -35,8 +35,7 @@ CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
 ExecStart=/usr/bin/python -O /usr/local/bin/ws-nontls 2086
-LimitNOFILE=51200 
-Restart=on-failure 
+Restart=on-failure
 RestartSec=1s
 
 [Install]
@@ -65,8 +64,7 @@ CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
 ExecStart=/usr/bin/python -O /usr/local/bin/ovpnws 8080
-LimitNOFILE=51200 
-Restart=on-failure 
+Restart=on-failure
 RestartSec=1s
 
 [Install]
@@ -95,8 +93,7 @@ CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
 ExecStart=/usr/bin/python -O /usr/local/bin/ws-tls 2087
-LimitNOFILE=51200 
-Restart=on-failure 
+Restart=on-failure
 RestartSec=1s
 
 [Install]
@@ -125,8 +122,7 @@ CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
 ExecStart=/usr/bin/python -O /usr/local/bin/wstunnel
-LimitNOFILE=51200 
-Restart=on-failure 
+Restart=on-failure
 RestartSec=1s
 
 [Install]
@@ -154,8 +150,7 @@ CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
 ExecStart=/usr/bin/python -O /usr/local/bin/sshws 300
-LimitNOFILE=51200 
-Restart=on-failure 
+Restart=on-failure
 RestartSec=1s
 
 [Install]
