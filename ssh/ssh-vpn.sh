@@ -439,10 +439,14 @@ Documentation=https://t.me/zerossl
 After=syslog.target network-online.target
 
 [Service]
+User=roit
 Type=forking
-ExecStart=/usr/local/wisnucs/stunnel5 /etc/stunnel5/stunnel5.conf
+ExecStart= 
+ExecStart=/usr/local/bin/stunnel5 run -config /etc/stunnel5/stunnel5.conf
 Restart=on-failure
-RestartSec=1s
+RestartPreventExitStatus=23
+LimitNPROC=10000
+LimitNOFILE=1000000
 
 [Install]
 WantedBy=multi-user.target
@@ -456,7 +460,7 @@ wget -q -O /etc/init.d/stunnel5 "https://${wisnuvpnnnn}/stunnel5.init"
 chown -R nobody:nogroup /etc/stunnel5
 chmod 644 /etc/stunnel5/stunnel5.pem
 chmod +x /etc/init.d/stunnel5
-cp /usr/local/bin/stunnel /usr/local/wisnucs/stunnel5
+cp /usr/local/bin/stunnel /usr/local/bin/stunnel5
 
 # Remove File
 rm -r -f /usr/local/share/doc/stunnel/
