@@ -4,7 +4,7 @@ import socket, threading, thread, select, signal, sys, time, getopt
 # Listen
 LISTENING_ADDR = '0.0.0.0'
 LISTENING_PORT = sys.argv[1]
-LISTENING_PORT = 8080
+
 # Pass
 PASS = ''
 
@@ -12,7 +12,7 @@ PASS = ''
 BUFLEN = 4096 * 4
 TIMEOUT = 60
 DEFAULT_HOST = '127.0.0.1:1194'
-RESPONSE = 'HTTP/1.1 520 <b><font color="green">SUN AMATAK AJIKU SI JARAN GOYANG TAK GOYANG ING TENGAH LATAR CEMETHIKU SODHO LANANG SAKING SWARGO TAK SABETAKE GUNUNG JUGRUG TAK SABETAKE SEGORO ASAT TAK SABETAKE MARANG ATINE SI JABANG BAYI PET SIDHO EDAN ORA EDAN SIDHO GENDENG ORA GENDENG ORA MARI MARI YEN ORA INGSUN SING NAMBANI </font></b>\r\n\r\nContent-Length: 104857600000\r\n\r\n'
+RESPONSE = 'HTTP/1.1 101 Switching Protocols\r\n\r\nContent-Length: 104857600000\r\n\r\n'
 
 class Server(threading.Thread):
     def __init__(self, host, port):
