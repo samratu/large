@@ -345,7 +345,7 @@ RUN=yes
 # systemd users: don't forget to modify /lib/systemd/system/sslh.service
 DAEMON=/usr/sbin/sslh
 
-DAEMON_OPTS="--user sslh --listen 0.0.0.0:2087 --ssl 127.0.0.1:500 --ssh 127.0.0.1:22 --ssh 127.0.0.1:300 --openvpn 127.0.0.1:1194 --ssh 127.0.0.1:200 --pidfile /var/run/sslh/sslh.pid -n"
+DAEMON_OPTS="--user sslh --listen 0.0.0.0:2087 --ssl 127.0.0.1:500 --ssh 127.0.0.1:22 --ssh 127.0.0.1:300 --openvpn 127.0.0.1:1194 --http 127.0.0.1:2086 --pidfile /var/run/sslh/sslh.pid -n"
 
 END
 
@@ -427,7 +427,7 @@ socket = r:TCP_NODELAY=1
 
 [dropbear]
 accept = 600
-connect = 127.0.0.1:200
+connect = 127.0.0.1:300
 
 [openssh]
 accept = 500
@@ -450,7 +450,7 @@ After=syslog.target network-online.target
 [Service]
 User=root
 Type=forking
-ExecStart=/usr/local/bin/stunnel5 run /etc/stunnel5/stunnel5.conf
+ExecStart=/usr/local/bin/stunnel5 /etc/stunnel5/stunnel5.conf
 
 [Install]
 WantedBy=multi-user.target
