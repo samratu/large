@@ -387,6 +387,14 @@ rm -f stunnel5.zip
 mkdir -p /etc/stunnel5
 chmod 644 /etc/stunnel5
 
+useradd -s /bin/false -r stunnel 
+mkdir /var/lib/stunnel 
+chown stunnel:stunnel /var/lib/stunnel 
+cp /usr/local/share/doc/stunnel/examples/stunnel.init /etc/init.d/stunnel5 
+chmod 755 /etc/init.d/stunnel5 
+cp /usr/local/share/doc/stunnel/examples/stunnel.service /etc/systemd/system/stunnel5.service 
+systemctl start stunnel5 
+systemctl enable stunnel5
 # Download Config Stunnel5
 cat > /etc/stunnel5/stunnel5.conf <<-END
 cert = /etc/ssl/private/fullchain.pem
@@ -402,7 +410,7 @@ connect = 127.0.0.1:200
 
 [openssh]
 accept = 777
-connect = 127.0.0.1:443
+connect = 127.0.0.1:22
 
 [openvpn]
 accept = 990
@@ -442,8 +450,8 @@ chmod +x /etc/init.d/stunnel5
 cp /usr/local/bin/stunnel /usr/local/wisnucs/stunnel5
 
 # Remove File
-rm -r -f /usr/local/share/doc/stunnel/
-rm -r -f /usr/local/etc/stunnel/
+rm -r -f /usr/local/share/doc/stunnel
+rm -r -f /usr/local/etc/stunnel
 rm -f /usr/local/bin/stunnel
 rm -f /usr/local/bin/stunnel3
 rm -f /usr/local/bin/stunnel4
