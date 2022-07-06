@@ -187,5 +187,4 @@ echo " 🔰 GANDRING & WISNU SCRIPT" | tee -a log-install.txt
 echo "Installation Log --> /root/log-install.txt" |tee -a log-install.txt
 echo "reboot setelah 15 detik"
 sleep 15
-rm -f setup.sh
 reboot
