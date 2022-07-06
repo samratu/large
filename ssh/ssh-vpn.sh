@@ -301,7 +301,7 @@ sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7900 --max-c
 
 # setting port ssh
 sed -i 's/Port 22/Port 22/g' /etc/ssh/sshd_config
-sed -i '/Port 22/a Port 2253' /etc/ssh/sshd_config
+sed -i "$/22/42/g" /etc/ssh/sshd_config
 echo "Port 22" >> /etc/ssh/sshd_config
 echo "Port 42" >> /etc/ssh/sshd_config
 /etc/init.d/ssh restart
@@ -344,7 +344,7 @@ RUN=yes
 # systemd users: don't forget to modify /lib/systemd/system/sslh.service
 DAEMON=/usr/sbin/sslh
 
-DAEMON_OPTS="--user sslh --listen 0.0.0.0:443 --ssl 127.0.0.1:777 --ssh 127.0.0.1:109 --openvpn 127.0.0.1:1194 --http 127.0.0.1:8080 --pidfile /var/run/sslh/sslh.pid -n"
+DAEMON_OPTS="--user sslh --listen 0.0.0.0:443 --ssl 127.0.0.1:777 --ssh 127.0.0.1:22 --ssh 127.0.0.1:200 --openvpn 127.0.0.1:1194 --http 127.0.0.1:8080 --pidfile /var/run/sslh/sslh.pid -n"
 
 END
 
@@ -397,8 +397,8 @@ socket = l:TCP_NODELAY=1
 socket = r:TCP_NODELAY=1
 
 [dropbear]
-accept = 2087
-connect = 127.0.0.1:109
+accept = 600
+connect = 127.0.0.1:200
 
 [openssh]
 accept = 777
