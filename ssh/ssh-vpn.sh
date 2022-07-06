@@ -344,29 +344,11 @@ RUN=yes
 # systemd users: don't forget to modify /lib/systemd/system/sslh.service
 DAEMON=/usr/sbin/sslh
 
-DAEMON_OPTS="--user sslh --listen 0.0.0.0:443 --ssl 127.0.0.1:200 --ssh 127.0.0.1:300 --openvpn 127.0.0.1:1194 --http 127.0.0.1:910 --pidfile /var/run/sslh/sslh.pid -n"
+DAEMON_OPTS="--user sslh --listen 0.0.0.0:443 --ssl 127.0.0.1:777 --ssh 127.0.0.1:109 --openvpn 127.0.0.1:1194 --http 127.0.0.1:2086 --pidfile /var/run/sslh/sslh.pid -n"
 
 END
 
-# Service SSLH systemctl restart sslh
-#cat > /lib/systemd/system/sslh.service << END
-#[Unit]
-#Description=SSH MULTIPLEXLER 
-#After=syslog.target network-online.target
-#Documentation=http://t.me/zerossl
-
-#[Service]
-#EnvironmentFile=/etc/default/sslh
-#ExecStart=/usr/sbin/sslh --foreground $DAEMON_OPTS
-#KillMode=process
-
-#[Install]
-#WantedBy=multi-user.target
-#END
-
 # Restart Service SSLH
-systemctl daemon-reload
-systemctl enable sslh
 service sslh restart
 systemctl restart sslh
 /etc/init.d/sslh restart
@@ -390,9 +372,6 @@ systemctl enable vnstat
 rm -f /root/vnstat-2.6.tar.gz
 rm -rf /root/vnstat-2.6
 
-mkdir -p /usr/local/wisnucs
-mkdir -p /etc/wisnucs
-
 # install stunnel 5 
 cd /root/
 wget -q -O stunnel5.zip "https://${wisnuvpnnnn}/stunnel5.zip"
@@ -408,29 +387,22 @@ rm -f stunnel5.zip
 mkdir -p /etc/stunnel5
 chmod 644 /etc/stunnel5
 
-# make a certificate
-
-#openssl genrsa -out key.pem 2048
-#openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
-#-subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
-#cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
-
 # Download Config Stunnel5
 cat > /etc/stunnel5/stunnel5.conf <<-END
-cert = /etc/ssl/private/fullchain.pem
-key = /etc/ssl/private/privkey.pem
+cert = /etc/xray/xray.crt
+key = /etc/xray/xray.key
 client = no
 socket = a:SO_REUSEADDR=1
 socket = l:TCP_NODELAY=1
 socket = r:TCP_NODELAY=1
 
 [dropbear]
-accept = 600
-connect = 127.0.0.1:300
+accept = 2087
+connect = 127.0.0.1:109
 
 [openssh]
-accept = 200
-connect = 127.0.0.1:22
+accept = 777
+connect = 127.0.0.1:443
 
 [openvpn]
 accept = 990
@@ -438,22 +410,26 @@ connect = 127.0.0.1:1194
 
 END
 
+# make a certificate
+#openssl genrsa -out key.pem 2048
+#openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
+#-subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
+#cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
+
 # Service Stunnel5 systemctl restart stunnel5
 cat > /etc/systemd/system/stunnel5.service << END
 [Unit]
 Description=Stunnel5 Service
 Documentation=https://stunnel.org
-Documentation=https://t.me/zerossl
+Documentation=https://github.com/Akbar218
 After=syslog.target network-online.target
 
 [Service]
-User=root
-Type=forking
 ExecStart=/usr/local/bin/stunnel5 /etc/stunnel5/stunnel5.conf
+Type=forking
 
 [Install]
 WantedBy=multi-user.target
-
 END
 
 # Service Stunnel5 /etc/init.d/stunnel5
