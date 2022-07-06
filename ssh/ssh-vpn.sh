@@ -349,6 +349,8 @@ DAEMON_OPTS="--user sslh --listen 0.0.0.0:443 --ssl 127.0.0.1:500 --ssh 127.0.0.
 END
 
 # Restart Service SSLH
+systemctl daemon-reload
+systemctl enable sslh
 service sslh restart
 systemctl restart sslh
 /etc/init.d/sslh restart
@@ -387,12 +389,6 @@ rm -f stunnel5.zip
 mkdir -p /etc/stunnel5
 chmod 644 /etc/stunnel5
 
-useradd -s /bin/false -r stunnel 
-mkdir /var/lib/stunnel 
-chown stunnel:stunnel /var/lib/stunnel 
-
-systemctl start stunnel5 
-systemctl enable stunnel5
 # Download Config Stunnel5
 cat > /etc/stunnel5/stunnel5.conf <<-END
 cert = /etc/ssl/private/fullchain.pem
@@ -456,6 +452,7 @@ rm -f /usr/local/bin/stunnel4
 #rm -f /usr/local/bin/stunnel5
 
 # Restart Stunnel 5
+systemctl daemon-reload
 systemctl stop stunnel5
 systemctl enable stunnel5
 systemctl start stunnel5
