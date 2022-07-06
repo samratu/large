@@ -390,9 +390,7 @@ chmod 644 /etc/stunnel5
 useradd -s /bin/false -r stunnel 
 mkdir /var/lib/stunnel 
 chown stunnel:stunnel /var/lib/stunnel 
-cp /usr/local/share/doc/stunnel/examples/stunnel.init /etc/init.d/stunnel5 
-chmod 755 /etc/init.d/stunnel5 
-cp /usr/local/share/doc/stunnel/examples/stunnel.service /etc/systemd/system/stunnel5.service 
+
 systemctl start stunnel5 
 systemctl enable stunnel5
 # Download Config Stunnel5
