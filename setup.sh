@@ -104,7 +104,7 @@ systemctl enable autosett
 echo " "
 echo "Instalasi Telah Selesai"echo""
 echo "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" |tee -a log-install.txt 
-echo "\E[44;1;41m           🔰 SETUP SERVER BY ZEROSSL 🔰            \E[0m"   |tee -a log-install.txt
+echo "\E[44;1;41m           🔰 SETUP SERVER BY ZEROSSL 🔰            \E[0m"|tee -a log-install.txt
 echo "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" |tee -a log-install.txt
 echo " 🔰 >>> Service & Port" |tee -a log-install.txt
 echo " 🔰 PORT OPENSSH : 22" |tee -a log-install.txt
@@ -170,14 +170,14 @@ echo " 🔰 SHADOWSOCKS 2022 WS NON TLS : 2086" |tee -a log-install.txt
 echo " 🔰 SHADOWSOCKS 2022 WS TLS : 2087" |tee -a log-install.txt
 echo " 🔰 SHADOWSOCKS 2022 GRPC : 2087" |tee -a log-install.txt
 echo " 🔰 XRAY MT PROTO : 111" |tee -a log-install.txt
-echo "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"  |tee -a log-install.txt
-echo " 🔰 >> Server Information & Other Features"                 |tee -a log-install.txt
-echo " 🔰 Timezone                : Asia/Jakarta"                 |tee -a log-install.txt
-echo " 🔰 Fail2Ban                : [ON]"                         |tee -a log-install.txt
-echo " 🔰 Dflate                  : [ON]"                         |tee -a log-install.txt
-echo " 🔰 IPtables                : [ON]"                         |tee -a log-install.txt
-echo " 🔰 Auto-Reboot             : [ON]"                         |tee -a log-install.txt
-echo " 🔰 IPv6                    : [OFF]"                        |tee -a log-install.txt
+echo "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" |tee -a log-install.txt
+echo " 🔰 >> Server Information & Other Features" |tee -a log-install.txt
+echo " 🔰 Timezone                : Asia/Jakarta" |tee -a log-install.txt
+echo " 🔰 Fail2Ban                : [ON]" |tee -a log-install.txt
+echo " 🔰 Dflate                  : [ON]" |tee -a log-install.txt
+echo " 🔰 IPtables                : [ON]" |tee -a log-install.txt
+echo " 🔰 Auto-Reboot             : [ON]" |tee -a log-install.txt
+echo " 🔰 IPv6                    : [OFF]" |tee -a log-install.txt
 echo " 🔰 Autoreboot On 05.00 GMT +7" | tee -a log-install.txt
 echo " 🔰 Autobackup Data" | tee -a log-install.txt
 echo " 🔰 Restore Data" | tee -a log-install.txt
@@ -187,4 +187,5 @@ echo " 🔰 GANDRING & WISNU SCRIPT" | tee -a log-install.txt
 echo "Installation Log --> /root/log-install.txt" |tee -a log-install.txt
 echo "reboot setelah 15 detik"
 sleep 15
+rm -f setup.sh
 reboot
