@@ -101,13 +101,9 @@ apt-get install grep -y &>/dev/null
 apt install python3-pip -y
 apt-add-repository universe -y &>/dev/null
 apt-get install software-properties-common -y &>/dev/null
-apt install ruby -y
 apt install python -y
 apt install privoxy -y
 apt install make -y
-apt install cowsay -y
-apt install figlet -y
-apt install lolcat -y
 apt install cmake -y
 apt install ncurses-utils -y
 apt install coreutils -y
@@ -134,10 +130,8 @@ apt install libz-dev -y
 apt install gcc -y
 apt install g++ -y
 apt install libreadline-dev -y
-apt install openssl -y
 apt install zlib1g-dev -y
 apt install libssl-dev -y
-gem install lolcat
 apt install jq curl -y
 apt install dnsutils jq -y
 apt-get install tcpdump -y
@@ -311,6 +305,11 @@ sed -i '/Port 22/a Port 2253' /etc/ssh/sshd_config
 echo "Port 22" >> /etc/ssh/sshd_config
 echo "Port 42" >> /etc/ssh/sshd_config
 /etc/init.d/ssh restart
+# install squid
+cd
+apt -y install squid3
+wget -O /etc/squid/squid.conf "https://${wisnuvpn}/squid3.conf"
+sed -i $MYIP2 /etc/squid/squid.conf
 
 # install dropbear
 suxo apt-get update -y
@@ -345,7 +344,7 @@ RUN=yes
 # systemd users: don't forget to modify /lib/systemd/system/sslh.service
 DAEMON=/usr/sbin/sslh
 
-DAEMON_OPTS="--user sslh --listen 0.0.0.0:443 --ssl 127.0.0.1:500 --ssh 127.0.0.1:300 --openvpn 127.0.0.1:1194 --http 127.0.0.1:200 --pidfile /var/run/sslh/sslh.pid -n"
+DAEMON_OPTS="--user sslh --listen 0.0.0.0:443 --ssl 127.0.0.1:200 --ssh 127.0.0.1:300 --openvpn 127.0.0.1:1194 --http 127.0.0.1:910 --pidfile /var/run/sslh/sslh.pid -n"
 
 END
 
@@ -430,8 +429,8 @@ accept = 600
 connect = 127.0.0.1:300
 
 [openssh]
-accept = 500
-connect = 127.0.0.1:443
+accept = 200
+connect = 127.0.0.1:22
 
 [openvpn]
 accept = 990
