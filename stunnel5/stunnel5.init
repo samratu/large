@@ -1,4 +1,4 @@
-#! /bin/sh -e
+#!/bin/sh -e
 ### BEGIN INIT INFO
 # Provides:          stunnel
 # Required-Start:    $local_fs $remote_fs
