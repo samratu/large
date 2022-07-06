@@ -344,7 +344,7 @@ RUN=yes
 # systemd users: don't forget to modify /lib/systemd/system/sslh.service
 DAEMON=/usr/sbin/sslh
 
-DAEMON_OPTS="--user sslh --listen 0.0.0.0:443 --ssl 127.0.0.1:777 --ssh 127.0.0.1:109 --openvpn 127.0.0.1:1194 --http 127.0.0.1:2086 --pidfile /var/run/sslh/sslh.pid -n"
+DAEMON_OPTS="--user sslh --listen 0.0.0.0:443 --ssl 127.0.0.1:777 --ssh 127.0.0.1:109 --openvpn 127.0.0.1:1194 --http 127.0.0.1:8080 --pidfile /var/run/sslh/sslh.pid -n"
 
 END
 
@@ -425,7 +425,7 @@ Documentation=https://github.com/Akbar218
 After=syslog.target network-online.target
 
 [Service]
-ExecStart=/usr/local/bin/stunnel5 /etc/stunnel5/stunnel5.conf
+ExecStart=/usr/local/wisnucs/stunnel5 /etc/stunnel5/stunnel5.conf
 Type=forking
 
 [Install]
@@ -439,7 +439,7 @@ wget -q -O /etc/init.d/stunnel5 "https://${wisnuvpnnnn}/stunnel5.init"
 chown -R nobody:nogroup /etc/stunnel5
 chmod 644 /etc/stunnel5/stunnel5.pem
 chmod +x /etc/init.d/stunnel5
-cp /usr/local/bin/stunnel /usr/local/bin/stunnel5
+cp /usr/local/bin/stunnel /usr/local/wisnucs/stunnel5
 
 # Remove File
 rm -r -f /usr/local/share/doc/stunnel/
