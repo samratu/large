@@ -48,12 +48,14 @@ email=djarumpentol01@gmail.com
 wget -O /etc/pam.d/common-password "https://${wisnuvpn}/password"
 chmod +x /etc/pam.d/common-password
 
+# go to root
+cd
+
 # Edit file /etc/systemd/system/rc-local.service
 cat > /etc/systemd/system/rc-local.service <<-END
 [Unit]
 Description=/etc/rc.local
 ConditionPathExists=/etc/rc.local
-
 [Service]
 Type=forking
 ExecStart=/etc/rc.local start
@@ -61,10 +63,8 @@ TimeoutSec=0
 StandardOutput=tty
 RemainAfterExit=yes
 SysVStartPriority=99
-
 [Install]
 WantedBy=multi-user.target
-
 END
 
 # nano /etc/rc.local
@@ -79,33 +79,29 @@ END
 chmod +x /etc/rc.local
 
 # enable rc local
-systemctl daemon-reload
-systemctl enable rc-local.service
+systemctl enable rc-local
 systemctl start rc-local.service
+
+# disable ipv6
+echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6
+sed -i '$ i\echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6' /etc/rc.local
 
 #update
 apt update -y
 apt upgrade -y
 apt dist-upgrade -y
 apt-get remove --purge ufw firewalld -y
-apt-get install gawk -y &>/dev/null
 apt-get remove --purge exim4 -y
-apt-get purge apache2* -y
-rm -rf /etc/apache2
-dpkg --configure -a &>/dev/null
+
 # install wget and curl
 apt -y install wget curl
+apt -y install net-tools
 
 # Install Requirements Tools
-apt-get install grep -y &>/dev/null
-apt install python3-pip -y
-apt-add-repository universe -y &>/dev/null
-apt-get install software-properties-common -y &>/dev/null
+apt install ruby -y
 apt install python -y
-apt install privoxy -y
 apt install make -y
 apt install cmake -y
-apt install ncurses-utils -y
 apt install coreutils -y
 apt install rsyslog -y
 apt install net-tools -y
@@ -115,7 +111,6 @@ apt install nano -y
 apt install sed -y
 apt install gnupg -y
 apt install gnupg1 -y
-apt install gnupg2 -y
 apt install bc -y
 apt install jq -y
 apt install apt-transport-https -y
@@ -132,148 +127,25 @@ apt install g++ -y
 apt install libreadline-dev -y
 apt install zlib1g-dev -y
 apt install libssl-dev -y
-apt install jq curl -y
-apt install dnsutils jq -y
-apt-get install tcpdump -y
-apt-get install dsniff -y
-apt install grepcidr -y
 apt install libssl1.0-dev -y
 apt install dos2unix -y
-# Privoxy Ports
-Privoxy_Port1=4000
-Privoxy_Port2=5000
-
- # Creating Privoxy server config using cat eof tricks
-cd
-cat <<'privoxy' > /etc/privoxy/config
-# My Privoxy Server Config
-user-manual /usr/share/doc/privoxy/user-manual
-confdir /etc/privoxy
-logdir /var/log/privoxy
-filterfile default.filter
-logfile logfile
-listen-address 127.0.0.1:4000
-listen-address 127.0.0.1:5000
-toggle 1
-enable-remote-toggle 0
-enable-remote-http-toggle 0
-enable-edit-actions 0
-enforce-blocks 0
-buffer-limit 4096
-enable-proxy-authentication-forwarding 1
-forwarded-connect-retries 1
-accept-intercepted-requests 1
-allow-cgi-request-crunching 1
-split-large-forms 0
-keep-alive-timeout 5
-tolerate-pipelining 1
-socket-timeout 300
-permit-access 0.0.0.0/0 IP-ADDRESS
-privoxy
-IP-ADDRESS=$MYIP
-
-#Setting machine's IP Address inside of our privoxy config(security that only allows this machine to use this proxy server)
-sed -i "s|IP-ADDRESS|$MYIP|g" /etc/privoxy/config
- 
-#Setting privoxy ports
-sed -i "s|Privoxy_Port1|$Privoxy_Port1|g" /etc/privoxy/config
-sed -i "s|Privoxy_Port2|$Privoxy_Port2|g" /etc/privoxy/config
 
 # set time GMT +7
 ln -fs /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
 
 # set locale
 sed -i 's/AcceptEnv/#AcceptEnv/g' /etc/ssh/sshd_config
-mkdir /ssl/xray
 
 # install
-
+apt-get --reinstall --fix-missing install -y bzip2 gzip coreutils wget screen rsyslog iftop htop net-tools zip unzip wget net-tools curl nano sed screen gnupg gnupg1 bc apt-transport-https build-essential dirmngr libxml-parser-perl neofetch git lsof
+echo "clear" >> .profile
 echo "neofetch" >> .profile
-echo "status" >> .profile
-sleep 1p
+
 # install webserver
-mkdir -p /etc/nginx/conf.d
 apt -y install nginx php php-fpm php-cli php-mysql libxml-parser-perl
-sudo pkill -f nginx & wait $!
-systemctl stop nginx
-sudo apt install gnupg2 ca-certificates lsb-release -y
-systemctl daemon-reload
-systemctl enable nginx
-touch /etc/nginx/conf.d/default.conf
-cat <<EOF >>/etc/nginx/conf.d/default.conf
-server {
-	listen 81;
-	listen [::]:81;
-	server_name ${domain};
-	# shellcheck disable=SC2154
-	return 301 https://${domain};
-}
-server {
-		listen 127.0.0.1:31300;
-		server_name _;
-		return 403;
-}
-server {
-	listen 127.0.0.1:31302 http2;
-	server_name ${domain};
-	root /usr/share/nginx/html;
-	location /s/ {
-    		add_header Content-Type text/plain;
-    		alias /etc/rare/config-url/;
-    }
-
-    location /xraygrpc {
-		client_max_body_size 0;
-#		keepalive_time 1071906480m;
-		keepalive_requests 4294967296;
-		client_body_timeout 1071906480m;
- 		send_timeout 1071906480m;
- 		lingering_close always;
- 		grpc_read_timeout 1071906480m;
- 		grpc_send_timeout 1071906480m;
-		grpc_pass grpc://127.0.0.1:31301;
-	}
-
-	location /xraytrojangrpc {
-		client_max_body_size 0;
-		# keepalive_time 1071906480m;
-		keepalive_requests 4294967296;
-		client_body_timeout 1071906480m;
- 		send_timeout 1071906480m;
- 		lingering_close always;
- 		grpc_read_timeout 1071906480m;
- 		grpc_send_timeout 1071906480m;
-		grpc_pass grpc://127.0.0.1:31304;
-	}
-}
-server {
-	listen 127.0.0.1:31300;
-	server_name ${domain};
-	root /usr/share/nginx/html;
-	location /s/ {
-		add_header Content-Type text/plain;
-		alias /etc/rare/config-url/;
-	}
-	location / {
-		add_header Strict-Transport-Security "max-age=15552000; preload" always;
-	}
-}
-EOF
-mkdir /etc/systemd/system/nginx.service.d
-printf "[Service]\nExecStartPost=/bin/sleep 0.1\n" > /etc/systemd/system/nginx.service.d/override.conf
-rm /etc/nginx/conf.d/default.conf
-systemctl daemon-reload
-service nginx restart
-cd
-rm -rf /usr/share/nginx/html
-#wget -q -P /usr/share/nginx https://raw.githubusercontent.com/samratu/large/file/html.zip 
-#unzip -o /usr/share/nginx/html.zip -d /usr/share/nginx/html 
-#rm -f /usr/share/nginx/html.zip*
-
-apt -y install nginx php php-fpm php-cli php-mysql libxml-parser-perl
-rm /etc/nginx/sites-enabled
-rm /etc/nginx/sites-available
-#curl https://${wisnuvpn}/nginx.conf > /etc/nginx/nginx.conf
+rm /etc/nginx/sites-enabled/default
+rm /etc/nginx/sites-available/default
+curl https://${wisnuvpn}/nginx.conf > /etc/nginx/nginx.conf
 curl https://${wisnuvpn}/vps.conf > /etc/nginx/conf.d/vps.conf
 sed -i 's/listen = \/var\/run\/php-fpm.sock/listen = 127.0.0.1:9000/g' /etc/php/fpm/pool.d/www.conf
 useradd -m vps;
@@ -282,8 +154,9 @@ echo "<?php phpinfo() ?>" > /home/vps/public_html/info.php
 chown -R www-data:www-data /home/vps/public_html
 chmod -R g+rw /home/vps/public_html
 cd /home/vps/public_html
-wget -O /home/vps/public_html/index.html "https://${wisnuvpn}/index.html"
+wget -O /home/vps/public_html/index.html "https://${wisnuvpn}/index.html1"
 /etc/init.d/nginx restart
+cd
 
 # install badvpn
 cd
@@ -292,34 +165,32 @@ chmod +x /usr/bin/badvpn-udpgw
 sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 500' /etc/rc.local
 sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 500' /etc/rc.local
 sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300 --max-clients 500' /etc/rc.local
-sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7400 --max-clients 500' /etc/rc.local
-sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7500 --max-clients 500' /etc/rc.local
-sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7600 --max-clients 500' /etc/rc.local
-sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7700 --max-clients 500' /etc/rc.local
-sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7800 --max-clients 500' /etc/rc.local
-sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7900 --max-clients 500' /etc/rc.local
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 500
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 500
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300 --max-clients 500
+
 
 # setting port ssh
 sed -i 's/Port 22/Port 22/g' /etc/ssh/sshd_config
-sed -i "$/22/42/g" /etc/ssh/sshd_config
+sed -i '/Port 22/a Port 2253' /etc/ssh/sshd_config
 echo "Port 22" >> /etc/ssh/sshd_config
 echo "Port 42" >> /etc/ssh/sshd_config
 /etc/init.d/ssh restart
-# install squid
-cd
-apt -y install squid3
-wget -O /etc/squid/squid.conf "https://${wisnuvpn}/squid3.conf"
-sed -i $MYIP2 /etc/squid/squid.conf
 
 # install dropbear
-suxo apt-get update -y
-apt install dropbear -y
+apt -y install dropbear
 sed -i 's/NO_START=1/NO_START=0/g' /etc/default/dropbear
-sed -i 's/DROPBEAR_PORT=22/DROPBEAR_PORT=300/g' /etc/default/dropbear
-sed -i 's/DROPBEAR_EXTRA_ARGS=/DROPBEAR_EXTRA_ARGS="-p 200 -p 1153"/g' /etc/default/dropbear
+sed -i 's/DROPBEAR_PORT=22/DROPBEAR_PORT=143/g' /etc/default/dropbear
+sed -i 's/DROPBEAR_EXTRA_ARGS=/DROPBEAR_EXTRA_ARGS="-p 109 -p 1153"/g' /etc/default/dropbear
 echo "/bin/false" >> /etc/shells
 echo "/usr/sbin/nologin" >> /etc/shells
 /etc/init.d/dropbear restart
+
+# install squid (proxy nya aku matikan)
+cd
+#apt -y install squid3
+#wget -O /etc/squid/squid.conf "https://${wisnuvpn}/squid3.conf"
+#sed -i $MYIP2 /etc/squid/squid.conf
 
 # Install SSLH
 apt -y install sslh
@@ -344,13 +215,11 @@ RUN=yes
 # systemd users: don't forget to modify /lib/systemd/system/sslh.service
 DAEMON=/usr/sbin/sslh
 
-DAEMON_OPTS="--user sslh --listen 0.0.0.0:443 --ssl 127.0.0.1:500 --ssh 127.0.0.1:200 --openvpn 127.0.0.1:1194 --http 127.0.0.1:8080 --pidfile /var/run/sslh/sslh.pid -n"
+DAEMON_OPTS="--user sslh --listen 0.0.0.0:443 --ssl 127.0.0.1:777 --ssh 127.0.0.1:109 --openvpn 127.0.0.1:1194 --http 127.0.0.1:8880 --pidfile /var/run/sslh/sslh.pid -n"
 
 END
 
 # Restart Service SSLH
-systemctl daemon-reload
-systemctl enable sslh
 service sslh restart
 systemctl restart sslh
 /etc/init.d/sslh restart
@@ -391,19 +260,19 @@ chmod 644 /etc/stunnel5
 
 # Download Config Stunnel5
 cat > /etc/stunnel5/stunnel5.conf <<-END
-cert = /etc/ssl/private/fullchain.pem
-key = /etc/ssl/private/privkey.pem
+cert = /etc/xray/xray.crt
+key = /etc/xray/xray.key
 client = no
 socket = a:SO_REUSEADDR=1
 socket = l:TCP_NODELAY=1
 socket = r:TCP_NODELAY=1
 
 [dropbear]
-accept = 600
-connect = 127.0.0.1:200
+accept = 445
+connect = 127.0.0.1:109
 
 [openssh]
-accept = 500
+accept = 777
 connect = 127.0.0.1:443
 
 [openvpn]
@@ -427,7 +296,7 @@ Documentation=https://github.com/Akbar218
 After=syslog.target network-online.target
 
 [Service]
-ExecStart=/usr/local/wisnucs/stunnel5 /etc/stunnel5/stunnel5.conf
+ExecStart=/usr/local/bin/stunnel5 /etc/stunnel5/stunnel5.conf
 Type=forking
 
 [Install]
@@ -438,21 +307,19 @@ END
 wget -q -O /etc/init.d/stunnel5 "https://${wisnuvpnnnn}/stunnel5.init"
 
 # Ubah Izin Akses
-chown -R nobody:nogroup /etc/stunnel5
-chmod 644 /etc/stunnel5/stunnel5.pem
+chmod 600 /etc/stunnel5/stunnel5.pem
 chmod +x /etc/init.d/stunnel5
-cp /usr/local/bin/stunnel /usr/local/wisnucs/stunnel5
+cp /usr/local/bin/stunnel /usr/local/bin/stunnel5
 
 # Remove File
-rm -r -f /usr/local/share/doc/stunnel
-rm -r -f /usr/local/etc/stunnel
+rm -r -f /usr/local/share/doc/stunnel/
+rm -r -f /usr/local/etc/stunnel/
 rm -f /usr/local/bin/stunnel
 rm -f /usr/local/bin/stunnel3
 rm -f /usr/local/bin/stunnel4
 #rm -f /usr/local/bin/stunnel5
 
 # Restart Stunnel 5
-systemctl daemon-reload
 systemctl stop stunnel5
 systemctl enable stunnel5
 systemctl start stunnel5
@@ -481,7 +348,7 @@ echo "Banner /etc/issue.net" >>/etc/ssh/sshd_config
 sed -i 's@DROPBEAR_BANNER=""@DROPBEAR_BANNER="/etc/issue.net"@g' /etc/default/dropbear
 
 # Install BBR
-wget https://${wisnuvpn}/bbr.sh && chmod +x bbr.sh && ./bbr.sh
+#wget https://${wisnuvpn}/bbr.sh && chmod +x bbr.sh && ./bbr.sh
 
 # Ganti Banner
 wget -O /etc/issue.net "https://${wisnuvpn}/issue.net"
