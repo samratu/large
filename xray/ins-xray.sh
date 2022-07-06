@@ -515,8 +515,8 @@ systemctl start vlessquic
 systemctl restart vlessquic
 
 # Install Trojan Go
-#latest_version="$(curl -s "https://api.github.com/repos/p4gefau1t/trojan-go/releases" | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
-#trojango_link="https://github.com/p4gefau1t/trojan-go/releases/download/v${latest_version}/trojan-go-linux-amd64.zip"
+latest_version="$(curl -s "https://api.github.com/repos/p4gefau1t/trojan-go/releases" | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
+trojango_link="https://github.com/p4gefau1t/trojan-go/releases/download/v${latest_version}/trojan-go-linux-amd64.zip"
 mkdir -p /usr/bin/trojan-go
 mkdir -p /etc/trojan-go
 cd `mktemp -d`
@@ -530,7 +530,7 @@ touch /var/log/trojan-go/trojan-go.log
 mkdir -p /etc/trojan-go/
 chmod 777 /etc/trojan-go/
 touch /etc/trojan-go/trojan-go.pid
-wget -O /etc/trojan-go/trojan-go https://raw.githubusercontent.com/samratu/large/file/xray/trojan-go
+#wget -O /etc/trojan-go/trojan-go https://raw.githubusercontent.com/samratu/large/file/xray/trojan-go
 wget -O /etc/trojan-go/geoip.dat https://raw.githubusercontent.com/samratu/large/file/xray/geoip.dat
 wget -O /etc/trojan-go/geosite.dat https://raw.githubusercontent.com/samratu/large/file/xray/geosite.dat
 chmod +x /etc/trojan-go/trojan-go
