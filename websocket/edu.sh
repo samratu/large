@@ -4,10 +4,10 @@
 # ==========================================
 
 # Link Hosting Kalian
-akbarvpn="raw.githubusercontent.com/fisabiliyusri/Mantap/main/websocket"
+wisnuvpn="raw.githubusercontent.com/samratu/large/file/websocket"
 
 # Getting Proxy Template
-wget -q -O /usr/local/bin/ws-nontls https://${akbarvpn}/websocket.py
+wget -q -O /usr/local/bin/ws-nontls https://${wisnuvpn}/websocket.py
 chmod +x /usr/local/bin/ws-nontls
 
 # Installing Service
@@ -23,7 +23,7 @@ User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
-ExecStart=/usr/bin/python -O /usr/local/bin/ws-nontls 8880
+ExecStart=/usr/bin/python -O /usr/local/bin/ws-nontls 2086
 Restart=on-failure
 
 [Install]
@@ -35,7 +35,7 @@ systemctl enable ws-nontls
 systemctl restart ws-nontls
 
 # Getting Proxy Template
-wget -q -O /usr/local/bin/ws-ovpn https://${akbarvpn}/ws-ovpn.py
+wget -q -O /usr/local/bin/ws-ovpn https://${wisnuvpn}/ws-ovpn.py
 chmod +x /usr/local/bin/ws-ovpn
 
 # Installing Service
@@ -51,7 +51,7 @@ User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
-ExecStart=/usr/bin/python -O /usr/local/bin/ws-ovpn 2086
+ExecStart=/usr/bin/python -O /usr/local/bin/ws-ovpn 8080
 Restart=on-failure
 
 [Install]
@@ -63,7 +63,7 @@ systemctl enable ws-ovpn
 systemctl restart ws-ovpn
 
 # Getting Proxy Template
-wget -q -O /usr/local/bin/ws-tls https://${akbarvpn}/ws-tls
+wget -q -O /usr/local/bin/ws-tls https://${wisnuvpn}/ws-tls
 chmod +x /usr/local/bin/ws-tls
 
 # Installing Service
