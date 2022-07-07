@@ -57,7 +57,7 @@ curl https://get.acme.sh | sh
 alias acme.sh=~/.acme.sh/acme.sh
 /root/.acme.sh/acme.sh --upgrade --auto-upgrade
 /root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
-/root/.acme.sh/acme.sh --issue -d "${domain}" --standalone --keylength ec-2048
+#/root/.acme.sh/acme.sh --issue -d "${domain}" --standalone --keylength ec-2048
 /root/.acme.sh/acme.sh --issue -d "${domain}" --standalone --keylength ec-384
 /root/.acme.sh/acme.sh --install-cert -d "${domain}" --ecc \
 --fullchain-file /etc/ssl/private/fullchain.pem \
@@ -283,7 +283,7 @@ Restart=on-failure
 RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target.wants
+WantedBy=multi-user.target
 END
 
 # / / Installation Xray Service
@@ -306,7 +306,7 @@ Restart=on-failure
 RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target.wants
+WantedBy=multi-user.target
 END
 
 # / / Installation Xray Service
@@ -329,7 +329,7 @@ Restart=on-failure
 RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target.wants
+WantedBy=multi-user.target
 END
 
 cat > /etc/systemd/system/xvmess.service << END
@@ -351,7 +351,7 @@ Restart=on-failure
 RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target.wants
+WantedBy=multi-user.target
 END
 
 # / / Installation Xray Service
@@ -374,7 +374,7 @@ Restart=on-failure
 RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target.wants
+WantedBy=multi-user.target
 END
 
 # / / Installation Xray Service
@@ -397,7 +397,7 @@ Restart=on-failure
 RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target.wants
+WantedBy=multi-user.target
 END
 
 # / / Installation Xray Service
@@ -420,7 +420,7 @@ Restart=on-failure
 RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target.wants
+WantedBy=multi-user.target
 END
 
 # / / Installation Xray Service
@@ -443,7 +443,7 @@ Restart=on-failure
 RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target.wants
+WantedBy=multi-user.target
 END
 
 # // Enable & Start Service
@@ -457,19 +457,11 @@ sudo iptables -A INPUT -p tcp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED
 sudo iptables -A INPUT -p udp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
 sudo iptables -A OUTPUT -p tcp --sport 443 -m conntrack --ctstate ESTABLISHED -j ACCEPT
 sudo iptables -A OUTPUT -p udp --sport 443 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-open_port() { 
-if [[ ${release} != "centos" ]]; then #iptables -I INPUT -p tcp --dport 80 -j ACCEPT #iptables -I INPUT -p tcp --dport 443 -j ACCEPT iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 80 -j ACCEPT iptables -I INPUT -m state --state NEW -m udp -p udp --dport 80 -j ACCEPT ip6tables -I INPUT -m state --state NEW -m tcp -p tcp --dport 80 -j ACCEPT ip6tables -I INPUT -m state --state NEW -m udp -p udp --dport 80 -j ACCEPT iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 443 -j ACCEPT iptables -I INPUT -m state --state NEW -m udp -p udp --dport 443 -j ACCEPT ip6tables -I INPUT -m state --state NEW -m tcp -p tcp --dport 443 -j ACCEPT ip6tables -I INPUT -m state --state NEW -m udp -p udp --dport 443 -j ACCEPT iptables-save >/etc/iptables.rules.v4 		ip6tables-save >/etc/iptables.rules.v6 netfilter-persistent save netfilter-persistent reload else firewall-cmd --zone=public --add-port=80/tcp --permanent firewall-cmd --zone=public --add-port=443/tcp --permanent 	fi } 
 
 sudo iptables-save > /etc/iptables.up.rules
 sudo iptables-restore -t < /etc/iptables.up.rules
 sudo netfilter-persistent save
 sudo netfilter-persistent reload
-firewall-cmd --zone=public --add-port=80/tcp --permanent 
-firewall-cmd --zone=public --add-port=443/tcp --permanent
-fi
-}
-END
-
 sudo systemctl daemon-reload
 systemctl stop xray
 systemctl enable xray
@@ -596,7 +588,7 @@ cat > /etc/trojan-go/config.json << END
   },
   "websocket": {
     "enabled": true,
-    "path": "/trojango",
+    "path": "/gandring",
     "host": "$domain"
   },
     "api": {
@@ -634,7 +626,7 @@ Restart=on-failure
 RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target.wants
+WantedBy=multi-user.target
 END
 
 # Trojan Go Uuid
