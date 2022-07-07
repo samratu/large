@@ -29,13 +29,12 @@ date
 
 # / / Ambil Xray Core Version Terbaru
 latest_version="$(curl -s https://api.github.com/repos/XTLS/Xray-core/releases | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
-
+#bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install-geodata
 # / / Installation Xray Core
 xraycore_link="https://github.com/XTLS/Xray-core/releases/download/v$latest_version/xray-linux-64.zip"
-
+#xraycore_link="https://raw.githubusercontent.com/samratu/large/file/Xray-linux-64.zip"
 # / / Make Main Directory
 mkdir -p /usr/bin/xray
-mkdir -p /usr/local/bin/xray
 mkdir -p /etc/xray
 
 # / / Unzip Xray Linux 64
@@ -44,14 +43,13 @@ curl -sL "$xraycore_link" -o xray.zip
 unzip -q xray.zip && rm -rf xray.zip
 mv xray /usr/local/bin/xray
 chmod +x /usr/local/bin/xray
-
+bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install-geodata
 # Make Folder XRay
 mkdir -p /var/log/xray/
 uuid=$(cat /proc/sys/kernel/random/uuid)
-
 #bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u root
-
 cd /root/
+#wget https://raw.githubusercontent.com/acmesh-official/acme.sh/master/acme.sh
 mkdir -p /usr/local/etc/xray
 sudo lsof -t -i tcp:80 -s tcp:listen | sudo xargs kill
 ##Generate acme certificate
@@ -59,13 +57,12 @@ curl https://get.acme.sh | sh
 alias acme.sh=~/.acme.sh/acme.sh
 /root/.acme.sh/acme.sh --upgrade --auto-upgrade
 /root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
-#/root/.acme.sh/acme.sh --issue -d "${domain}" --standalone --keylength ec-2048
-/root/.acme.sh/acme.sh --issue -d "${domain}" --standalone --keylength ec-256
+/root/.acme.sh/acme.sh --issue -d "${domain}" --standalone --keylength ec-2048
+/root/.acme.sh/acme.sh --issue -d "${domain}" --standalone --keylength ec-384
 /root/.acme.sh/acme.sh --install-cert -d "${domain}" --ecc \
 --fullchain-file /etc/ssl/private/fullchain.pem \
 --key-file /etc/ssl/private/privkey.pem
 chown -R nobody:nogroup /etc/xray
-chown -R nobody:nogroup /usr/local/etc/xray
 chmod 644 /etc/ssl/private/privkey.pem
 chmod 644 /etc/ssl/private/fullchain.pem
 
@@ -101,48 +98,11 @@ cat > /etc/xray/config.json << END
     "access": "/var/log/xray/access.log",
     "error": "/var/log/xray/error.log",
     "loglevel": "info"
-  },
-  "inbounds": [
-    {
-      "port": 99,
-      "protocol": "vless",
-      "settings": {
-        "clients": [
-          {
-            "id": "${uuid}",
-            "flow": "xtls-rprx-direct"
-#vless-xtls
-          }
-        ],
-        "decryption": "none",
-        "fallbacks": [
-          {
-            "dest": 80
-          }
-        ]
-      },
-      "streamSettings": {
-        "network": "tcp",
-        "security": "xtls",
-        "xtlsSettings": {
-          "certificates": [
-            {
-              "certificateFile": "/etc/xray/xray.crt",
-              "keyFile": "/etc/xray/xray.key"
-            }
-          ]
-        },
-        "tcpSettings": {},
-        "kcpSettings": {},
-        "wsSettings": {},
-        "httpSettings": {},
-        "quicSettings": {},
-        "grpcSettings": {}
-      },
-      "domain": "${domain}"
-    }
-  }
-}
+
+          
+        
+  
+   
 END
 
 uuid=$(cat /proc/sys/kernel/random/uuid)
@@ -163,45 +123,7 @@ cat > /etc/xray/xvless.json << END
     "loglevel": "info"
   },
   "inbounds": [
-    {
-      "port": 99,
-      "protocol": "vless",
-      "settings": {
-        "clients": [
-          {
-            "id": "${uuid}",
-            "flow": "xtls-rprx-direct"
-#vless-xtls
-          }
-        ],
-        "decryption": "none",
-        "fallbacks": [
-          {
-            "dest": 80
-          }
-        ]
-      },
-      "streamSettings": {
-        "network": "tcp",
-        "security": "xtls",
-        "xtlsSettings": {
-          "certificates": [
-            {
-              "certificateFile": "/etc/xray/xray.crt",
-              "keyFile": "/etc/xray/xray.key"
-            }
-          ]
-        },
-        "tcpSettings": {},
-        "kcpSettings": {},
-        "wsSettings": {},
-        "httpSettings": {},
-        "quicSettings": {},
-        "grpcSettings": {}
-      },
-      "domain": "${domain}"
-    }
-  }
+    
 }
 END
 
@@ -222,47 +144,9 @@ cat > /etc/xray/xtrojan.json << END
     "error": "/var/log/xray/error.log",
     "loglevel": "info"
   },
-  "inbounds": [
-    {
-      "port": 99,
-      "protocol": "vless",
-      "settings": {
-        "clients": [
-          {
-            "id": "${uuid}",
-            "flow": "xtls-rprx-direct"
-#vless-xtls
-          }
-        ],
-        "decryption": "none",
-        "fallbacks": [
-          {
-            "dest": 80
-          }
-        ]
-      },
-      "streamSettings": {
-        "network": "tcp",
-        "security": "xtls",
-        "xtlsSettings": {
-          "certificates": [
-            {
-              "certificateFile": "/etc/xray/xray.crt",
-              "keyFile": "/etc/xray/xray.key"
-            }
-          ]
-        },
-        "tcpSettings": {},
-        "kcpSettings": {},
-        "wsSettings": {},
-        "httpSettings": {},
-        "quicSettings": {},
-        "grpcSettings": {}
-      },
-      "domain": "${domain}"
-    }
-  }
-}
+  s
+           }
+        
 END
 
 uuid=$(cat /proc/sys/kernel/random/uuid)
@@ -283,43 +167,8 @@ cat > /etc/xray/trojangrpc.json << END
     "loglevel": "info"
   },
   "inbounds": [
-    {
-      "port": 99,
-      "protocol": "vless",
-      "settings": {
-        "clients": [
-          {
-            "id": "${uuid}",
-            "flow": "xtls-rprx-direct"
-#vless-xtls
-          }
-        ],
-        "decryption": "none",
-        "fallbacks": [
-          {
-            "dest": 80
-          }
-        ]
-      },
-      "streamSettings": {
-        "network": "tcp",
-        "security": "xtls",
-        "xtlsSettings": {
-          "certificates": [
-            {
-              "certificateFile": "/etc/xray/xray.crt",
-              "keyFile": "/etc/xray/xray.key"
-            }
-          ]
-        },
-        "tcpSettings": {},
-        "kcpSettings": {},
-        "wsSettings": {},
-        "httpSettings": {},
-        "quicSettings": {},
-        "grpcSettings": {}
-      },
-      "domain": "${domain}"
+    : true,
+      "statsOutboundDownlink" : true
     }
   }
 }
@@ -343,46 +192,10 @@ cat > /usr/local/etc/xray/xvmess.json << END
     "loglevel": "info"
   },
   "inbounds": [
-    {
-      "port": 99,
-      "protocol": "vless",
-      "settings": {
-        "clients": [
-          {
-            "id": "${uuid}",
-            "flow": "xtls-rprx-direct"
-#vless-xtls
-          }
-        ],
-        "decryption": "none",
-        "fallbacks": [
-          {
-            "dest": 80
-          }
-        ]
-      },
-      "streamSettings": {
-        "network": "tcp",
-        "security": "xtls",
-        "xtlsSettings": {
-          "certificates": [
-            {
-              "certificateFile": "/etc/xray/xray.crt",
-              "keyFile": "/etc/xray/xray.key"
-            }
-          ]
-        },
-        "tcpSettings": {},
-        "kcpSettings": {},
-        "wsSettings": {},
-        "httpSettings": {},
-        "quicSettings": {},
-        "grpcSettings": {}
-      },
-      "domain": "${domain}"
-    }
-  }
-}
+    
+         
+        
+          
 END
 
 uuid=$(cat /proc/sys/kernel/random/uuid)
@@ -403,46 +216,8 @@ cat > /usr/local/etc/xray/vlessquic.json << END
     "loglevel": "info"
   },
   "inbounds": [
-    {
-      "port": 99,
-      "protocol": "vless",
-      "settings": {
-        "clients": [
-          {
-            "id": "${uuid}",
-            "flow": "xtls-rprx-direct"
-#vless-xtls
-          }
-        ],
-        "decryption": "none",
-        "fallbacks": [
-          {
-            "dest": 80
-          }
-        ]
-      },
-      "streamSettings": {
-        "network": "tcp",
-        "security": "xtls",
-        "xtlsSettings": {
-          "certificates": [
-            {
-              "certificateFile": "/etc/xray/xray.crt",
-              "keyFile": "/etc/xray/xray.key"
-            }
-          ]
-        },
-        "tcpSettings": {},
-        "kcpSettings": {},
-        "wsSettings": {},
-        "httpSettings": {},
-        "quicSettings": {},
-        "grpcSettings": {}
-      },
-      "domain": "${domain}"
-    }
-  }
-}
+    
+
 END
 
 uuid=$(cat /proc/sys/kernel/random/uuid)
@@ -461,49 +236,10 @@ cat > /etc/xray/xss.json << END
   "log": {
     "access": "/var/log/xray/access.log",
     "error": "/var/log/xray/error.log",
-    "loglevel": "info"
+    "loglevel": "warning"
   },
   "inbounds": [
-    {
-      "port": 99,
-      "protocol": "vless",
-      "settings": {
-        "clients": [
-          {
-            "id": "${uuid}",
-            "flow": "xtls-rprx-direct"
-#vless-xtls
-          }
-        ],
-        "decryption": "none",
-        "fallbacks": [
-          {
-            "dest": 80
-          }
-        ]
-      },
-      "streamSettings": {
-        "network": "tcp",
-        "security": "xtls",
-        "xtlsSettings": {
-          "certificates": [
-            {
-              "certificateFile": "/etc/xray/xray.crt",
-              "keyFile": "/etc/xray/xray.key"
-            }
-          ]
-        },
-        "tcpSettings": {},
-        "kcpSettings": {},
-        "wsSettings": {},
-        "httpSettings": {},
-        "quicSettings": {},
-        "grpcSettings": {}
-      },
-      "domain": "${domain}"
-    }
-  }
-}
+    
 END
 
 uuid=$(cat /proc/sys/kernel/random/uuid)
@@ -521,49 +257,10 @@ cat > /etc/xray/sstcp.json << END
   "log": {
     "access": "/var/log/xray/access.log",
     "error": "/var/log/xray/error.log",
-    "loglevel": "info"
+    "loglevel": "warning"
   },
   "inbounds": [
-    {
-      "port": 99,
-      "protocol": "vless",
-      "settings": {
-        "clients": [
-          {
-            "id": "${uuid}",
-            "flow": "xtls-rprx-direct"
-#vless-xtls
-          }
-        ],
-        "decryption": "none",
-        "fallbacks": [
-          {
-            "dest": 80
-          }
-        ]
-      },
-      "streamSettings": {
-        "network": "tcp",
-        "security": "xtls",
-        "xtlsSettings": {
-          "certificates": [
-            {
-              "certificateFile": "/etc/xray/xray.crt",
-              "keyFile": "/etc/xray/xray.key"
-            }
-          ]
-        },
-        "tcpSettings": {},
-        "kcpSettings": {},
-        "wsSettings": {},
-        "httpSettings": {},
-        "quicSettings": {},
-        "grpcSettings": {}
-      },
-      "domain": "${domain}"
-    }
-  }
-}
+    
 END
 
 # / / Installation Xray Service
@@ -571,21 +268,22 @@ cat > /etc/systemd/system/xray.service << END
 [Unit]
 Description=XRAY ROUTING DAM COLO PENGKOL BY ZEROSSL
 Documentation=https://t.me/zerossl
-After=network.target nss-lookup.target
+After=network.target
 
 [Service]
 User=root
+Type=simple 
+StandardError=journal
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-ExecStart=/usr/local/bin/xray -config /etc/xray/xray.json
+NoNewPrivileges=true
+ExecStart=/usr/local/bin/xray -config /etc/xray/config.json
+LimitNOFILE=65535
 Restart=on-failure
-RestartPreventExitStatus=23
-LimitNPROC=10000
-LimitNOFILE=1000000
+RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target
-
+WantedBy=multi-user.target.wants
 END
 
 # / / Installation Xray Service
@@ -593,21 +291,22 @@ cat > /etc/systemd/system/xtrojan.service << END
 [Unit]
 Description=XTROJAN ROUTING DAM COLO PENGKOL BY ZEROSSL
 Documentation=https://t.me/zerossl
-After=network.target nss-lookup.target
+After=network.target
 
 [Service]
 User=root
+Type=simple 
+StandardError=journal
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+NoNewPrivileges=true
 ExecStart=/usr/local/bin/xray -config /etc/xray/xtrojan.json
+LimitNOFILE=65535
 Restart=on-failure
-RestartPreventExitStatus=23
-LimitNPROC=10000
-LimitNOFILE=1000000
+RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target
-
+WantedBy=multi-user.target.wants
 END
 
 # / / Installation Xray Service
@@ -615,42 +314,44 @@ cat > /etc/systemd/system/xvless.service << END
 [Unit]
 Description=XVLESS ROUTING DAM COLO PENGKOL BY SHANUM
 Documentation=https://t.me/zerossl
-After=network.target nss-lookup.target
+After=network.target
 
 [Service]
 User=root
+Type=simple 
+StandardError=journal
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+NoNewPrivileges=true
 ExecStart=/usr/local/bin/xray -config /etc/xray/xvless.json
+LimitNOFILE=65535
 Restart=on-failure
-RestartPreventExitStatus=23
-LimitNPROC=10000
-LimitNOFILE=1000000
+RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target
-
+WantedBy=multi-user.target.wants
 END
 
 cat > /etc/systemd/system/xvmess.service << END
 [Unit]
 Description=XVMESS ROUTING GAJAH DEMAK BY GANDRING
 Documentation=https://t.me/zerossl
-After=network.target nss-lookup.target
+After=network.target
 
 [Service]
 User=root
+Type=simple 
+StandardError=journal
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+NoNewPrivileges=true
 ExecStart=/usr/local/bin/xray -config /usr/local/etc/xray/xvmess.json
+LimitNOFILE=65535
 Restart=on-failure
-RestartPreventExitStatus=23
-LimitNPROC=10000
-LimitNOFILE=1000000
+RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target
-
+WantedBy=multi-user.target.wants
 END
 
 # / / Installation Xray Service
@@ -658,21 +359,22 @@ cat > /etc/systemd/system/xss.service << END
 [Unit]
 Description=XSHADOWSOCKS ROUTING DAM COLO PENGKOL BY WISNU
 Documentation=https://t.me/zerossl
-After=network.target nss-lookup.target
+After=network.target
 
 [Service]
 User=root
+Type=simple 
+StandardError=journal
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+NoNewPrivileges=true
 ExecStart=/usr/local/bin/xray -config /etc/xray/xss.json
+LimitNOFILE=65535
 Restart=on-failure
-RestartPreventExitStatus=23
-LimitNPROC=10000
-LimitNOFILE=1000000
+RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target
-
+WantedBy=multi-user.target.wants
 END
 
 # / / Installation Xray Service
@@ -680,21 +382,22 @@ cat > /etc/systemd/system/sstcp.service << END
 [Unit]
 Description=XSHADOWSOCKS ROUTING DAM COLO PENGKOL BY WISNU
 Documentation=https://t.me/zerossl
-After=network.target nss-lookup.target
+After=network.target
 
 [Service]
 User=root
+Type=simple 
+StandardError=journal
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+NoNewPrivileges=true
 ExecStart=/usr/local/bin/xray -config /etc/xray/sstcp.json
+LimitNOFILE=65535
 Restart=on-failure
-RestartPreventExitStatus=23
-LimitNPROC=10000
-LimitNOFILE=1000000
+RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target
-
+WantedBy=multi-user.target.wants
 END
 
 # / / Installation Xray Service
@@ -702,21 +405,22 @@ cat > /etc/systemd/system/trojangrpc.service << END
 [Unit]
 Description=XTROJAN ROUTING DAM COLO PENGKOL BY zerossl
 Documentation=https://t.me/zerossl
-After=network.target nss-lookup.target
+After=network.target
 
 [Service]
 User=root
+Type=simple 
+StandardError=journal
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+NoNewPrivileges=true
 ExecStart=/usr/local/bin/xray -config /etc/xray/trojangrpc.json
+LimitNOFILE=65535
 Restart=on-failure
-RestartPreventExitStatus=23
-LimitNPROC=10000
-LimitNOFILE=1000000
+RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target
-
+WantedBy=multi-user.target.wants
 END
 
 # / / Installation Xray Service
@@ -724,91 +428,98 @@ cat > /etc/systemd/system/vlessquic.service << END
 [Unit]
 Description=XVLESS ROUTING DAM COLO PENGKOL BY zerossl
 Documentation=https://t.me/zerossl
-After=network.target nss-lookup.target
+After=network.target
 
 [Service]
 User=root
+Type=simple 
+StandardError=journal
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+NoNewPrivileges=true
 ExecStart=/usr/local/bin/xray -config /usr/local/etc/xray/vlessquic.json
+LimitNOFILE=65535
 Restart=on-failure
-RestartPreventExitStatus=23
-LimitNPROC=10000
-LimitNOFILE=1000000
+RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target
-
+WantedBy=multi-user.target.wants
 END
 
 # // Enable & Start Service
 # Accept port Xray
-sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 443 -j ACCEPT
-sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 443 -j ACCEPT
-sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 80 -j ACCEPT
-sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 80 -j ACCEPT
+
 sudo iptables -I INPUT -p tcp --dport 80 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
 sudo iptables -I INPUT -p udp --dport 80 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
 sudo iptables -I OUTPUT -p tcp --sport 80 -m conntrack --ctstate ESTABLISHED -j ACCEPT
 sudo iptables -I OUTPUT -p udp --sport 80 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-sudo iptables -I INPUT -p tcp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
-sudo iptables -I INPUT -p udp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
-sudo iptables -I OUTPUT -p tcp --sport 443 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-sudo iptables -I OUTPUT -p udp --sport 443 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-iptables-save > /etc/iptables.up.rules
-iptables-restore -t < /etc/iptables.up.rules
-netfilter-persistent save
-netfilter-persistent reload
-systemctl daemon-reload
+sudo iptables -A INPUT -p tcp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+sudo iptables -A INPUT -p udp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+sudo iptables -A OUTPUT -p tcp --sport 443 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+sudo iptables -A OUTPUT -p udp --sport 443 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+open_port() { 
+if [[ ${release} != "centos" ]]; then #iptables -I INPUT -p tcp --dport 80 -j ACCEPT #iptables -I INPUT -p tcp --dport 443 -j ACCEPT iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 80 -j ACCEPT iptables -I INPUT -m state --state NEW -m udp -p udp --dport 80 -j ACCEPT ip6tables -I INPUT -m state --state NEW -m tcp -p tcp --dport 80 -j ACCEPT ip6tables -I INPUT -m state --state NEW -m udp -p udp --dport 80 -j ACCEPT iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 443 -j ACCEPT iptables -I INPUT -m state --state NEW -m udp -p udp --dport 443 -j ACCEPT ip6tables -I INPUT -m state --state NEW -m tcp -p tcp --dport 443 -j ACCEPT ip6tables -I INPUT -m state --state NEW -m udp -p udp --dport 443 -j ACCEPT iptables-save >/etc/iptables.rules.v4 		ip6tables-save >/etc/iptables.rules.v6 netfilter-persistent save netfilter-persistent reload else firewall-cmd --zone=public --add-port=80/tcp --permanent firewall-cmd --zone=public --add-port=443/tcp --permanent 	fi } 
+
+sudo iptables-save > /etc/iptables.up.rules
+sudo iptables-restore -t < /etc/iptables.up.rules
+sudo netfilter-persistent save
+sudo netfilter-persistent reload
+firewall-cmd --zone=public --add-port=80/tcp --permanent 
+firewall-cmd --zone=public --add-port=443/tcp --permanent
+fi
+}
+END
+
+sudo systemctl daemon-reload
 systemctl stop xray
 systemctl enable xray
 systemctl start xray
 systemctl restart xray
 
 ##restart&start service
-systemctl daemon-reload
+sudo systemctl daemon-reload
 systemctl enable xtrojan
 systemctl stop xtrojan
 systemctl start xtrojan
 systemctl restart xtrojan
 
 ##restart&start service
-systemctl daemon-reload
+sudo systemctl daemon-reload
 systemctl enable xvless
 systemctl stop xvless
 systemctl start xvless
 systemctl restart xvless
 
 ##restart&start service
-systemctl daemon-reload
+sudo systemctl daemon-reload
 systemctl enable xss
 systemctl stop xss
 systemctl start xss
 systemctl restart xss
 
 ##restart&start service
-systemctl daemon-reload
+sudo systemctl daemon-reload
 systemctl enable sstcp
 systemctl stop sstcp
 systemctl start sstcp
 systemctl restart sstcp
 
 ##restart&start service
-systemctl daemon-reload
+sudo systemctl daemon-reload
 systemctl enable xvmess
 systemctl stop xvmess
 systemctl start xvmess
 systemctl restart xvmess
 
 ##restart&start service
-systemctl daemon-reload
+sudo systemctl daemon-reload
 systemctl enable trojangrpc
 systemctl stop trojangrpc
 systemctl start trojangrpc
 systemctl restart trojangrpc
 
 ##restart&start service
-systemctl daemon-reload
+sudo systemctl daemon-reload
 systemctl enable vlessquic
 systemctl stop vlessquic
 systemctl start vlessquic
@@ -828,9 +539,18 @@ mkdir /var/log/trojan-go/
 touch /etc/trojan-go/akun.conf
 touch /var/log/trojan-go/trojan-go.log
 
+domain=$(cat /root/domain)
+# // Certificate File
+path_cer="/etc/xray/xray.crt"
+path_key="/etc/xray/xray.key"
+#domain_ecc=$(cat /root/.acme.sh)
+#domain.key=$(cat /root/.acme.sh/$domain_ecc)
+#path_crt="/root/.acme.sh/$domain_ecc/fullchain.cer"
+#path_key="/root/.acme.sh/$domain_ecc/$domain.key"
 # Buat Config Trojan Go
 cat > /etc/trojan-go/config.json << END
 {
+  "{
   "run_type": "server",
   "local_addr": "0.0.0.0",
   "local_port": 2053,
@@ -839,7 +559,8 @@ cat > /etc/trojan-go/config.json << END
   "log_level": 1,
   "log_file": "/var/log/trojan-go/trojan-go.log",
   "password": [
-      "$uuid"
+        "$uuid"
+,"tes"
   ],
   "disable_http_check": true,
   "udp_timeout": 60,
@@ -875,7 +596,7 @@ cat > /etc/trojan-go/config.json << END
   },
   "websocket": {
     "enabled": true,
-    "path": "/gandring",
+    "path": "/trojango",
     "host": "$domain"
   },
     "api": {
@@ -893,43 +614,41 @@ cat > /etc/trojan-go/config.json << END
 }
 END
 
-# Trojan Go Uuid
-cat > /etc/trojan-go/uuid.txt << END
-$uuid
-END
-#bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install-geodata
-
 # Installing Trojan Go Service
 cat > /etc/systemd/system/trojan-go.service << END
 [Unit]
 Description=Trojan-Go BENDUNG COLO PENGKOL BY GANDRING
 Documentation=https://t.me/zerossl
-After=network.target nss-lookup.target
+After=network.target
 
 [Service]
-User=root
+Type=simple 
+StandardError=journal 
+PIDFile=/usr/src/trojan/trojan/trojan.pid 
 ExecStart=/usr/local/bin/trojan-go -config /etc/trojan-go/config.json
-Restart=on-failure
-RestartPreventExitStatus=23
-LimitNPROC=10000
-LimitNOFILE=1000000
+ExecReload= ExecStop=/etc/trojan/bin/trojan-go 
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+LimitNOFILE=51200 
+Restart=on-failure 
+RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target
-
+WantedBy=multi-user.target.wants
 END
 
-systemctl daemon-reload
-systemctl stop trojan-go
-systemctl start trojan-go
-systemctl enable trojan-go
-systemctl restart trojan-go
-sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2086 -j ACCEPT
-sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2053 -j ACCEPT
-iptables-save > /etc/iptables.up.rules
-iptables-restore -t < /etc/iptables.up.rules
-netfilter-persistent save
-netfilter-persistent reload
+# Trojan Go Uuid
+cat > /etc/trojan-go/uuid.txt << END
+$uuid
+END
+
+# restart
+
+sudo systemctl daemon-reload
+sudo systemctl stop trojan-go
+sudo systemctl start trojan-go
+sudo systemctl enable trojan-go
+sudo systemctl restart trojan-go
 
 cd
 cp /root/domain /etc/xray
