@@ -897,7 +897,7 @@ END
 cat > /etc/trojan-go/uuid.txt << END
 $uuid
 END
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install-geodata
+#bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install-geodata
 
 # Installing Trojan Go Service
 cat > /etc/systemd/system/trojan-go.service << END
