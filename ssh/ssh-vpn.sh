@@ -286,6 +286,14 @@ END
 #-subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
 #cat key.pem cert.pem >> /etc/stunnel5/stunnel5.pem
 
+# Service Stunnel5 /etc/init.d/stunnel5
+wget -q -O /etc/init.d/stunnel5 "https://${wisnuvpnnnn}/stunnel5.init"
+
+# Ubah Izin Akses
+chmod 600 /etc/stunnel5/stunnel5.pem
+chmod +x /etc/init.d/stunnel5
+cp /usr/local/bin/stunnel5 /usr/local/wisnucs/stunnel5
+
 # Service Stunnel5 systemctl restart stunnel5
 cat > /etc/systemd/system/stunnel5.service << END
 [Unit]
@@ -301,14 +309,6 @@ Type=forking
 [Install]
 WantedBy=multi-user.target
 END
-
-# Service Stunnel5 /etc/init.d/stunnel5
-wget -q -O /etc/init.d/stunnel5 "https://${wisnuvpnnnn}/stunnel5.init"
-
-# Ubah Izin Akses
-chmod 600 /etc/stunnel5/stunnel5.pem
-chmod +x /etc/init.d/stunnel5
-cp /usr/local/bin/stunnel5 /usr/local/wisnucs/stunnel5
 
 # Remove File
 rm -r -f /usr/local/share/doc/stunnel/
