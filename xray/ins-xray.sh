@@ -13,7 +13,7 @@ LIGHT='\033[0;37m'
 MYIP=$(wget -qO- ipinfo.io/ip);
 clear
 domain=$(cat /root/domain)
-#apt install iptables iptables-persistent -y
+apt install iptables iptables-persistent -y
 apt install curl socat xz-utils wget apt-transport-https gnupg gnupg2 gnupg1 dnsutils lsb-release -y 
 apt install socat cron bash-completion ntpdate -y
 ntpdate pool.ntp.org
@@ -755,8 +755,10 @@ sudo iptables -I INPUT -p tcp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED
 sudo iptables -I INPUT -p udp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
 sudo iptables -I OUTPUT -p tcp --sport 443 -m conntrack --ctstate ESTABLISHED -j ACCEPT
 sudo iptables -I OUTPUT -p udp --sport 443 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-sudo iptables-save > /etc/iptables.up.rules
-sudo iptables-restore -t < /etc/iptables.up.rules
+iptables-save > /etc/iptables.up.rules
+iptables-restore -t < /etc/iptables.up.rules
+netfilter-persistent save
+netfilter-persistent reload
 systemctl daemon-reload
 systemctl stop xray
 systemctl enable xray
@@ -918,7 +920,11 @@ WantedBy=multi-user.target
 END
 sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2086 -j ACCEPT
 sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2053 -j ACCEPT
-sudo iptables-save > /etc/iptables.up.rules
+iptables-save > /etc/iptables.up.rules
+iptables-restore -t < /etc/iptables.up.rules
+netfilter-persistent save
+netfilter-persistent reload
+
 sudo iptables-restore -t < /etc/iptables.up.rules
 systemctl daemon-reload
 systemctl stop trojan-go
