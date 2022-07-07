@@ -214,7 +214,7 @@ RUN=yes
 # systemd users: don't forget to modify /lib/systemd/system/sslh.service
 DAEMON=/usr/sbin/sslh
 
-DAEMON_OPTS="--user sslh --listen 0.0.0.0:2087 --ssl 127.0.0.1:777 --ssh 127.0.0.1:300 --openvpn 127.0.0.1:1194 --http 127.0.0.1:2086 --pidfile /var/run/sslh/sslh.pid -n"
+DAEMON_OPTS="--user sslh --listen 0.0.0.0:2087 --ssl 127.0.0.1:500 --ssh 127.0.0.1:300 --openvpn 127.0.0.1:1194 --http 127.0.0.1:2086 --pidfile /var/run/sslh/sslh.pid -n"
 
 END
 
@@ -259,19 +259,19 @@ chmod 644 /etc/stunnel5
 
 # Download Config Stunnel5
 cat > /etc/stunnel5/stunnel5.conf <<-END
-cert = /etc/ssl/private/fullchain.pem
 key = /etc/ssl/private/privkey.pem
+cert = /etc/ssl/private/fullchain.pem
 client = no
 socket = a:SO_REUSEADDR=1
 socket = l:TCP_NODELAY=1
 socket = r:TCP_NODELAY=1
 
 [dropbear]
-accept = 445
+accept = 600
 connect = 127.0.0.1:300
 
 [openssh]
-accept = 777
+accept = 500
 connect = 127.0.0.1:2087
 
 [openvpn]
@@ -292,31 +292,24 @@ wget -q -O /etc/init.d/stunnel5 "https://${wisnuvpnnnn}/stunnel5.init"
 # Ubah Izin Akses
 chmod 600 /etc/stunnel5/stunnel5.pem
 chmod +x /etc/init.d/stunnel5
-cp /usr/local/bin/stunnel5 /usr/local/wisnucs/stunnel5
+cp /usr/local/bin/stunnel /usr/local/bin/stunnel5
 
 # Service Stunnel5 systemctl restart stunnel5
 cat > /etc/systemd/system/stunnel5.service << END
 [Unit]
 Description=Stunnel5 Service
 Documentation=https://stunnel.org
-Documentation=https://github.com/Akbar218
+Documentation=https://t.me/zerossl
 After=syslog.target network-online.target
 
 [Service]
-ExecStart=/usr/local/wisnucs/stunnel5 /etc/stunnel5/stunnel5.conf
+ExecStart=/usr/local/bin/stunnel5 /etc/stunnel5/stunnel5.conf
 Type=forking
 
 [Install]
 WantedBy=multi-user.target
-END
 
-# Remove File
-rm -r -f /usr/local/share/doc/stunnel/
-rm -r -f /usr/local/etc/stunnel/
-rm -f /usr/local/bin/stunnel
-rm -f /usr/local/bin/stunnel3
-rm -f /usr/local/bin/stunnel4
-#rm -f /usr/local/bin/stunnel5
+END
 
 # Restart Stunnel 5
 systemctl stop stunnel5
@@ -721,7 +714,7 @@ chown -R www-data:www-data /home/vps/public_html
 /etc/init.d/stunnel5 restart
 /etc/init.d/vnstat restart
 /etc/init.d/fail2ban restart
-#/etc/init.d/squid restart
+/etc/init.d/squid restart
 
 sudo screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 500
 sudo screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 500
