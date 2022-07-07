@@ -577,7 +577,7 @@ After=network.target nss-lookup.target
 User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-ExecStart=/usr/local/bin/xray run -config /etc/xray/xray.json
+ExecStart=/usr/local/bin/xray -config /etc/xray/xray.json
 Restart=on-failure
 RestartPreventExitStatus=23
 LimitNPROC=10000
@@ -599,7 +599,7 @@ After=network.target nss-lookup.target
 User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-ExecStart=/usr/local/bin/xray run -config /etc/xray/xtrojan.json
+ExecStart=/usr/local/bin/xray -config /etc/xray/xtrojan.json
 Restart=on-failure
 RestartPreventExitStatus=23
 LimitNPROC=10000
@@ -621,7 +621,7 @@ After=network.target nss-lookup.target
 User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-ExecStart=/usr/local/bin/xray run -config /etc/xray/xvless.json
+ExecStart=/usr/local/bin/xray -config /etc/xray/xvless.json
 Restart=on-failure
 RestartPreventExitStatus=23
 LimitNPROC=10000
@@ -642,7 +642,7 @@ After=network.target nss-lookup.target
 User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-ExecStart=/usr/local/bin/xray run -config /usr/local/etc/xray/xvmess.json
+ExecStart=/usr/local/bin/xray -config /usr/local/etc/xray/xvmess.json
 Restart=on-failure
 RestartPreventExitStatus=23
 LimitNPROC=10000
@@ -664,7 +664,7 @@ After=network.target nss-lookup.target
 User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-ExecStart=/usr/local/bin/xray run -config /etc/xray/xss.json
+ExecStart=/usr/local/bin/xray -config /etc/xray/xss.json
 Restart=on-failure
 RestartPreventExitStatus=23
 LimitNPROC=10000
@@ -686,7 +686,7 @@ After=network.target nss-lookup.target
 User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-ExecStart=/usr/local/bin/xray run -config /etc/xray/sstcp.json
+ExecStart=/usr/local/bin/xray -config /etc/xray/sstcp.json
 Restart=on-failure
 RestartPreventExitStatus=23
 LimitNPROC=10000
@@ -708,7 +708,7 @@ After=network.target nss-lookup.target
 User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-ExecStart=/usr/local/bin/xray run -config /etc/xray/trojangrpc.json
+ExecStart=/usr/local/bin/xray -config /etc/xray/trojangrpc.json
 Restart=on-failure
 RestartPreventExitStatus=23
 LimitNPROC=10000
@@ -730,7 +730,7 @@ After=network.target nss-lookup.target
 User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-ExecStart=/usr/local/bin/xray run -config /usr/local/etc/xray/vlessquic.json
+ExecStart=/usr/local/bin/xray -config /usr/local/etc/xray/vlessquic.json
 Restart=on-failure
 RestartPreventExitStatus=23
 LimitNPROC=10000
@@ -918,6 +918,12 @@ LimitNOFILE=1000000
 WantedBy=multi-user.target
 
 END
+
+systemctl daemon-reload
+systemctl stop trojan-go
+systemctl start trojan-go
+systemctl enable trojan-go
+systemctl restart trojan-go
 sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2086 -j ACCEPT
 sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2053 -j ACCEPT
 iptables-save > /etc/iptables.up.rules
@@ -925,14 +931,6 @@ iptables-restore -t < /etc/iptables.up.rules
 netfilter-persistent save
 netfilter-persistent reload
 
-sudo iptables-restore -t < /etc/iptables.up.rules
-systemctl daemon-reload
-systemctl stop trojan-go
-systemctl start trojan-go
-systemctl enable trojan-go
-systemctl restart trojan-go
-systemctl enable trojan-go@.service
-systemctl restart trojan-go@.service
 cd
 cp /root/domain /etc/xray
 cp /root/domain /usr/local/etc/xray
