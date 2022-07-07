@@ -41,6 +41,8 @@ sed -i "s/443/2053/g" /etc/trojan-go/config.json
 sed -i "s/443/1120/g" /etc/xray/xvless.json
 sed -i "s/443/1190/g" /etc/xray/config.json
 sed -i "s/443/1150/g" /etc/xray/xtrojan.json
+sed -i "s/443/2087/g" /usr/local/bin/ws-tls
+sed -i "s/443/1194/g" /usr/local/bin/ws-ovpn
 
 systemctl daemon-reload
 systemctl enable ws-nontls
