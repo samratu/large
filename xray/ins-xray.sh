@@ -594,26 +594,6 @@ cat > /etc/trojan-go/config.json << END
 }
 END
 
-# Installing Trojan Go Service
-cat > /etc/systemd/system/trojan-go.service << END
-[Unit]
-Description=Trojan-Go Service Mod By SL
-Documentation=nekopoi.care
-After=network.target nss-lookup.target
-
-[Service]
-User=root
-CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-NoNewPrivileges=true
-ExecStart=/usr/local/bin/trojan-go -config /etc/trojan-go/config.json
-Restart=on-failure
-RestartPreventExitStatus=23
-
-[Install]
-WantedBy=multi-user.target
-END
-
 # Trojan Go Uuid
 cat > /etc/trojan-go/uuid.txt << END
 $uuid
