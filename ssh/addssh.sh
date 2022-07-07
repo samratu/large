@@ -42,7 +42,7 @@ hariini=`date -d "0 days" +"%Y-%m-%d"`
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 systemctl restart ws-tls
 systemctl restart ws-nontls
-systemctl restartws-ovpn
+systemctl restart ws-ovpn
 systemctl restart ssh-ohp
 systemctl restart stunnel5
 systemctl restart dropbear-ohp
@@ -72,7 +72,7 @@ echo -e "Created   :$hariini"
 echo -e "Expired   :$exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "PAYLOAD SSH & OVPN WEBSOCKET"
-echo -e "gandring https://bugmu.com/http/1.1[crlf]Host: ${domain}[crlf]Upgrade: websocket[crlf][crlf]"
+echo -e "GET ws//bugmu.com/http/1.1[crlf]Host: ${domain}[crlf]Upgrade: websocket[crlf][crlf]"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m🔰LUXURY EDITION ZEROSSL🔰\e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
