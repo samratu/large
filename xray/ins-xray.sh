@@ -268,11 +268,11 @@ cat > /etc/systemd/system/xray.service << END
 [Unit]
 Description=XRAY ROUTING DAM COLO PENGKOL BY ZEROSSL
 Documentation=https://t.me/zerossl
-After=network.target
+After=network.target nss-lookup.target
 
 [Service]
 User=root
-Type=simple 
+Type=simple
 StandardError=journal
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
@@ -291,11 +291,11 @@ cat > /etc/systemd/system/xtrojan.service << END
 [Unit]
 Description=XTROJAN ROUTING DAM COLO PENGKOL BY ZEROSSL
 Documentation=https://t.me/zerossl
-After=network.target
+After=network.target nss-lookup.target
 
 [Service]
 User=root
-Type=simple 
+Type=simple
 StandardError=journal
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
@@ -307,6 +307,7 @@ RestartSec=1s
 
 [Install]
 WantedBy=multi-user.target
+
 END
 
 # / / Installation Xray Service
@@ -314,11 +315,11 @@ cat > /etc/systemd/system/xvless.service << END
 [Unit]
 Description=XVLESS ROUTING DAM COLO PENGKOL BY SHANUM
 Documentation=https://t.me/zerossl
-After=network.target
+After=network.target nss-lookup.target
 
 [Service]
 User=root
-Type=simple 
+Type=simple
 StandardError=journal
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
@@ -330,17 +331,18 @@ RestartSec=1s
 
 [Install]
 WantedBy=multi-user.target
+
 END
 
 cat > /etc/systemd/system/xvmess.service << END
 [Unit]
 Description=XVMESS ROUTING GAJAH DEMAK BY GANDRING
 Documentation=https://t.me/zerossl
-After=network.target
+After=network.target nss-lookup.target
 
 [Service]
 User=root
-Type=simple 
+Type=simple
 StandardError=journal
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
@@ -352,6 +354,7 @@ RestartSec=1s
 
 [Install]
 WantedBy=multi-user.target
+
 END
 
 # / / Installation Xray Service
@@ -359,11 +362,11 @@ cat > /etc/systemd/system/xss.service << END
 [Unit]
 Description=XSHADOWSOCKS ROUTING DAM COLO PENGKOL BY WISNU
 Documentation=https://t.me/zerossl
-After=network.target
+After=network.target nss-lookup.target
 
 [Service]
 User=root
-Type=simple 
+Type=simple
 StandardError=journal
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
@@ -375,6 +378,7 @@ RestartSec=1s
 
 [Install]
 WantedBy=multi-user.target
+
 END
 
 # / / Installation Xray Service
@@ -382,11 +386,11 @@ cat > /etc/systemd/system/sstcp.service << END
 [Unit]
 Description=XSHADOWSOCKS ROUTING DAM COLO PENGKOL BY WISNU
 Documentation=https://t.me/zerossl
-After=network.target
+After=network.target nss-lookup.target
 
 [Service]
 User=root
-Type=simple 
+Type=simple
 StandardError=journal
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
@@ -398,6 +402,7 @@ RestartSec=1s
 
 [Install]
 WantedBy=multi-user.target
+
 END
 
 # / / Installation Xray Service
@@ -405,11 +410,11 @@ cat > /etc/systemd/system/trojangrpc.service << END
 [Unit]
 Description=XTROJAN ROUTING DAM COLO PENGKOL BY zerossl
 Documentation=https://t.me/zerossl
-After=network.target
+After=network.target nss-lookup.target
 
 [Service]
 User=root
-Type=simple 
+Type=simple
 StandardError=journal
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
@@ -421,6 +426,7 @@ RestartSec=1s
 
 [Install]
 WantedBy=multi-user.target
+
 END
 
 # / / Installation Xray Service
@@ -428,11 +434,11 @@ cat > /etc/systemd/system/vlessquic.service << END
 [Unit]
 Description=XVLESS ROUTING DAM COLO PENGKOL BY zerossl
 Documentation=https://t.me/zerossl
-After=network.target
+After=network.target nss-lookup.target
 
 [Service]
 User=root
-Type=simple 
+Type=simple
 StandardError=journal
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
@@ -444,20 +450,96 @@ RestartSec=1s
 
 [Install]
 WantedBy=multi-user.target
+
 END
 
 # // Enable & Start Service
 # Accept port Xray
 
-sudo iptables -I INPUT -p tcp --dport 80 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
-sudo iptables -I INPUT -p udp --dport 80 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
-sudo iptables -I OUTPUT -p tcp --sport 80 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-sudo iptables -I OUTPUT -p udp --sport 80 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 443 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 443 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 8443 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 8443 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2053 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2052 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2052 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 8088 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 8088 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2053 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 8880 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 8880 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 80 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 80 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2083 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2083 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2096 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2095 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2095 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2096 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 808 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 808 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 8808 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 8808 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 111 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 111 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 333 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 333 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 880 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 880 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 888 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 888 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 808 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 808 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 4443 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 4443 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 8888 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 8888 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 5443 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 5443 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 3443 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 3443 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2443 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2443 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 888 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 888 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 3443 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 3443 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 3444 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 3444 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2082 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2082 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2087 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2087 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 8080 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 8080 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 441 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 441 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 442 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 442 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 212 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 212 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 501 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 501 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 502 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 502 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 503 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 503 -j ACCEPT
+sudo iptables -A INPUT -p tcp --dport 80 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+sudo iptables -A INPUT -p udp --dport 80 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+sudo iptables -A OUTPUT -p tcp --sport 80 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+sudo iptables -A OUTPUT -p udp --sport 80 -m conntrack --ctstate ESTABLISHED -j ACCEPT
 sudo iptables -A INPUT -p tcp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
 sudo iptables -A INPUT -p udp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
 sudo iptables -A OUTPUT -p tcp --sport 443 -m conntrack --ctstate ESTABLISHED -j ACCEPT
 sudo iptables -A OUTPUT -p udp --sport 443 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-
+sudo iptables -A OUTPUT -p tcp --sport 22 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+sudo iptables -A OUTPUT -p udp --sport 22 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+sudo iptables -A OUTPUT -p tcp --sport 300 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+sudo iptables -A OUTPUT -p udp --sport 300 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+sudo iptables -A OUTPUT -p tcp --sport 10809 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+sudo iptables -A OUTPUT -p udp --sport 10809 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+sudo iptables -A OUTPUT -p tcp --sport 10808 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+sudo iptables -A OUTPUT -p udp --sport 10808 -m conntrack --ctstate ESTABLISHED -j ACCEPT
 sudo iptables-save > /etc/iptables.up.rules
 sudo iptables-restore -t < /etc/iptables.up.rules
 sudo netfilter-persistent save
@@ -611,22 +693,22 @@ cat > /etc/systemd/system/trojan-go.service << END
 [Unit]
 Description=Trojan-Go BENDUNG COLO PENGKOL BY GANDRING
 Documentation=https://t.me/zerossl
-After=network.target
+After=network.target nss-lookup.target
 
 [Service]
-Type=simple 
-StandardError=journal 
-PIDFile=/usr/src/trojan/trojan/trojan.pid 
+Type=root
+PIDFile=/usr/src/trojan/trojan/trojan.pid
 ExecStart=/usr/local/bin/trojan-go -config /etc/trojan-go/config.json
-ExecReload= ExecStop=/etc/trojan/bin/trojan-go 
+ExecReload= ExecStop=/etc/trojan/bin/trojan-go
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-LimitNOFILE=51200 
-Restart=on-failure 
+LimitNOFILE=51200
+Restart=on-failure
 RestartSec=1s
 
 [Install]
 WantedBy=multi-user.target
+
 END
 
 # Trojan Go Uuid
@@ -636,12 +718,17 @@ END
 
 # restart
 
-sudo systemctl daemon-reload
-sudo systemctl stop trojan-go
-sudo systemctl start trojan-go
-sudo systemctl enable trojan-go
-sudo systemctl restart trojan-go
-
+systemctl daemon-reload
+systemctl stop trojan-go
+systemctl start trojan-go
+systemctl enable trojan-go
+systemctl restart trojan-go
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2053 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2053 -j ACCEPT
+iptables-save > /etc/iptables.up.rules
+iptables-restore -t < /etc/iptables.up.rules
+netfilter-persistent save
+netfilter-persistent reload
 cd
 cp /root/domain /etc/xray
 cp /root/domain /usr/local/etc/xray
