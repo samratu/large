@@ -613,36 +613,26 @@ mkdir /var/log/trojan-go/
 touch /etc/trojan-go/akun.conf
 touch /var/log/trojan-go/trojan-go.log
 
-domain=$(cat /root/domain)
-# // Certificate File
-path_cer="/etc/xray/xray.crt"
-path_key="/etc/xray/xray.key"
-#domain_ecc=$(cat /root/.acme.sh)
-#domain.key=$(cat /root/.acme.sh/$domain_ecc)
-#path_crt="/root/.acme.sh/$domain_ecc/fullchain.cer"
-#path_key="/root/.acme.sh/$domain_ecc/$domain.key"
 # Buat Config Trojan Go
 cat > /etc/trojan-go/config.json << END
 {
-  "{
   "run_type": "server",
   "local_addr": "0.0.0.0",
-  "local_port": 2053,
+  "local_port": 2087,
   "remote_addr": "127.0.0.1",
-  "remote_port": 88,
+  "remote_port": 89,
   "log_level": 1,
   "log_file": "/var/log/trojan-go/trojan-go.log",
   "password": [
-        "$uuid"
-,"tes"
+      "$uuid"
   ],
   "disable_http_check": true,
   "udp_timeout": 60,
   "ssl": {
     "verify": false,
     "verify_hostname": false,
-    "cert": "/etc/ssl/private/fullchain.pem",
-    "key": "/etc/ssl/private/privkey.pem",
+    "cert": "/etc/xray/xray.crt",
+    "key": "/etc/xray/xray.key",
     "key_password": "",
     "cipher": "",
     "curves": "",
@@ -670,7 +660,7 @@ cat > /etc/trojan-go/config.json << END
   },
   "websocket": {
     "enabled": true,
-    "path": "/gandring",
+    "path": "/trojango",
     "host": "$domain"
   },
     "api": {
@@ -691,24 +681,21 @@ END
 # Installing Trojan Go Service
 cat > /etc/systemd/system/trojan-go.service << END
 [Unit]
-Description=Trojan-Go BENDUNG COLO PENGKOL BY GANDRING
+Description=Trojan-Go Service Mod By wisnu
 Documentation=https://t.me/zerossl
 After=network.target nss-lookup.target
 
 [Service]
-Type=root
-PIDFile=/usr/src/trojan/trojan/trojan.pid
-ExecStart=/usr/local/bin/trojan-go -config /etc/trojan-go/config.json
-ExecReload= ExecStop=/etc/trojan/bin/trojan-go
+User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-LimitNOFILE=51200
+NoNewPrivileges=true
+ExecStart=/usr/local/bin/trojan-go -config /etc/trojan-go/config.json
 Restart=on-failure
-RestartSec=1s
+RestartPreventExitStatus=23
 
 [Install]
 WantedBy=multi-user.target
-
 END
 
 # Trojan Go Uuid
@@ -717,18 +704,17 @@ $uuid
 END
 
 # restart
-
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2086 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2053 -j ACCEPT
+iptables-save > /etc/iptables.up.rules
+iptables-restore -t < /etc/iptables.up.rules
+netfilter-persistent save
+netfilter-persistent reload
 systemctl daemon-reload
 systemctl stop trojan-go
 systemctl start trojan-go
 systemctl enable trojan-go
 systemctl restart trojan-go
-sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2053 -j ACCEPT
-sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2053 -j ACCEPT
-iptables-save > /etc/iptables.up.rules
-iptables-restore -t < /etc/iptables.up.rules
-netfilter-persistent save
-netfilter-persistent reload
 cd
 cp /root/domain /etc/xray
 cp /root/domain /usr/local/etc/xray
