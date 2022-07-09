@@ -524,76 +524,65 @@ sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 502 -j ACCEPT
 sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 502 -j ACCEPT
 sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 503 -j ACCEPT
 sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 503 -j ACCEPT
-sudo iptables -A INPUT -p tcp --dport 80 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
-sudo iptables -A INPUT -p udp --dport 80 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p tcp --sport 80 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p udp --sport 80 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-sudo iptables -A INPUT -p tcp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
-sudo iptables -A INPUT -p udp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p tcp --sport 443 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p udp --sport 443 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p tcp --sport 22 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p udp --sport 22 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p tcp --sport 300 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p udp --sport 300 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p tcp --sport 10809 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p udp --sport 10809 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p tcp --sport 10808 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p udp --sport 10808 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-sudo iptables-save > /etc/iptables.up.rules
-sudo iptables-restore -t < /etc/iptables.up.rules
-sudo netfilter-persistent save
-sudo netfilter-persistent reload
-sudo systemctl daemon-reload
+
+iptables -A OUTPUT -p tcp --sport 10809 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+iptables -A OUTPUT -p udp --sport 10809 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+iptables -A OUTPUT -p tcp --sport 10808 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+iptables -A OUTPUT -p udp --sport 10808 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+iptables-save > /etc/iptables.up.rules
+iptables-restore -t < /etc/iptables.up.rules
+netfilter-persistent save
+netfilter-persistent reload
+systemctl daemon-reload
 systemctl stop xray
 systemctl enable xray
 systemctl start xray
 systemctl restart xray
 
 ##restart&start service
-sudo systemctl daemon-reload
+systemctl daemon-reload
 systemctl enable xtrojan
 systemctl stop xtrojan
 systemctl start xtrojan
 systemctl restart xtrojan
 
 ##restart&start service
-sudo systemctl daemon-reload
+systemctl daemon-reload
 systemctl enable xvless
 systemctl stop xvless
 systemctl start xvless
 systemctl restart xvless
 
 ##restart&start service
-sudo systemctl daemon-reload
+systemctl daemon-reload
 systemctl enable xss
 systemctl stop xss
 systemctl start xss
 systemctl restart xss
 
 ##restart&start service
-sudo systemctl daemon-reload
+systemctl daemon-reload
 systemctl enable sstcp
 systemctl stop sstcp
 systemctl start sstcp
 systemctl restart sstcp
 
 ##restart&start service
-sudo systemctl daemon-reload
+systemctl daemon-reload
 systemctl enable xvmess
 systemctl stop xvmess
 systemctl start xvmess
 systemctl restart xvmess
 
 ##restart&start service
-sudo systemctl daemon-reload
+systemctl daemon-reload
 systemctl enable trojangrpc
 systemctl stop trojangrpc
 systemctl start trojangrpc
 systemctl restart trojangrpc
 
 ##restart&start service
-sudo systemctl daemon-reload
+systemctl daemon-reload
 systemctl enable vlessquic
 systemctl stop vlessquic
 systemctl start vlessquic
@@ -631,8 +620,8 @@ cat > /etc/trojan-go/config.json << END
   "ssl": {
     "verify": false,
     "verify_hostname": false,
-    "cert": "/etc/xray/xray.crt",
-    "key": "/etc/xray/xray.key",
+    "cert": "/etc/ssl/private/fullchain.pem",
+    "key": "/etc/ssl/private/privkey.pem",
     "key_password": "",
     "cipher": "",
     "curves": "",
@@ -645,7 +634,7 @@ cat > /etc/trojan-go/config.json << END
     "reuse_session": true,
     "plain_http_response": "",
     "fallback_addr": "127.0.0.1",
-    "fallback_port": 0,
+    "fallback_port": 2053,
     "fingerprint": "firefox"
   },
   "tcp": {
@@ -660,7 +649,7 @@ cat > /etc/trojan-go/config.json << END
   },
   "websocket": {
     "enabled": true,
-    "path": "/trojango",
+    "path": "/gandring",
     "host": "$domain"
   },
     "api": {
