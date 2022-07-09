@@ -38,7 +38,7 @@ if [[ -e /etc/wireguard/params ]]; then
 	exit 1
 fi
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo "\033[1;36m${Info} instalasi Wireguard Script By zerossl      \033[0m"
+echo "${Info} instalasi Wireguard Script By zerossl"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 # Detect public IPv4 address and pre-fill for the user
 
@@ -109,14 +109,8 @@ cd /usr/bin
 wget -O addwg "https://${wisnuvpn}/addwg.sh"
 wget -O delwg "https://${wisnuvpn}/delwg.sh"
 wget -O renewwg "https://${wisnuvpn}/renewwg.sh"
-wget -O trial-wg "https://${wisnuvpn}/trial-wg.sh"
-wget -O portwg "https://${wisnuvpn}/portwg.sh"
-wget -O cekwg "https://${wisnuvpn}/cekwg.sh"
 chmod +x addwg
 chmod +x delwg
 chmod +x renewwg
-chmod +x trial-wg
-chmod +x portwg
-chmod +x cekwg
 cd
 rm -f /root/wg.sh
