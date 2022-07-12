@@ -225,7 +225,7 @@ echo "/bin/false" >> /etc/shells
 echo "/usr/sbin/nologin" >> /etc/shells
 /etc/init.d/dropbear restart
 
-# install squid (proxy nya aku matikan)
+# install squid
 cd
 apt -y install squid3
 wget -O /etc/squid/squid.conf "https://${wisnuvpn}/squid3.conf"
@@ -299,8 +299,8 @@ chmod 644 /etc/stunnel5
 
 # Download Config Stunnel5
 cat > /etc/stunnel5/stunnel5.conf <<-END
-key = /etc/ssl/private/privkey.pem
 cert = /etc/ssl/private/fullchain.pem
+key = /etc/ssl/private/privkey.pem
 client = no
 socket = a:SO_REUSEADDR=1
 socket = l:TCP_NODELAY=1
