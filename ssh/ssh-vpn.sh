@@ -524,6 +524,7 @@ wget -O addxrayss "https://${wisnuvpnn}/addxrayss.sh"
 wget -O addnewtr "https://${wisnuvpnn}/addnewtr.sh"
 wget -O addnewvmess "https://${wisnuvpnn}/addnewvmess.sh"
 wget -O addnewvless "https://${wisnuvpnn}/addnewvless.sh"
+wget -O addxtreme "https://${wisnuvpnn}/addxtreme.sh"
 
 wget -O delxrayss "https://${wisnuvpnn}/delxrayss.sh"
 wget -O delvmess "https://${wisnuvpnn}/delvmess.sh"
