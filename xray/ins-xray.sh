@@ -1,5 +1,5 @@
 #!/bin/bash
-# @ Copyrigt 2021 By zerossl
+# @ Copyrigt 2017 By zerossl
 # Color
 RED='\033[0;31m'
 NC='\033[0m'
@@ -872,7 +872,7 @@ cat > /etc/xray/xtrojan.json << END
       }
     },
     {
-      "port": 2096,
+      "port": 20878,
       "listen": "0.0.0.0",
       "protocol": "trojan",
       "tag": "TROJAN-WSTLS-in",
@@ -930,7 +930,7 @@ cat > /etc/xray/xtrojan.json << END
       }
     },
     {
-      "port": 2000,
+      "port": 1120,
       "listen": "0.0.0.0",
       "protocol": "trojan",
       "tag": "TROJAN-HTTP/2-in",
@@ -1046,7 +1046,7 @@ cat > /etc/xray/xvless.json << END
     },
     "inbounds": [
         {
-            "port": 2052,
+            "port": 2053,
             "protocol": "vmess",
             "settings": {
                 "clients": [
@@ -1080,7 +1080,7 @@ cat > /etc/xray/xvless.json << END
             }
         },
         {
-            "port": 2052,
+            "port": 20520,
             "protocol": "vmess",
             "settings": {
                 "clients": [
@@ -1114,7 +1114,7 @@ cat > /etc/xray/xvless.json << END
             }
         },
         {
-            "port": 8080,
+            "port": 1150,
             "protocol": "vmess",
             "settings": {
                 "clients": [
@@ -1148,7 +1148,7 @@ cat > /etc/xray/xvless.json << END
             }
         },
         {
-            "port": 8080,
+            "port": 21820,
             "protocol": "vmess",
             "settings": {
                 "clients": [
@@ -1384,6 +1384,235 @@ cat > /etc/xray/xvless.json << END
   }
 }
 END
+
+uuid=$(cat /proc/sys/kernel/random/uuid)
+domain=$(cat /root/domain)
+# // Certificate File
+path_crt="/etc/xray/xray.crt"
+path_key="/etc/xray/xray.key"
+#domain_ecc=$(cat /root/.acme.sh)
+#domain.key=$(cat /root/.acme.sh/$domain_ecc)
+#path_crt="/root/.acme.sh/$domain_ecc/fullchain.cer"
+#path_key="/root/.acme.sh/$domain_ecc/$domain.key"
+# Buat Config Xray
+cat > /etc/xray/trojangrpc.json << END
+{
+  "log": {
+    "access": "/var/log/xray/access.log",
+    "error": "/var/log/xray/error.log",
+    "loglevel": "info"
+  },
+  "inbounds": [
+    : true,
+      "statsOutboundDownlink" : true
+    }
+  }
+}
+END
+
+uuid=$(cat /proc/sys/kernel/random/uuid)
+domain=$(cat /root/domain)
+# // Certificate File
+path_crt="/etc/xray/xray.crt"
+path_key="/etc/xray/xray.key"
+#domain_ecc=$(cat /root/.acme.sh)
+#domain.key=$(cat /root/.acme.sh/$domain_ecc)
+#path_crt="/root/.acme.sh/$domain_ecc/fullchain.cer"
+#path_key="/root/.acme.sh/$domain_ecc/$domain.key"
+# Buat Config Xray
+cat > /usr/local/etc/xray/xvmess.json << END
+{
+  "log": {
+    "access": "/var/log/xray/access.log",
+    "error": "/var/log/xray/error.log",
+    "loglevel": "info"
+  },
+  "inbounds": [
+    
+         
+        
+          
+END
+
+uuid=$(cat /proc/sys/kernel/random/uuid)
+domain=$(cat /root/domain)
+# // Certificate File
+path_crt="/etc/xray/xray.crt"
+path_key="/etc/xray/xray.key"
+#domain_ecc=$(cat /root/.acme.sh)
+#domain.key=$(cat /root/.acme.sh/$domain_ecc)
+#path_crt="/root/.acme.sh/$domain_ecc/fullchain.cer"
+#path_key="/root/.acme.sh/$domain_ecc/$domain.key"
+# Buat Config Xray
+cat > /usr/local/etc/xray/vlessquic.json << END
+{
+  "log": {
+    "access": "/var/log/xray/access.log",
+    "error": "/var/log/xray/error.log",
+    "loglevel": "info"
+  },
+  "inbounds": [
+    
+
+END
+
+uuid=$(cat /proc/sys/kernel/random/uuid)
+
+domain=$(cat /root/domain)
+# // Certificate File
+path_crt="/etc/xray/xray.crt"
+path_key="/etc/xray/xray.key"
+#domain_ecc=$(cat /root/.acme.sh)
+#domain.key=$(cat /root/.acme.sh/$domain_ecc)
+#path_crt="/root/.acme.sh/$domain_ecc/fullchain.cer"
+#path_key="/root/.acme.sh/$domain_ecc/$domain.key"
+# Buat Config Xray
+cat > /etc/xray/xss.json << END
+{
+  "log": {
+    "access": "/var/log/xray/access.log",
+    "error": "/var/log/xray/error.log",
+    "loglevel": "warning"
+  },
+  "inbounds": [
+    
+END
+
+uuid=$(cat /proc/sys/kernel/random/uuid)
+domain=$(cat /root/domain)
+# // Certificate File
+path_crt="/etc/xray/xray.crt"
+path_key="/etc/xray/xray.key"
+#domain_ecc=$(cat /root/.acme.sh)
+#domain.key=$(cat /root/.acme.sh/$domain_ecc)
+#path_crt="/root/.acme.sh/$domain_ecc/fullchain.cer"
+#path_key="/root/.acme.sh/$domain_ecc/$domain.key"
+# Buat Config Xray
+cat > /etc/xray/sstcp.json << END
+{
+  "log": {
+    "access": "/var/log/xray/access.log",
+    "error": "/var/log/xray/error.log",
+    "loglevel": "warning"
+  },
+  "inbounds": [
+    
+END
+
+cat > /etc/systemd/system/xvmess.service << END
+[Unit]
+Description=XVMESS ROUTING GAJAH DEMAK BY GANDRING
+Documentation=https://t.me/zerossl
+After=network.target nss-lookup.target
+
+[Service]
+User=root
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+NoNewPrivileges=true
+ExecStart=/usr/local/bin/xray -config /usr/local/etc/xray/xvmess.json
+Restart=on-failure
+RestartSec=1s
+
+[Install]
+WantedBy=multi-user.target
+END
+
+# / / Installation Xray Service
+cat > /etc/systemd/system/xss.service << END
+[Unit]
+Description=XSHADOWSOCKS ROUTING DAM COLO PENGKOL BY WISNU
+Documentation=https://t.me/zerossl
+After=network.target nss-lookup.target
+
+[Service]
+User=root
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+NoNewPrivileges=true
+ExecStart=/usr/local/bin/xray -config /etc/xray/xss.json
+Restart=on-failure
+RestartSec=1s
+
+[Install]
+WantedBy=multi-user.target
+END
+
+# / / Installation Xray Service
+cat > /etc/systemd/system/sstcp.service << END
+[Unit]
+Description=XSHADOWSOCKS ROUTING DAM COLO PENGKOL BY WISNU
+Documentation=https://t.me/zerossl
+After=network.target nss-lookup.target
+
+[Service]
+User=root
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+NoNewPrivileges=true
+ExecStart=/usr/local/bin/xray -config /etc/xray/sstcp.json
+Restart=on-failure
+RestartSec=1s
+
+[Install]
+WantedBy=multi-user.target
+END
+
+# / / Installation Xray Service
+cat > /etc/systemd/system/trojangrpc.service << END
+[Unit]
+Description=XTROJAN ROUTING DAM COLO PENGKOL BY zerossl
+Documentation=https://t.me/zerossl
+After=network.target nss-lookup.target
+
+[Service]
+User=root
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+NoNewPrivileges=true
+ExecStart=/usr/local/bin/xray -config /etc/xray/trojangrpc.json
+Restart=on-failure
+RestartSec=1s
+
+[Install]
+WantedBy=multi-user.target
+END
+
+# / / Installation Xray Service
+cat > /etc/systemd/system/vlessquic.service << END
+[Unit]
+Description=XVLESS ROUTING DAM COLO PENGKOL BY zerossl
+Documentation=https://t.me/zerossl
+After=network.target nss-lookup.target
+
+[Service]
+User=root
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+NoNewPrivileges=true
+ExecStart=/usr/local/bin/xray -config /usr/local/etc/xray/vlessquic.json
+Restart=on-failure
+RestartSec=1s
+
+[Install]
+WantedBy=multi-user.target
+END
+
+# // Enable & Start Service
+# Accept port Xray
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 8443 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 8443 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 80 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 80 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2083 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2083 -j ACCEPT
+iptables-save > /etc/iptables.up.rules
+iptables-restore -t < /etc/iptables.up.rules
+netfilter-persistent save
+netfilter-persistent reload
+
+
+systemctl restart vlessquic
 # / / Installation Xray Service
 cat > /etc/systemd/system/xray.service << END
 [Unit]
@@ -1524,6 +1753,40 @@ systemctl stop xvless
 systemctl start xvless
 systemctl restart xvless
 
+##restart&start service
+systemctl daemon-reload
+systemctl enable xss
+systemctl stop xss
+systemctl start xss
+systemctl restart xss
+
+##restart&start service
+systemctl daemon-reload
+systemctl enable sstcp
+systemctl stop sstcp
+systemctl start sstcp
+systemctl restart sstcp
+
+##restart&start service
+systemctl daemon-reload
+systemctl enable xvmess
+systemctl stop xvmess
+systemctl start xvmess
+systemctl restart xvmess
+
+##restart&start service
+systemctl daemon-reload
+systemctl enable trojangrpc
+systemctl stop trojangrpc
+systemctl start trojangrpc
+systemctl restart trojangrpc
+
+##restart&start service
+systemctl daemon-reload
+systemctl enable vlessquic
+systemctl stop vlessquic
+systemctl start vlessquic
+
 # Install Trojan Go
 latest_version="$(curl -s "https://api.github.com/repos/p4gefau1t/trojan-go/releases" | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
 trojango_link="https://github.com/p4gefau1t/trojan-go/releases/download/v${latest_version}/trojan-go-linux-amd64.zip"
@@ -1538,22 +1801,14 @@ mkdir /var/log/trojan-go/
 touch /etc/trojan-go/akun.conf
 touch /var/log/trojan-go/trojan-go.log
 
-domain=$(cat /root/domain)
-# // Certificate File
-path_cer="/etc/xray/xray.cer"
-path_key="/etc/xray/xray.key"
-#domain_ecc=$(cat /root/.acme.sh)
-#domain.key=$(cat /root/.acme.sh/$domain_ecc)
-#path_crt="/root/.acme.sh/$domain_ecc/fullchain.cer"
-#path_key="/root/.acme.sh/$domain_ecc/$domain.key"
 # Buat Config Trojan Go
 cat > /etc/trojan-go/config.json << END
 {
   "run_type": "server",
   "local_addr": "0.0.0.0",
-  "local_port": 2087,
+  "local_port": 2053,
   "remote_addr": "127.0.0.1",
-  "remote_port": 88,
+  "remote_port": 89,
   "log_level": 1,
   "log_file": "/var/log/trojan-go/trojan-go.log",
   "password": [
@@ -1564,8 +1819,8 @@ cat > /etc/trojan-go/config.json << END
   "ssl": {
     "verify": false,
     "verify_hostname": false,
-    "cert": "/etc/xray/xray.cer",
-    "key": "/etc/xray/xray.key",
+    "cert": "/etc/ssl/private/fullchain.pem",
+    "key": "/etc/ssl/private/privkey.pem",
     "key_password": "",
     "cipher": "",
     "curves": "",
@@ -1578,7 +1833,7 @@ cat > /etc/trojan-go/config.json << END
     "reuse_session": true,
     "plain_http_response": "",
     "fallback_addr": "127.0.0.1",
-    "fallback_port": 0,
+    "fallback_port": 2053,
     "fingerprint": "firefox"
   },
   "tcp": {
@@ -1587,7 +1842,7 @@ cat > /etc/trojan-go/config.json << END
     "prefer_ipv4": true
   },
   "mux": {
-    "enabled": true,
+    "enabled": false,
     "concurrency": 8,
     "idle_timeout": 60
   },
@@ -1614,7 +1869,7 @@ END
 # Installing Trojan Go Service
 cat > /etc/systemd/system/trojan-go.service << END
 [Unit]
-Description=Trojan-Go BENDUNG COLO PENGKOL BY GANDRING
+Description=Trojan-Go Service Mod By zerossl
 Documentation=https://t.me/zerossl
 After=network.target nss-lookup.target
 
@@ -1637,8 +1892,8 @@ $uuid
 END
 
 # restart
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2087 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2087 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2086 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2053 -j ACCEPT
 iptables-save > /etc/iptables.up.rules
 iptables-restore -t < /etc/iptables.up.rules
 netfilter-persistent save
@@ -1648,6 +1903,10 @@ systemctl stop trojan-go
 systemctl start trojan-go
 systemctl enable trojan-go
 systemctl restart trojan-go
-
 cd
 cp /root/domain /etc/xray
+cp /root/domain /usr/local/etc/xray
+cp /root/.acme.sh/$domain_ecc/fullcain.cer /etc/stunnel/stunnel.pem
+cp /root/.acme.sh/$domain_ecc/$domain.key /etc/stunnel/stunnel.pem
+cp /etc/ssl/private/fullchain.pem //etc/xray/xray.crt
+cp /etc/ssl/private/privkey.pem //etc/xray/xray.key
