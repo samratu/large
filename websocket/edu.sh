@@ -4,10 +4,10 @@
 # ==========================================
 
 # Link Hosting Kalian
-akbarvpn="raw.githubusercontent.com/pengkol/Mantap/main/websocket"
+wisnuvpn="raw.githubusercontent.com/samratu/large/sae/websocket"
 
 # Getting Proxy Template
-wget -q -O /usr/local/bin/ws-nontls https://${akbarvpn}/websocket.py
+wget -q -O /usr/local/bin/ws-nontls https://${wisnuvpn}/websocket.py
 chmod +x /usr/local/bin/ws-nontls
 
 # Installing Service
@@ -35,7 +35,7 @@ systemctl enable ws-nontls
 systemctl restart ws-nontls
 
 # Getting Proxy Template
-wget -q -O /usr/local/bin/ws-ovpn https://${akbarvpn}/ws-ovpn.py
+wget -q -O /usr/local/bin/ws-ovpn https://${wisnuvpn}/ws-ovpn.py
 chmod +x /usr/local/bin/ws-ovpn
 
 # Installing Service
@@ -63,7 +63,7 @@ systemctl enable ws-ovpn
 systemctl restart ws-ovpn
 
 # Getting Proxy Template
-wget -q -O /usr/local/bin/ws-tls https://${akbarvpn}/ws-tls.py
+wget -q -O /usr/local/bin/ws-tls https://${wisnuvpn}/ws-tls.py
 chmod +x /usr/local/bin/ws-tls
 
 # Installing Service
