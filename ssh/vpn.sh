@@ -13,10 +13,19 @@ LIGHT='\033[0;37m'
 # ==========================================
 # Getting
 MYIP=$(wget -qO- ipinfo.io/ip);
-# Mod By zerossl
+echo "Checking VPS"
+IZIN=$( curl ipinfo.io/ip | grep $MYIP )
+if [ $MYIP = $MYIP ]; then
+echo -e "${NC}${GREEN}Permission Accepted...${NC}"
+else
+echo -e "${NC}${RED}Permission Denied!${NC}";
+echo -e "${NC}${LIGHT}Fuck You!!"
+exit 0
+fi
+# Mod By SL
 # ==================================================
 # Link Hosting Kalian
-akbarvpn="raw.githubusercontent.com/samratu/large/file/ssh"
+akbarvpn="raw.githubusercontent.com/senowahyu62/scriptvps/main/ssh"
 
 # initialisasi var
 export DEBIAN_FRONTEND=noninteractive
@@ -52,12 +61,6 @@ systemctl enable --now openvpn-server@server-udp
 echo 1 > /proc/sys/net/ipv4/ip_forward
 sed -i 's/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/g' /etc/sysctl.conf
 
-domain=$(cat /root/domain)
-domain_ecc=$(cat /root/.acme.sh)
-fullchain=$(cat /root/.acme.sh/$domain_ecc/fullchain.cer)
-domainkey=$(cat /root/.acme.sh/$domain_ecc/$domain.key)
-<ca>=/root/.acme.sh/$domain_ecc/fullchain.cer
-<key>=/root/.acme.sh/$domain_ecc/$domain.key
 # Buat config client TCP 1194
 cat > /etc/openvpn/tcp.ovpn <<-END
 client
@@ -76,12 +79,12 @@ END
 
 sed -i $MYIP2 /etc/openvpn/tcp.ovpn;
 
-# Buat config client UDP 1195
+# Buat config client UDP 2200
 cat > /etc/openvpn/udp.ovpn <<-END
 client
 dev tun
 proto udp
-remote xxxxxxxxx 1195
+remote xxxxxxxxx 2200
 resolv-retry infinite
 route-method exe
 nobind
@@ -120,12 +123,7 @@ cd
 echo '<ca>' >> /etc/openvpn/tcp.ovpn
 cat /etc/openvpn/server/ca.crt >> /etc/openvpn/tcp.ovpn
 echo '</ca>' >> /etc/openvpn/tcp.ovpn
-#echo '<ca>' >> /etc/openvpn/tcp.ovpn
-#cat /root/.acme.sh/$domain_ecc/fullchain.cer >> /etc/openvpn/tcp.ovpn
-#echo '</ca>' >> /etc/openvpn/tcp.ovpn
-#echo '<key>' >> /etc/openvpn/tcp.ovpn
-#cat /root/.acme.sh/$domain_ecc/$domain.key >> /etc/openvpn/tcp.ovpn
-#echo '</key>' >> /etc/openvpn/tcp.ovpn
+
 # Copy config OpenVPN client ke home directory root agar mudah didownload ( TCP 1194 )
 cp /etc/openvpn/tcp.ovpn /home/vps/public_html/tcp.ovpn
 
@@ -133,12 +131,7 @@ cp /etc/openvpn/tcp.ovpn /home/vps/public_html/tcp.ovpn
 echo '<ca>' >> /etc/openvpn/udp.ovpn
 cat /etc/openvpn/server/ca.crt >> /etc/openvpn/udp.ovpn
 echo '</ca>' >> /etc/openvpn/udp.ovpn
-#echo '<ca>' >> /etc/openvpn/udp.ovpn
-#cat /root/.acme.sh/$domain/fullchain.cer >> /etc/openvpn/udp.ovpn
-#echo '</ca>' >> /etc/openvpn/udp.ovpn
-#echo '<key>' >> /etc/openvpn/udp.ovpn
-#cat /root/.acme.sh/$domain_ecc/$domain.key >> /etc/openvpn/udp.ovpn
-#echo '</key>' >> /etc/openvpn/udp.ovpn
+
 # Copy config OpenVPN client ke home directory root agar mudah didownload ( UDP 2200 )
 cp /etc/openvpn/udp.ovpn /home/vps/public_html/udp.ovpn
 
@@ -146,12 +139,7 @@ cp /etc/openvpn/udp.ovpn /home/vps/public_html/udp.ovpn
 echo '<ca>' >> /etc/openvpn/ssl.ovpn
 cat /etc/openvpn/server/ca.crt >> /etc/openvpn/ssl.ovpn
 echo '</ca>' >> /etc/openvpn/ssl.ovpn
-#echo '<ca>' >> /etc/openvpn/ssl.ovpn
-#cat /root/.acme.sh/$domain_ecc/fullchain.cer >> /etc/openvpn/ssl.ovpn
-#echo '</ca>' >> /etc/openvpn/ssl.ovpn
-#echo '<key>' >> /etc/openvpn/ssl.ovpn
-#cat /root/.acme.sh/$domain_ecc/$domain.key >> /etc/openvpn/ssl.ovpn
-#echo '</key>' >> /etc/openvpn/ssl.ovpn
+
 # Copy config OpenVPN client ke home directory root agar mudah didownload ( SSL )
 cp /etc/openvpn/ssl.ovpn /home/vps/public_html/ssl.ovpn
 
