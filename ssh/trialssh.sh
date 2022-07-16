@@ -33,6 +33,8 @@ Pass=1
 clear
 systemctl restart ws-tls
 systemctl restart ws-nontls
+systemctl restart ws-ovpn
+systemctl restart stunnel5
 systemctl restart ssh-ohp
 systemctl restart dropbear-ohp
 systemctl restart openvpn-ohp
@@ -66,9 +68,12 @@ echo -e "OVPN SSL  :http://$MYIP:88/ssl.ovpn"
 echo -e "BadVpn    :7100-7200-7900"
 echo -e "Created   :$hariini"
 echo -e "Expired   :$expi"
-echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "PAYLOAD SSH & OVPN WEBSOCKET"
-echo -e "gandring http://bugmu.com/http/1.1[crlf]Host: ${domain}[crlf]Upgrade: websocket[crlf][crlf]"
+echo -e "━━━━━━━━━━━━━━━━━━━"
+echo -e "Payload SSH WEBSOCKET"
+echo -e "GET wss://bug.com/ HTTP/1.1[crlf]Host:[host][crlf]Upgrade:websocket[crlf][crlf]"
+echo -e "━━━━━━━━━━━━━━━━━━━"
+echo -e "Payload OVPN WEBSOCKET"
+echo -e "GET /HTTP/1.1[crlf]Host:$domain[crlf]Upgrade:websocket[crlf][crlf]"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m🔰LUXURY EDITION ZEROSSL🔰\e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
