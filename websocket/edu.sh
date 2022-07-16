@@ -1,6 +1,6 @@
 #!/bin/bash
-# Proxy For Edukasi & Imclass
-# SL
+# Proxy mod
+# wisnucokrosatrio
 # ==========================================
 
 # Link Hosting Kalian
