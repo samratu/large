@@ -24,10 +24,15 @@ systemctl restart xl2tpd
 systemctl restart pptpd
 systemctl restart ipsec
 systemctl restart accel-ppp
-systemctl restart ovpnws
+systemctl restart ws-ovpn
 systemctl restart wg-quick@wg0
 systemctl restart xtrojan
 systemctl restart xvless
+systemctl restart xvmess
+systemctl restart trojangrpc
+systemctl restart xss
+systemctl restart sstcp
+systemctl restart vlessquic
 systemctl restart ssh-ohp
 systemctl restart dropbear-ohp
 systemctl restart openvpn-ohp
