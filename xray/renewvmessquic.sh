@@ -1,3 +1,4 @@
+
 #!/bin/bash
 # My Telegram : https://t.me/zerossl
 # ==========================================
@@ -107,6 +108,10 @@ user=$(grep -E "^#&# " "/etc/xray/xvless.json" | cut -d ' ' -f 2 | sed -n "${CLI
 exp=$(grep -E "^#&# " "/etc/xray/xvless.json" | cut -d ' ' -f 3 | sed -n "${CLIENT_NUMBER}"p)
 user=$(grep -E "^#&# " "/etc/xray/config.json" | cut -d ' ' -f 2 | sed -n "${CLIENT_NUMBER}"p)
 exp=$(grep -E "^#&# " "/etc/xray/config.json" | cut -d ' ' -f 3 | sed -n "${CLIENT_NUMBER}"p)
+user=$(grep -E "^#&# " "/etc/xray/vlessquic.json" | cut -d ' ' -f 2 | sed -n "${CLIENT_NUMBER}"p)
+exp=$(grep -E "^#&# " "/etc/xray/vlessquic.json" | cut -d ' ' -f 3 | sed -n "${CLIENT_NUMBER}"p)
+user=$(grep -E "^#&# " "/etc/xray/trojangrpc.json" | cut -d ' ' -f 2 | sed -n "${CLIENT_NUMBER}"p)
+exp=$(grep -E "^#&# " "/etc/xray/trojangrpc.json" | cut -d ' ' -f 3 | sed -n "${CLIENT_NUMBER}"p)
 now=$(date +%Y-%m-%d)
 d1=$(date -d "$exp" +%s)
 d2=$(date -d "$now" +%s)
@@ -117,10 +122,12 @@ sed -i "s/#&# $user $exp/#&# $user $exp4/g" /etc/xray/xtrojan.json
 sed -i "s/#&# $user $exp/#&# $user $exp4/g" /usr/local/etc/xray/xvmess.json
 sed -i "s/#&# $user $exp/#&# $user $exp4/g" /etc/xray/xvless.json
 sed -i "s/#&# $user $exp/#&# $user $exp4/g" /etc/xray/config.json
+sed -i "s/#&# $user $exp/#&# $user $exp4/g" /etc/xray/vlessquic.json
+sed -i "s/#&# $user $exp/#&# $user $exp4/g" /etc/xray/trojangrpc.json
 clear
 echo ""
 echo "================================"
-echo "  Trojan Account Renewed  "
+echo "  Vmess Account Renewed  "
 echo "================================"
 echo "Username  : $user"
 echo "Expired  : $exp4"

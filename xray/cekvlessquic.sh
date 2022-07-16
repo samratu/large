@@ -15,18 +15,21 @@ LIGHT='\033[0;37m'
 MYIP=$(wget -qO- ipinfo.io/ip);
 clear
 echo -n > /tmp/other.txt
-data=( `cat /etc/xray/xtrojan.json | grep '^####' | cut -d ' ' -f 2`);
-data=( `cat /etc/xray/trojangrpc.json | grep '^####' | cut -d ' ' -f 2`);
-data=( `cat /usr/local/etc/xray/xvmess.json | grep '^####' | cut -d ' ' -f 2`);
+data=( `cat /etc/xray/xtrojan.json | grep '^#&#' | cut -d ' ' -f 2`);
+data=( `cat /etc/xray/trojangrpc.json | grep '^#&#' | cut -d ' ' -f 2`);
+data=( `cat /usr/local/etc/xray/xvmess.json | grep '^#&#' | cut -d ' ' -f 2`);
+data=( `cat /etc/xray/xvless.json | grep '^#&#' | cut -d ' ' -f 2`);
+data=( `cat /etc/xray/config.json | grep '^#&#' | cut -d ' ' -f 2`);
+data=( `cat /usr/local/etc/xray/vlessquic.json | grep '^#&#' | cut -d ' ' -f 2`);
 echo "----------------------------------------";
-echo "---------=[ TROJAN User Login ]=---------";
+echo "---------=[ Vless User Login ]=---------";
 echo "----------------------------------------";
 for akun in "${data[@]}"
 do
 if [[ -z "$akun" ]]; then
 akun="tidakada"
 fi
-echo -n > /tmp/iptrojan.txt
+echo -n > /tmp/ipvless.txt
 data2=( `netstat -anp | grep ESTABLISHED | grep tcp6 | grep xray | awk '{print $5}' | cut -d: -f1 | sort | uniq`);
 for ip in "${data2[@]}"
 do
@@ -36,19 +39,19 @@ echo "$jum" >> /tmp/ipvless.txt
 else
 echo "$ip" >> /tmp/other.txt
 fi
-jum2=$(cat /tmp/iptrojan.txt)
+jum2=$(cat /tmp/ipvless.txt)
 sed -i "/$jum2/d" /tmp/other.txt > /dev/null 2>&1
 done
-jum=$(cat /tmp/iptrojan.txt)
+jum=$(cat /tmp/ipvless.txt)
 if [[ -z "$jum" ]]; then
 echo > /dev/null
 else
-jum2=$(cat /tmp/iptrojan.txt | nl)
+jum2=$(cat /tmp/ipvless.txt | nl)
 echo "user : $akun";
 echo "$jum2";
 echo "----------------------------------------"
 fi
-rm -rf /tmp/iptrojan.txt
+rm -rf /tmp/ipvless.txt
 done
 oth=$(cat /tmp/other.txt | sort | uniq | nl)
 echo "other";

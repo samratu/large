@@ -1,3 +1,4 @@
+
 #!/bin/bash
 # My Telegram : https://t.me/zerossl
 # ==========================================
@@ -120,7 +121,7 @@ sed -i "s/#&# $user $exp/#&# $user $exp4/g" /etc/xray/config.json
 clear
 echo ""
 echo "================================"
-echo "  Trojan Account Renewed  "
+echo "  TROJAN Account Renewed  "
 echo "================================"
 echo "Username  : $user"
 echo "Expired  : $exp4"

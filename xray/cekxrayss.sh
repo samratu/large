@@ -16,6 +16,8 @@ MYIP=$(wget -qO- ipinfo.io/ip);
 clear
 echo -n > /tmp/other.txt
 data=( `cat /etc/xray/config.json | grep '^###' | cut -d ' ' -f 2`);
+data=( `cat /etc/xray/xtrojan.json | grep '^#&#' | cut -d ' ' -f 2`);
+data=( `cat /etc/xray/xss.json | grep '^#&#' | cut -d ' ' -f 2`);
 echo "----------------------------------------";
 echo "---------=[ shadowsocks User Login ]=---------";
 echo "----------------------------------------";
