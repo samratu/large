@@ -49,8 +49,6 @@ uuid=$(cat /proc/sys/kernel/random/uuid)
 #bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u root
 cd /root/
 #wget https://raw.githubusercontent.com/acmesh-official/acme.sh/master/acme.sh
-
-sudo lsof -t -i tcp:80 -s tcp:listen | sudo xargs kill
 ##Generate acme certificate
 curl https://get.acme.sh | sh
 alias acme.sh=~/.acme.sh/acme.sh
@@ -64,7 +62,6 @@ chown -R nobody:nogroup /etc/xray
 chmod 644 /etc/xray/xray.cer
 chmod 644 /etc/xray/xray.key
 
-sudo lsof -t -i tcp:80 -s tcp:listen | sudo xargs kill
 #cd /root/
 #wget https://raw.githubusercontent.com/acmesh-official/acme.sh/master/acme.sh
 #bash acme.sh --install
