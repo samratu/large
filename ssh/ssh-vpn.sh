@@ -341,12 +341,8 @@ accept = 700
 connect = 127.0.0.1:200
 
 [openssh]
-accept = 600
-connect = 127.0.0.1:22
-
-[openssh]
 accept = 500
-connect = 127.0.0.1:443
+connect = 127.0.0.1:22
 
 [openvpn]
 accept = 990
