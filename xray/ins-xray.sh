@@ -35,6 +35,7 @@ xraycore_link="https://github.com/XTLS/Xray-core/releases/download/v$latest_vers
 # / / Make Main Directory
 mkdir -p /usr/bin/xray
 mkdir -p /etc/xray
+mkdir -p /etc/ssl/private
 mkdir -p /usr/local/etc/xray
 # / / Unzip Xray Linux 64
 cd `mktemp -d`
@@ -60,8 +61,10 @@ alias acme.sh=~/.acme.sh/acme.sh
 --fullchain-file /etc/ssl/private/fullchain.pem \
 --key-file /etc/ssl/private/privkey.pem
 chown -R nobody:nogroup /etc/xray
-chmod 644 /etc/ssl/private/privkey.pem
+chown -R nobody:nogroup /etc/ssl/private
 chmod 644 /etc/ssl/private/fullchain.pem
+chmod 644 /etc/ssl/private/privkey.pem
+
 
 #sudo lsof -t -i tcp:80 -s tcp:listen | sudo xargs kill
 #cd /root/
@@ -85,7 +88,7 @@ chmod 644 /etc/ssl/private/fullchain.pem
 #chmod +x /root/.acme.sh/acme.sh
 #/root/.acme.sh/acme.sh --issue -d $domain --standalone -k ec-256
 #~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath /etc/xray/xray.crt --keypath /etc/xray/xray.key --ecc
-
+bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install-geodata
 uuid=$(cat /proc/sys/kernel/random/uuid)
 domain=$(cat /root/domain)
 # // Certificate File
