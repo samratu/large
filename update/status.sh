@@ -23,7 +23,7 @@ ERROR="$rd Error [ ${red}Not Running${NC} ]"
 dahlah=()
 mantap=()
 declare ingfo=()            
-#=====================================
+=====================================
 status01=$(systemctl status dropbear         | grep -i "active (running)")
 status02=$(systemctl status sshd             | grep -i "active (running)")
 status03=$(systemctl status stunnel5         | grep -i "active (running)")
@@ -40,22 +40,16 @@ status13=$(systemctl status squid            | grep -i "active (running)")
 status14=$(systemctl status cron             | grep -i "active (running)")
 status15=$(systemctl status fail2ban         | grep -i "active (running)")
 status16=$(systemctl status vnstat           | grep -i "active (running)")
-status17=$(systemctl status sslh             | grep -i "active (running)")
+status17=$(systemctl status ws-tls           | grep -i "active (running)")
 status18=$(systemctl status privoxy          | grep -i "active (running)")
 status19=$(systemctl status ws-tls           | grep -i "active (running)")
 status19=$(systemctl status ws-nontls        | grep -i "active (running)")
-status20=$(systemctl status ovpnws           | grep -i "active (running)")
-status21=$(systemctl status wstunnel         | grep -i "active (running)")
+status20=$(systemctl status ws-ovpn          | grep -i "active (running)")
+status21=$(systemctl status ws-tls           | grep -i "active (running)")
 status22=$(systemctl status wg-quick@wg0     | grep -i "active (exited)")
 status23=$(systemctl status shadowsocks-libev| grep -i "active (running)")
 status23=$(systemctl status shadowsocks-libev| grep -i "active (running)")
 status24=$(systemctl status ssrmu            | grep -i "active (running)")
-#v2ray=$(systemctl status v2ray              | grep -i "active (running)")
-#v2ray=$(systemctl status v2ray              | grep -i "active (running)")
-#v2ray=$(systemctl status v2ray              | grep -i "active (running)")
-#v2ray=$(systemctl status v2ray              | grep -i "active (running)")
-#v2ray=$(systemctl status v2ray              | grep -i "active (running)")
-#v2ray=$(systemctl status v2ray              | grep -i "active (running)")
 status25=$(systemctl status xray             | grep -i "active (running)")
 status26=$(systemctl status xray             | grep -i "active (running)")
 status27=$(systemctl status xray             | grep -i "active (running)")
@@ -83,6 +77,14 @@ status48=$(systemctl status xray             | grep -i "active (running)")
 status49=$(systemctl status xray             | grep -i "active (running)")
 status50=$(systemctl status xray             | grep -i "active (running)")
 status51=$(systemctl status xray             | grep -i "active (running)")
+status52=$(systemctl status xray             | grep -i "active (running)")
+status53=$(systemctl status xray             | grep -i "active (running)")
+status54=$(systemctl status xray             | grep -i "active (running)")
+status55=$(systemctl status xray             | grep -i "active (running)")
+status56=$(systemctl status xray             | grep -i "active (running)")
+status57=$(systemctl status xray             | grep -i "active (running)")
+status58=$(systemctl status xray             | grep -i "active (running)")
+status59=$(systemctl status xray             | grep -i "active (running)")
 #======================================
 if [[ $status01 == "" ]]; then
       sstatus01=$ERROR
@@ -509,6 +511,62 @@ else
       sstatus51=$AKTIF
       mantap+=("hore53")
 fi
+if [[ $status52 == "" ]]; then
+      sstatus52=$ERROR
+      ingfo+=("XRAY SOCKS5 TCP")
+      dahlah+=("err54")
+else
+      sstatus52=$AKTIF
+      mantap+=("hore54")
+fi
+if [[ $status53 == "" ]]; then
+      sstatus53=$ERROR
+      ingfo+=("TROJAN QUIC")
+      dahlah+=("err56")
+else
+      sstatus53=$AKTIF
+      mantap+=("hore56")
+fi
+if [[ $status54 == "" ]]; then
+      sstatus54=$ERROR
+      ingfo+=("VLESS QUIC")
+      dahlah+=("err57")
+else
+      sstatus54=$AKTIF
+      mantap+=("hore57")
+fi
+if [[ $status55 == "" ]]; then
+      sstatus55=$ERROR
+      ingfo+=("SHADOWSOCKS 2022 TCP")
+      dahlah+=("err58")
+else
+      sstatus55=$AKTIF
+      mantap+=("hore58")
+fi
+if [[ $status56 == "" ]]; then
+      sstatus56=$ERROR
+      ingfo+=("SHADOWSOCKS 2022 WS TLS")
+      dahlah+=("err59")
+else
+      sstatus56=$AKTIF
+      mantap+=("hore59")
+fi
+if [[ $status57 == "" ]]; then
+      sstatus57=$ERROR
+      ingfo+=("SHADOWSOCKS 2022 WS NON TLS")
+      dahlah+=("err60")
+else
+      sstatus57=$AKTIF
+      mantap+=("hore60")
+fi
+if [[ $status58 == "" ]]; then
+      sstatus58=$ERROR
+      ingfo+=("SHADOWSOCKS 2022 GRPC")
+      dahlah+=("err61")
+else
+      sstatus58=$AKTIF
+      mantap+=("hore61")
+fi
 jumlah1="${#mantap[@]}"
 jumlah2="${#dahlah[@]}"
 
@@ -700,13 +758,20 @@ echo -e "$bl🔰 $off $bl TROJAN WS TLS               $off : $sstatus45🔰"
 echo -e "$bl🔰 $off $bl TROJAN WS NON TLS           $off : $sstatus46🔰"
 echo -e "$bl🔰 $off $bl XRAY SHADOWSOCKS            $off : $sstatus47🔰"
 echo -e "$bl🔰 $off $bl XRAY MT PROTO               $off : $sstatus48🔰"
-echo -e "$bl🔰 $off $bl SOCKS5 TCP                  $off : $sstatus49🔰"
+echo -e "$bl🔰 $off $bl SOCKS5 WEBSOCKET            $off : $sstatus49🔰"
+echo -e "$bl🔰 $off $bl SOCKS5 TCP                  $off : $sstatus52🔰"
+echo -e "$bl🔰 $off $bl TROJAN QUIC                 $off : $sstatus53🔰"
+echo -e "$bl🔰 $off $bl VLESS QUIC                  $off : $sstatus54🔰"
+#echo -e "$bl🔰 $off $bl VMESS QUIC                  $off : $sstatus55🔰"
+echo -e "$bl🔰 $off $bl SHADOWSOCKS 2022 TCP        $off : $sstatus55🔰"
+echo -e "$bl🔰 $off $bl SHADOWSOCKS 2022 GRPC       $off : $sstatus56🔰"
+echo -e "$bl🔰 $off $bl SHADOWSOCKS 2022 WS TLS     $off : $sstatus57🔰"
+echo -e "$bl🔰 $off $bl SHADOWSOCKS 2022 WS NON TLS $off : $sstatus58🔰"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\E[43;1;46m             🔰 SOLO THE SPIRIT OF JAVA 🔰              \E[0m"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "  - JUMLAH LAYANAN RUNNING PERFECT [ ${green}$jumlah_aktif${off} ]"
-echo -e "  - JUMLAH LAYANAN RUNNING TROUBLE [ ${red}$jumlah_error${off} ]"
+echo -e "  ✅ JUMLAH LAYANAN RUNNING PERFECT [ ${green}$jumlah_aktif${off} ]"
+echo -e "  ⛔️ JUMLAH LAYANAN RUNNING TROUBLE [ ${red}$jumlah_error${off} ]"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\E[43;1;46m             🔰 LUXURY EDITION ZEROSSL 🔰               \E[0m"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e ""
