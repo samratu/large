@@ -54,13 +54,25 @@ curl https://get.acme.sh | sh
 alias acme.sh=~/.acme.sh/acme.sh
 /root/.acme.sh/acme.sh --upgrade --auto-upgrade
 /root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
+#/root/.acme.sh/acme.sh --issue -d "${domain}" --standalone --keylength ec-2048
 /root/.acme.sh/acme.sh --issue -d "${domain}" --standalone --keylength ec-256
 /root/.acme.sh/acme.sh --install-cert -d "${domain}" --ecc \
---fullchain-file /etc/xray/xray.cer \
---key-file /etc/xray/xray.key
+--fullchain-file /etc/ssl/private/fullchain.pem \
+--key-file /etc/ssl/private/privkey.pem
 chown -R nobody:nogroup /etc/xray
-chmod 644 /etc/xray/xray.cer
-chmod 644 /etc/xray/xray.key
+chmod 644 /etc/ssl/private/privkey.pem
+chmod 644 /etc/ssl/private/fullchain.pem
+
+#sudo lsof -t -i tcp:80 -s tcp:listen | sudo xargs kill
+#cd /root/
+#wget https://raw.githubusercontent.com/acmesh-official/acme.sh/master/acme.sh
+#bash acme.sh --install
+#bash acme.sh --register-account -m djarumpentol01@gmail.com
+#bash acme.sh --issue --standalone -d $domain --force
+#bash acme.sh --installcert -d $domain --fullchainpath /etc/ssl/private/fullchain.pem --keypath /etc/ssl/private/privkey.pem
+#chown -R nobody:nogroup /etc/xray
+#chmod 644 /etc/ssl/private/privkey.pem
+#chmod 644 /etc/ssl/private/fullchain.pem
 
 #cd /root/
 #wget https://raw.githubusercontent.com/acmesh-official/acme.sh/master/acme.sh
