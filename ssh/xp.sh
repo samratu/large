@@ -141,13 +141,37 @@ exp2=$(( (d1 - d2) / 86400 ))
 if [[ "$exp2" = "0" ]]; then
 sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
 sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
-rm -f /etc/xray/vmess-$user-tls.json /etc/xray/vmess-$user-nontls.json
-#sed -i "/^### $user $exp/,/^},{/d" /etc/v2ray/config.json
-#sed -i "/^### $user $exp/,/^},{/d" /etc/v2ray/config.json
-#rm -f /etc/v2ray/vmess-$user-tls.json /etc/v2ray/vmess-$user-nontls.json
+rm -f /etc/xray/vmess-$user-tls.json /etc/xray/vmess-$user-tls.json
+sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
+sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
+rm -f /etc/xray/vmess-$user-nontls.json /etc/xray/vmess-$user-nontls.json
+sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
+sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
+rm -f /etc/xray/vmess-$user-tls.json /etc/xray/vmess-$user-tls.json
+sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
+sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
+rm -f /etc/xray/vmess-$user-nontls.json /etc/xray/vmess-$user-nontls.json
+sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
+sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
+rm -f /etc/xray/vmess-$user-tls.json /etc/xray/vmess-$user-tls.json
+sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
+sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
+rm -f /etc/xray/vmess-$user-nontls.json /etc/xray/vmess-$user-nontls.json
+sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
+sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
+rm -f /etc/xray/vmess-$user-tls.json /etc/xray/vmess-$user-tls.json
+sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
+sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
+rm -f /etc/xray/vmess-$user-tls.json /etc/xray/vmess-$user-tls.json
+sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
+sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
+rm -f /etc/xray/vmess-$user-nontls.json /etc/xray/vmess-$user-nontls.json
 fi
 done
 systemctl restart xray.service
+systemctl restart xvmess
+systemctl restart xvless
+systemctl restart xtrojan
 systemctl restart xray@.service
 #systemctl restart v2ray.service
 data=( `cat /etc/xray/config.json | grep '^####' | cut -d ' ' -f 2`);
@@ -183,8 +207,8 @@ done
 systemctl restart xray.service
 systemctl daemon-reload
 systemctl restart xtrojan.service
-#systemctl restart v2ray.service
-
+systemctl restart xvmess.service
+systemctl restart xless
 exp=$(grep -w "^#### $user" "/etc/xray/xvless.json" | cut -d ' ' -f 3)
 #exp=$(grep -w "^#### $user" "/etc/v2ray/config.json" | cut -d ' ' -f 3)
 d1=$(date -d "$exp" +%s)
@@ -203,3 +227,90 @@ systemctl stop xvless.service
 systemctl start xvless.service
 systemctl enable xvless.service
 systemctl restart xvless.service
+systemctl restart xvmess
+systemctl restart xtrojan
+
+exp=$(grep -w "^#### $user" "/usr/local/etc/xray/xvmess.json" | cut -d ' ' -f 3)
+#exp=$(grep -w "^#### $user" "/etc/v2ray/config.json" | cut -d ' ' -f 3)
+d1=$(date -d "$exp" +%s)
+d2=$(date -d "$now" +%s)
+exp2=$(( (d1 - d2) / 86400 ))
+if [[ "$exp2" = "0" ]]; then
+sed -i "/^#### $user $exp/,/^},{/d" /usr/local/etc/xray/xvmess.json
+sed -i "/^#### $user $exp/,/^},{/d" /usr/local/etc/xray/xvmess.json
+#sed -i "/^#### $user $exp/,/^},{/d" /etc/v2ray/config.json
+#sed -i "/^#### $user $exp/,/^},{/d" /etc/v2ray/config.json
+fi
+done
+##restart&start service
+systemctl daemon-reload
+systemctl stop xvmess.service
+systemctl start xvmess.service
+systemctl enable xvmess.service
+systemctl restart xvmess.service
+
+exp=$(grep -w "^#### $user" "/usr/local/etc/xray/vlessquic.json" | cut -d ' ' -f 3)
+#exp=$(grep -w "^#### $user" "/etc/v2ray/config.json" | cut -d ' ' -f 3)
+d1=$(date -d "$exp" +%s)
+d2=$(date -d "$now" +%s)
+exp2=$(( (d1 - d2) / 86400 ))
+if [[ "$exp2" = "0" ]]; then
+sed -i "/^#### $user $exp/,/^},{/d" /usr/local/etc/xray/vlessquic.json
+sed -i "/^#### $user $exp/,/^},{/d" /usr/local/etc/xray/xvmess.json
+#sed -i "/^#### $user $exp/,/^},{/d" /etc/v2ray/config.json
+#sed -i "/^#### $user $exp/,/^},{/d" /etc/v2ray/config.json
+fi
+done
+##restart&start service
+systemctl daemon-reload
+systemctl stop xvmess.service
+systemctl start xvmess.service
+systemctl enable xvmess.service
+systemctl restart xvmess.service
+
+
+exp=$(grep -w "^#### $user" "/etc/xray/xss.json" | cut -d ' ' -f 3)
+#exp=$(grep -w "^#### $user" "/etc/v2ray/config.json" | cut -d ' ' -f 3)
+d1=$(date -d "$exp" +%s)
+d2=$(date -d "$now" +%s)
+exp2=$(( (d1 - d2) / 86400 ))
+if [[ "$exp2" = "0" ]]; then
+sed -i "/^#### $user $exp/,/^},{/d" /etc/xray/xss.json
+sed -i "/^#### $user $exp/,/^},{/d" /etc/xray/xss.json
+#sed -i "/^#### $user $exp/,/^},{/d" /etc/v2ray/config.json
+#sed -i "/^#### $user $exp/,/^},{/d" /etc/v2ray/config.json
+fi
+done
+##restart&start service
+systemctl daemon-reload
+systemctl stop xss.service
+systemctl start xss.service
+systemctl enable xss.service
+systemctl restart xss.service
+
+exp=$(grep -w "^#### $user" "/etc/xray/trojangrpc.json" | cut -d ' ' -f 3)
+exp=$(grep -w "^#### $user" "/etc/xray/vlessquic.json" | cut -d ' ' -f 3)
+#exp=$(grep -w "^#### $user" "/etc/v2ray/config.json" | cut -d ' ' -f 3)
+d1=$(date -d "$exp" +%s)
+d2=$(date -d "$now" +%s)
+exp2=$(( (d1 - d2) / 86400 ))
+if [[ "$exp2" = "0" ]]; then
+sed -i "/^#### $user $exp/,/^},{/d" /etc/xray/trojangrpc.json
+sed -i "/^#### $user $exp/,/^},{/d" /etc/xray/vlessquic.json
+#sed -i "/^#### $user $exp/,/^},{/d" /etc/v2ray/config.json
+#sed -i "/^#### $user $exp/,/^},{/d" /etc/v2ray/config.json
+fi
+done
+##restart&start service
+systemctl daemon-reload
+systemctl stop trojangrpc.service
+systemctl start trojangrpc.service
+systemctl enable trojangrpc.service
+systemctl restart trojangrpc.service
+
+##restart&start service
+systemctl daemon-reload
+systemctl stop vlessquic.service
+systemctl start vlessquic.service
+systemctl enable vlessquic.service
+systemctl restart vlessquic.service
