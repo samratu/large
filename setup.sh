@@ -108,50 +108,64 @@ echo " 🔰 PORT OPENSSH : 22" |tee -a log-install.txt
 echo " 🔰 PORT OPENVPN TCP : 1194" |tee -a log-install.txt
 echo " 🔰 PORT OPENVPN UDP : 1195" |tee -a log-install.txt
 echo " 🔰 PORT OPENVPN SSL : 990" |tee -a log-install.txt
-echo " 🔰 PORT STUNNEL5 : 500, 600, 700" |tee -a log-install.txt
+echo " 🔰 PORT STUNNEL5 : 2087, 500, 600" |tee -a log-install.txt
 echo " 🔰 PORT DROPBEAR : 200, 300" |tee -a log-install.txt
 echo " 🔰 PORT SQUID : 3128, 3228" |tee -a log-install.txt
 echo " 🔰 Badvpn : 7100, 7200, 7300-7900" |tee -a log-install.txt
 echo " 🔰 Nginx : 88" |tee -a log-install.txt
-echo " 🔰 Wireguard : 591" |tee -a log-install.txt
+echo " 🔰 WIREGUARD : 591" |tee -a log-install.txt
 echo " 🔰 L2TP/IPSEC VPN : 1701" |tee -a log-install.txt
 echo " 🔰 PPTP VPN : 1732" |tee -a log-install.txt
-echo " 🔰 SSTP VPN : 444" |tee -a log-install.txt
-echo " 🔰 Shadowsocks-R : 1444-1943" |tee -a log-install.txt
+echo " 🔰 SSTP VPN : 666" |tee -a log-install.txt
+echo " 🔰 Shadowsocks-R : 1444-1543" |tee -a log-install.txt
 echo " 🔰 SS-OBFS TLS : 2444-2943" |tee -a log-install.txt
 echo " 🔰 SS-OBFS HTTP : 2944-3442" |tee -a log-install.txt
-echo " 🔰 WEBSOCKET TLS : 8443" |tee -a log-install.txt
-echo " 🔰 WEBSOCKET NON TLS : 8880" |tee -a log-install.txt
-echo " 🔰 PORT OVPNWS : 2086" |tee -a log-install.txt
+echo " 🔰 XRAY SHADOWSOCKS : 333" |tee -a log-install.txt
+echo " 🔰 XRAY MTPROTO : 111" |tee -a log-install.txt
+echo " 🔰 WEBSOCKET TLS : 222" |tee -a log-install.txt
+echo " 🔰 WEBSOCKET NON TLS : 80" |tee -a log-install.txt
+echo " 🔰 PORT OVPNWS : 8080" |tee -a log-install.txt
 echo " 🔰 OHP SSH : 8181" |tee -a log-install.txt
 echo " 🔰 OHP Dropbear : 8282" |tee -a log-install.txt
 echo " 🔰 OHP OpenVPN : 8383" |tee -a log-install.txt
-echo " 🔰 VMESS WS TLS : 2053" |tee -a log-install.txt
-echo " 🔰 VMESS WS NON TLS : 2053" |tee -a log-install.txt
-echo " 🔰 VMESS GRPC TLS: 2052" |tee -a log-install.txt
-echo " 🔰 VMESS GRPC NON TLS: 2052" |tee -a log-install.txt
-echo " 🔰 VMESS H2C TLS : 3443" |tee -a log-install.txt
-echo " 🔰 VMESS H2C NON TLS : 3444" |tee -a log-install.txt
-echo " 🔰 VMESS HTTP TLS : 8808" |tee -a log-install.txt
+echo " 🔰 VMESS WS TLS : 443" |tee -a log-install.txt
+echo " 🔰 VMESS WS NON TLS : 2052" |tee -a log-install.txt
+echo " 🔰 VMESS GRPC TLS: 2083" |tee -a log-install.txt
+echo " 🔰 VMESS GRPC NON TLS: 2082" |tee -a log-install.txt
+echo " 🔰 VMESS H2C TLS : 1190" |tee -a log-install.txt
+echo " 🔰 VMESS HTTP TLS : 443" |tee -a log-install.txt
+echo " 🔰 VMESS QUIC : 443" |tee -a log-install.txt
 echo " 🔰 VMESS HTTP NON TLS : 808" |tee -a log-install.txt
-echo " 🔰 VLESS XTLS : 44443" |tee -a log-install.txt
-echo " 🔰 VLESS WS TLS : 2083" |tee -a log-install.txt
-echo " 🔰 VLESS WS NON TLS : 2083" |tee -a log-install.txt
-echo " 🔰 VLESS GRPC TLS : 2082" |tee -a log-install.txt
-echo " 🔰 VLESS GRPC NON TLS : 2082" |tee -a log-install.txt
-echo " 🔰 VLESS H2C TLS : 8888" |tee -a log-install.txt
-echo " 🔰 VLESS H2C NON TLS: 888" |tee -a log-install.txt
-echo " 🔰 VLESS HTTP TLS : 8088" |tee -a log-install.txt
-echo " 🔰 VLESS HTTP NON TLS : 888" |tee -a log-install.txt
-echo " 🔰 TROJAN GO : 2087" |tee -a log-install.txt
+echo " 🔰 VLESS XTLS : 443" |tee -a log-install.txt
+echo " 🔰 VLESS GFW : 443" |tee -a log-install.txt
+echo " 🔰 VLESS WS TLS : 443" |tee -a log-install.txt
+echo " 🔰 VLESS WS NON TLS : 8880" |tee -a log-install.txt
+echo " 🔰 VLESS GRPC TLS : 2096" |tee -a log-install.txt
+echo " 🔰 VLESS GRPC NON TLS: 2082" |tee -a log-install.txt
+echo " 🔰 VLESS H2C TLS : 1150" |tee -a log-install.txt
+echo " 🔰 VLESS QUIC : 414" |tee -a log-install.txt
+echo " 🔰 VLESS HTTP TLS : 443" |tee -a log-install.txt
+echo " 🔰 VLESS HTTP NON TLS : 8088" |tee -a log-install.txt
+echo " 🔰 TROJAN GO : 2053" |tee -a log-install.txt
 echo " 🔰 TROJAN GRPC : 8443" |tee -a log-install.txt
-echo " 🔰 TROJAN HTTP : 880" |tee -a log-install.txt
-echo " 🔰 TROJAN H2C : 2000" |tee -a log-install.txt
-echo " 🔰 TROJAN XTLS : 4443" |tee -a log-install.txt
-echo " 🔰 TROJAN WS TLS : 2096" |tee -a log-install.txt
+echo " 🔰 TROJAN HTTP TLS : 443" |tee -a log-install.txt
+echo " 🔰 TROJAN HTTP NON TLS : 880" |tee -a log-install.txt
+echo " 🔰 TROJAN H2C : 1120" |tee -a log-install.txt
+echo " 🔰 TROJAN XTLS : 1440" |tee -a log-install.txt
+echo " 🔰 TROJAN QUIC : 443" |tee -a log-install.txt
+echo " 🔰 TROJAN GFW : 443" |tee -a log-install.txt
+echo " 🔰 TROJAN WS TLS : 443" |tee -a log-install.txt
 echo " 🔰 TROJAN WS NON TLS : 2095" |tee -a log-install.txt
-echo " 🔰 SOCKS5 WEBSOCKET : 777" |tee -a log-install.txt
-echo " 🔰 XRAY SHADOWSOCKS : 333" |tee -a log-install.txt
+echo " 🔰 SOCKS5 WEBSOCKET : 1080" |tee -a log-install.txt
+echo " 🔰 SOCKS5 TCP : 999 |tee -a log-install.txt
+echo " 🔰 SHADOWSOCKS TCP : 333" |tee -a log-install.txt
+echo " 🔰 SHADOWSOCKS UDP : 503" |tee -a log-install.txt
+echo " 🔰 SHADOWSOCKS WS TLS: 501" |tee -a log-install.txt
+echo " 🔰 SHADOWSOCKS WS NON TLS : 502" |tee -a log-install.txt
+echo " 🔰 SHADOWSOCKS 2022 TCP : 212" |tee -a log-install.txt
+echo " 🔰 SHADOWSOCKS 2022 WS NON TLS : 2086" |tee -a log-install.txt
+echo " 🔰 SHADOWSOCKS 2022 WS TLS : 2087" |tee -a log-install.txt
+echo " 🔰 SHADOWSOCKS 2022 GRPC : 2087" |tee -a log-install.txt
 echo " 🔰 XRAY MT PROTO : 111" |tee -a log-install.txt
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo " 🔰>> Server Information & Other Features"                  |tee -a log-install.txt
