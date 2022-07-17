@@ -7,14 +7,14 @@
 wisnuvpn="raw.githubusercontent.com/samratu/large/sae/websocket"
 
 # Getting Proxy Template
-wget -q -O /usr/local/bin/ws-nontls https://${wisnuvpn}/websocket.py
+wget -q -O /usr/local/bin/ws-nontls https://${wisnuvpn}/ws-nontls.py
 chmod +x /usr/local/bin/ws-nontls
 
 # Installing Service
 cat > /etc/systemd/system/ws-nontls.service << END
 [Unit]
-Description=Python Proxy Mod By shanum
-Documentation=https://nekopi.care
+Description=SSH WEBSOCKET ROUTING GAJAH BY WISNU
+Documentation=https://t.me/zerossl
 After=network.target nss-lookup.target
 
 [Service]
@@ -41,8 +41,8 @@ chmod +x /usr/local/bin/ws-ovpn
 # Installing Service
 cat > /etc/systemd/system/ws-ovpn.service << END
 [Unit]
-Description=Python Proxy Mod By wisnu
-Documentation=https://nekopoi.care
+Description=OVPN WEBSOCKET ROTING PENGKOL BY GANDRING
+Documentation=https://t.me/zerossl
 After=network.target nss-lookup.target
 
 [Service]
@@ -63,14 +63,42 @@ systemctl enable ws-ovpn
 systemctl restart ws-ovpn
 
 # Getting Proxy Template
+wget -q -O /usr/local/bin/wstunnel https://${wisnuvpn}/ws-tls
+chmod +x /usr/local/bin/wstunnel
+
+# Installing Service
+cat > /etc/systemd/system/wstunnel.service << END
+[Unit]
+Description=WEBSOCKET ROUTING ACTIVATED BY ZEROSSL
+Documentation=https://t.me/zerossl
+After=network.target nss-lookup.target
+
+[Service]
+Type=simple
+User=root
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+NoNewPrivileges=true
+ExecStart=/usr/bin/python -O /usr/local/bin/wstunnel
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+END
+
+systemctl daemon-reload
+systemctl enable wstunnel
+systemctl restart wstunnel
+
+# Getting Proxy Template
 wget -q -O /usr/local/bin/ws-tls https://${wisnuvpn}/ws-tls.py
 chmod +x /usr/local/bin/ws-tls
 
 # Installing Service
 cat > /etc/systemd/system/ws-tls.service << END
 [Unit]
-Description=Python Proxy Mod By gandring
-Documentation=https://nekopoi.care
+Description=SSH WEBSOCKET TLS ROUTING INDONESIA BY ZEROSSL
+Documentation=https://t.me/zerossl
 After=network.target nss-lookup.target
 
 [Service]
