@@ -98,17 +98,18 @@ systemctl daemon-reload
 systemctl enable autosett
 history -c
 echo "1.2" > /home/ver
-echo ""
-echo "Installation has been completed!!"
-echo ""
+echo " "
+echo "Installation has been completed!!"echo " "
+echo ""  |tee -a log-install.txt
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\E[44;1;41m           🔰 SETUP SERVER BY ZEROSSL 🔰            \E[0m"
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo ""  |tee -a log-install.txt
 echo " 🔰 >>> Service & Port" |tee -a log-install.txt
 echo " 🔰 PORT OPENSSH : 22" |tee -a log-install.txt
-echo " 🔰 PORT OPENVPN TCP : 1194" |tee -a log-install.txt
-echo " 🔰 PORT OPENVPN UDP : 1195" |tee -a log-install.txt
-echo " 🔰 PORT OPENVPN SSL : 990" |tee -a log-install.txt
+echo " 🔰 PORT OPENVPN TCP : 700" |tee -a log-install.txt
+echo " 🔰 PORT OPENVPN UDP : 800" |tee -a log-install.txt
+echo " 🔰 PORT OPENVPN SSL : 900" |tee -a log-install.txt
 echo " 🔰 PORT STUNNEL5 : 2087, 500, 600" |tee -a log-install.txt
 echo " 🔰 PORT DROPBEAR : 200, 300" |tee -a log-install.txt
 echo " 🔰 PORT SQUID : 3128, 3228" |tee -a log-install.txt
@@ -165,9 +166,10 @@ echo " 🔰 SHADOWSOCKS WS TLS: 501" |tee -a log-install.txt
 echo " 🔰 SHADOWSOCKS WS NON TLS : 502" |tee -a log-install.txt
 echo " 🔰 SHADOWSOCKS 2022 TCP : 212" |tee -a log-install.txt
 echo " 🔰 SHADOWSOCKS 2022 WS NON TLS : 2086" |tee -a log-install.txt
-echo " 🔰 SHADOWSOCKS 2022 WS TLS : 2087" |tee -a log-install.txt
-echo " 🔰 SHADOWSOCKS 2022 GRPC : 2087" |tee -a log-install.txt
+echo " 🔰 SHADOWSOCKS 2022 WS TLS : 443" |tee -a log-install.txt
+echo " 🔰 SHADOWSOCKS 2022 GRPC : 2096" |tee -a log-install.txt
 echo " 🔰 XRAY MT PROTO : 111" |tee -a log-install.txt
+echo ""  |tee -a log-install.txt
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo " 🔰>> Server Information & Other Features"                  |tee -a log-install.txt
 echo " 🔰 Timezone                : Asia/Jakarta (GMT +7)"        |tee -a log-install.txt
