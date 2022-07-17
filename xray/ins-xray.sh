@@ -384,7 +384,7 @@ cat > /usr/local/etc/xray/vlessquic.json << END
   },
   "inbounds": [
     {
-      "port": 2053,
+      "port": 2082,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -552,7 +552,7 @@ cat > /etc/xray/ssws.json << END
   },
   "inbounds": [
     {
-      "port": 2053,
+      "port": 2087,
       "protocol": "vmess",
       "settings": {
         "clients": [
