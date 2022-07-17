@@ -268,7 +268,6 @@ systemctl start xvmess.service
 systemctl enable xvmess.service
 systemctl restart xvmess.service
 
-
 exp=$(grep -w "^#### $user" "/etc/xray/xss.json" | cut -d ' ' -f 3)
 #exp=$(grep -w "^#### $user" "/etc/v2ray/config.json" | cut -d ' ' -f 3)
 d1=$(date -d "$exp" +%s)
@@ -287,6 +286,25 @@ systemctl stop xss.service
 systemctl start xss.service
 systemctl enable xss.service
 systemctl restart xss.service
+
+exp=$(grep -w "^#### $user" "/etc/xray/ssws.json" | cut -d ' ' -f 3)
+#exp=$(grep -w "^#### $user" "/etc/v2ray/config.json" | cut -d ' ' -f 3)
+d1=$(date -d "$exp" +%s)
+d2=$(date -d "$now" +%s)
+exp2=$(( (d1 - d2) / 86400 ))
+if [[ "$exp2" = "0" ]]; then
+sed -i "/^#### $user $exp/,/^},{/d" /etc/xray/ssws.json
+sed -i "/^#### $user $exp/,/^},{/d" /etc/xray/ssws.json
+#sed -i "/^#### $user $exp/,/^},{/d" /etc/v2ray/config.json
+#sed -i "/^#### $user $exp/,/^},{/d" /etc/v2ray/config.json
+fi
+done
+##restart&start service
+systemctl daemon-reload
+systemctl stop ssws.service
+systemctl start ssws.service
+systemctl enable ssws.service
+systemctl restart ssws.service
 
 exp=$(grep -w "^#### $user" "/etc/xray/trojangrpc.json" | cut -d ' ' -f 3)
 exp=$(grep -w "^#### $user" "/etc/xray/vlessquic.json" | cut -d ' ' -f 3)
