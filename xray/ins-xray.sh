@@ -551,6 +551,7 @@ END
 
 uuid=$(cat /proc/sys/kernel/random/uuid)
 domain=$(cat /root/domain)
+password=$openssl rand -base64 32
 # // Certificate File
 path_crt="/etc/xray/xray.crt"
 path_key="/etc/xray/xray.key"
