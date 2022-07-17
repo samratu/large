@@ -38,22 +38,22 @@ echo -e "\e[1;36m ⇱ Select Number From [ 1 - 0 ] ⇲ \e[m"
 read -p " ⇱ Silahkan Pilih Angka [ 1 - 0 ] ⇲: " menu
 case $menu in
 1)
-addnewtr
+addtrojantester
 ;;
 2)
-delnewtr
+deltrojantester
 ;;
 3)
-addnewvless
+addvlesstester
 ;;
 4)
-delnewvless
+delvlesstester
 ;;
 5)
-addnewvmess
+addvmesstester
 ;;
 6)
-delnewvmess
+delvmesstester
 ;;
 7)
 addxtreme
@@ -62,7 +62,7 @@ addxtreme
 delxtreme
 ;;
 9)
-ceknewtr
+cektrojantester
 ;;
 0)
 clear
