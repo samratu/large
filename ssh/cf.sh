@@ -17,9 +17,9 @@ MYIP=$(wget -qO- ipinfo.io/ip);
 #MYIP=$(wget -qO- https://ipv6.icanhazip.com);
 clear
 apt install jq curl -y
-DOMAIN=smule.my.id
+DOMAIN=zerossl.my.id
 sub=$(</dev/urandom tr -dc a-z0-9 | head -c2)
-SUB_DOMAIN=xxx.smule.my.id
+SUB_DOMAIN=$sub.zerossl.my.id
 CF_ID=djarumpentol01@gmail.com
 CF_KEY=380be704eee4db9f74f71565e4e52f0042a4b
 set -euo pipefail
@@ -49,7 +49,7 @@ RESULT=$(curl -sLX PUT "https://api.cloudflare.com/client/v4/zones/${ZONE}/dns_r
      -H "Content-Type: application/json" \
      --data '{"type":"A","name":"'${SUB_DOMAIN}'","content":"'${IP}'","ttl":300,"proxied":false}')
 
-WILD_DOMAIN="*.$SUB_DOMAIN"
+WILD_DOMAIN="*.$sub"
 set -euo pipefail
 echo ""
 echo "Updating DNS for ${WILD_DOMAIN}..."
