@@ -532,6 +532,62 @@ cat > /etc/xray/sstcp.json << END
     }
 END
 
+uuid=$(cat /proc/sys/kernel/random/uuid)
+domain=$(cat /root/domain)
+password=$openssl rand -base64 16
+# // Certificate File
+path_crt="/etc/xray/xray.crt"
+path_key="/etc/xray/xray.key"
+#domain_ecc=$(cat /root/.acme.sh)
+#domain.key=$(cat /root/.acme.sh/$domain_ecc)
+#path_crt="/root/.acme.sh/$domain_ecc/fullchain.cer"
+#path_key="/root/.acme.sh/$domain_ecc/$domain.key"
+# Buat Config Xray
+cat > /etc/xray/ssws.json << END
+{
+  "log": {
+    "access": "/var/log/xray/access.log",
+    "error": "/var/log/xray/error.log",
+    "loglevel": "info"
+  },
+  "inbounds": [
+    {
+      "port": 2053,
+      "protocol": "vmess",
+      "settings": {
+        "clients": [
+          {
+            "id": "${uuid1}",
+            "alterId": 32
+#xray-vmess-tls
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "certificates": [
+            {
+              "certificateFile": "${path_crt}",
+              "keyFile": "${path_key}"
+            }
+          ]
+        },
+        "tcpSettings": {},
+        "kcpSettings": {},
+        "httpSettings": {},
+        "wsSettings": {
+          "path": "/vmess/",
+          "headers": {
+            "Host": ""
+          }
+        },
+        "quicSettings": {}
+      }
+    }
+END
+
 cat > /etc/systemd/system/xvmess.service << END
 [Unit]
 Description=XVMESS ROUTING GAJAH DEMAK BY GANDRING
@@ -604,6 +660,26 @@ CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
 ExecStart=/usr/local/bin/xray -config /etc/xray/trojangrpc.json
+Restart=on-failure
+RestartSec=1s
+
+[Install]
+WantedBy=multi-user.target
+END
+
+# / / Installation Xray Service
+cat > /etc/systemd/system/ssws.service << END
+[Unit]
+Description=XSHADOWSOCKS ROUTING DAM COLO PENGKOL BY zerossl
+Documentation=https://t.me/zerossl
+After=network.target nss-lookup.target
+
+[Service]
+User=root
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+NoNewPrivileges=true
+ExecStart=/usr/local/bin/xray -config /etc/xray/ssws.json
 Restart=on-failure
 RestartSec=1s
 
@@ -727,6 +803,13 @@ systemctl restart sstcp
 
 ##restart&start service
 systemctl daemon-reload
+systemctl enable ssws
+systemctl stop ssws
+systemctl start ssws
+systemctl restart ssws
+
+##restart&start service
+systemctl daemon-reload
 systemctl enable xvmess
 systemctl stop xvmess
 systemctl start xvmess
@@ -825,8 +908,8 @@ sudo iptables -A OUTPUT -p tcp --sport 22 -m conntrack --ctstate ESTABLISHED -j 
 sudo iptables -A OUTPUT -p udp --sport 22 -m conntrack --ctstate ESTABLISHED -j ACCEPT
 sudo iptables -A OUTPUT -p tcp --sport 300 -m conntrack --ctstate ESTABLISHED -j ACCEPT
 sudo iptables -A OUTPUT -p udp --sport 300 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p tcp --sport 10805 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p udp --sport 10805 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+sudo iptables -A OUTPUT -p tcp --sport 10809 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+sudo iptables -A OUTPUT -p udp --sport 10809 -m conntrack --ctstate ESTABLISHED -j ACCEPT
 sudo iptables -A OUTPUT -p tcp --sport 10808 -m conntrack --ctstate ESTABLISHED -j ACCEPT
 sudo iptables -A OUTPUT -p udp --sport 10808 -m conntrack --ctstate ESTABLISHED -j ACCEPT
 sudo iptables-save > /etc/iptables.up.rules
