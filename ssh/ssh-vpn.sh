@@ -619,24 +619,19 @@ wget -O deltrgo "https://${wisnuvpnnn}/deltrgo.sh"
 wget -O renewtrgo "https://${wisnuvpnnn}/renewtrgo.sh"
 wget -O cektrgo "https://${wisnuvpnnn}/cektrgo.sh"
 
-wget -O trpcwsmenu "https://${wisnuvpnnnnn}/trpcwsmenu.sh"
+wget -O trojanmenu "https://${wisnuvpnnnnn}/trojanmenu.sh"
 wget -O sshovpnmenu "https://${wisnuvpnnnnn}/sshovpnmenu.sh"
-#wget -O l2tpmenu "https://${wisnuvpnnnnn}/l2tpmenu.sh"
 wget -O l2tppmenu "https://${wisnuvpnnnnn}/l2tppmenu.sh"
-#wget -O pptpmenu "https://${wisnuvpnnnnn}/pptpmenu.sh"
-#wget -O sstpmenu "https://${wisnuvpnnnnn}/sstpmenu.sh"
-wget -O wgmenu "https://${wisnuvpnnnnn}/wgmenu.sh"
 wget -O ssmenu "https://${wisnuvpnnnnn}/ssmenu.sh"
-#wget -O ssrmenu "https://${wisnuvpnnnnn}/ssrmenu.sh"
 wget -O vmessmenu "https://${wisnuvpnnnnn}/vmessmenu.sh"
 wget -O vlessmenu "https://${wisnuvpnnnnn}/vlessmenu.sh"
-#wget -O grpcmenu "https://${wisnuvpnnnnn}/grpcmenu.sh"
-wget -O trghmenu "https://${wisnuvpnnnnn}/trghmenu.sh"
-wget -O trxtmenu "https://${wisnuvpnnnnn}/trxtmenu.sh"
 wget -O setmenu "https://${wisnuvpnnnnn}/setmenu.sh"
 wget -O testermenu "https://${wisnuvpnnnnn}/testermenu.sh"
 wget -O menu "https://${wisnuvpnnnnn}/menu.sh"
 wget -O status "https://${wisnuvpnnnnn}/status.sh"
+wget -O status2 "https://${wisnuvpnnnnn}/status2.sh"
+wget -O status3 "https://${wisnuvpnnnnn}/status3.sh"
+wget -O status4 "https://${wisnuvpnnnnn}/status4.sh"
 chmod +x testermenu
 chmod +x ceknewtr
 chmod +x addnewtr
@@ -645,31 +640,26 @@ chmod +x addnewvmess
 chmod +x addnewvless
 chmod +x delnewtr
 chmod +x delnewvmess
-chmod +x addnewvless
+chmod +x delxtreme
 chmod +x restart
 chmod +x portdropbear
 chmod +x portopenssh
 chmod +x portstunnel5
 chmod +x status
+chmod +x status2
+chmod +x status3
+chmod +x status4
 chmod +x portsshnontls
 chmod +x portsshwstls
+
 chmod +x menuu
 chmod +x sshovpnmenu
-#chmod +x l2tpmenu
 chmod +x l2tppmenu
-#chmod +x pptpmenu
-#chmod +x sstpmenu
-chmod +x wgmenu
 chmod +x ssmenu
-
-#chmod +x ssrmenu
 chmod +x vmessmenu
 chmod +x vlessmenu
-#chmod +x grpcmenu
-chmod +x trxtmenu
-chmod +x trpcwsmenu
+chmod +x trojanmenu
 chmod +x setmenu
-chmod +x trghmenu
 chmod +x addhost
 chmod +x menu
 chmod +x addssh
