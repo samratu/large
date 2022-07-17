@@ -63,7 +63,7 @@ systemctl enable ws-ovpn
 systemctl restart ws-ovpn
 
 # Getting Proxy Template
-wget -q -O /usr/local/bin/wstunnel https://${wisnuvpn}/ws-tls
+wget -q -O /usr/local/bin/wstunnel https://${wisnuvpn}/wstunnel.py
 chmod +x /usr/local/bin/wstunnel
 
 # Installing Service
