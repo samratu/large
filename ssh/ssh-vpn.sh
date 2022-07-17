@@ -533,7 +533,7 @@ wget -O portsshnontls "https://${wisnuvpn}/portsshnontls.sh"
 wget -O portsshwstls "https://${wisnuvpn}/portsshwstls.sh"
 
 wget -O addvmess "https://${wisnuvpnn}/addvmess.sh"
-wget -O addnewtr "https://${wisnuvpnn}/addnewtr.sh"
+wget -O addtrojantester "https://${wisnuvpnn}/addtrojantester.sh"
 wget -O addvmessgrpc "https://${wisnuvpnn}/addvmessgrpc.sh"
 wget -O addvmesshdua "https://${wisnuvpnn}/addvmesshdua.sh"
 wget -O addvmesshttp "https://${wisnuvpnn}/addvmesshttp.sh"
@@ -544,22 +544,21 @@ wget -O addxrayss "https://${wisnuvpnn}/addxrayss.sh"
 wget -O addvless "https://${wisnuvpnn}/addvless.sh"
 wget -O addvlessgrpc "https://${wisnuvpnn}/addvlessgrpc.sh"
 wget -O addtrojan "https://${wisnuvpnn}/addtrojan.sh"
-wget -O addxtlstrojan "https://${wisnuvpnn}/addxtlstrojan.sh"
-wget -O addgrpctrojan "https://${wisnuvpnn}/addgrpctrojan.sh"
+wget -O addtrojanxtls "https://${wisnuvpnn}/addtrojanxtls.sh"
+wget -O addtrojangrpc "https://${wisnuvpnn}/addtrojangrpc.sh"
 wget -O addtrojanwss "https://${wisnuvpnn}/addtrojanwss.sh"
 wget -O addtrojanhttp "https://${wisnuvpnn}/addtrojanhttp.sh"
 wget -O addtrojanhdua "https://${wisnuvpnn}/addtrojanhdua.sh"
 wget -O addxrayss "https://${wisnuvpnn}/addxrayss.sh"
-wget -O addnewtr "https://${wisnuvpnn}/addnewtr.sh"
-wget -O addnewvmess "https://${wisnuvpnn}/addnewvmess.sh"
-wget -O addnewvless "https://${wisnuvpnn}/addnewvless.sh"
+wget -O addvmesstester "https://${wisnuvpnn}/addvmesstester.sh"
+wget -O addvlesstester "https://${wisnuvpnn}/addvlesstester.sh"
 wget -O addxtreme "https://${wisnuvpnn}/addxtreme.sh"
 
 wget -O delxrayss "https://${wisnuvpnn}/delxrayss.sh"
 wget -O delvmess "https://${wisnuvpnn}/delvmess.sh"
-wget -O delnewvmess "https://${wisnuvpnn}/delnewvmess.sh"
-wget -O delnewvless "https://${wisnuvpnn}/delnewvless.sh"
-wget -O delnewtr "https://${wisnuvpnn}/delnewtr.sh"
+wget -O delvmesstester "https://${wisnuvpnn}/delvmesstester.sh"
+wget -O delvlesstester "https://${wisnuvpnn}/delvlesstester.sh"
+wget -O deltrojantester "https://${wisnuvpnn}/deltrojantester.sh"
 wget -O delvmessgrpc "https://${wisnuvpnn}/delvmessgrpc.sh"
 wget -O delvmesshdua "https://${wisnuvpnn}/delvmesshdua.sh"
 wget -O delvmesshttp "https://${wisnuvpnn}/delvmesshttp.sh"
@@ -570,8 +569,8 @@ wget -O delxrayss "https://${wisnuvpnn}/delxrayss.sh"
 wget -O delvless "https://${wisnuvpnn}/delvless.sh"
 wget -O delvlessgrpc "https://${wisnuvpnn}/delvlessgrpc.sh"
 wget -O deltrojan "https://${wisnuvpnn}/deltrojan.sh"
-wget -O delxtlstrojan "https://${wisnuvpnn}/delxtlstrojan.sh"
-wget -O delgrpctrojan "https://${wisnuvpnn}/delgrpctrojan.sh"
+wget -O deltrojanxltls "https://${wisnuvpnn}/deltrojanxtls.sh"
+wget -O deltrojangrpc "https://${wisnuvpnn}/deltrojangrpc.sh"
 wget -O deltrojanwss "https://${wisnuvpnn}/deltrojanwss.sh"
 wget -O deltrojanhdua "https://${wisnuvpnn}/deltrojanhdua.sh"
 wget -O deltrojanhttp "https://${wisnuvpnn}/deltrojanhttp.sh"
@@ -587,11 +586,11 @@ wget -O cekxrayss "https://${wisnuvpnn}/cekxrayss.sh"
 wget -O cekvless "https://${wisnuvpnn}/cekvless.sh"
 wget -O cekvlessgrpc "https://${wisnuvpnn}/cekvlessgrpc.sh"
 wget -O cektrojan "https://${wisnuvpnn}/cektrojan.sh"
-wget -O cekxtlstrojan "https://${wisnuvpnn}/cekxtlstrojan.sh"
-wget -O cekgrpctrojan "https://${wisnuvpnn}/cekgrpctrojan.sh"
+wget -O cektrojanxtls "https://${wisnuvpnn}/cektrojanxtls.sh"
+wget -O cektrojangrpc "https://${wisnuvpnn}/cektrojangrpc.sh"
 wget -O cektrojanwss "https://${wisnuvpnn}/cektrojanwss.sh"
 wget -O cektrojanhttp "https://${wisnuvpnn}/cektrojanhttp.sh"
-wget -O ceknewtr "https://${wisnuvpnn}/ceknewtr.sh"
+wget -O cektrojantester "https://${wisnuvpnn}/cektrojantester.sh"
 wget -O cekxrayss "https://${wisnuvpnn}/cekxrayss.sh"
 wget -O cektrojanhdua "https://${wisnuvpnn}/cektrojanhdua.sh"
 
@@ -607,8 +606,8 @@ wget -O renewxrayss "https://${wisnuvpnn}/renewxrayss.sh"
 wget -O renewvless "https://${wisnuvpnn}/renewvless.sh"
 wget -O renewvlessgrpc "https://${wisnuvpnn}/renewvlessgrpc.sh"
 wget -O renewtrojan "https://${wisnuvpnn}/renewtrojan.sh"
-wget -O renewxtlstrojan "https://${wisnuvpnn}/renewxtlstrojan.sh"
-wget -O renewgrpctrojan "https://${wisnuvpnn}/renewgrpctrojan.sh"
+wget -O renewtrojanxtls "https://${wisnuvpnn}/renewtrojanxtls.sh"
+wget -O renewtrojangrpc "https://${wisnuvpnn}/renewtrojangrpc.sh"
 wget -O renewtrojanwss "https://${wisnuvpnn}/renewtrojanwss.sh"
 wget -O renewtrojanhdua "https://${wisnuvpnn}/renewtrojanhdua.sh"
 wget -O renewtrojanhttp "https://${wisnuvpnn}/renewtrojanhttp.sh"
@@ -626,20 +625,20 @@ wget -O ssmenu "https://${wisnuvpnnnnn}/ssmenu.sh"
 wget -O vmessmenu "https://${wisnuvpnnnnn}/vmessmenu.sh"
 wget -O vlessmenu "https://${wisnuvpnnnnn}/vlessmenu.sh"
 wget -O setmenu "https://${wisnuvpnnnnn}/setmenu.sh"
-wget -O testermenu "https://${wisnuvpnnnnn}/testermenu.sh"
+wget -O menutester "https://${wisnuvpnnnnn}/menutester.sh"
 wget -O menu "https://${wisnuvpnnnnn}/menu.sh"
 wget -O status "https://${wisnuvpnnnnn}/status.sh"
 wget -O status2 "https://${wisnuvpnnnnn}/status2.sh"
 wget -O status3 "https://${wisnuvpnnnnn}/status3.sh"
 wget -O status4 "https://${wisnuvpnnnnn}/status4.sh"
-chmod +x testermenu
-chmod +x ceknewtr
-chmod +x addnewtr
+chmod +x menutester
+chmod +x cektrojantester
+chmod +x addtrojantester
 chmod +x addxrayss
-chmod +x addnewvmess
-chmod +x addnewvless
-chmod +x delnewtr
-chmod +x delnewvmess
+chmod +x addvmesstester
+chmod +x addvlesstester
+chmod +x deltrojantester
+chmod +x delvmesstester
 chmod +x delxtreme
 chmod +x restart
 chmod +x portdropbear
@@ -703,8 +702,8 @@ chmod +x addvlesshttp
 chmod +x addvlesshdua
 chmod +x addvlessxtls
 chmod +x addxrayss
-chmod +x addxtlstrojan
-chmod +x addgrpctrojan
+chmod +x addtrojanxtls
+chmod +x addtrojangrpc
 chmod +x addtrojanwss
 chmod +x addtrojanhttp
 chmod +x addtrojanhdua
@@ -723,8 +722,8 @@ chmod +x delxrayss
 chmod +x deltrojan
 chmod +x delvlesshttp
 chmod +x delvlesshdua
-chmod +x delxtlstrojan
-chmod +x delgrpctrojan
+chmod +x deltrojanxtls
+chmod +x deltrojangrpc
 chmod +x deltrojanwss
 chmod +x deltrojanhttp
 chmod +x deltrojanhdua
@@ -740,8 +739,8 @@ chmod +x renewvlessxtls
 chmod +x renewxrayss
 chmod +x renewtrojan
 chmod +x renewvlesshttp
-chmod +x renewxtlstrojan
-chmod +x renewgrpctrojan
+chmod +x renewtrojanxtls
+chmod +x renewtrojangrpc
 chmod +x renewtrojanwss
 chmod +x renewtrojanhttp
 chmod +x renewtrojanhdua
@@ -756,8 +755,8 @@ chmod +x cekvless
 chmod +x cekvlessgrpc
 chmod +x cekvlessxtls
 chmod +x cekxrayss
-chmod +x cekxtlstrojan
-chmod +x cekgrpctrojan
+chmod +x cektrojanxtls
+chmod +x cektrojangrpc
 chmod +x cektrojanwss
 chmod +x cektrojanhttp
 chmod +x cektrojan
