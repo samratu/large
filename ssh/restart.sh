@@ -32,6 +32,7 @@ systemctl restart xvmess
 systemctl restart trojangrpc
 systemctl restart xss
 systemctl restart sstcp
+systemctl restart ssws
 systemctl restart vlessquic
 systemctl restart ssh-ohp
 systemctl restart dropbear-ohp
