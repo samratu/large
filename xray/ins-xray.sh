@@ -1687,21 +1687,6 @@ RestartSec=1s
 WantedBy=multi-user.target
 END
 
-# // Enable & Start Service
-# Accept port Xray
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 8443 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 8443 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 80 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 80 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2083 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2083 -j ACCEPT
-iptables-save > /etc/iptables.up.rules
-iptables-restore -t < /etc/iptables.up.rules
-netfilter-persistent save
-netfilter-persistent reload
-
-
-systemctl restart vlessquic
 # / / Installation Xray Service
 cat > /etc/systemd/system/xray.service << END
 [Unit]
@@ -1762,66 +1747,6 @@ RestartPreventExitStatus=23
 WantedBy=multi-user.target
 END
 
-
-# // Enable & Start Service
-# Accept port Xray
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 443 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 443 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 8443 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 8443 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2053 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2052 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2052 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 8088 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 8088 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2053 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 8880 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 8880 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 777 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 777 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2083 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2083 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2096 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2095 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2095 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2096 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 808 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 808 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 8808 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 8808 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 111 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 111 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 333 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 333 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 880 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 880 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 888 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 888 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 808 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 808 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 4443 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 4443 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 8888 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 8888 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 5443 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 5443 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 3443 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 3443 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2443 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2443 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 888 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 888 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 3443 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 3443 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 3444 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 3444 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2082 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2082 -j ACCEPT
-iptables-save > /etc/iptables.up.rules
-iptables-restore -t < /etc/iptables.up.rules
-netfilter-persistent save
-netfilter-persistent reload
-
 systemctl daemon-reload
 systemctl stop xray
 systemctl enable xray
@@ -1875,6 +1800,19 @@ systemctl daemon-reload
 systemctl enable vlessquic
 systemctl stop vlessquic
 systemctl start vlessquic
+
+# // Enable & Start Service
+# Accept port Xray
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 8443 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 8443 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 80 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 80 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2083 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2083 -j ACCEPT
+sudo iptables-save > /etc/iptables.up.rules
+sudo iptables-restore -t < /etc/iptables.up.rules
+sudo netfilter-persistent save
+sudo netfilter-persistent reload
 
 # Install Trojan Go
 latest_version="$(curl -s "https://api.github.com/repos/p4gefau1t/trojan-go/releases" | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
