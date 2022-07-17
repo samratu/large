@@ -310,7 +310,7 @@ RUN=yes
 # systemd users: don't forget to modify /lib/systemd/system/sslh.service
 DAEMON=/usr/sbin/sslh
 
-DAEMON_OPTS="--user sslh --listen 0.0.0.0:2087 --ssl 127.0.0.1:500 --ssh 127.0.0.1:300 --openvpn 127.0.0.1:1194 --http 127.0.0.1:2086 --pidfile /var/run/sslh/sslh.pid -n"
+DAEMON_OPTS="--user sslh --listen 0.0.0.0:2087 --ssl 127.0.0.1:500 --ssh 127.0.0.1:300 --openvpn 127.0.0.1:700 --http 127.0.0.1:2086 --pidfile /var/run/sslh/sslh.pid -n"
 
 END
 
@@ -372,7 +372,7 @@ connect = 127.0.0.1:2087
 
 [openvpn]
 accept = 900
-connect = 127.0.0.1:1194
+connect = 127.0.0.1:700
 
 END
 
@@ -409,7 +409,7 @@ cp /usr/local/bin/stunnel /usr/local/bin/stunnel5
 # Remove File
 rm -r -f /usr/local/share/doc/stunnel/
 rm -r -f /usr/local/etc/stunnel/
-rm -f /usr/local/bin/stunnel
+#rm -f /usr/local/bin/stunnel
 rm -f /usr/local/bin/stunnel3
 rm -f /usr/local/bin/stunnel4
 #rm -f /usr/local/bin/stunnel5
@@ -811,6 +811,7 @@ screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7800 --max-clients 100
 screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7900 --max-clients 100
 echo "0 4 * * * root clearlog && reboot" >> /etc/crontab
 echo "0 0 * * * root xp" >> /etc/crontab
+echo "0 1 * * * root delexp" >> /etc/crontab
 history -c
 echo "unset HISTFILE" >> /etc/profile
 
