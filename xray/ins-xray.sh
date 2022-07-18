@@ -65,7 +65,6 @@ chown -R nobody:nogroup /etc/ssl/private
 chmod 644 /etc/ssl/private/fullchain.pem
 chmod 644 /etc/ssl/private/privkey.pem
 
-
 #sudo lsof -t -i tcp:80 -s tcp:listen | sudo xargs kill
 #cd /root/
 #wget https://raw.githubusercontent.com/acmesh-official/acme.sh/master/acme.sh
@@ -91,7 +90,6 @@ chmod 644 /etc/ssl/private/privkey.pem
 bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install-geodata
 uuid=$(cat /proc/sys/kernel/random/uuid)
 domain=$(cat /root/domain)
-
 # Check OS version
 if [[ -e /etc/debian_version ]]; then
 	source /etc/os-release
@@ -124,13 +122,13 @@ echo "
 server {
    server {
   listen 443 ssl http2 so_keepalive=on;
-  server_name h4rdcore.live;
+  server_name $domain;
 
   index index.html;
   root /var/www/html;
 
-  ssl_certificate /ryan/xray.crt;
-  ssl_certificate_key /ryan/xray.key;
+  ssl_certificate /etc/ssl/private/privkey.pem;
+  ssl_certificate_key /etc/ssl/private/privkey.pem;
   ssl_protocols TLSv1.2 TLSv1.3;
   ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384;
 
@@ -210,7 +208,7 @@ location /wisnugrpc {
 
 server {
   listen 80;
-  server_name h4rdcore.live;
+  server_name $domain;
         root /usr/share/nginx/html;
         index index.html;
         location / {
