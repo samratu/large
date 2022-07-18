@@ -975,14 +975,14 @@ sudo iptables -A INPUT -p tcp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED
 sudo iptables -A INPUT -p udp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
 sudo iptables -A OUTPUT -p tcp --sport 443 -m conntrack --ctstate ESTABLISHED -j ACCEPT
 sudo iptables -A OUTPUT -p udp --sport 443 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p tcp --sport 22 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p udp --sport 22 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p tcp --sport 300 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p udp --sport 300 -m conntrack --ctstate ESTABLISHED -j ACCEPT
 sudo iptables -A OUTPUT -p tcp --sport 10809 -m conntrack --ctstate ESTABLISHED -j ACCEPT
 sudo iptables -A OUTPUT -p udp --sport 10809 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+sudo iptables -A OUTPUT -p tcp --dport 10809 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+sudo iptables -A OUTPUT -p udp --dport 10809 -m conntrack --ctstate ESTABLISHED -j ACCEPT
 sudo iptables -A OUTPUT -p tcp --sport 10808 -m conntrack --ctstate ESTABLISHED -j ACCEPT
 sudo iptables -A OUTPUT -p udp --sport 10808 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+sudo iptables -A OUTPUT -p tcp --dport 10808 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+sudo iptables -A OUTPUT -p udp --dport 10808 -m conntrack --ctstate ESTABLISHED -j ACCEPT
 sudo iptables-save > /etc/iptables.up.rules
 sudo iptables-restore -t < /etc/iptables.up.rules
 sudo netfilter-persistent save >/dev/null 2>&1
