@@ -122,44 +122,145 @@ rm -f /etc/nginx/conf.d/default.conf
 clear
 echo "
 server {
-    listen 80 ;
-    listen [::]:80 ;
-    access_log /var/log/nginx/access.log;
-    error_log /var/log/nginx/error.log;
+   server {
+  listen 443 ssl http2 so_keepalive=on;
+  server_name h4rdcore.live;
 
-    location /shanumgrpc {
-       client_max_body_size 0;
-       keepalive_time 1071906480m;
-       keepalive_requests 4294967296;
-       client_body_timeout 1071906480m;
-       send_timeout 1071906480m;
-       lingering_close always;
-       grpc_read_timeout 1071906480m;
-       grpc_send_timeout 1071906480m;
-       grpc_pass grpc://127.0.0.1:1190;
-       }
-    location /wisnugrpc {
-       client_max_body_size 0;
-       keepalive_time 1071906480m;
-       keepalive_requests 4294967296;
-       client_body_timeout 1071906480m;
-       send_timeout 1071906480m;
-       lingering_close always;
-       grpc_read_timeout 1071906480m;
-       grpc_send_timeout 1071906480m;
-       grpc_pass grpc://127.0.0.1:1160;
-       }
+  index index.html;
+  root /var/www/html;
+
+  ssl_certificate /ryan/xray.crt;
+  ssl_certificate_key /ryan/xray.key;
+  ssl_protocols TLSv1.2 TLSv1.3;
+  ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384;
+
+        client_header_timeout 52w;
+        keepalive_timeout 52w;
+
+location /wisnugrpc {
+        if ($content_type !~ "application/grpc") {
+        return 404;
+        }
+        client_max_body_size 0;
+        grpc_set_header X-Real-IP $remote_addr;
+        client_body_timeout 52w;
+        grpc_read_timeout 52w;
+        grpc_pass grpc://127.0.0.1:1150;
+    }
+    location /shanumgrpc  {
+        if ($content_type !~ "application/grpc") {
+        return 404;
+        }
+        client_max_body_size 0;
+        grpc_set_header X-Real-IP $remote_addr;
+        client_body_timeout 52w;
+        grpc_read_timeout 52w;
+        grpc_pass grpc://127.0.0.1:1190;
+    }
     location /gandringgrpc {
-       client_max_body_size 0;
-       keepalive_time 1071906480m;
-       keepalive_requests 4294967296;
-       client_body_timeout 1071906480m;
-       send_timeout 1071906480m;
-       lingering_close always;
-       grpc_read_timeout 1071906480m;
-       grpc_send_timeout 1071906480m;
-       grpc_pass grpc://127.0.0.1:1130;
-       }
+        if ($content_type !~ "application/grpc") {
+        return 404;
+        }
+        client_max_body_size 0;
+        grpc_set_header X-Real-IP $remote_addr;
+        client_body_timeout 52w;
+        grpc_read_timeout 52w;
+        grpc_pass grpc://127.0.0.1:1120;
+    }
+    location = /wisnu {
+        if ($http_upgrade != "websocket") {
+            return 404;
+        }
+        proxy_redirect off;
+        proxy_pass http://127.0.0.1:1140;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+    location = /shanum {
+        if ($http_upgrade != "websocket") {
+            return 404;
+        }
+        proxy_redirect off;
+        proxy_pass http://127.0.0.1:1170;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+    location = /gandring {
+        if ($http_upgrade != "websocket") {
+            return 404;
+        }
+        proxy_redirect off;
+        proxy_pass http://127.0.0.1:1110;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+}
+
+server {
+  listen 80;
+  server_name h4rdcore.live;
+        root /usr/share/nginx/html;
+        index index.html;
+        location / {
+        proxy_ssl_server_name on;
+        proxy_pass https://bing.com ;
+        proxy_set_header Accept-Encoding '';
+        sub_filter "bing.com" "h4rdcore.live";
+        sub_filter_once off;
+    }
+
+    location = /wisnu {
+        if ($http_upgrade != "websocket") {
+            return 404;
+        }
+        proxy_redirect off;
+        proxy_pass http://127.0.0.1:2082;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+    location = /shanum {
+        if ($http_upgrade != "websocket") {
+            return 404;
+        }
+        proxy_redirect off;
+        proxy_pass http://127.0.0.1:2052;
+        proxy_http_version 1.1;
+
+proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+    location = /gandring {
+        if ($http_upgrade != "websocket") {
+            return 404;
+        }
+        proxy_redirect off;
+        proxy_pass http://127.0.0.1:2095;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
 }
 " > /etc/nginx/conf.d/default.conf
 
