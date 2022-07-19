@@ -360,7 +360,7 @@ cat > /etc/xray/config.json << END
   },
   "inbounds": [
     {
-      "port": 443,
+      "port": 777,
       "protocol": "vmess",
       "settings": {
         "clients": [
