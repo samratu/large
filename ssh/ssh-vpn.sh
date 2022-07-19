@@ -198,7 +198,7 @@ apt-get --reinstall --fix-missing install -y bzip2 gzip coreutils wget screen rs
 echo "status" >> .profile
 
 # install webserver
-#apt -y install nginx php php-fpm php-cli php-mysql libxml-parser-perl
+apt -y install nginx php php-fpm php-cli php-mysql libxml-parser-perl
 rm /etc/nginx/sites-enabled
 rm /etc/nginx/sites-available
 #curl https://${wisnuvpn}/nginx.conf > /etc/nginx/nginx.conf
