@@ -136,18 +136,6 @@ server {
     error_log /var/log/nginx/error.log;
 
     location /shanumgrpc {
-       if ($http_upgrade != "websocket") {
-           return 404;
-       }
-       proxy_redirect off;
-       proxy_pass http://127.0.0.1:2052;
-       proxy_http_version 1.1;
-       proxy_set_header Upgrade $http_upgrade;
-       proxy_set_header Connection "upgrade";
-       proxy_set_header Host $http_host;
-       proxy_set_header X-Real-IP $remote_addr;
-       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-       }
        client_max_body_size 0;
        keepalive_time 1071906480m;
        keepalive_requests 4294967296;
@@ -159,18 +147,6 @@ server {
        grpc_pass grpc://127.0.0.1:1190;
        }
     location /wisnugrpc {
-       if ($http_upgrade != "websocket") {
-           return 404;
-       }
-       proxy_redirect off;
-       proxy_pass http://127.0.0.1:2082;
-       proxy_http_version 1.1;
-       proxy_set_header Upgrade $http_upgrade;
-       proxy_set_header Connection "upgrade";
-       proxy_set_header Host $http_host;
-       proxy_set_header X-Real-IP $remote_addr;
-       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-       }
        client_max_body_size 0;
        keepalive_time 1071906480m;
        keepalive_requests 4294967296;
@@ -182,18 +158,6 @@ server {
        grpc_pass grpc://127.0.0.1:1160;
        }
     location /gandringgrpc {
-       if ($http_upgrade != "websocket") {
-           return 404;
-       }
-       proxy_redirect off;
-       proxy_pass http://127.0.0.1:2095;
-       proxy_http_version 1.1;
-       proxy_set_header Upgrade $http_upgrade;
-       proxy_set_header Connection "upgrade";
-       proxy_set_header Host $http_host;
-       proxy_set_header X-Real-IP $remote_addr;
-       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-       }
        client_max_body_size 0;
        keepalive_time 1071906480m;
        keepalive_requests 4294967296;
@@ -1050,7 +1014,7 @@ cat > /etc/trojan-go/config.json << END
 {
   "run_type": "server",
   "local_addr": "0.0.0.0",
-  "local_port": 2052,
+  "local_port": 2082,
   "remote_addr": "127.0.0.1",
   "remote_port": 88,
   "log_level": 1,
@@ -1063,8 +1027,8 @@ cat > /etc/trojan-go/config.json << END
   "ssl": {
     "verify": false,
     "verify_hostname": false,
-    "cert": "/etc/ssl/private/fullchain.pem",
-    "key": "/etc/ssl/private/privkey.pem",
+    "cert": "",
+    "key": "",
     "key_password": "",
     "cipher": "",
     "curves": "",
@@ -1145,7 +1109,7 @@ systemctl restart trojan-go
 
 # restart
 sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 8080 -j ACCEPT
-sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2052 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2082 -j ACCEPT
 sudo iptables-save > /etc/iptables.up.rules
 sudo iptables-restore -t < /etc/iptables.up.rules
 sudo netfilter-persistent save >/dev/null 2>&1
