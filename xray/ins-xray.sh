@@ -122,10 +122,32 @@ echo "
 server {
     listen 80 ;
     listen [::]:80 ;
+    server_name $domain www.$domain;
+    root /usr/share/nginx/html;
+        index index.html;
+        location / {
+        proxy_ssl_server_name on;
+        proxy_pass https://$domain;
+        proxy_set_header Accept-Encoding;
+        sub_filter "$domain" "www.$domain";
+        sub_filter_once off;
+    }
     access_log /var/log/nginx/access.log;
     error_log /var/log/nginx/error.log;
 
     location /shanumgrpc {
+       if ($http_upgrade != "websocket") {
+           return 404;
+       }
+       proxy_redirect off;
+       proxy_pass http://127.0.0.1:2052;
+       proxy_http_version 1.1;
+       proxy_set_header Upgrade $http_upgrade;
+       proxy_set_header Connection "upgrade";
+       proxy_set_header Host $http_host;
+       proxy_set_header X-Real-IP $remote_addr;
+       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+       }
        client_max_body_size 0;
        keepalive_time 1071906480m;
        keepalive_requests 4294967296;
@@ -137,6 +159,18 @@ server {
        grpc_pass grpc://127.0.0.1:1190;
        }
     location /wisnugrpc {
+       if ($http_upgrade != "websocket") {
+           return 404;
+       }
+       proxy_redirect off;
+       proxy_pass http://127.0.0.1:2082;
+       proxy_http_version 1.1;
+       proxy_set_header Upgrade $http_upgrade;
+       proxy_set_header Connection "upgrade";
+       proxy_set_header Host $http_host;
+       proxy_set_header X-Real-IP $remote_addr;
+       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+       }
        client_max_body_size 0;
        keepalive_time 1071906480m;
        keepalive_requests 4294967296;
@@ -148,6 +182,18 @@ server {
        grpc_pass grpc://127.0.0.1:1160;
        }
     location /gandringgrpc {
+       if ($http_upgrade != "websocket") {
+           return 404;
+       }
+       proxy_redirect off;
+       proxy_pass http://127.0.0.1:2095;
+       proxy_http_version 1.1;
+       proxy_set_header Upgrade $http_upgrade;
+       proxy_set_header Connection "upgrade";
+       proxy_set_header Host $http_host;
+       proxy_set_header X-Real-IP $remote_addr;
+       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+       }
        client_max_body_size 0;
        keepalive_time 1071906480m;
        keepalive_requests 4294967296;
