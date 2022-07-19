@@ -12,8 +12,12 @@ alias acme.sh=~/.acme.sh/acme.sh
 /root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
 /root/.acme.sh/acme.sh --issue -d "${domain}" --standalone --keylength ec-384
 /root/.acme.sh/acme.sh --install-cert -d "${domain}" --ecc \
---fullchain-file /etc/xray/xray.crt \
---key-file /etc/xray/xray.key
+--fullchain-file /etc/ssl/private/fullchain.pem \
+--key-file /etc/ssl/private/privkey.pem
 chown -R nobody:nogroup /etc/xray
-chmod 644 /etc/xray/xray.crt
-chmod 644 /etc/xray/xray.key
+chown -R nobody:nogroup /etc/ssl/private
+chmod 644 /etc/ssl/private/fullchain.pem
+chmod 644 /etc/ssl/private/privkey.pem
+
+cp /etc/ssl/private/fullchain.pem /etc/xray/xray.crt
+cp etc/ssl/private/privkey.pem /etc/xray/xray.key
