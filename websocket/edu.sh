@@ -91,34 +91,6 @@ systemctl enable wstunnel
 systemctl restart wstunnel
 
 # Getting Proxy Template
-wget -q -O /usr/local/bin/wss-stunnel https://${wisnuvpn}/wss-stunnel.py
-chmod +x /usr/local/bin/wss-stunnel
-
-# Installing Service
-cat > /etc/systemd/system/wss-stunnel.service << END
-[Unit]
-Description=WEBSOCKET ROUTING ACTIVATED BY ZEROSSL
-Documentation=https://t.me/zerossl
-After=network.target nss-lookup.target
-
-[Service]
-Type=simple
-User=root
-CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-NoNewPrivileges=true
-ExecStart=/usr/bin/python -O /usr/local/bin/wss-stunnel 500
-Restart=on-failure
-
-[Install]
-WantedBy=multi-user.target
-END
-
-systemctl daemon-reload
-systemctl enable wss-stunnel
-systemctl restart wss-stunnel
-
-# Getting Proxy Template
 wget -q -O /usr/local/bin/ws-tls https://${wisnuvpn}/ws-tls.py
 chmod +x /usr/local/bin/ws-tls
 
