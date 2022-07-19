@@ -51,30 +51,30 @@ uuid=$(cat /proc/sys/kernel/random/uuid)
 cd /root/
 #wget https://raw.githubusercontent.com/acmesh-official/acme.sh/master/acme.sh
 ##Generate acme certificate
-#curl https://get.acme.sh | sh
-#alias acme.sh=~/.acme.sh/acme.sh
-#/root/.acme.sh/acme.sh --upgrade --auto-upgrade
-#/root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
-#/root/.acme.sh/acme.sh --issue -d "${domain}" --standalone --keylength ec-2048
-#/root/.acme.sh/acme.sh --issue -d "${domain}" --standalone --keylength ec-384
-#/root/.acme.sh/acme.sh --install-cert -d "${domain}" --ecc \
-#--fullchain-file /etc/ssl/private/fullchain.pem \
-#--key-file /etc/ssl/private/privkey.pem
-#chown -R nobody:nogroup /etc/xray
-#chown -R nobody:nogroup /etc/ssl/private
-#chmod 644 /etc/ssl/private/fullchain.pem
-#chmod 644 /etc/ssl/private/privkey.pem
+curl https://get.acme.sh | sh
+alias acme.sh=~/.acme.sh/acme.sh
+/root/.acme.sh/acme.sh --upgrade --auto-upgrade
+/root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
+/root/.acme.sh/acme.sh --issue -d "${domain}" --standalone --keylength ec-2048
+/root/.acme.sh/acme.sh --issue -d "${domain}" --standalone --keylength ec-384
+/root/.acme.sh/acme.sh --install-cert -d "${domain}" --ecc \
+--fullchain-file /etc/ssl/private/fullchain.pem \
+--key-file /etc/ssl/private/privkey.pem
+chown -R nobody:nogroup /etc/xray
+chown -R nobody:nogroup /etc/ssl/private
+chmod 644 /etc/ssl/private/fullchain.pem
+chmod 644 /etc/ssl/private/privkey.pem
 
 #sudo lsof -t -i tcp:80 -s tcp:listen | sudo xargs kill
-cd /root/
-wget https://raw.githubusercontent.com/acmesh-official/acme.sh/master/acme.sh
-bash acme.sh --install
-bash acme.sh --register-account -m djarumpentol01@gmail.com
-bash acme.sh --issue --standalone -d $domain --force
-bash acme.sh --installcert -d $domain --fullchainpath /etc/ssl/private/fullchain.pem --keypath /etc/ssl/private/privkey.pem
-chown -R nobody:nogroup /etc/xray
-chmod 644 /etc/ssl/private/privkey.pem
-chmod 644 /etc/ssl/private/fullchain.pem
+#cd /root/
+#wget https://raw.githubusercontent.com/acmesh-official/acme.sh/master/acme.sh
+#bash acme.sh --install
+#bash acme.sh --register-account -m djarumpentol01@gmail.com
+#bash acme.sh --issue --standalone -d $domain --force
+#bash acme.sh --installcert -d $domain --fullchainpath /etc/ssl/private/fullchain.pem --keypath /etc/ssl/private/privkey.pem
+#chown -R nobody:nogroup /etc/xray
+#chmod 644 /etc/ssl/private/privkey.pem
+#chmod 644 /etc/ssl/private/fullchain.pem
 
 #cd /root/
 #wget https://raw.githubusercontent.com/acmesh-official/acme.sh/master/acme.sh
