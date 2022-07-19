@@ -217,8 +217,8 @@ stream {
         server 127.0.0.1:1190;
     }
     server {
-        listen 443 reuseport;
-        listen [::]:443 reuseport;
+        listen 127.0.0.1:1080 reuseport;
+        listen [::]:1080 reuseport;
         proxy_pass  $backend_name;
         ssl_preread on;
     }
