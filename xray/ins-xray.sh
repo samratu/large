@@ -1050,7 +1050,7 @@ cat > /etc/trojan-go/config.json << END
 {
   "run_type": "server",
   "local_addr": "0.0.0.0",
-  "local_port": 2053,
+  "local_port": 2052,
   "remote_addr": "127.0.0.1",
   "remote_port": 88,
   "log_level": 1,
@@ -1077,7 +1077,7 @@ cat > /etc/trojan-go/config.json << END
     "reuse_session": true,
     "plain_http_response": "",
     "fallback_addr": "127.0.0.1",
-    "fallback_port": 2053,
+    "fallback_port": 88,
     "fingerprint": "firefox"
   },
   "tcp": {
@@ -1144,8 +1144,8 @@ systemctl enable trojan-go
 systemctl restart trojan-go
 
 # restart
-sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2053 -j ACCEPT
-sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2053 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 8080 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2052 -j ACCEPT
 sudo iptables-save > /etc/iptables.up.rules
 sudo iptables-restore -t < /etc/iptables.up.rules
 sudo netfilter-persistent save >/dev/null 2>&1
