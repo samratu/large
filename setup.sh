@@ -142,7 +142,7 @@ echo " 🔰 VLESS XTLS : 443" |tee -a log-install.txt
 echo " 🔰 VLESS GFW : 443" |tee -a log-install.txt
 echo " 🔰 VLESS WS TLS : 443" |tee -a log-install.txt
 echo " 🔰 VLESS WS NON TLS : 8880" |tee -a log-install.txt
-echo " 🔰 VLESS GRPC TLS : 2083" |tee -a log-install.txt
+echo " 🔰 VLESS GRPC TLS : 2096" |tee -a log-install.txt
 echo " 🔰 VLESS GRPC NON TLS: 2082" |tee -a log-install.txt
 echo " 🔰 VLESS H2C TLS : 1150" |tee -a log-install.txt
 echo " 🔰 VLESS QUIC : 414" |tee -a log-install.txt
