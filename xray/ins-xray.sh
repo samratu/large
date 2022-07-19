@@ -566,6 +566,7 @@ domain=$(cat /root/domain)
 # // Certificate File
 path_crt="/etc/xray/xray.crt"
 path_key="/etc/xray/xray.key"
+base64=$(openssl rand -base64 16)
 #domain_ecc=$(cat /root/.acme.sh)
 #domain.key=$(cat /root/.acme.sh/$domain_ecc)
 #path_crt="/root/.acme.sh/$domain_ecc/fullchain.cer"
@@ -672,7 +673,8 @@ cat > /usr/local/etc/xray/vlessquic.json << END
 END
 
 uuid=$(cat /proc/sys/kernel/random/uuid)
-
+base64=$(openssl rand -base64 16)
+password=$base64
 domain=$(cat /root/domain)
 # // Certificate File
 path_crt="/etc/xray/xray.crt"
@@ -729,7 +731,8 @@ END
 
 uuid=$(cat /proc/sys/kernel/random/uuid)
 domain=$(cat /root/domain)
-password=$openssl rand -base64 32
+base64=$(openssl rand -base64 16)
+password=$base64
 # // Certificate File
 path_crt="/etc/xray/xray.crt"
 path_key="/etc/xray/xray.key"
@@ -785,7 +788,8 @@ END
 
 uuid=$(cat /proc/sys/kernel/random/uuid)
 domain=$(cat /root/domain)
-password=$openssl rand -base64 16
+base64=$(openssl rand -base64 16)
+password=$base64
 # // Certificate File
 path_crt="/etc/xray/xray.crt"
 path_key="/etc/xray/xray.key"
