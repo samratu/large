@@ -79,7 +79,7 @@ User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
-ExecStart=/usr/bin/python -O /usr/local/bin/wstunnel
+ExecStart=/usr/bin/python -O /usr/local/bin/wstunnel 1443
 Restart=on-failure
 
 [Install]
@@ -107,7 +107,7 @@ User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
-ExecStart=/usr/bin/python -O /usr/local/bin/ws-tls
+ExecStart=/usr/bin/python -O /usr/local/bin/ws-tls 1443
 Restart=on-failure
 
 [Install]
