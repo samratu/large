@@ -106,60 +106,242 @@ if [[ $OS == 'ubuntu' ]]; then
 		systemctl daemon-reload
         systemctl enable nginx
 elif [[ $OS == 'debian' ]]; then
-		sudo apt install gnupg2 ca-certificates lsb-release -y 
-        echo "deb http://nginx.org/packages/mainline/debian $(lsb_release -cs) nginx" | sudo tee /etc/apt/sources.list.d/nginx.list 
-        echo -e "Package: *\nPin: origin nginx.org\nPin: release o=nginx\nPin-Priority: 900\n" | sudo tee /etc/apt/preferences.d/99nginx 
-        curl -o /tmp/nginx_signing.key https://nginx.org/keys/nginx_signing.key 
-        # gpg --dry-run --quiet --import --import-options import-show /tmp/nginx_signing.key
-        sudo mv /tmp/nginx_signing.key /etc/apt/trusted.gpg.d/nginx_signing.asc
-        sudo apt update
-        systemctl daemon-reload
-        systemctl enable nginx
+yum -y install epel-release && yum install wget git nginx nginx-mod-stream certbot curl -y && rm -rf /html/* && mkdir -p /html/we.dog && cd /html/we.dog && git clone https://github.com/Pearlulu/h5ai_dplayer.git && mv h5ai_dplayer/_h5ai ./ && rm -rf /etc/nginx/sites-enabled/default && bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install && sed -i 's/nobody/root/g' /etc/systemd/system/xray.service
+chattr -i  /etc/selinux/config && sed -i 's/enforcing/disabled/g' /etc/selinux/config && chattr +i  /etc/selinux/config
+systemctl stop nginx && yes | certbot certonly --standalone -d $DOMIN --agree-tos --email ppcert@gmail.com
+else
+iptables -F && iptables -P INPUT ACCEPT && iptables -P OUTPUT ACCEPT && iptables -P FORWARD ACCEPT && iptables-save && systemctl stop ufw && systemctl disable ufw
+apt update && apt install wget git nginx certbot curl -y && rm -rf /html/* && mkdir -p /html/we.dog && cd /html/we.dog && git clone https://github.com/Pearlulu/h5ai_dplayer.git && mv h5ai_dplayer/_h5ai ./ && rm -rf /etc/nginx/sites-enabled/default && bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install && sed -i 's/nobody/root/g' /etc/systemd/system/xray.service && systemctl stop nginx && yes | certbot certonly --standalone -d $DOMIN --agree-tos --email ppcert@gmail.com
 fi
-rm -f /etc/nginx/conf.d/default.conf 
-clear
-echo "
-server {
-    listen 127.0.0.1:80 ;
-    listen [::]:80 ;
-    access_log /var/log/nginx/access.log;
-    error_log /var/log/nginx/error.log;
+cat >> /etc/nginx/nginx.conf <<EOF
+user www-data;
+worker_processes auto;
+pid /run/nginx.pid;
+include /etc/nginx/modules-enabled/*.conf;
 
-    location /shanumgrpc {
-       client_max_body_size 0;
-       keepalive_time 1071906480m;
-       keepalive_requests 4294967296;
-       client_body_timeout 1071906480m;
-       send_timeout 1071906480m;
-       lingering_close always;
-       grpc_read_timeout 1071906480m;
-       grpc_send_timeout 1071906480m;
-       grpc_pass grpc://127.0.0.1:1190;
-       }
-    location /wisnugrpc {
-       client_max_body_size 0;
-       keepalive_time 1071906480m;
-       keepalive_requests 4294967296;
-       client_body_timeout 1071906480m;
-       send_timeout 1071906480m;
-       lingering_close always;
-       grpc_read_timeout 1071906480m;
-       grpc_send_timeout 1071906480m;
-       grpc_pass grpc://127.0.0.1:1160;
-       }
-    location /gandringgrpc {
-       client_max_body_size 0;
-       keepalive_time 1071906480m;
-       keepalive_requests 4294967296;
-       client_body_timeout 1071906480m;
-       send_timeout 1071906480m;
-       lingering_close always;
-       grpc_read_timeout 1071906480m;
-       grpc_send_timeout 1071906480m;
-       grpc_pass grpc://127.0.0.1:1130;
-       }
+events {
+	worker_connections 1024;
+	# multi_accept on;
 }
-" > /etc/nginx/conf.d/default.conf;
+
+http {
+
+	##
+	# Basic Settings
+	##
+
+	sendfile on;
+	tcp_nopush on;
+	tcp_nodelay on;
+	keepalive_timeout 65;
+	types_hash_max_size 2048;
+	# server_tokens off;
+
+	# server_names_hash_bucket_size 64;
+	# server_name_in_redirect off;
+
+	include /etc/nginx/mime.types;
+	default_type application/octet-stream;
+
+	##
+	# SSL Settings
+	##
+
+	ssl_protocols TLSv1 TLSv1.1 TLSv1.2 TLSv1.3; # Dropping SSLv3, ref: POODLE
+	ssl_prefer_server_ciphers on;
+
+	##
+	# Logging Settings
+	##
+
+	access_log /var/log/nginx/access.log;
+	error_log /var/log/nginx/error.log;
+
+	##
+	# Gzip Settings
+	##
+
+	gzip on;
+
+	# gzip_vary on;
+	# gzip_proxied any;
+	# gzip_comp_level 6;
+	# gzip_buffers 16 8k;
+	# gzip_http_version 1.1;
+	# gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
+
+	##
+	# Virtual Host Configs
+	##
+
+	include /etc/nginx/conf.d/*.conf;
+	include /etc/nginx/sites-enabled/*;
+}
+
+
+#mail {
+#	# See sample authentication script at:
+#	# http://wiki.nginx.org/ImapAuthenticateWithApachePhpScript
+# 
+#	# auth_http localhost/auth.php;
+#	# pop3_capabilities "TOP" "USER";
+#	# imap_capabilities "IMAP4rev1" "UIDPLUS";
+# 
+#	server {
+#		listen     localhost:110;
+#		protocol   pop3;
+#		proxy      on;
+#	}
+# 
+#	server {
+#		listen     localhost:143;
+#		protocol   imap;
+#		proxy      on;
+#	}
+#}
+stream {
+    map $ssl_preread_server_name $backend_name {
+        $domain h5ai;
+        default h5ai;
+    }
+    upstream h5ai {
+        server 127.0.0.1:40000;
+    }
+    upstream /gandringgrpc {
+        server 127.0.0.1:1130;
+    }
+    upstream /wisnugrpc {
+        server 127.0.0.1:1160;
+    }
+    upstream /shanumgrpc {
+        server 127.0.0.1:1190;
+    }
+    server {
+        listen 443 reuseport;
+        listen [::]:443 reuseport;
+        proxy_pass  $backend_name;
+        ssl_preread on;
+    }
+}
+EOF
+
+cat > /etc/nginx/conf.d/h5ai.conf <<"EOF"
+server { 
+                listen 127.0.0.1:39999;  
+                root /html/we.dog; 
+ index index.html index.htm index.nginx-debian.html index.php /_h5ai/public/index.php;
+                 location ~* \.php$ {
+                    fastcgi_index   index.php;
+                    fastcgi_pass    127.0.0.1:9000;
+                    include         fastcgi_params;
+                    fastcgi_param   SCRIPT_FILENAME    $document_root$fastcgi_script_name;
+                    fastcgi_param   SCRIPT_NAME        $fastcgi_script_name;
+    }
+location /gandringgrpc {
+        if ($content_type !~ "application/grpc") {
+        return 404;
+        }
+        client_max_body_size 0;
+        grpc_set_header X-Real-IP $remote_addr;
+        client_body_timeout 52w;
+        grpc_read_timeout 52w;
+        grpc_pass grpc://127.0.0.1:1130;
+    }
+location /wisnugrpc {
+        if ($content_type !~ "application/grpc") {
+        return 404;
+        }
+        client_max_body_size 0;
+        grpc_set_header X-Real-IP $remote_addr;
+        client_body_timeout 52w;
+        grpc_read_timeout 52w;
+        grpc_pass grpc://127.0.0.1:1160;
+    }
+location /ahanumgrpc {
+        if ($content_type !~ "application/grpc") {
+        return 404;
+        }
+        client_max_body_size 0;
+        grpc_set_header X-Real-IP $remote_addr;
+        client_body_timeout 52w;
+        grpc_read_timeout 52w;
+        grpc_pass grpc://127.0.0.1:1190;
+    }
+location = /gandring {
+        if ($http_upgrade != "websocket") {
+            return 404;
+        }
+        proxy_redirect off;
+        proxy_pass http://127.0.0.1:1110;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+location = /wisnu {
+        if ($http_upgrade != "websocket") {
+            return 404;
+        }
+        proxy_redirect off;
+        proxy_pass http://127.0.0.1:1140;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+} 
+location = /shanum {
+        if ($http_upgrade != "websocket") {
+            return 404;
+        }
+        proxy_redirect off;
+        proxy_pass http://127.0.0.1:1170;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+}
+EOF
+
+cat >> /etc/nginx/conf.d/h5ai.conf <<EOF
+#server { 
+ #       return 301 https://$domain; 
+ #               listen 80; 
+ #               server_name $domain; 
+server {
+  listen 80;
+  server_name $domain;
+        root /usr/share/nginx/html;
+        index index.html;
+        location / {
+        proxy_ssl_server_name on;
+        proxy_pass https://$domain ;
+        proxy_set_header Accept-Encoding '';
+        sub_filter "$domain" "www.$domain";
+        sub_filter_once off;
+    }
+location = /wisnu {
+        if ($http_upgrade != "websocket") {
+            return 404;
+        }
+        proxy_redirect off;
+        proxy_pass http://127.0.0.1:2082;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+}
+EOF
 
 # // Certificate File
 path_crt="/etc/xray/xray.cer"
