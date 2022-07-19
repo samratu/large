@@ -120,18 +120,8 @@ rm -f /etc/nginx/conf.d/default.conf
 clear
 echo "
 server {
-    listen 80 ;
+    listen 127.0.0.1:80 ;
     listen [::]:80 ;
-    server_name $domain www.$domain;
-    root /usr/share/nginx/html;
-        index index.html;
-        location / {
-        proxy_ssl_server_name on;
-        proxy_pass https://$domain;
-        proxy_set_header Accept-Encoding;
-        sub_filter "$domain" "www.$domain";
-        sub_filter_once off;
-    }
     access_log /var/log/nginx/access.log;
     error_log /var/log/nginx/error.log;
 
@@ -1016,7 +1006,7 @@ cat > /etc/trojan-go/config.json << END
   "local_addr": "0.0.0.0",
   "local_port": 2082,
   "remote_addr": "127.0.0.1",
-  "remote_port": 88,
+  "remote_port": 80,
   "log_level": 1,
   "log_file": "/var/log/trojan-go/trojan-go.log",
   "password": [
@@ -1027,8 +1017,8 @@ cat > /etc/trojan-go/config.json << END
   "ssl": {
     "verify": false,
     "verify_hostname": false,
-    "cert": "",
-    "key": "",
+    "cert": "/etc/ssl/private/fullchain.pem",
+    "key": "/etc/ssl/private/privkey.pem",
     "key_password": "",
     "cipher": "",
     "curves": "",
