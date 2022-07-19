@@ -148,7 +148,7 @@ echo " 🔰 VLESS H2C TLS : 1150" |tee -a log-install.txt
 echo " 🔰 VLESS QUIC : 414" |tee -a log-install.txt
 echo " 🔰 VLESS HTTP TLS : 443" |tee -a log-install.txt
 echo " 🔰 VLESS HTTP NON TLS : 8088" |tee -a log-install.txt
-echo " 🔰 TROJAN GO : 2052" |tee -a log-install.txt
+echo " 🔰 TROJAN GO : 2082" |tee -a log-install.txt
 echo " 🔰 TROJAN GRPC : 8443" |tee -a log-install.txt
 echo " 🔰 TROJAN HTTP TLS : 443" |tee -a log-install.txt
 echo " 🔰 TROJAN HTTP NON TLS : 880" |tee -a log-install.txt
@@ -165,7 +165,7 @@ echo " 🔰 SHADOWSOCKS UDP : 503" |tee -a log-install.txt
 echo " 🔰 SHADOWSOCKS WS TLS: 443" |tee -a log-install.txt
 echo " 🔰 SHADOWSOCKS WS NON TLS : 8880" |tee -a log-install.txt
 echo " 🔰 SHADOWSOCKS 2022 TCP : 212" |tee -a log-install.txt
-echo " 🔰 SHADOWSOCKS 2022 WS NON TLS : 8880" |tee -a log-install.txt
+echo " 🔰 SHADOWSOCKS 2022 WS NON TLS : 2052" |tee -a log-install.txt
 echo " 🔰 SHADOWSOCKS 2022 WS TLS : 2053" |tee -a log-install.txt
 echo " 🔰 SHADOWSOCKS 2022 GRPC : 2087" |tee -a log-install.txt
 echo " 🔰 XRAY MT PROTO : 111" |tee -a log-install.txt
