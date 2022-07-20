@@ -105,89 +105,89 @@ echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━�
 echo -e "\E[44;1;41m           🔰 SETUP SERVER BY ZEROSSL 🔰            \E[0m"
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo ""  |tee -a log-install.txt
-echo " 🔰 >>> Service & Port" |tee -a log-install.txt
-echo " 🔰 PORT OPENSSH : 22" |tee -a log-install.txt
-echo " 🔰 PORT OPENVPN TCP : 700" |tee -a log-install.txt
-echo " 🔰 PORT OPENVPN UDP : 800" |tee -a log-install.txt
-echo " 🔰 PORT OPENVPN SSL : 900" |tee -a log-install.txt
-echo " 🔰 PORT STUNNEL5 : 2087, 500, 600" |tee -a log-install.txt
-echo " 🔰 PORT DROPBEAR : 200, 300" |tee -a log-install.txt
-echo " 🔰 PORT SQUID : 3128, 3228" |tee -a log-install.txt
-echo " 🔰 Badvpn : 7100, 7200, 7300-7900" |tee -a log-install.txt
-echo " 🔰 Nginx : 88" |tee -a log-install.txt
-echo " 🔰 WIREGUARD : 591" |tee -a log-install.txt
-echo " 🔰 L2TP/IPSEC VPN : 1701" |tee -a log-install.txt
-echo " 🔰 PPTP VPN : 1732" |tee -a log-install.txt
-echo " 🔰 SSTP VPN : 666" |tee -a log-install.txt
-echo " 🔰 Shadowsocks-R : 1444-1543" |tee -a log-install.txt
-echo " 🔰 SS-OBFS TLS : 2444-2943" |tee -a log-install.txt
-echo " 🔰 SS-OBFS HTTP : 2944-3442" |tee -a log-install.txt
-echo " 🔰 XRAY SHADOWSOCKS : 333" |tee -a log-install.txt
-echo " 🔰 XRAY MTPROTO : 111" |tee -a log-install.txt
+echo -e " 🔰 >>> Service & Port" |tee -a log-install.txt
+echo -e " 🔰 PORT OPENSSH : 22" |tee -a log-install.txt
+echo -e " 🔰 PORT OPENVPN TCP : 700" |tee -a log-install.txt
+echo -e " 🔰 PORT OPENVPN UDP : 800" |tee -a log-install.txt
+echo -e " 🔰 PORT OPENVPN SSL : 900" |tee -a log-install.txt
+echo -e " 🔰 PORT STUNNEL5 : 500, 600" |tee -a log-install.txt
+echo -e " 🔰 PORT DROPBEAR : 200, 300" |tee -a log-install.txt
+echo -e " 🔰 PORT SQUID : 3128, 3228" |tee -a log-install.txt
+echo -e " 🔰 Badvpn : 7100, 7200, 7300-7900" |tee -a log-install.txt
+echo -e " 🔰 Nginx : 88" |tee -a log-install.txt
+echo -e " 🔰 WIREGUARD : 591" |tee -a log-install.txt
+echo -e " 🔰 L2TP/IPSEC VPN : 1701" |tee -a log-install.txt
+echo -e " 🔰 PPTP VPN : 1732" |tee -a log-install.txt
+echo -e " 🔰 SSTP VPN : 666" |tee -a log-install.txt
+echo -e " 🔰 Shadowsocks-R : 1444-1543" |tee -a log-install.txt
+echo -e " 🔰 SS-OBFS TLS : 2444-2943" |tee -a log-install.txt
+echo -e " 🔰 SS-OBFS HTTP : 2944-3442" |tee -a log-install.txt
+echo -e " 🔰 XRAY SHADOWSOCKS : 333" |tee -a log-install.txt
+echo -e " 🔰 XRAY MTPROTO : 111" |tee -a log-install.txt
 #echo " 🔰 WEBSOCKET TLS : 2087" |tee -a log-install.txt
-echo " 🔰 WEBSOCKET NON TLS : 2086" |tee -a log-install.txt
-echo " 🔰 PORT OVPNWS : 8080" |tee -a log-install.txt
-echo " 🔰 OHP SSH : 8181" |tee -a log-install.txt
-echo " 🔰 OHP Dropbear : 8282" |tee -a log-install.txt
-echo " 🔰 OHP OpenVPN : 8383" |tee -a log-install.txt
-echo " 🔰 VMESS WS TLS : 443" |tee -a log-install.txt
-echo " 🔰 VMESS WS NON TLS : 2052" |tee -a log-install.txt
-echo " 🔰 VMESS GRPC TLS: 2083" |tee -a log-install.txt
-echo " 🔰 VMESS GRPC NON TLS: 2082" |tee -a log-install.txt
-echo " 🔰 VMESS H2C TLS : 1190" |tee -a log-install.txt
-echo " 🔰 VMESS HTTP TLS : 443" |tee -a log-install.txt
-echo " 🔰 VMESS QUIC : 443" |tee -a log-install.txt
-echo " 🔰 VMESS HTTP NON TLS : 808" |tee -a log-install.txt
-echo " 🔰 VLESS XTLS : 443" |tee -a log-install.txt
-echo " 🔰 VLESS GFW : 443" |tee -a log-install.txt
-echo " 🔰 VLESS WS TLS : 443" |tee -a log-install.txt
-echo " 🔰 VLESS WS NON TLS : 8880" |tee -a log-install.txt
-echo " 🔰 VLESS GRPC TLS : 2096" |tee -a log-install.txt
-echo " 🔰 VLESS GRPC NON TLS: 2082" |tee -a log-install.txt
-echo " 🔰 VLESS H2C TLS : 1150" |tee -a log-install.txt
-echo " 🔰 VLESS QUIC : 414" |tee -a log-install.txt
-echo " 🔰 VLESS HTTP TLS : 443" |tee -a log-install.txt
-echo " 🔰 VLESS HTTP NON TLS : 8088" |tee -a log-install.txt
-echo " 🔰 TROJAN GO : 2082" |tee -a log-install.txt
-echo " 🔰 TROJAN GRPC : 8443" |tee -a log-install.txt
-echo " 🔰 TROJAN HTTP TLS : 443" |tee -a log-install.txt
-echo " 🔰 TROJAN HTTP NON TLS : 880" |tee -a log-install.txt
-echo " 🔰 TROJAN H2C : 1120" |tee -a log-install.txt
-echo " 🔰 TROJAN XTLS : 1440" |tee -a log-install.txt
-echo " 🔰 TROJAN QUIC : 443" |tee -a log-install.txt
-echo " 🔰 TROJAN GFW : 443" |tee -a log-install.txt
-echo " 🔰 TROJAN WS TLS : 443" |tee -a log-install.txt
-echo " 🔰 TROJAN WS NON TLS : 2095" |tee -a log-install.txt
-echo " 🔰 SOCKS5 WEBSOCKET : 1080" |tee -a log-install.txt
-echo " 🔰 SOCKS5 TCP : 999 |tee -a log-install.txt
-echo " 🔰 SHADOWSOCKS TCP : 333" |tee -a log-install.txt
-echo " 🔰 SHADOWSOCKS UDP : 503" |tee -a log-install.txt
-echo " 🔰 SHADOWSOCKS WS TLS: 443" |tee -a log-install.txt
-echo " 🔰 SHADOWSOCKS WS NON TLS : 8880" |tee -a log-install.txt
-echo " 🔰 SHADOWSOCKS 2022 TCP : 212" |tee -a log-install.txt
-echo " 🔰 SHADOWSOCKS 2022 WS NON TLS : 2052" |tee -a log-install.txt
-echo " 🔰 SHADOWSOCKS 2022 WS TLS : 2053" |tee -a log-install.txt
-echo " 🔰 SHADOWSOCKS 2022 GRPC : 2087" |tee -a log-install.txt
-echo " 🔰 XRAY MT PROTO : 111" |tee -a log-install.txt
+echo -e " 🔰 WEBSOCKET NON TLS : 2086" |tee -a log-install.txt
+echo -e " 🔰 PORT OVPNWS : 8080" |tee -a log-install.txt
+echo -e " 🔰 OHP SSH : 8181" |tee -a log-install.txt
+echo -e " 🔰 OHP Dropbear : 8282" |tee -a log-install.txt
+echo -e " 🔰 OHP OpenVPN : 8383" |tee -a log-install.txt
+echo -e " 🔰 VMESS WS TLS : 443" |tee -a log-install.txt
+echo -e " 🔰 VMESS WS NON TLS : 2052" |tee -a log-install.txt
+echo -e " 🔰 VMESS GRPC TLS: 2083" |tee -a log-install.txt
+echo -e " 🔰 VMESS GRPC NON TLS: 2082" |tee -a log-install.txt
+echo -e " 🔰 VMESS H2C TLS : 1190" |tee -a log-install.txt
+echo -e " 🔰 VMESS HTTP TLS : 443" |tee -a log-install.txt
+echo -e " 🔰 VMESS QUIC : 443" |tee -a log-install.txt
+echo -e " 🔰 VMESS HTTP NON TLS : 808" |tee -a log-install.txt
+echo -e " 🔰 VLESS XTLS : 443" |tee -a log-install.txt
+echo -e " 🔰 VLESS GFW : 443" |tee -a log-install.txt
+echo -e " 🔰 VLESS WS TLS : 443" |tee -a log-install.txt
+echo -e " 🔰 VLESS WS NON TLS : 8880" |tee -a log-install.txt
+echo -e " 🔰 VLESS GRPC TLS : 2096" |tee -a log-install.txt
+echo -e " 🔰 VLESS GRPC NON TLS: 2082" |tee -a log-install.txt
+echo -e " 🔰 VLESS H2C TLS : 1150" |tee -a log-install.txt
+echo -e " 🔰 VLESS QUIC : 414" |tee -a log-install.txt
+echo -e " 🔰 VLESS HTTP TLS : 443" |tee -a log-install.txt
+echo -e " 🔰 VLESS HTTP NON TLS : 8088" |tee -a log-install.txt
+echo -e " 🔰 TROJAN GO : 2082" |tee -a log-install.txt
+echo -e " 🔰 TROJAN GRPC : 8443" |tee -a log-install.txt
+echo -e " 🔰 TROJAN HTTP TLS : 443" |tee -a log-install.txt
+echo -e " 🔰 TROJAN HTTP NON TLS : 880" |tee -a log-install.txt
+echo -e " 🔰 TROJAN H2C : 1120" |tee -a log-install.txt
+echo -e " 🔰 TROJAN XTLS : 1440" |tee -a log-install.txt
+echo -e " 🔰 TROJAN QUIC : 443" |tee -a log-install.txt
+echo -e " 🔰 TROJAN GFW : 443" |tee -a log-install.txt
+echo -e " 🔰 TROJAN WS TLS : 443" |tee -a log-install.txt
+echo -e " 🔰 TROJAN WS NON TLS : 2095" |tee -a log-install.txt
+echo -e " 🔰 SOCKS5 WEBSOCKET : 1080" |tee -a log-install.txt
+echo -e " 🔰 SOCKS5 TCP : 999 |tee -a log-install.txt
+echo -e " 🔰 SHADOWSOCKS TCP : 333" |tee -a log-install.txt
+echo -e " 🔰 SHADOWSOCKS UDP : 503" |tee -a log-install.txt
+echo -e " 🔰 SHADOWSOCKS WS TLS: 443" |tee -a log-install.txt
+echo -e " 🔰 SHADOWSOCKS WS NON TLS : 8880" |tee -a log-install.txt
+echo -e " 🔰 SHADOWSOCKS 2022 TCP : 212" |tee -a log-install.txt
+echo -e " 🔰 SHADOWSOCKS 2022 WS NON TLS : 2052" |tee -a log-install.txt
+echo -e " 🔰 SHADOWSOCKS 2022 WS TLS : 2053" |tee -a log-install.txt
+echo -e " 🔰 SHADOWSOCKS 2022 GRPC : 2087" |tee -a log-install.txt
+echo -e " 🔰 XRAY MT PROTO : 111" |tee -a log-install.txt
 echo ""  |tee -a log-install.txt
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo " 🔰>> Server Information & Other Features"                  |tee -a log-install.txt
-echo " 🔰 Timezone                : Asia/Jakarta (GMT +7)"        |tee -a log-install.txt
-echo " 🔰 Fail2Ban                : [ON]"                         |tee -a log-install.txt
-echo " 🔰 Dflate                  : [ON]"                         |tee -a log-install.txt
-echo " 🔰 IPtables                : [ON]"                         |tee -a log-install.txt
-echo " 🔰 Auto-Reboot             : [ON]"                         |tee -a log-install.txt
-echo " 🔰 IPv6                    : [OFF]"                        |tee -a log-install.txt
-echo " 🔰 Autoreboot On 04.00 GMT +7"                             |tee -a log-install.txt
-echo " 🔰 Autobackup Data"                                        |tee -a log-install.txt
-echo " 🔰 Restore Data"                                           |tee -a log-install.txt
-echo " 🔰 Auto Delete Expired Account"                            |tee -a log-install.txt
-echo " 🔰 NGUTER,CENTRAL JAVA,INDONESIA"                          |tee -a log-install.txt
-echo " 🔰 Editing and Scan Typo by GANDRING"                      |tee -a log-install.txt
+echo -e " 🔰>> Server Information & Other Features"                  |tee -a log-install.txt
+echo -e " 🔰 Timezone                : Asia/Jakarta (GMT +7)"        |tee -a log-install.txt
+echo -e " 🔰 Fail2Ban                : [ON]"                         |tee -a log-install.txt
+echo -e " 🔰 Dflate                  : [ON]"                         |tee -a log-install.txt
+echo -e " 🔰 IPtables                : [ON]"                         |tee -a log-install.txt
+echo -e " 🔰 Auto-Reboot             : [ON]"                         |tee -a log-install.txt
+echo -e " 🔰 IPv6                    : [OFF]"                        |tee -a log-install.txt
+echo -e " 🔰 Autoreboot On 04.00 GMT +7"                             |tee -a log-install.txt
+echo -e " 🔰 Autobackup Data"                                        |tee -a log-install.txt
+echo -e " 🔰 Restore Data"                                           |tee -a log-install.txt
+echo -e " 🔰 Auto Delete Expired Account"                            |tee -a log-install.txt
+echo -e " 🔰 NGUTER,CENTRAL JAVA,INDONESIA"                          |tee -a log-install.txt
+echo -e " 🔰 Editing and Scan Typo by GANDRING"                      |tee -a log-install.txt
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\E[44;1;41m           🔰 SOLO THE SPIRIT OF JAVA 🔰            \E[0m"
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"  
-echo " 🔰 Installation Log --> /root/log-install.txt" |tee -a log-install.txt
+echo -e " 🔰 Installation Log --> /root/log-install.txt" |tee -a log-install.txt
 echo " Reboot 5 Sec"
 sleep 5
 rm -f setup.sh
