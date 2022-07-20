@@ -55,8 +55,8 @@ curl https://get.acme.sh | sh
 alias acme.sh=~/.acme.sh/acme.sh
 /root/.acme.sh/acme.sh --upgrade --auto-upgrade
 /root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
-/root/.acme.sh/acme.sh --issue -d "${domain}" --standalone --keylength ec-2048
-/root/.acme.sh/acme.sh --issue -d "${domain}" --standalone --keylength ec-384
+#/root/.acme.sh/acme.sh --issue -d "${domain}" --standalone --keylength ec-2048
+/root/.acme.sh/acme.sh --issue -d "${domain}" --standalone --keylength ec-256
 /root/.acme.sh/acme.sh --install-cert -d "${domain}" --ecc \
 --fullchain-file /etc/ssl/private/fullchain.pem \
 --key-file /etc/ssl/private/privkey.pem
@@ -90,76 +90,7 @@ chmod 644 /etc/ssl/private/privkey.pem
 bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install-geodata
 uuid=$(cat /proc/sys/kernel/random/uuid)
 domain=$(cat /root/domain)
-# Check OS version
-if [[ -e /etc/debian_version ]]; then
-	source /etc/os-release
-	OS=$ID # debian or ubuntu
-elif [[ -e /etc/centos-release ]]; then
-	source /etc/os-release
-	OS=centos
-fi
-if [[ $OS == 'ubuntu' ]]; then
-		sudo add-apt-repository ppa:ondrej/nginx -y
-		apt update ; apt upgrade -y
-		sudo apt install nginx -y
-		sudo apt install python3-certbot-nginx -y
-		systemctl daemon-reload
-        systemctl enable nginx
-elif [[ $OS == 'debian' ]]; then
-		sudo apt install gnupg2 ca-certificates lsb-release -y 
-        echo "deb http://nginx.org/packages/mainline/debian $(lsb_release -cs) nginx" | sudo tee /etc/apt/sources.list.d/nginx.list 
-        echo -e "Package: *\nPin: origin nginx.org\nPin: release o=nginx\nPin-Priority: 900\n" | sudo tee /etc/apt/preferences.d/99nginx 
-        curl -o /tmp/nginx_signing.key https://nginx.org/keys/nginx_signing.key 
-        # gpg --dry-run --quiet --import --import-options import-show /tmp/nginx_signing.key
-        sudo mv /tmp/nginx_signing.key /etc/apt/trusted.gpg.d/nginx_signing.asc
-        sudo apt update
-        systemctl daemon-reload
-        systemctl enable nginx
-fi
-rm -f /etc/nginx/conf.d/default.conf 
-clear
-echo "
-server {
-    listen 80 ;
-    listen [::]:80 ;
-    access_log /var/log/nginx/access.log;
-    error_log /var/log/nginx/error.log;
 
-    location /shanumgrpc {
-       client_max_body_size 0;
-       keepalive_time 1071906480m;
-       keepalive_requests 4294967296;
-       client_body_timeout 1071906480m;
-       send_timeout 1071906480m;
-       lingering_close always;
-       grpc_read_timeout 1071906480m;
-       grpc_send_timeout 1071906480m;
-       grpc_pass grpc://127.0.0.1:1190;
-       }
-    location /wisnugrpc {
-       client_max_body_size 0;
-       keepalive_time 1071906480m;
-       keepalive_requests 4294967296;
-       client_body_timeout 1071906480m;
-       send_timeout 1071906480m;
-       lingering_close always;
-       grpc_read_timeout 1071906480m;
-       grpc_send_timeout 1071906480m;
-       grpc_pass grpc://127.0.0.1:1160;
-       }
-    location /gandringgrpc {
-       client_max_body_size 0;
-       keepalive_time 1071906480m;
-       keepalive_requests 4294967296;
-       client_body_timeout 1071906480m;
-       send_timeout 1071906480m;
-       lingering_close always;
-       grpc_read_timeout 1071906480m;
-       grpc_send_timeout 1071906480m;
-       grpc_pass grpc://127.0.0.1:1130;
-       }
-}
-" > /etc/nginx/conf.d/default.conf
 # // Certificate File
 path_crt="/etc/xray/xray.cer"
 path_key="/etc/xray/xray.key"
@@ -342,7 +273,7 @@ cat > /etc/xray/trojangrpc.json << END
   },
   "inbounds": [
     {
-      "port": 2082,
+      "port": 2052,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -453,7 +384,7 @@ cat > /usr/local/etc/xray/vlessquic.json << END
   },
   "inbounds": [
     {
-      "port": 2082,
+      "port": 2052,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -1009,7 +940,7 @@ cat > /etc/trojan-go/config.json << END
   "local_addr": "0.0.0.0",
   "local_port": 2082,
   "remote_addr": "127.0.0.1",
-  "remote_port": 80,
+  "remote_port": 88,
   "log_level": 1,
   "log_file": "/var/log/trojan-go/trojan-go.log",
   "password": [
