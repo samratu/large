@@ -15,6 +15,8 @@ LIGHT='\033[0;37m'
 MYIP=$(wget -qO- ipinfo.io/ip);
 clear
 echo -n > /tmp/other.txt
+data=( `cat /etc/xray/ssws.json | grep '^###' | cut -d ' ' -f 2`);
+data=( `cat /etc/xray/sstcp.json | grep '^###' | cut -d ' ' -f 2`);
 data=( `cat /etc/xray/config.json | grep '^###' | cut -d ' ' -f 2`);
 data=( `cat /etc/xray/xtrojan.json | grep '^#&#' | cut -d ' ' -f 2`);
 data=( `cat /etc/xray/xss.json | grep '^#&#' | cut -d ' ' -f 2`);
@@ -26,7 +28,7 @@ do
 if [[ -z "$akun" ]]; then
 akun="tidakada"
 fi
-echo -n > /tmp/ipvmess.txt
+echo -n > /tmp/ipss.txt
 data2=( `netstat -anp | grep ESTABLISHED | grep tcp6 | grep xray | awk '{print $5}' | cut -d: -f1 | sort | uniq`);
 for ip in "${data2[@]}"
 do
