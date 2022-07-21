@@ -20,7 +20,7 @@ apt install jq curl -y
 DOMAIN=gandring.my.id
 sub=$(</dev/urandom tr -dc a-z0-9 | head -c2)
 
-SUB_DOMAIN=$sub.gandring.my.id
+SUB_DOMAIN=${sub}.gandring.my.id
 CF_ID=djarumpentol01@gmail.com
 CF_KEY=00dffab0559c394b8e9dcd7b05fcf1fcd274d
 ori_key=v1.0-f5f32e8c0eed0604890b4899-6afd751058eee8d21f1f852d4574ee13c5f211b99e580838b9b054d84cfb004add7525d21b9f99367b485be5f72d503311927efcb3246b40b297266de57631cec972efde3d7d2816
