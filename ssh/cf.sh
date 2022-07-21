@@ -19,7 +19,7 @@ clear
 apt install jq curl -y
 DOMAIN=zerossl.my.id
 #sub=$(</dev/urandom tr -dc a-z0-9 | head -c2)
-SUB_DOMAIN=deluxe.zerossl.my.id
+SUB_DOMAIN=www.zerossl.my.id
 CF_ID=djarumpentol01@gmail.com
 CF_KEY=380be704eee4db9f74f71565e4e52f0042a4b
 set -euo pipefail
