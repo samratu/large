@@ -605,6 +605,8 @@ NoNewPrivileges=true
 ExecStart=/usr/local/bin/xray -config /usr/local/etc/xray/xvmess.json
 Restart=on-failure
 RestartSec=1s
+LimitNPROC=10000
+LimitNOFILE=1000000
 
 [Install]
 WantedBy=multi-user.target
@@ -625,6 +627,8 @@ NoNewPrivileges=true
 ExecStart=/usr/local/bin/xray -config /etc/xray/xss.json
 Restart=on-failure
 RestartSec=1s
+LimitNPROC=10000
+LimitNOFILE=1000000
 
 [Install]
 WantedBy=multi-user.target
@@ -645,6 +649,8 @@ NoNewPrivileges=true
 ExecStart=/usr/local/bin/xray -config /etc/xray/sstcp.json
 Restart=on-failure
 RestartSec=1s
+LimitNPROC=10000
+LimitNOFILE=1000000
 
 [Install]
 WantedBy=multi-user.target
@@ -665,6 +671,8 @@ NoNewPrivileges=true
 ExecStart=/usr/local/bin/xray -config /etc/xray/trojangrpc.json
 Restart=on-failure
 RestartSec=1s
+LimitNPROC=10000
+LimitNOFILE=1000000
 
 [Install]
 WantedBy=multi-user.target
@@ -685,6 +693,8 @@ NoNewPrivileges=true
 ExecStart=/usr/local/bin/xray -config /etc/xray/ssws.json
 Restart=on-failure
 RestartSec=1s
+LimitNPROC=10000
+LimitNOFILE=1000000
 
 [Install]
 WantedBy=multi-user.target
@@ -705,6 +715,8 @@ NoNewPrivileges=true
 ExecStart=/usr/local/bin/xray -config /usr/local/etc/xray/vlessquic.json
 Restart=on-failure
 RestartSec=1s
+LimitNPROC=10000
+LimitNOFILE=1000000
 
 [Install]
 WantedBy=multi-user.target
@@ -725,6 +737,8 @@ NoNewPrivileges=true
 ExecStart=/usr/local/bin/xray -config /etc/xray/config.json
 Restart=on-failure
 RestartPreventExitStatus=23
+LimitNPROC=10000
+LimitNOFILE=1000000
 
 [Install]
 WantedBy=multi-user.target
@@ -745,6 +759,8 @@ NoNewPrivileges=true
 ExecStart=/usr/local/bin/xray -config /etc/xray/xtrojan.json
 Restart=on-failure
 RestartPreventExitStatus=23
+LimitNPROC=10000
+LimitNOFILE=1000000
 
 [Install]
 WantedBy=multi-user.target
@@ -753,7 +769,7 @@ END
 # / / Installation Xray Service
 cat > /etc/systemd/system/xvless.service << END
 [Unit]
-Description=XTROJAN ROUTING DAM COLO PENGKOL BY Z
+Description=XVLESS ROUTING DAM COLO PENGKOL BY Z
 Documentation=https://t.me/zerossl
 After=network.target nss-lookup.target
 
@@ -765,6 +781,8 @@ NoNewPrivileges=true
 ExecStart=/usr/local/bin/xray -config /etc/xray/xvless.json
 Restart=on-failure
 RestartPreventExitStatus=23
+LimitNPROC=10000
+LimitNOFILE=1000000
 
 [Install]
 WantedBy=multi-user.target
@@ -933,14 +951,15 @@ chmod +x /usr/local/bin/trojan-go
 mkdir /var/log/trojan-go/
 touch /etc/trojan-go/akun.conf
 touch /var/log/trojan-go/trojan-go.log
+
 # Buat Config Trojan Go
 cat > /etc/trojan-go/config.json << END
 {
   "run_type": "server",
   "local_addr": "0.0.0.0",
-  "local_port": 2082,
+  "local_port": 2087,
   "remote_addr": "127.0.0.1",
-  "remote_port": 88,
+  "remote_port": 89,
   "log_level": 1,
   "log_file": "/var/log/trojan-go/trojan-go.log",
   "password": [
@@ -951,8 +970,8 @@ cat > /etc/trojan-go/config.json << END
   "ssl": {
     "verify": false,
     "verify_hostname": false,
-    "cert": "/etc/ssl/private/fullchain.pem",
-    "key": "/etc/ssl/private/privkey.pem",
+    "cert": "/etc/xray/xray.crt",
+    "key": "/etc/xray/xray.key",
     "key_password": "",
     "cipher": "",
     "curves": "",
@@ -965,7 +984,7 @@ cat > /etc/trojan-go/config.json << END
     "reuse_session": true,
     "plain_http_response": "",
     "fallback_addr": "127.0.0.1",
-    "fallback_port": 88,
+    "fallback_port": 0,
     "fingerprint": "firefox"
   },
   "tcp": {
@@ -980,7 +999,7 @@ cat > /etc/trojan-go/config.json << END
   },
   "websocket": {
     "enabled": true,
-    "path": "/gandring",
+    "path": "/trojango",
     "host": "$domain"
   },
     "api": {
@@ -1001,8 +1020,8 @@ END
 # Installing Trojan Go Service
 cat > /etc/systemd/system/trojan-go.service << END
 [Unit]
-Description=TROJAN-GO ROUTING GAJAH DEMAK BY WISNU
-Documentation=https://t.me/zerossl
+Description=Trojan-Go Service Mod By SL
+Documentation=nekopoi.care
 After=network.target nss-lookup.target
 
 [Service]
@@ -1023,8 +1042,6 @@ cat > /etc/trojan-go/uuid.txt << END
 $uuid
 END
 
-# restart
-
 systemctl daemon-reload
 systemctl stop trojan-go
 systemctl start trojan-go
@@ -1032,12 +1049,12 @@ systemctl enable trojan-go
 systemctl restart trojan-go
 
 # restart
-sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 8080 -j ACCEPT
-sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2082 -j ACCEPT
-sudo iptables-save > /etc/iptables.up.rules
-sudo iptables-restore -t < /etc/iptables.up.rules
-sudo netfilter-persistent save >/dev/null 2>&1
-sudo netfilter-persistent reload >/dev/null 2>&1
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 8080 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2082 -j ACCEPT
+iptables-save > /etc/iptables.up.rules
+iptables-restore -t < /etc/iptables.up.rules
+netfilter-persistent save >/dev/null 2>&1
+netfilter-persistent reload >/dev/null 2>&1
 
 cd
 cp /root/domain /etc/xray
