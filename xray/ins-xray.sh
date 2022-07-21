@@ -121,8 +121,8 @@ rm -f /etc/nginx/conf.d/default.conf
 clear
 echo "
 server {
-    listen 80 ;
-    listen [::]:80 ;
+    listen 81 ;
+    listen [::]:81 ;
     access_log /var/log/nginx/access.log;
     error_log /var/log/nginx/error.log;
 
