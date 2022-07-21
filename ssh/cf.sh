@@ -23,27 +23,23 @@ sub=$(</dev/urandom tr -dc a-z0-9 | head -c2)
 SUB_DOMAIN=${sub}.gandring.my.id
 CF_ID=djarumpentol01@gmail.com
 CF_KEY=00dffab0559c394b8e9dcd7b05fcf1fcd274d
-ori_key=v1.0-f5f32e8c0eed0604890b4899-6afd751058eee8d21f1f852d4574ee13c5f211b99e580838b9b054d84cfb004add7525d21b9f99367b485be5f72d503311927efcb3246b40b297266de57631cec972efde3d7d2816
 set -euo pipefail
 IP=$(wget -qO- ipinfo.io/ip);
 echo "Updating DNS for ${SUB_DOMAIN}..."
 ZONE=$(curl -sLX GET "https://api.cloudflare.com/client/v4/zones?name=${DOMAIN}&status=active" \
      -H "X-Auth-Email: ${CF_ID}" \
      -H "X-Auth-Key: ${CF_KEY}" \
-     -H "X-Auth-Key: ${ori_key}" \
      -H "Content-Type: application/json" | jq -r .result[0].id)
 
 RECORD=$(curl -sLX GET "https://api.cloudflare.com/client/v4/zones/${ZONE}/dns_records?name=${SUB_DOMAIN}" \
      -H "X-Auth-Email: ${CF_ID}" \
      -H "X-Auth-Key: ${CF_KEY}" \
-     -H "X-Auth-Key: ${ori_key}" \
      -H "Content-Type: application/json" | jq -r .result[0].id)
 
 if [[ "${#RECORD}" -le 10 ]]; then
      RECORD=$(curl -sLX POST "https://api.cloudflare.com/client/v4/zones/${ZONE}/dns_records" \
      -H "X-Auth-Email: ${CF_ID}" \
      -H "X-Auth-Key: ${CF_KEY}" \
-     -H "X-Auth-Key: ${ori_key}" \
      -H "Content-Type: application/json" \
      --data '{"type":"A","name":"'${SUB_DOMAIN}'","content":"'${IP}'","ttl":300,"proxied":false}' | jq -r .result.id)
 fi
@@ -51,7 +47,6 @@ fi
 RESULT=$(curl -sLX PUT "https://api.cloudflare.com/client/v4/zones/${ZONE}/dns_records/${RECORD}" \
      -H "X-Auth-Email: ${CF_ID}" \
      -H "X-Auth-Key: ${CF_KEY}" \
-     -H "X-Auth-Key: ${ori_key}" \
      -H "Content-Type: application/json" \
      --data '{"type":"A","name":"'${SUB_DOMAIN}'","content":"'${IP}'","ttl":300,"proxied":false}')
 
@@ -62,20 +57,17 @@ echo "Updating DNS for ${WILD_DOMAIN}..."
 ZONE=$(curl -sLX GET "https://api.cloudflare.com/client/v4/zones?name=${DOMAIN}&status=active" \
      -H "X-Auth-Email: ${CF_ID}" \
      -H "X-Auth-Key: ${CF_KEY}" \
-     -H "X-Auth-Key: ${ori_key}" \
      -H "Content-Type: application/json" | jq -r .result[0].id)
 
 RECORD=$(curl -sLX GET "https://api.cloudflare.com/client/v4/zones/${ZONE}/dns_records?name=${WILD_DOMAIN}" \
      -H "X-Auth-Email: ${CF_ID}" \
      -H "X-Auth-Key: ${CF_KEY}" \
-     -H "X-Auth-Key: ${oti_key}" \
      -H "Content-Type: application/json" | jq -r .result[0].id)
 
 if [[ "${#RECORD}" -le 10 ]]; then
      RECORD=$(curl -sLX POST "https://api.cloudflare.com/client/v4/zones/${ZONE}/dns_records" \
      -H "X-Auth-Email: ${CF_ID}" \
      -H "X-Auth-Key: ${CF_KEY}" \
-     -H "X-Auth-Key: ${ori_key}" \
      -H "Content-Type: application/json" \
      --data '{"type":"A","name":"'${WILD_DOMAIN}'","content":"'${IP}'","ttl":300,"proxied":false}' | jq -r .result.id)
 fi
@@ -83,7 +75,6 @@ fi
 RESULT=$(curl -sLX PUT "https://api.cloudflare.com/client/v4/zones/${ZONE}/dns_records/${RECORD}" \
      -H "X-Auth-Email: ${CF_ID}" \
      -H "X-Auth-Key: ${CF_KEY}" \
-     -H "X-Auth-Key: ${ori_key}" \
      -H "Content-Type: application/json" \
      --data '{"type":"A","name":"'${WILD_DOMAIN}'","content":"'${IP}'","ttl":300,"proxied":false}')
 echo "Host : $SUB_DOMAIN"
