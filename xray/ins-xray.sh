@@ -957,9 +957,9 @@ cat > /etc/trojan-go/config.json << END
 {
   "run_type": "server",
   "local_addr": "0.0.0.0",
-  "local_port": 2087,
+  "local_port": 2082,
   "remote_addr": "127.0.0.1",
-  "remote_port": 89,
+  "remote_port": 88,
   "log_level": 1,
   "log_file": "/var/log/trojan-go/trojan-go.log",
   "password": [
@@ -984,7 +984,7 @@ cat > /etc/trojan-go/config.json << END
     "reuse_session": true,
     "plain_http_response": "",
     "fallback_addr": "127.0.0.1",
-    "fallback_port": 0,
+    "fallback_port": 88,
     "fingerprint": "firefox"
   },
   "tcp": {
@@ -1020,8 +1020,8 @@ END
 # Installing Trojan Go Service
 cat > /etc/systemd/system/trojan-go.service << END
 [Unit]
-Description=Trojan-Go Service Mod By SL
-Documentation=nekopoi.care
+Description=TROJAN-GO ROUTING ACTIVATED BY ZEROSSL
+Documentation=t.me/zerossl
 After=network.target nss-lookup.target
 
 [Service]
