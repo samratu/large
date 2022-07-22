@@ -57,7 +57,8 @@ yum -y install nss-devel nspr-devel pkgconfig pam-devel \
   flex bison gcc make ppp 
 
 yum "$REPO1" -y install xl2tpd 
-
+sudo apt update
+sudo apt -y install softether-common
 
 if [[ $ver == '7' ]]; then
   yum -y install systemd-devel iptables-services 
