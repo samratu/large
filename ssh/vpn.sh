@@ -113,9 +113,9 @@ cd
 echo '<ca>' >> /etc/openvpn/tcp.ovpn
 cat /etc/openvpn/server/ca.crt >> /etc/openvpn/tcp.ovpn
 echo '</ca>' >> /etc/openvpn/tcp.ovpn
-echo '<tls-auth>' >> /etc/openvpn/tcp.ovpn
-cat /etc/openvpn/server/ta.key >> /etc/openvpn/tcp.ovpn
-echo '</tls-auth>' >> /etc/openvpn/tcp.ovpn
+#echo '<tls-auth>' >> /etc/openvpn/tcp.ovpn
+#cat /etc/openvpn/server/ta.key >> /etc/openvpn/tcp.ovpn
+#echo '</tls-auth>' >> /etc/openvpn/tcp.ovpn
 
 # Copy config OpenVPN client ke home directory root agar mudah didownload ( TCP 700 )
 cp /etc/openvpn/tcp.ovpn /home/vps/public_html/tcp.ovpn
@@ -124,9 +124,9 @@ cp /etc/openvpn/tcp.ovpn /home/vps/public_html/tcp.ovpn
 echo '<ca>' >> /etc/openvpn/udp.ovpn
 cat /etc/openvpn/server/ca.crt >> /etc/openvpn/udp.ovpn
 echo '</ca>' >> /etc/openvpn/udp.ovpn
-echo '<tls-auth>' >> /etc/openvpn/udp.ovpn
-cat /etc/openvpn/server/ta.key >> /etc/openvpn/udp.ovpn
-echo '</tls-auth>' >> /etc/openvpn/udp.ovpn
+#echo '<tls-auth>' >> /etc/openvpn/udp.ovpn
+#cat /etc/openvpn/server/ta.key >> /etc/openvpn/udp.ovpn
+#echo '</tls-auth>' >> /etc/openvpn/udp.ovpn
 
 # Copy config OpenVPN client ke home directory root agar mudah didownload ( UDP 800 )
 cp /etc/openvpn/udp.ovpn /home/vps/public_html/udp.ovpn
@@ -135,17 +135,17 @@ cp /etc/openvpn/udp.ovpn /home/vps/public_html/udp.ovpn
 echo '<ca>' >> /etc/openvpn/ssl.ovpn
 cat /etc/openvpn/server/ca.crt >> /etc/openvpn/ssl.ovpn
 echo '</ca>' >> /etc/openvpn/ssl.ovpn
-echo '<tls-auth>' >> /etc/openvpn/ssl.ovpn
-cat /etc/openvpn/server/ta.key >> /etc/openvpn/ssl.ovpn
-echo '</tls-auth>' >> /etc/openvpn/ssl.ovpn
+#echo '<tls-auth>' >> /etc/openvpn/ssl.ovpn
+#cat /etc/openvpn/server/ta.key >> /etc/openvpn/ssl.ovpn
+#echo '</tls-auth>' >> /etc/openvpn/ssl.ovpn
 
 # Copy config OpenVPN client ke home directory root agar mudah didownload ( SSL 900 )
 cp /etc/openvpn/ssl.ovpn /home/vps/public_html/ssl.ovpn
 
 #firewall untuk memperbolehkan akses UDP dan akses jalur TCP
 
-iptables -t nat -I POSTROUTING -s 10.6.0.0/24 -o $ANU -j MASQUERADE
-iptables -t nat -I POSTROUTING -s 10.7.0.0/24 -o $ANU -j MASQUERADE
+iptables -t nat -I POSTROUTING -s 10.1.0.0/32 -o $ANU -j MASQUERADE
+iptables -t nat -I POSTROUTING -s 10.2.0.0/32 -o $ANU -j MASQUERADE
 iptables-save > /etc/iptables.up.rules
 chmod +x /etc/iptables.up.rules
 
