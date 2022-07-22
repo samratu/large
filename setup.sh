@@ -125,7 +125,7 @@ echo -e " 🔰 SS-OBFS HTTP : 2944-3442" |tee -a log-install.txt
 echo -e " 🔰 XRAY SHADOWSOCKS : 333" |tee -a log-install.txt
 echo -e " 🔰 XRAY MTPROTO : 111" |tee -a log-install.txt
 echo -e " 🔰 WEBSOCKET TLS : 2087" |tee -a log-install.txt
-echo -e " 🔰 WEBSOCKET NON TLS : 2086" |tee -a log-install.txt
+echo -e " 🔰 WEBSOCKET NON TLS : 80" |tee -a log-install.txt
 echo -e " 🔰 PORT OVPNWS : 8080" |tee -a log-install.txt
 echo -e " 🔰 OHP SSH : 8181" |tee -a log-install.txt
 echo -e " 🔰 OHP Dropbear : 8282" |tee -a log-install.txt
@@ -145,7 +145,7 @@ echo -e " 🔰 VLESS WS NON TLS : 8880" |tee -a log-install.txt
 echo -e " 🔰 VLESS GRPC TLS : 2083" |tee -a log-install.txt
 echo -e " 🔰 VLESS GRPC NON TLS: 1001" |tee -a log-install.txt
 echo -e " 🔰 VLESS H2C TLS : 1150" |tee -a log-install.txt
-echo -e " 🔰 VLESS QUIC : 414" |tee -a log-install.txt
+echo -e " 🔰 VLESS QUIC : 443" |tee -a log-install.txt
 echo -e " 🔰 VLESS HTTP TLS : 443" |tee -a log-install.txt
 echo -e " 🔰 VLESS HTTP NON TLS : 8088" |tee -a log-install.txt
 echo -e " 🔰 TROJAN GO : 2082" |tee -a log-install.txt
