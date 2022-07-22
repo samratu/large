@@ -124,16 +124,16 @@ echo -e " 🔰 SS-OBFS TLS : 2444-2943" |tee -a log-install.txt
 echo -e " 🔰 SS-OBFS HTTP : 2944-3442" |tee -a log-install.txt
 echo -e " 🔰 XRAY SHADOWSOCKS : 333" |tee -a log-install.txt
 echo -e " 🔰 XRAY MTPROTO : 111" |tee -a log-install.txt
-#echo " 🔰 WEBSOCKET TLS : 2087" |tee -a log-install.txt
+echo -e " 🔰 WEBSOCKET TLS : 2087" |tee -a log-install.txt
 echo -e " 🔰 WEBSOCKET NON TLS : 2086" |tee -a log-install.txt
 echo -e " 🔰 PORT OVPNWS : 8080" |tee -a log-install.txt
 echo -e " 🔰 OHP SSH : 8181" |tee -a log-install.txt
 echo -e " 🔰 OHP Dropbear : 8282" |tee -a log-install.txt
 echo -e " 🔰 OHP OpenVPN : 8383" |tee -a log-install.txt
 echo -e " 🔰 VMESS WS TLS : 443" |tee -a log-install.txt
-echo -e " 🔰 VMESS WS NON TLS : 2052" |tee -a log-install.txt
+echo -e " 🔰 VMESS WS NON TLS : 8880" |tee -a log-install.txt
 echo -e " 🔰 VMESS GRPC TLS: 2083" |tee -a log-install.txt
-echo -e " 🔰 VMESS GRPC NON TLS: 2082" |tee -a log-install.txt
+echo -e " 🔰 VMESS GRPC NON TLS: 1000" |tee -a log-install.txt
 echo -e " 🔰 VMESS H2C TLS : 1190" |tee -a log-install.txt
 echo -e " 🔰 VMESS HTTP TLS : 443" |tee -a log-install.txt
 echo -e " 🔰 VMESS QUIC : 443" |tee -a log-install.txt
@@ -142,8 +142,8 @@ echo -e " 🔰 VLESS XTLS : 443" |tee -a log-install.txt
 echo -e " 🔰 VLESS GFW : 443" |tee -a log-install.txt
 echo -e " 🔰 VLESS WS TLS : 443" |tee -a log-install.txt
 echo -e " 🔰 VLESS WS NON TLS : 8880" |tee -a log-install.txt
-echo -e " 🔰 VLESS GRPC TLS : 2096" |tee -a log-install.txt
-echo -e " 🔰 VLESS GRPC NON TLS: 2082" |tee -a log-install.txt
+echo -e " 🔰 VLESS GRPC TLS : 2083" |tee -a log-install.txt
+echo -e " 🔰 VLESS GRPC NON TLS: 1001" |tee -a log-install.txt
 echo -e " 🔰 VLESS H2C TLS : 1150" |tee -a log-install.txt
 echo -e " 🔰 VLESS QUIC : 414" |tee -a log-install.txt
 echo -e " 🔰 VLESS HTTP TLS : 443" |tee -a log-install.txt
@@ -162,12 +162,12 @@ echo -e " 🔰 SOCKS5 WEBSOCKET : 1080" |tee -a log-install.txt
 echo -e " 🔰 SOCKS5 TCP : 999 |tee -a log-install.txt
 echo -e " 🔰 SHADOWSOCKS TCP : 333" |tee -a log-install.txt
 echo -e " 🔰 SHADOWSOCKS UDP : 503" |tee -a log-install.txt
-echo -e " 🔰 SHADOWSOCKS WS TLS: 443" |tee -a log-install.txt
-echo -e " 🔰 SHADOWSOCKS WS NON TLS : 8880" |tee -a log-install.txt
+echo -e " 🔰 SHADOWSOCKS WS TLS: 2053" |tee -a log-install.txt
+echo -e " 🔰 SHADOWSOCKS WS NON TLS : 2052" |tee -a log-install.txt
 echo -e " 🔰 SHADOWSOCKS 2022 TCP : 212" |tee -a log-install.txt
 echo -e " 🔰 SHADOWSOCKS 2022 WS NON TLS : 2052" |tee -a log-install.txt
 echo -e " 🔰 SHADOWSOCKS 2022 WS TLS : 2053" |tee -a log-install.txt
-echo -e " 🔰 SHADOWSOCKS 2022 GRPC : 2087" |tee -a log-install.txt
+echo -e " 🔰 SHADOWSOCKS 2022 GRPC : 2096" |tee -a log-install.txt
 echo -e " 🔰 XRAY MT PROTO : 111" |tee -a log-install.txt
 echo ""  |tee -a log-install.txt
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
