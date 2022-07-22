@@ -34,6 +34,7 @@ clear
 systemctl restart ws-tls
 systemctl restart ws-nontls
 systemctl restart ws-ovpn
+systemctl restart ws-ovpntls
 systemctl restart stunnel5
 systemctl restart ssh-ohp
 systemctl restart dropbear-ohp
@@ -56,7 +57,7 @@ echo -e "Dropbear  :${dropbearport}"
 echo -e "SSL/TLS   :$ssl"
 echo -e "Privoxy   :4000,5000"
 echo -e "Squid     :$sqd"
-#echo -e "Ws SSL    :$ws"
+echo -e "Ws SSL    :$ws"
 echo -e "Ws No SSL :$ws2"
 echo -e "Ovpn Ws   :$ows"
 echo -e "Port TCP  :$otcp"
