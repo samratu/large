@@ -201,7 +201,7 @@ echo "status" >> .profile
 apt -y install nginx php php-fpm php-cli php-mysql libxml-parser-perl
 rm /etc/nginx/sites-enabled
 rm /etc/nginx/sites-available
-#curl https://${wisnuvpn}/nginx.conf > /etc/nginx/nginx.conf
+curl https://${wisnuvpn}/nginx.conf > /etc/nginx/nginx.conf
 curl https://${wisnuvpn}/vps.conf > /etc/nginx/conf.d/vps.conf
 sed -i 's/listen = \/var\/run\/php-fpm.sock/listen = 127.0.0.1:9000/g' /etc/php/fpm/pool.d/www.conf
 useradd -m vps;
@@ -368,7 +368,7 @@ connect = 127.0.0.1:300
 
 [openssh]
 accept = 500
-connect = 127.0.0.1:2087
+connect = 127.0.0.1:443
 
 [openvpn]
 accept = 900
