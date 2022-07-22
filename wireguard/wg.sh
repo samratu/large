@@ -47,8 +47,8 @@ SERVER_PUB_NIC=$(ip -o $ANU -4 route show to default | awk '{print $5}');
 
 # Install WireGuard tools and module
 	if [[ $OS == 'ubuntu' ]]; then
-	sudo apt update 
-        sudo apt install wireguard wireguard-tools linux-headers-$(uname -r)
+	sudo apt update -y
+        sudo apt -y install wireguard wireguard-tools linux-headers-$(uname -r)
 elif [[ $OS == 'debian' ]]; then
         echo "deb http://deb.debian.org/debian buster-backports main" | sudo tee /etc/apt/sources.list.d/buster-backports.list
 	echo "deb http://deb.debian.org/debian/ unstable main" >/etc/apt/sources.list.d/unstable.list
@@ -63,7 +63,7 @@ elif [[ ${OS} == 'centos' ]]; then
 	yum -y update
 	yum -y install wireguard-dkms wireguard-tools
 	fi
-sudo apt install openresolv
+sudo apt install openresolv -y
 apt install iptables iptables-persistent -y
 # Make sure the directory exists (this does not seem the be the case on fedora)
 mkdir /etc/wireguard >/dev/null 2>&1
