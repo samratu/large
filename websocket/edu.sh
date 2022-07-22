@@ -23,7 +23,7 @@ User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
-ExecStart=/usr/bin/python -O /usr/local/bin/ws-nontls 80 8080
+ExecStart=/usr/bin/python -O /usr/local/bin/ws-nontls 80
 Restart=on-failure
 
 [Install]
@@ -51,13 +51,12 @@ User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
-ExecStart=/usr/bin/python -O /usr/local/bin/ws-ovpn 8080 80
+ExecStart=/usr/bin/python -O /usr/local/bin/ws-ovpn 8080
 Restart=on-failure
 
 [Install]
 WantedBy=multi-user.target
 END
-
 systemctl daemon-reload
 systemctl enable ws-ovpn
 systemctl restart ws-ovpn
