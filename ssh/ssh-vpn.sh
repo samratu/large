@@ -198,10 +198,10 @@ apt-get --reinstall --fix-missing install -y bzip2 gzip coreutils wget screen rs
 echo "status" >> .profile
 
 # install webserver
-apt -y install nginx php php-fpm php-cli php-mysql libxml-parser-perl
-rm /etc/nginx/sites-enabled
-rm /etc/nginx/sites-available
-curl https://${wisnuvpn}/nginx.conf > /etc/nginx/nginx.conf
+#apt -y install nginx php php-fpm php-cli php-mysql libxml-parser-perl
+#rm /etc/nginx/sites-enabled
+#rm /etc/nginx/sites-available
+#curl https://${wisnuvpn}/nginx.conf > /etc/nginx/nginx.conf
 curl https://${wisnuvpn}/vps.conf > /etc/nginx/conf.d/vps.conf
 sed -i 's/listen = \/var\/run\/php-fpm.sock/listen = 127.0.0.1:9000/g' /etc/php/fpm/pool.d/www.conf
 useradd -m vps;
@@ -310,7 +310,7 @@ RUN=yes
 # systemd users: don't forget to modify /lib/systemd/system/sslh.service
 DAEMON=/usr/sbin/sslh
 
-DAEMON_OPTS="--user sslh --listen 0.0.0.0:2087 --ssl 127.0.0.1:500 --ssh 127.0.0.1:300 --openvpn 127.0.0.1:700 --http 127.0.0.1:2086 --pidfile /var/run/sslh/sslh.pid -n"
+DAEMON_OPTS="--user sslh --listen 0.0.0.0:1443 --ssl 127.0.0.1:500 --ssh 127.0.0.1:300 --openvpn 127.0.0.1:700 --http 127.0.0.1:2086 --pidfile /var/run/sslh/sslh.pid -n"
 
 END
 
@@ -368,7 +368,7 @@ connect = 127.0.0.1:300
 
 [openssh]
 accept = 500
-connect = 127.0.0.1:2087
+connect = 127.0.0.1:1443
 
 [openvpn]
 accept = 900
