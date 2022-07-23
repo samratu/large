@@ -874,6 +874,7 @@ netfilter-persistent save >/dev/null 2>&1
 netfilter-persistent reload >/dev/null 2>&1
 
 cd
+mkdir /etc/stunnel5
 cp /root/domain /etc/xray
 cp /root/domain /usr/local/etc/xray
 cp /root/.acme.sh/$domain_ecc/fullcain.cer /etc/stunnel/stunnel.pem
