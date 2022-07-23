@@ -13,12 +13,8 @@ LIGHT='\033[0;37m'
 MYIP=$(wget -qO- ipinfo.io/ip);
 clear
 domain=$(cat /root/domain)
-read -e -p " Masukan Domain :$domain" domain
-echo -e "$domain" >> /root/domain
-#domain=$(cat /root/domain)
-
 apt update ; apt upgrade -y
-apt install python ; apt install python3-pip -y
+apt install python -y ; apt install python3-pip -y
 apt install iptables iptables-persistent -y
 apt-get install libpcre3 libpcre3-dev zlib1g-dev dbus -y
 apt install curl socat xz-utils wget apt-transport-https gnupg gnupg2 gnupg1 dnsutils lsb-release -y 
