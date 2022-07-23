@@ -13,8 +13,8 @@ LIGHT='\033[0;37m'
 MYIP=$(wget -qO- ipinfo.io/ip);
 clear
 domain=$(cat /root/domain)
-#read -e -p " Masukan Domain :$domain" domain
-#echo -e "$domain" >> /root/domain
+read -e -p " Masukan Domain :$domain" domain
+echo -e "$domain" >> /root/domain
 #domain=$(cat /root/domain)
 
 apt update ; apt upgrade -y
