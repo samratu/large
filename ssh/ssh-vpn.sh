@@ -202,7 +202,7 @@ apt -y install nginx php php-fpm php-cli php-mysql libxml-parser-perl
 rm /etc/nginx/sites-enabled
 rm /etc/nginx/sites-available
 curl https://${wisnuvpn}/nginx.conf > /etc/nginx/nginx.conf
-curl https://${wisnuvpn}/default.conf > /etc/nginx/conf.d/default.conf
+#curl https://${wisnuvpn}/default.conf > /etc/nginx/conf.d/default.conf
 curl https://${wisnuvpn}/vps.conf > /etc/nginx/conf.d/vps.conf
 sed -i 's/listen = \/var\/run\/php-fpm.sock/listen = 127.0.0.1:9000/g' /etc/php/fpm/pool.d/www.conf
 useradd -m vps;
@@ -256,7 +256,7 @@ proxy_set_header Host $http_host;
 location = /wisnu
 {
 proxy_redirect off;
-proxy_pass http://127.0.0.1:26525;
+proxy_pass http://127.0.0.1:1140;
 proxy_http_version 1.1;
 proxy_set_header X-Real-IP $remote_addr;
 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -267,7 +267,7 @@ proxy_set_header Host $http_host;
 location = /socks-ws
 {
 proxy_redirect off;
-proxy_pass http://127.0.0.1:21051;
+proxy_pass http://127.0.0.1:501;
 proxy_http_version 1.1;
 proxy_set_header X-Real-IP $remote_addr;
 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -278,7 +278,7 @@ proxy_set_header Host $http_host;
 location = /shanum
 {
 proxy_redirect off;
-proxy_pass http://127.0.0.1:33050;
+proxy_pass http://127.0.0.1:1170;
 proxy_http_version 1.1;
 proxy_set_header X-Real-IP $remote_addr;
 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -289,7 +289,7 @@ proxy_set_header Host $http_host;
 location = /gandring
 {
 proxy_redirect off;
-proxy_pass http://127.0.0.1:39399;
+proxy_pass http://127.0.0.1:1110;
 proxy_http_version 1.1;
 proxy_set_header X-Real-IP $remote_addr;
 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -300,7 +300,7 @@ proxy_set_header Host $http_host;
 location = /ss-ws
 {
 proxy_redirect off;
-proxy_pass http://127.0.0.1:11162;
+proxy_pass http://127.0.0.1:2053;
 proxy_http_version 1.1;
 proxy_set_header X-Real-IP $remote_addr;
 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -330,7 +330,7 @@ proxy_redirect off;
 grpc_set_header X-Real-IP $remote_addr;
 grpc_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 grpc_set_header Host $http_host;
-grpc_pass grpc://127.0.0.1:23587;
+grpc_pass grpc://127.0.0.1:2096;
 }
 location ^~ /gandringgrpc
 {
@@ -346,7 +346,7 @@ proxy_redirect off;
 grpc_set_header X-Real-IP $remote_addr;
 grpc_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 grpc_set_header Host $http_host;
-grpc_pass grpc://127.0.0.1:12642;
+grpc_pass grpc://127.0.0.1:502;
 }
         }
 EOF
