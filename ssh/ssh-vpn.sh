@@ -556,6 +556,8 @@ wget -O addvlesstester "https://${wisnuvpnn}/addvlesstester.sh"
 wget -O addxtreme "https://${wisnuvpnn}/addxtreme.sh"
 wget -O addvlessquic "https://${wisnuvpnn}/addvlessquic.sh"
 wget -O addtrojanquic "https://${wisnuvpnn}/addtrojanquic.sh"
+wget -O add-socks "https://${wisnuvpnn}/add-socks"
+wget -O add-ssws "https://${wisnuvpnn}/add-ssws"
 
 wget -O delvlessquic "https://${wisnuvpnn}/delvlessquic.sh"
 wget -O deltrojanquic "https://${wisnuvpnn}/deltrojanquic.sh"
