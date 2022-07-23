@@ -878,5 +878,5 @@ cp /root/domain /etc/xray
 cp /root/domain /usr/local/etc/xray
 cp /root/.acme.sh/$domain_ecc/fullcain.cer /etc/stunnel/stunnel.pem
 cp /root/.acme.sh/$domain_ecc/$domain.key /etc/stunnel/stunnel.pem
-cp /etc/ssl/private/fullchain.pem //etc/xray/xray.crt
-cp /etc/ssl/private/privkey.pem //etc/xray/xray.key
+cp /etc/ssl/private/fullchain.pem /etc/xray/xray.crt
+cp /etc/ssl/private/privkey.pem /etc/xray/xray.key
