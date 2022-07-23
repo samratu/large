@@ -259,61 +259,6 @@ domain=$(cat /root/domain)
 # // Certificate File
 path_crt="/etc/xray/xray.crt"
 path_key="/etc/xray/xray.key"
-#domain_ecc=$(cat /root/.acme.sh)
-#domain.key=$(cat /root/.acme.sh/$domain_ecc)
-#path_crt="/root/.acme.sh/$domain_ecc/fullchain.cer"
-#path_key="/root/.acme.sh/$domain_ecc/$domain.key"
-# Buat Config Xray
-cat > /etc/xray/trojangrpc.json << END
-{
-  "log": {
-    "access": "/var/log/xray/access.log",
-    "error": "/var/log/xray/error.log",
-    "loglevel": "info"
-  },
-  "inbounds": [
-    {
-      "port": 2053,
-      "protocol": "vmess",
-      "settings": {
-        "clients": [
-          {
-            "id": "${uuid1}",
-            "alterId": 32
-#xray-vmess-tls
-          }
-        ]
-      },
-      "streamSettings": {
-        "network": "ws",
-        "security": "tls",
-        "tlsSettings": {
-          "certificates": [
-            {
-              "certificateFile": "${path_crt}",
-              "keyFile": "${path_key}"
-            }
-          ]
-        },
-        "tcpSettings": {},
-        "kcpSettings": {},
-        "httpSettings": {},
-        "wsSettings": {
-          "path": "/vmess/",
-          "headers": {
-            "Host": ""
-          }
-        },
-        "quicSettings": {}
-      }
-    }
-END
-
-uuid=$(cat /proc/sys/kernel/random/uuid)
-domain=$(cat /root/domain)
-# // Certificate File
-path_crt="/etc/xray/xray.crt"
-path_key="/etc/xray/xray.key"
 base64=$(openssl rand -base64 16)
 #domain_ecc=$(cat /root/.acme.sh)
 #domain.key=$(cat /root/.acme.sh/$domain_ecc)
@@ -330,61 +275,6 @@ cat > /usr/local/etc/xray/xvmess.json << END
   "inbounds": [
     {
       "port": 8443,
-      "protocol": "vmess",
-      "settings": {
-        "clients": [
-          {
-            "id": "${uuid1}",
-            "alterId": 32
-#xray-vmess-tls
-          }
-        ]
-      },
-      "streamSettings": {
-        "network": "ws",
-        "security": "tls",
-        "tlsSettings": {
-          "certificates": [
-            {
-              "certificateFile": "${path_crt}",
-              "keyFile": "${path_key}"
-            }
-          ]
-        },
-        "tcpSettings": {},
-        "kcpSettings": {},
-        "httpSettings": {},
-        "wsSettings": {
-          "path": "/vmess/",
-          "headers": {
-            "Host": ""
-          }
-        },
-        "quicSettings": {}
-      }
-    }
-END
-
-uuid=$(cat /proc/sys/kernel/random/uuid)
-domain=$(cat /root/domain)
-# // Certificate File
-path_crt="/etc/xray/xray.crt"
-path_key="/etc/xray/xray.key"
-#domain_ecc=$(cat /root/.acme.sh)
-#domain.key=$(cat /root/.acme.sh/$domain_ecc)
-#path_crt="/root/.acme.sh/$domain_ecc/fullchain.cer"
-#path_key="/root/.acme.sh/$domain_ecc/$domain.key"
-# Buat Config Xray
-cat > /usr/local/etc/xray/vlessquic.json << END
-{
-  "log": {
-    "access": "/var/log/xray/access.log",
-    "error": "/var/log/xray/error.log",
-    "loglevel": "info"
-  },
-  "inbounds": [
-    {
-      "port": 2052,
       "protocol": "vmess",
       "settings": {
         "clients": [
@@ -477,63 +367,6 @@ cat > /etc/xray/xss.json << END
     }
 END
 
-uuid=$(cat /proc/sys/kernel/random/uuid)
-domain=$(cat /root/domain)
-base64=$(openssl rand -base64 16)
-password=$base64
-# // Certificate File
-path_crt="/etc/xray/xray.crt"
-path_key="/etc/xray/xray.key"
-#domain_ecc=$(cat /root/.acme.sh)
-#domain.key=$(cat /root/.acme.sh/$domain_ecc)
-#path_crt="/root/.acme.sh/$domain_ecc/fullchain.cer"
-#path_key="/root/.acme.sh/$domain_ecc/$domain.key"
-# Buat Config Xray
-cat > /etc/xray/sstcp.json << END
-{
-  "log": {
-    "access": "/var/log/xray/access.log",
-    "error": "/var/log/xray/error.log",
-    "loglevel": "info"
-  },
-  "inbounds": [
-    {
-      "port": 2096,
-      "protocol": "vmess",
-      "settings": {
-        "clients": [
-          {
-            "id": "${uuid1}",
-            "alterId": 32
-#xray-vmess-tls
-          }
-        ]
-      },
-      "streamSettings": {
-        "network": "ws",
-        "security": "tls",
-        "tlsSettings": {
-          "certificates": [
-            {
-              "certificateFile": "${path_crt}",
-              "keyFile": "${path_key}"
-            }
-          ]
-        },
-        "tcpSettings": {},
-        "kcpSettings": {},
-        "httpSettings": {},
-        "wsSettings": {
-          "path": "/vmess/",
-          "headers": {
-            "Host": ""
-          }
-        },
-        "quicSettings": {}
-      }
-    }
-END
-
 cat > /etc/systemd/system/xvmess.service << END
 [Unit]
 Description=XVMESS ROUTING GAJAH DEMAK BY GANDRING
@@ -568,72 +401,6 @@ CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
 ExecStart=/usr/local/bin/xray -config /etc/xray/xss.json
-Restart=on-failure
-RestartSec=1s
-LimitNPROC=10000
-LimitNOFILE=1000000
-
-[Install]
-WantedBy=multi-user.target
-END
-
-# / / Installation Xray Service
-cat > /etc/systemd/system/sstcp.service << END
-[Unit]
-Description=XSHADOWSOCKS ROUTING DAM COLO PENGKOL BY WISNU
-Documentation=https://t.me/zerossl
-After=network.target nss-lookup.target
-
-[Service]
-User=root
-CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-NoNewPrivileges=true
-ExecStart=/usr/local/bin/xray -config /etc/xray/sstcp.json
-Restart=on-failure
-RestartSec=1s
-LimitNPROC=10000
-LimitNOFILE=1000000
-
-[Install]
-WantedBy=multi-user.target
-END
-
-# / / Installation Xray Service
-cat > /etc/systemd/system/trojangrpc.service << END
-[Unit]
-Description=XTROJAN ROUTING DAM COLO PENGKOL BY zerossl
-Documentation=https://t.me/zerossl
-After=network.target nss-lookup.target
-
-[Service]
-User=root
-CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-NoNewPrivileges=true
-ExecStart=/usr/local/bin/xray -config /etc/xray/trojangrpc.json
-Restart=on-failure
-RestartSec=1s
-LimitNPROC=10000
-LimitNOFILE=1000000
-
-[Install]
-WantedBy=multi-user.target
-END
-
-# / / Installation Xray Service
-cat > /etc/systemd/system/vlessquic.service << END
-[Unit]
-Description=XVLESS ROUTING DAM COLO PENGKOL BY zerossl
-Documentation=https://t.me/zerossl
-After=network.target nss-lookup.target
-
-[Service]
-User=root
-CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-NoNewPrivileges=true
-ExecStart=/usr/local/bin/xray -config /usr/local/etc/xray/vlessquic.json
 Restart=on-failure
 RestartSec=1s
 LimitNPROC=10000
@@ -738,30 +505,10 @@ systemctl restart xss
 
 ##restart&start service
 systemctl daemon-reload
-systemctl enable sstcp
-systemctl stop sstcp
-systemctl start sstcp
-systemctl restart sstcp
-
-##restart&start service
-systemctl daemon-reload
 systemctl enable xvmess
 systemctl stop xvmess
 systemctl start xvmess
 systemctl restart xvmess
-
-##restart&start service
-systemctl daemon-reload
-systemctl enable trojangrpc
-systemctl stop trojangrpc
-systemctl start trojangrpc
-systemctl restart trojangrpc
-
-##restart&start service
-systemctl daemon-reload
-systemctl enable vlessquic
-systemctl stop vlessquic
-systemctl start vlessquic
 
 # // Enable & Start Service
 # Accept port Xray
