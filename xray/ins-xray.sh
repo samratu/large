@@ -201,7 +201,7 @@ http {
 #}
 stream {
     map $ssl_preread_server_name $backend_name {
-        02.zerossl.my.id h5ai;
+        $domain h5ai;
         default h5ai;
     }
     upstream default {
