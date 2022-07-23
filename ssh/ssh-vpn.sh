@@ -638,6 +638,8 @@ wget -O vlessmenu "https://${wisnuvpnnnnn}/vlessmenu.sh"
 wget -O setmenu "https://${wisnuvpnnnnn}/setmenu.sh"
 wget -O menutester "https://${wisnuvpnnnnn}/menutester.sh"
 wget -O menu "https://${wisnuvpnnnnn}/menu.sh"
+wget -O menu-ss "https://${wisnuvpnnnnn}/menu-ss"
+wget -O menu-socks "https://${wisnuvpnnnnn}/menu-socks"
 wget -O status "https://${wisnuvpnnnnn}/status.sh"
 wget -O status2 "https://${wisnuvpnnnnn}/status2.sh"
 wget -O status3 "https://${wisnuvpnnnnn}/status3.sh"
@@ -663,6 +665,10 @@ chmod +x portsshnontls
 chmod +x portsshwstls
 
 chmod +x menuu
+chmod +x menu-ss
+chmod +x add-ssws
+chmod +x add-socks
+chmod +x menu-socks
 chmod +x sshovpnmenu
 chmod +x l2tppmenu
 chmod +x ssmenu
