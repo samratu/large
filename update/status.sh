@@ -85,6 +85,8 @@ status56=$(systemctl status xray             | grep -i "active (running)")
 status57=$(systemctl status xray             | grep -i "active (running)")
 status58=$(systemctl status xray             | grep -i "active (running)")
 status59=$(systemctl status xray             | grep -i "active (running)")
+status60=$(systemctl status xray             | grep -i "active (running)")
+status61=$(systemctl status xray             | grep -i "active (running)")
 #======================================
 if [[ $status01 == "" ]]; then
       sstatus01=$ERROR
@@ -489,7 +491,7 @@ else
 fi
 if [[ $status49 == "" ]]; then
       sstatus49=$ERROR
-      ingfo+=("SOCKS5 WEBSOCKET")
+      ingfo+=("SOCKS5 WS TLS")
       dahlah+=("err51")
 else
       sstatus49=$AKTIF
@@ -497,7 +499,7 @@ else
 fi
 if [[ $status50 == "" ]]; then
       sstatus50=$ERROR
-      ingfo+=("VMESS H2C NON TLS")
+      ingfo+=("SOCKS5 WS NON TLS")
       dahlah+=("err52")
 else
       sstatus50=$AKTIF
@@ -505,7 +507,7 @@ else
 fi
 if [[ $status51 == "" ]]; then
       sstatus51=$ERROR
-      ingfo+=("VLESS H2C NON TLS")
+      ingfo+=("SOCKS5 GRPC")
       dahlah+=("err53")
 else
       sstatus51=$AKTIF
@@ -513,7 +515,7 @@ else
 fi
 if [[ $status52 == "" ]]; then
       sstatus52=$ERROR
-      ingfo+=("XRAY SOCKS5 TCP")
+      ingfo+=("VMESS H2C NON TLS")
       dahlah+=("err54")
 else
       sstatus52=$AKTIF
@@ -521,51 +523,67 @@ else
 fi
 if [[ $status53 == "" ]]; then
       sstatus53=$ERROR
-      ingfo+=("TROJAN QUIC")
-      dahlah+=("err56")
+      ingfo+=("VLESS H2C NON TLS")
+      dahlah+=("err55")
 else
       sstatus53=$AKTIF
-      mantap+=("hore56")
+      mantap+=("hore55")
 fi
 if [[ $status54 == "" ]]; then
       sstatus54=$ERROR
-      ingfo+=("VLESS QUIC")
-      dahlah+=("err57")
+      ingfo+=("XRAY SOCKS5 TCP")
+      dahlah+=("err56")
 else
       sstatus54=$AKTIF
-      mantap+=("hore57")
+      mantap+=("hore56")
 fi
 if [[ $status55 == "" ]]; then
       sstatus55=$ERROR
-      ingfo+=("SHADOWSOCKS 2022 TCP")
-      dahlah+=("err58")
+      ingfo+=("TROJAN QUIC")
+      dahlah+=("err57")
 else
       sstatus55=$AKTIF
-      mantap+=("hore58")
+      mantap+=("hore57")
 fi
 if [[ $status56 == "" ]]; then
       sstatus56=$ERROR
-      ingfo+=("SHADOWSOCKS 2022 WS TLS")
-      dahlah+=("err59")
+      ingfo+=("VLESS QUIC")
+      dahlah+=("err58")
 else
       sstatus56=$AKTIF
-      mantap+=("hore59")
+      mantap+=("hore58")
 fi
 if [[ $status57 == "" ]]; then
       sstatus57=$ERROR
-      ingfo+=("SHADOWSOCKS 2022 WS NON TLS")
-      dahlah+=("err60")
+      ingfo+=("SHADOWSOCKS 2022 TCP")
+      dahlah+=("err59")
 else
       sstatus57=$AKTIF
-      mantap+=("hore60")
+      mantap+=("hore59")
 fi
 if [[ $status58 == "" ]]; then
       sstatus58=$ERROR
-      ingfo+=("SHADOWSOCKS 2022 GRPC")
-      dahlah+=("err61")
+      ingfo+=("SHADOWSOCKS 2022 WS TLS")
+      dahlah+=("err60")
 else
       sstatus58=$AKTIF
+      mantap+=("hore60")
+fi
+if [[ $status59 == "" ]]; then
+      sstatus59=$ERROR
+      ingfo+=("SHADOWSOCKS 2022 WS NON TLS")
+      dahlah+=("err61")
+else
+      sstatus59=$AKTIF
       mantap+=("hore61")
+fi
+if [[ $status60 == "" ]]; then
+      sstatus60=$ERROR
+      ingfo+=("SHADOWSOCKS 2022 GRPC")
+      dahlah+=("err62")
+else
+      sstatus60=$AKTIF
+      mantap+=("hore62")
 fi
 jumlah1="${#mantap[@]}"
 jumlah2="${#dahlah[@]}"
@@ -758,7 +776,9 @@ echo -e "$bl🔰 $off $bl TROJAN WS TLS               $off : $sstatus45🔰"
 echo -e "$bl🔰 $off $bl TROJAN WS NON TLS           $off : $sstatus46🔰"
 echo -e "$bl🔰 $off $bl XRAY SHADOWSOCKS            $off : $sstatus47🔰"
 echo -e "$bl🔰 $off $bl XRAY MT PROTO               $off : $sstatus48🔰"
-echo -e "$bl🔰 $off $bl SOCKS5 WEBSOCKET            $off : $sstatus49🔰"
+echo -e "$bl🔰 $off $bl SOCKS5 WS TLS               $off : $sstatus49🔰"
+echo -e "$bl🔰 $off $bl SOCKS5 WS NON TLS           $off : $sstatus50🔰"
+echo -e "$bl🔰 $off $bl SOCKS5 GRPC                 $off : $sstatus51🔰"
 echo -e "$bl🔰 $off $bl SOCKS5 TCP                  $off : $sstatus52🔰"
 echo -e "$bl🔰 $off $bl TROJAN QUIC                 $off : $sstatus53🔰"
 echo -e "$bl🔰 $off $bl VLESS QUIC                  $off : $sstatus54🔰"
