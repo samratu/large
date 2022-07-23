@@ -397,8 +397,6 @@ NoNewPrivileges=true
 ExecStart=/usr/local/bin/xray -config /usr/local/etc/xray/xvmess.json
 Restart=on-failure
 RestartSec=1s
-LimitNPROC=10000
-LimitNOFILE=1000000
 
 [Install]
 WantedBy=multi-user.target
@@ -419,8 +417,6 @@ NoNewPrivileges=true
 ExecStart=/usr/local/bin/xray -config /etc/xray/xss.json
 Restart=on-failure
 RestartSec=1s
-LimitNPROC=10000
-LimitNOFILE=1000000
 
 [Install]
 WantedBy=multi-user.target
@@ -441,8 +437,6 @@ NoNewPrivileges=true
 ExecStart=/usr/local/bin/xray -config /etc/xray/config.json
 Restart=on-failure
 RestartPreventExitStatus=23
-LimitNPROC=10000
-LimitNOFILE=1000000
 
 [Install]
 WantedBy=multi-user.target
@@ -463,8 +457,6 @@ NoNewPrivileges=true
 ExecStart=/usr/local/bin/xray -config /etc/xray/xtrojan.json
 Restart=on-failure
 RestartPreventExitStatus=23
-LimitNPROC=10000
-LimitNOFILE=1000000
 
 [Install]
 WantedBy=multi-user.target
@@ -485,8 +477,6 @@ NoNewPrivileges=true
 ExecStart=/usr/local/bin/xray -config /etc/xray/xvless.json
 Restart=on-failure
 RestartPreventExitStatus=23
-LimitNPROC=10000
-LimitNOFILE=1000000
 
 [Install]
 WantedBy=multi-user.target
@@ -525,6 +515,73 @@ systemctl enable xvmess
 systemctl stop xvmess
 systemctl start xvmess
 systemctl restart xvmess
+# Check OS version
+if [[ -e /etc/debian_version ]]; then
+	source /etc/os-release
+	OS=$ID # debian or ubuntu
+elif [[ -e /etc/centos-release ]]; then
+	source /etc/os-release
+	OS=centos
+fi
+if [[ $OS == 'ubuntu' ]]; then
+		sudo add-apt-repository ppa:ondrej/nginx -y
+		apt update ; apt upgrade -y
+		sudo apt install nginx -y
+		sudo apt install python3-certbot-nginx -y
+		systemctl daemon-reload
+        systemctl enable nginx
+elif [[ $OS == 'debian' ]]; then
+		sudo apt install gnupg2 ca-certificates lsb-release -y 
+        echo "deb http://nginx.org/packages/mainline/debian $(lsb_release -cs) nginx" | sudo tee /etc/apt/sources.list.d/nginx.list 
+        echo -e "Package: *\nPin: origin nginx.org\nPin: release o=nginx\nPin-Priority: 900\n" | sudo tee /etc/apt/preferences.d/99nginx 
+        curl -o /tmp/nginx_signing.key https://nginx.org/keys/nginx_signing.key 
+        # gpg --dry-run --quiet --import --import-options import-show /tmp/nginx_signing.key
+        sudo mv /tmp/nginx_signing.key /etc/apt/trusted.gpg.d/nginx_signing.asc
+        sudo apt update 
+        apt -y install nginx 
+        systemctl daemon-reload
+        systemctl enable nginx
+fi
+rm -f /etc/nginx/conf.d/default.conf 
+clear
+echo "
+server {
+    listen 80 ;
+    listen [::]:80 ;
+    access_log /var/log/nginx/access.log;
+    error_log /var/log/nginx/error.log;
+    
+    location /shanum
+        {
+        proxy_redirect off;
+        proxy_pass http://127.0.0.1:1170;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade "'"$http_upgrade"'";
+        proxy_set_header Connection '"'upgrade'"';
+        proxy_set_header Host "'"$http_host"'";
+        }
+    location /wisnu
+        {
+        proxy_redirect off;
+        proxy_pass http://127.0.0.1:1140;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade "'"$http_upgrade"'";
+        proxy_set_header Connection '"'upgrade'"';
+        proxy_set_header Host "'"$http_host"'";
+	       }
+   location /shanumgrpc {
+        client_max_body_size 0;
+        keepalive_time 1071906480m;
+        keepalive_requests 4294967296;
+        client_body_timeout 1071906480m;
+        send_timeout 1071906480m;
+        lingering_close always;
+        grpc_read_timeout 1071906480m;
+        grpc_send_timeout 1071906480m;
+        grpc_pass grpc://127.0.0.1:1190;
+       	}
+}
+" > /etc/nginx/conf.d/default.conf
 
 # // Enable & Start Service
 # Accept port Xray
