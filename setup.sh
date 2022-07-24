@@ -158,13 +158,13 @@ echo -e " 🔰 TROJAN QUIC : 443" |tee -a log-install.txt
 echo -e " 🔰 TROJAN GFW : 443" |tee -a log-install.txt
 echo -e " 🔰 TROJAN WS TLS : 443" |tee -a log-install.txt
 echo -e " 🔰 TROJAN WS NON TLS : 2095" |tee -a log-install.txt
-echo -e " 🔰 SOCKS5 WS TLS : 2053" |tee -a log-install.txt
+echo -e " 🔰 SOCKS5 WS TLS : 443" |tee -a log-install.txt
 echo -e " 🔰 SOCKS5 WS NON TLS  : 2052" |tee -a log-install.txt
-echo -e " 🔰 SOCKS5 GRPC : 2087" |tee -a log-install.txt
+echo -e " 🔰 SOCKS5 GRPC : 443" |tee -a log-install.txt
 echo -e " 🔰 SOCKS5 TCP : 999 |tee -a log-install.txt
 echo -e " 🔰 SHADOWSOCKS TCP : 333" |tee -a log-install.txt
 echo -e " 🔰 SHADOWSOCKS UDP : 503" |tee -a log-install.txt
-echo -e " 🔰 SHADOWSOCKS WS TLS: 2053" |tee -a log-install.txt
+echo -e " 🔰 SHADOWSOCKS WS TLS: 443" |tee -a log-install.txt
 echo -e " 🔰 SHADOWSOCKS WS NON TLS : 2052" |tee -a log-install.txt
 echo -e " 🔰 SHADOWSOCKS 2022 TCP : 212" |tee -a log-install.txt
 echo -e " 🔰 SHADOWSOCKS 2022 WS NON TLS : 2052" |tee -a log-install.txt
