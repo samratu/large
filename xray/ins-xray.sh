@@ -106,7 +106,9 @@ domain=$(cat /root/domain)
 # // Certificate File
 path_crt="/etc/xray/xray.cer"
 path_key="/etc/xray/xray.key"
-#domain_ecc=$(cat /root/.acme.sh)
+base64=$(openssl rand -base64 16)
+password=$base64
+cp password /etc/xray/passwd
 #domain.key=$(cat /root/.acme.sh/$domain_ecc)
 #path_crt="/root/.acme.sh/$domain_ecc/fullchain.cer"
 #path_key="/root/.acme.sh/$domain_ecc/$domain.key"
@@ -325,6 +327,7 @@ END
 uuid=$(cat /proc/sys/kernel/random/uuid)
 base64=$(openssl rand -base64 16)
 password=$base64
+cp password /etc/xray/passwd
 domain=$(cat /root/domain)
 # // Certificate File
 path_crt="/etc/xray/xray.crt"
