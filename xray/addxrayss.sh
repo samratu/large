@@ -30,6 +30,7 @@ until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 			exit 1
 		fi
 	done
+passwd=$GESuWIqYcq34MSCDTOck0g==
 uuid=$(cat /proc/sys/kernel/random/uuid)
 password=$(openssl rand -base64 16)
 read -p "Expired (Days) : " masaaktif
@@ -50,7 +51,7 @@ cat>/etc/xray/ss-$user-new.json<<EOF
       }
     },
 EOF
-tmp5=$(echo -n "2022-blake3-aes-128-gcm:${user}@${domain}:$ssnew" | base64 -w0)
+tmp5=$(echo -n "2022-blake3-aes-128-gcm:$passwd:${user}@${domain}:$ssnew" | base64 -w0)
 shadowsocksnew="ss://$tmp5#$user"
 systemctl restart xray.service
 systemctl restart xss.service
