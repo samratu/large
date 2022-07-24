@@ -382,6 +382,26 @@ cat > /etc/xray/xss.json << END
     }
 END
 
+cat > /etc/systemd/system/xray@.service << EOF
+[Unit]
+Description=Xray Service
+Documentation=https://github.com/xtls
+After=network.target nss-lookup.target
+
+[Service]
+User=www-data
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+NoNewPrivileges=true
+ExecStart=/usr/local/bin/xray run -config /usr/local/etc/xray/%i.json
+Restart=on-failure
+RestartPreventExitStatus=23
+LimitNPROC=10000
+LimitNOFILE=1000000
+
+[Install]
+WantedBy=multi-user.target
+
 cat > /etc/systemd/system/xvmess.service << END
 [Unit]
 Description=XVMESS ROUTING GAJAH DEMAK BY GANDRING
@@ -389,7 +409,6 @@ Documentation=https://t.me/zerossl
 After=network.target nss-lookup.target
 
 [Service]
-User=www-data
 User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
@@ -412,7 +431,6 @@ Documentation=https://t.me/zerossl
 After=network.target nss-lookup.target
 
 [Service]
-User=www-data
 User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
@@ -435,7 +453,6 @@ Documentation=https://t.me/zerossl
 After=network.target nss-lookup.target
 
 [Service]
-User=www-data
 User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
@@ -458,7 +475,6 @@ Documentation=https://t.me/zerossl
 After=network.target nss-lookup.target
 
 [Service]
-User=www-data
 User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
@@ -481,7 +497,6 @@ Documentation=https://t.me/zerossl
 After=network.target nss-lookup.target
 
 [Service]
-User=www-data
 User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
@@ -497,38 +512,49 @@ WantedBy=multi-user.target
 END
 
 systemctl daemon-reload
-systemctl stop xray
-systemctl enable xray
-systemctl start xray
-systemctl restart xray
+systemctl stop xray@config.service
+systemctl enable xray@config.service
+systemctl start xray@config.service
+systemctl restart xray@config.service
+systemctl enable xray.service
+systemctl restart xray.service
 
 ##restart&start service
 systemctl daemon-reload
-systemctl enable xtrojan
-systemctl stop xtrojan
-systemctl start xtrojan
-systemctl restart xtrojan
+systemctl enable xray@xtrojan.service
+systemctl stop xray@xtrojan.service
+systemctl start xray@xtrojan.service
+systemctl restart xray@xtrojan.service
+systemctl enable xtrojan.service
+systemctl restart xtrojan.service
 
 ##restart&start service
 systemctl daemon-reload
-systemctl enable xvless
-systemctl stop xvless
-systemctl start xvless
-systemctl restart xvless
+systemctl enable xray@xvless.service
+systemctl stop xray@xvless.service
+systemctl start xray@xvless.service
+systemctl restart xray@xvless.service
+systemctl enable xvless.service
+systemctl restart xvless.service
 
 ##restart&start service
 systemctl daemon-reload
-systemctl enable xss
-systemctl stop xss
-systemctl start xss
-systemctl restart xss
+systemctl enable xray@xss.service
+systemctl stop xray@xss.service
+systemctl start xray@xss.service
+systemctl restart xray@xss.service
+systemctl enable xss.service
+systemctl start xss.service
+systemctl restart xss.service
 
 ##restart&start service
 systemctl daemon-reload
-systemctl enable xvmess
-systemctl stop xvmess
-systemctl start xvmess
-systemctl restart xvmess
+systemctl enable xray@xvmess.service
+systemctl stop xray@xvmess.service
+systemctl start xray@xvmess.service
+systemctl restart xray@xvmess.service
+systemctl enable xvmess.service
+systemctl restart xvmess.service
 
 # // Enable & Start Service
 # Accept port Xray
