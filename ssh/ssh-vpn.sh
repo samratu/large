@@ -443,7 +443,7 @@ fi
 clear
 echo; echo 'Installing DOS-Deflate 0.6'; echo
 echo; echo -n 'Downloading source files...'
-wget -q -O /usr/local/ddos/ddos.conf http://www.inetbase.com/scripts/ddos/ddos.conf
+wet -q -O /usr/local/ddos/ddos.conf http://www.inetbase.com/scripts/ddos/ddos.conf
 echo -n '.'
 wget -q -O /usr/local/ddos/LICENSE http://www.inetbase.com/scripts/ddos/LICENSE
 echo -n '.'
@@ -535,6 +535,7 @@ wget -O portdropbear "https://${wisnuvpn}/portdropbear.sh"
 wget -O portopenssh "https://${wisnuvpn}/portopenssh.sh"
 wget -O portsshnontls "https://${wisnuvpn}/portsshnontls.sh"
 wget -O portsshwstls "https://${wisnuvpn}/portsshwstls.sh"
+wget -O ins-sshws "https://${wisnuvpn}/ins-sshws.sh"
 
 wget -O addvmess "https://${wisnuvpnn}/addvmess.sh"
 wget -O addtrojantester "https://${wisnuvpnn}/addtrojantester.sh"
@@ -559,8 +560,8 @@ wget -O addvlesstester "https://${wisnuvpnn}/addvlesstester.sh"
 wget -O addxtreme "https://${wisnuvpnn}/addxtreme.sh"
 wget -O addvlessquic "https://${wisnuvpnn}/addvlessquic.sh"
 wget -O addtrojanquic "https://${wisnuvpnn}/addtrojanquic.sh"
-wget -O add-socks "https://${wisnuvpnn}/add-socks"
-wget -O add-ssws "https://${wisnuvpnn}/add-ssws"
+wget -O add-socks "https://${wisnuvpnn}/add-socks.sh"
+wget -O add-ssws "https://${wisnuvpnn}/add-ssws.sh"
 
 wget -O delvlessquic "https://${wisnuvpnn}/delvlessquic.sh"
 wget -O deltrojanquic "https://${wisnuvpnn}/deltrojanquic.sh"
@@ -666,6 +667,7 @@ chmod +x status3
 chmod +x status4
 chmod +x portsshnontls
 chmod +x portsshwstls
+chmod +x ins-sshws
 
 chmod +x menuu
 chmod +x menu-ss
