@@ -248,7 +248,7 @@ sed -i '/#vmess-quic$/a\### '"$user $exp"'\
 cat>/etc/xray/vmess-$user-tls.json<<EOF
       {
       "v": "4",
-      "ps": "🔰VMESS GRPC TLS ${user}",
+      "ps": "🔰VMESS QUIC TLS ${user}",
       "add": "${domain}",
       "port": "${vmquic}",
       "id": "${uuid}",
