@@ -87,7 +87,7 @@ cekxrayss
 menu-socks
 ;;
 14)
-menu-ssws
+menu-ss
 ;;
 0)
 clear
