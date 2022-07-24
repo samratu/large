@@ -56,7 +56,7 @@ uuid=$(cat /proc/sys/kernel/random/uuid)
 thdua="$(cat ~/log-install.txt | grep -w "TROJAN H2C" | cut -d: -f2|sed 's/ //g')"
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${user_EXISTS} == '0' ]]; do
 		read -rp "Password : " -e user
-		user_EXISTS=$(grep -w $user /usr/local/etc/xray/xvmess.json | wc -l)
+		user_EXISTS=$(grep -w $user /etc/xray/xvmess.json | wc -l)
 
 		if [[ ${user_EXISTS} == '1' ]]; then
 			echo ""
@@ -75,7 +75,7 @@ sed -i '/#trojan-hdua$/a\#&# '"$user $exp"'\
 sed -i '/#trojan-hdua$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvless.json
 sed -i '/#trojan-hdua$/a\#&# '"$user $exp"'\
-},{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
+},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvmess.json
 trojanhdua="trojan://${uuid}@${domain}:$thdua?sni=${domain}&type=http&security=tls&path=/gandringhttp#%F0%9F%94%B0TROJAN+H2C+TLS+${user}"
 systemctl restart xray.service
 systemctl restart xtrojan.service
