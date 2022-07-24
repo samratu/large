@@ -30,13 +30,25 @@ echo -e "09\e[1;33m) Buat Akun Shadowsocks AEAD \e[m "
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "10\e[1;33m) Hapus Akun Shadowsocks AEAD \e[m "
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "11\e[1;33m) Perpanjang Masa Aktif Akun Shadowsocks AEAD\e[m "
+echo -e "11\e[1;33m) Perpanjang Masa Aktif Akun Shadowsocks AEAD \e[m "
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "12\e[1;33m) Cek User Login Shadowsocks AEAD \e[m  "
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "13\e[1;33m) Menu sock5  \e[m "
+echo -e "13\e[1;33m) Buat Akun Shadowsocks Socks5 \e[m "
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "14\e[1;33m) Menu SHADOWSOCKS 2022 \e[m "
+echo -e "14\e[1;33m) Hapus Akun Shadowsocks Socks5 \e[m "
+echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "15\e[1;33m) Perpanjang Masa Aktif Akun Socks5 \e[m "
+echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "16\e[1;33m) Cek User Login Socks5 \e[m  "
+echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "17\e[1;33m) Buat Akun Shadowsocks 2022 \e[m "
+echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "18\e[1;33m) Hapus Akun Shadowsocks 2022 \e[m "
+echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "18\e[1;33m) Perpanjang Masa Aktif Akun Shadowsocks 2022 \e[m "
+echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "20\e[1;33m) Cek User Login Shadowsocks AEAD \e[m  "
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "00\e[1;31m) Menu Utama \e[m"
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
@@ -84,10 +96,28 @@ renewxrayss
 cekxrayss
 ;;
 13)
-menu-socks
+addsocks
 ;;
 14)
-menu-ss
+delsocks
+;;
+15)
+renewsocks
+;;
+16)
+ceksocks
+;;
+17)
+addssws
+;;
+18)
+delssws
+;;
+19)
+renewssws
+;;
+20)
+cekssws
 ;;
 0)
 clear
