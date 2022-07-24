@@ -279,7 +279,7 @@ base64=$(openssl rand -base64 16)
 #path_crt="/root/.acme.sh/$domain_ecc/fullchain.cer"
 #path_key="/root/.acme.sh/$domain_ecc/$domain.key"
 # Buat Config Xray
-cat > /usr/local/etc/xray/xvmess.json << END
+cat > /etc/xray/xvmess.json << END
 {
   "log": {
     "access": "/var/log/xray/access.log",
@@ -393,7 +393,7 @@ User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
-ExecStart=/usr/local/bin/xray -config /usr/local/etc/xray/xvmess.json
+ExecStart=/usr/local/bin/xray -config /etc/xray/xvmess.json
 Restart=on-failure
 RestartSec=1s
 
@@ -514,156 +514,6 @@ systemctl enable xvmess
 systemctl stop xvmess
 systemctl start xvmess
 systemctl restart xvmess
-# Check OS version
-if [[ -e /etc/debian_version ]]; then
-	source /etc/os-release
-	OS=$ID # debian or ubuntu
-elif [[ -e /etc/centos-release ]]; then
-	source /etc/os-release
-	OS=centos
-fi
-if [[ $OS == 'ubuntu' ]]; then
-		sudo add-apt-repository ppa:ondrej/nginx -y
-		apt update ; apt upgrade -y
-		sudo apt install nginx -y
-		sudo apt install python3-certbot-nginx -y
-		systemctl daemon-reload
-        systemctl enable nginx
-elif [[ $OS == 'debian' ]]; then
-		sudo apt install gnupg2 ca-certificates lsb-release -y 
-        echo "deb http://nginx.org/packages/mainline/debian $(lsb_release -cs) nginx" | sudo tee /etc/apt/sources.list.d/nginx.list 
-        echo -e "Package: *\nPin: origin nginx.org\nPin: release o=nginx\nPin-Priority: 900\n" | sudo tee /etc/apt/preferences.d/99nginx 
-        curl -o /tmp/nginx_signing.key https://nginx.org/keys/nginx_signing.key 
-        # gpg --dry-run --quiet --import --import-options import-show /tmp/nginx_signing.key
-        sudo mv /tmp/nginx_signing.key /etc/apt/trusted.gpg.d/nginx_signing.asc
-        sudo apt update 
-        apt -y install nginx 
-        systemctl daemon-reload
-        systemctl enable nginx
-fi
-rm -f /etc/nginx/conf.d/default.conf 
-clear
-echo "
-    server {
-             listen 80;
-             listen [::]:80;
-             listen 443 ssl http2 reuseport;
-             listen [::]:443 http2 reuseport;	
-             server_name 127.0.0.1 localhost;
-             ssl_certificate /etc/xray/xray.crt;
-             ssl_certificate_key /etc/xray/xray.key;
-             ssl_ciphers EECDH+CHACHA20:EECDH+CHACHA20-draft:EECDH+ECDSA+AES128:EECDH+aRSA+AES128:RSA+AES128:EECDH+ECDSA+AES256:EECDH+aRSA+AES256:RSA+AES256:EECDH+ECDSA+3DES:EECDH+aRSA+3DES:RSA+3DES:!MD5;
-             ssl_protocols TLSv1.1 TLSv1.2 TLSv1.3;
-             
-location /
-{
-proxy_redirect off;
-proxy_pass http://127.0.0.1:300;
-proxy_http_version 1.1;
-proxy_set_header X-Real-IP $remote_addr;
-proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-proxy_set_header Upgrade $http_upgrade;
-proxy_set_header Connection "upgrade";
-proxy_set_header Host $http_host;
-}
-location = /wisnu
-{
-proxy_redirect off;
-proxy_pass http://127.0.0.1:1140;
-proxy_http_version 1.1;
-proxy_set_header X-Real-IP $remote_addr;
-proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-proxy_set_header Upgrade $http_upgrade;
-proxy_set_header Connection "upgrade";
-proxy_set_header Host $http_host;
-}
-location = /socks-ws
-{
-proxy_redirect off;
-proxy_pass http://127.0.0.1:501;
-proxy_http_version 1.1;
-proxy_set_header X-Real-IP $remote_addr;
-proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-proxy_set_header Upgrade $http_upgrade;
-proxy_set_header Connection "upgrade";
-proxy_set_header Host $http_host;
-}
-location = /shanum
-{
-proxy_redirect off;
-proxy_pass http://127.0.0.1:1170;
-proxy_http_version 1.1;
-proxy_set_header X-Real-IP $remote_addr;
-proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-proxy_set_header Upgrade $http_upgrade;
-proxy_set_header Connection "upgrade";
-proxy_set_header Host $http_host;
-}
-location = /gandring
-{
-proxy_redirect off;
-proxy_pass http://127.0.0.1:1110;
-proxy_http_version 1.1;
-proxy_set_header X-Real-IP $remote_addr;
-proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-proxy_set_header Upgrade $http_upgrade;
-proxy_set_header Connection "upgrade";
-proxy_set_header Host $http_host;
-}
-location = /ss-ws
-{
-proxy_redirect off;
-proxy_pass http://127.0.0.1:2053;
-proxy_http_version 1.1;
-proxy_set_header X-Real-IP $remote_addr;
-proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-proxy_set_header Upgrade $http_upgrade;
-proxy_set_header Connection "upgrade";
-proxy_set_header Host $http_host;
-}
-location ^~ /wisnugrpc
-{
-proxy_redirect off;
-grpc_set_header X-Real-IP $remote_addr;
-grpc_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-grpc_set_header Host $http_host;
-grpc_pass grpc://127.0.0.1:1160;
-}
-location ^~ /shanumgrpc
-{
-proxy_redirect off;
-grpc_set_header X-Real-IP $remote_addr;
-grpc_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-grpc_set_header Host $http_host;
-grpc_pass grpc://127.0.0.1:1190;
-}
-location ^~ /socks-grpc
-{
-proxy_redirect off;
-grpc_set_header X-Real-IP $remote_addr;
-grpc_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-grpc_set_header Host $http_host;
-grpc_pass grpc://127.0.0.1:503;
-}
-location ^~ /gandringgrpc
-{
-proxy_redirect off;
-grpc_set_header X-Real-IP $remote_addr;
-grpc_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-grpc_set_header Host $http_host;
-grpc_pass grpc://127.0.0.1:1130;
-}
-location ^~ /ss-grpc
-{
-proxy_redirect off;
-grpc_set_header X-Real-IP $remote_addr;
-grpc_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-grpc_set_header Host $http_host;
-grpc_pass grpc://127.0.0.1:2096;
-}
-}
-END
-" > /etc/nginx/conf.d/default.conf
 
 # // Enable & Start Service
 # Accept port Xray
@@ -786,8 +636,8 @@ cat > /etc/trojan-go/config.json << END
   "ssl": {
     "verify": false,
     "verify_hostname": false,
-    "cert": "/etc/xray/xray.crt",
-    "key": "/etc/xray/xray.key",
+    "cert": "/etc/ssl/private/fullchain.pem",
+    "key": "/etc/ssl/private/privkey.pem",
     "key_password": "",
     "cipher": "",
     "curves": "",
