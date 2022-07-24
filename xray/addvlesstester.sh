@@ -48,17 +48,7 @@ until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 	done
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 		read -rp "Username : " -e user
-		CLIENT_EXISTS=$(grep -w $user /usr/local/etc/xray/xvmess.json | wc -l)
-
-		if [[ ${CLIENT_EXISTS} == '1' ]]; then
-			echo ""
-			echo -e "Username ${RED}${user}${NC} Already On VPS Please Choose Another"
-			exit 1
-		fi
-	done
-until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
-		read -rp "Username : " -e user
-		CLIENT_EXISTS=$(grep -w $user /usr/local/etc/xray/vlessquic.json | wc -l)
+		CLIENT_EXISTS=$(grep -w $user /etc/xray/xvmess.json | wc -l)
 
 		if [[ ${CLIENT_EXISTS} == '1' ]]; then
 			echo ""
@@ -85,25 +75,23 @@ exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#vless-grpc-tls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvless.json
 sed -i '/#vless-grpc-tls$/a\#### '"$user $exp"'\
-},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
+},{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvmess.json
 sed -i '/#vless-grpc-nontls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
 sed -i '/#vless-xtls$/a\#&# '"$user $exp"'\
-},{"id": "'""$uuid""'","flow": "'""xtls-rprx-direct""'", "email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
+},{"id": "'""$uuid""'","flow": "'""xtls-rprx-direct""'", "email": "'""$user""'"' /etc/xray/xvmess.json
 sed -i '/#vless-hdua$/a\#### '"$user $exp"'\
-},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
+},{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvmess.json
 sed -i '/#vless-hdua$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvless.json
 sed -i '/#vless-quic$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
-sed -i '/#vless-quic$/a\#### '"$user $exp"'\
-},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vlessquic.json
 sed -i '/#vless-tls$/a\#### '"$user $exp"'\
-},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
+},{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvmess.json
 sed -i '/#vless-nontls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
 sed -i '/#vless-http-tls$/a\#### '"$user $exp"'\
-},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
+},{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvmess.json
 sed -i '/#vless-http-nontls$/a\#### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
 vlesshttpnon="vless://${uuid}@${domain}:$vlhttpnon?sni=ojodumeh.org&security=none&type=tcp&headerType=http&encryption=none#%F0%9F%94%B0VLESS+HTTP+NONTLS+${user}"
@@ -121,7 +109,6 @@ systemctl restart xvless.service
 systemctl restart xray.service
 systemctl restart xtrojan.service
 systemctl restart xvmess
-systemctl restart vlessquic
 service cron restart
 clear
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
