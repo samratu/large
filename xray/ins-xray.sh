@@ -410,7 +410,7 @@ Documentation=https://t.me/zerossl
 After=network.target nss-lookup.target
 
 [Service]
-User=www-data
+User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
@@ -431,7 +431,7 @@ Documentation=https://t.me/zerossl
 After=network.target nss-lookup.target
 
 [Service]
-User=www-data
+User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
@@ -453,7 +453,7 @@ Documentation=https://t.me/zerossl
 After=network.target nss-lookup.target
 
 [Service]
-User=www-data
+User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
@@ -475,7 +475,7 @@ Documentation=https://t.me/zerossl
 After=network.target nss-lookup.target
 
 [Service]
-User=www-data
+User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
@@ -497,7 +497,7 @@ Documentation=https://t.me/zerossl
 After=network.target nss-lookup.target
 
 [Service]
-User=www-data
+User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
@@ -512,55 +512,31 @@ WantedBy=multi-user.target
 END
 
 systemctl daemon-reload
-systemctl stop xray@.service
-systemctl enable xray@.service
-systemctl start xray@.service
-systemctl restart xray@.service
 systemctl enable xray.service
 systemctl restart xray.service
 
 systemctl daemon-reload
-systemctl stop xray@config.service
-systemctl enable xray@config.service
-systemctl start xray@config.service
-systemctl restart xray@config.service
 systemctl enable xray.service
 systemctl restart xray.service
 
 ##restart&start service
 systemctl daemon-reload
-systemctl enable xray@xtrojan.service
-systemctl stop xray@xtrojan.service
-systemctl start xray@xtrojan.service
-systemctl restart xray@xtrojan.service
 systemctl enable xtrojan.service
 systemctl restart xtrojan.service
 
 ##restart&start service
 systemctl daemon-reload
-systemctl enable xray@xvless.service
-systemctl stop xray@xvless.service
-systemctl start xray@xvless.service
-systemctl restart xray@xvless.service
 systemctl enable xvless.service
 systemctl restart xvless.service
 
 ##restart&start service
 systemctl daemon-reload
-systemctl enable xray@xss.service
-systemctl stop xray@xss.service
-systemctl start xray@xss.service
-systemctl restart xray@xss.service
 systemctl enable xss.service
 systemctl start xss.service
 systemctl restart xss.service
 
 ##restart&start service
 systemctl daemon-reload
-systemctl enable xray@xvmess.service
-systemctl stop xray@xvmess.service
-systemctl start xray@xvmess.service
-systemctl restart xray@xvmess.service
 systemctl enable xvmess.service
 systemctl restart xvmess.service
 
