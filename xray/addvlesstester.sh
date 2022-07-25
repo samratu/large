@@ -72,27 +72,27 @@ read -p "Expired (Days) : " masaaktif
 hariini=`date -d "0 days" +"%Y-%m-%d"`
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 #exp2=`date -d "$masaaktif seconds" +"%Y-%m-%d"`
-sed -i '/#vless-grpc-tls$/a\#### '"$user $exp"'\
+sed -i '/#vless-grpc-tls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvless.json
-sed -i '/#vless-grpc-tls$/a\#### '"$user $exp"'\
+sed -i '/#vless-grpc-tls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvmess.json
-sed -i '/#vless-grpc-nontls$/a\#### '"$user $exp"'\
+sed -i '/#vless-grpc-nontls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
 sed -i '/#vless-xtls$/a\#&# '"$user $exp"'\
 },{"id": "'""$uuid""'","flow": "'""xtls-rprx-direct""'", "email": "'""$user""'"' /etc/xray/xvmess.json
-sed -i '/#vless-hdua$/a\#### '"$user $exp"'\
+sed -i '/#vless-hdua$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvmess.json
-sed -i '/#vless-hdua$/a\#### '"$user $exp"'\
+sed -i '/#vless-hdua$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvless.json
-sed -i '/#vless-quic$/a\#### '"$user $exp"'\
+sed -i '/#vless-quic$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
-sed -i '/#vless-tls$/a\#### '"$user $exp"'\
+sed -i '/#vless-tls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvmess.json
-sed -i '/#vless-nontls$/a\#### '"$user $exp"'\
+sed -i '/#vless-nontls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
-sed -i '/#vless-http-tls$/a\#### '"$user $exp"'\
+sed -i '/#vless-http-tls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvmess.json
-sed -i '/#vless-http-nontls$/a\#### '"$user $exp"'\
+sed -i '/#vless-http-nontls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
 vlesshttpnon="vless://${uuid}@${domain}:$vlhttpnon?sni=ojodumeh.org&security=none&type=tcp&headerType=http&encryption=none#%F0%9F%94%B0VLESS+HTTP+NONTLS+${user}"
 vlesshttp="vless://${uuid}@${domain}:$vlhttp?sni=macankimpet.xyz&host=${domain}&type=tcp&security=tls&path=/wisnutcp&headerType=http&encryption=none#%F0%9F%94%B0VLESS+HTTP+TLS+${user}"
