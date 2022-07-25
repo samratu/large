@@ -22,7 +22,7 @@ export RECEIVE="[${YELLOW} RECEIVE ${NC}]"
 # Getting
 MYIP=$(wget -qO- ipinfo.io/ip);
 clear
-function cektrojangrpc() {
+function cektrojanhdua() {
 clear
 echo -n > /tmp/other.txt
 data=( `cat /etc/xray/config.json | grep '###' | cut -d ' ' -f 2 | sort | uniq`);
