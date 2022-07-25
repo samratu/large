@@ -365,14 +365,14 @@ socket = r:TCP_NODELAY=1
 
 [dropbear]
 accept = 600
-connect = 127.0.0.1:1443
+connect = 127.0.0.1:300
 
 [openssh]
 accept = 500
-connect = 127.0.0.1:300
+connect = 127.0.0.1:1443
 
 [openvpn]
-accept = 2083
+accept = 900
 connect = 127.0.0.1:700
 
 END
