@@ -32,7 +32,7 @@ uuid=$(cat /proc/sys/kernel/random/uuid)
 read -p "Expired (Days) : " masaaktif
 hariini=`date -d "0 days" +"%Y-%m-%d"`
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
-sed -i '/#trojan-xtls$/a\#&# '"$user $exp"'\
+sed -i '/#trojan-xtls$/a\### '"$user $exp"'\
 },{"password": "'""$uuid""'","flow": "'""xtls-rprx-direct""'", "email": "'""$user""'"' /etc/xray/xtrojan.json
 
 trojanxtls="trojan://${uuid}@${domain}:$txtls?security=xtls&type=tcp&headerType=none&flow=xtls-rprx-direct#${user}"
@@ -40,6 +40,8 @@ trojanxtls="trojan://${uuid}@${domain}:$txtls?security=xtls&type=tcp&headerType=
 service cron restart
 systemctl restart xray.service
 systemctl restart xtrojan.service
+systemctl restart xvmess
+systemctl restart xvless
 clear
 echo -e ""
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
