@@ -642,8 +642,6 @@ wget -O vlessmenu "https://${wisnuvpnnnnn}/vlessmenu.sh"
 wget -O setmenu "https://${wisnuvpnnnnn}/setmenu.sh"
 wget -O menutester "https://${wisnuvpnnnnn}/menutester.sh"
 wget -O menu "https://${wisnuvpnnnnn}/menu.sh"
-wget -O menu-ss "https://${wisnuvpnnnnn}/menu-ss"
-wget -O menu-socks "https://${wisnuvpnnnnn}/menu-socks"
 wget -O status "https://${wisnuvpnnnnn}/status.sh"
 wget -O status2 "https://${wisnuvpnnnnn}/status2.sh"
 wget -O status3 "https://${wisnuvpnnnnn}/status3.sh"
@@ -824,8 +822,8 @@ screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7700 --max-clients 100
 screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7800 --max-clients 100
 screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7900 --max-clients 100
 echo "0 4 * * * root clearlog && reboot" >> /etc/crontab
-echo "0 4 * * * root xp" >> /etc/crontab
-echo "0 4 * * * root delexp" >> /etc/crontab
+echo "0 0 * * * root xp" >> /etc/crontab
+echo "0 0 * * * root delexp" >> /etc/crontab
 history -c
 echo "unset HISTFILE" >> /etc/profile
 
