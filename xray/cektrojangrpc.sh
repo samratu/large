@@ -1,5 +1,6 @@
 #!/bin/bash
 # My Telegram : https://t.me/zerossl
+#wisnucokrosatrio
 # ==========================================
 # Color
 RED='\033[0;31m'
@@ -10,9 +11,17 @@ BLUE='\033[0;34m'
 PURPLE='\033[0;35m'
 CYAN='\033[0;36m'
 LIGHT='\033[0;37m'
+# // Export Banner Status Information
+export EROR="[${RED} EROR ${NC}]"
+export INFO="[${YELLOW} INFO ${NC}]"
+export OKEY="[${GREEN} OKEY ${NC}]"
+export PENDING="[${YELLOW} PENDING ${NC}]"
+export SEND="[${YELLOW} SEND ${NC}]"
+export RECEIVE="[${YELLOW} RECEIVE ${NC}]"
 # ==========================================
 # Getting
 MYIP=$(wget -qO- ipinfo.io/ip);
+clear
 function cektrojangrpc() {
 clear
 echo -n > /tmp/other.txt
@@ -56,6 +65,9 @@ fi
 rm -rf /tmp/ipxray.txt
 done
 rm -rf /tmp/other.txt
+echo ""
+read -n 1 -s -r -p "Press any key to back on menu"
+menu
+}
 echo "----------------------------------------"
 echo "Script By @zerossl"
-rm -rf /tmp/other.txt
