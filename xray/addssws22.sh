@@ -22,7 +22,7 @@ ssudp="$(cat ~/log-install.txt | grep -w "SHADOWSOCKS UDP" | cut -d: -f2|sed 's/
 ssnew="$(cat ~/log-install.txt | grep -w "SHADOWSOCKS 2022" | cut -d: -f2|sed 's/ //g')"
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 		read -rp "Password : " -e user
-		CLIENT_EXISTS=$(grep -w $user /etc/xray/config.json | wc -l)
+		CLIENT_EXISTS=$(grep -w $user /etc/xray/xss.json | wc -l)
 
 		if [[ ${CLIENT_EXISTS} == '1' ]]; then
 			echo ""
@@ -36,7 +36,13 @@ password=$(openssl rand -base64 16)
 read -p "Expired (Days) : " masaaktif
 hariini=`date -d "0 days" +"%Y-%m-%d"`
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
-sed -i '/#xray-ss-new$/a\#&# '"$user $exp"'\
+sed -i '/#ss-tcp$/a\### '"$user $exp"'\
+},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xss.json
+sed -i '/#ss-tls$/a\### '"$user $exp"'\
+},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xss.json
+sed -i '/#ss-nontls$/a\### '"$user $exp"'\
+},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xss.json
+sed -i '/#ss-grpc$/a\### '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xss.json
 cat>/etc/xray/ss-$user-new.json<<EOF
       {
@@ -46,11 +52,12 @@ cat>/etc/xray/ss-$user-new.json<<EOF
       "protocol": "shadowsocks",
       "settings": {
         "method": "2022-blake3-aes-128-gcm",
-        "password": "${user}",
+        "password": "$passwd:${user}",
         "network": "tcp,udp"
       }
     },
 EOF
+
 tmp5=$(echo -n "2022-blake3-aes-128-gcm:$passwd:${user}@${domain}:$ssnew" | base64 -w0)
 shadowsocksnew="ss://$tmp5#$user"
 systemctl restart xray.service
