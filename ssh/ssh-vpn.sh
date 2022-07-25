@@ -533,6 +533,7 @@ wget -O portopenssh "https://${wisnuvpn}/portopenssh.sh"
 wget -O portsshnontls "https://${wisnuvpn}/portsshnontls.sh"
 wget -O portsshwstls "https://${wisnuvpn}/portsshwstls.sh"
 
+wget -O addss22 "https://${wisnuvpnn}/addss22.sh"
 wget -O addvmess "https://${wisnuvpnn}/addvmess.sh"
 wget -O addtrojantester "https://${wisnuvpnn}/addtrojantester.sh"
 wget -O addvmessgrpc "https://${wisnuvpnn}/addvmessgrpc.sh"
@@ -560,6 +561,7 @@ wget -O addtrojanquic "https://${wisnuvpnn}/addtrojanquic.sh"
 wget -O addsocks "https://${wisnuvpnn}/addsocks.sh"
 wget -O addssws "https://${wisnuvpnn}/addssws.sh"
 
+wget -O delss22 "https://${wisnuvpnn}/delss22.sh"
 wget -O delvlessquic "https://${wisnuvpnn}/delvlessquic.sh"
 wget -O deltrojanquic "https://${wisnuvpnn}/deltrojanquic.sh"
 wget -O delxrayss "https://${wisnuvpnn}/delxrayss.sh"
@@ -605,7 +607,9 @@ wget -O cektrojanhttp "https://${wisnuvpnn}/cektrojanhttp.sh"
 wget -O cektrojantester "https://${wisnuvpnn}/cektrojantester.sh"
 wget -O cekxrayss "https://${wisnuvpnn}/cekxrayss.sh"
 wget -O cektrojanhdua "https://${wisnuvpnn}/cektrojanhdua.sh"
+cekss22 "https://${wisnuvpnn}/cekss22.sh"
 
+wget -O renewss22 "https://${wisnuvpnn}/renewss22.sh"
 wget -O renewxrayss "https://${wisnuvpnn}/renewxrayss.sh"
 wget -O renewvmess "https://${wisnuvpnn}/renewvmess.sh"
 wget -O renewvmessgrpc "https://${wisnuvpnn}/renewvmessgrpc.sh"
@@ -725,10 +729,15 @@ chmod +x addtrojangrpc
 chmod +x addtrojanwss
 chmod +x addtrojanhttp
 chmod +x addtrojanhdua
+chmod +x addss22
+chmod +x renewss22
+
 chmod +x renewxrayss
 chmod +x addxtreme
 chmod +x cekxrayss
+chmod +x cekss22
 chmod +x delxrayss
+chmod +x delss22
 chmod +x delvmess
 chmod +x delvmessgrpc
 chmod +x delvmesshdua
