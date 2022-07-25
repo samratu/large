@@ -515,10 +515,6 @@ systemctl daemon-reload
 systemctl enable xray.service
 systemctl restart xray.service
 
-systemctl daemon-reload
-systemctl enable xray.service
-systemctl restart xray.service
-
 ##restart&start service
 systemctl daemon-reload
 systemctl enable xtrojan.service
