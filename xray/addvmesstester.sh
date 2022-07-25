@@ -270,7 +270,7 @@ until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 sed -i '/#vmess-http-tls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/xvmess.json
 sed -i '/#vmess-http-nontls$/a\### '"$user $exp"'\
-},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/satrio.json
+},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/xtrojan.json
 sed -i '/#vmess-http-nontls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
 cat>/etc/xray/vmess-$user-tls.json<<EOF
@@ -313,6 +313,7 @@ rm -rf /etc/xray/vmess-$user-nontls.json
 systemctl restart xvless
 systemctl restart xray.service
 systemctl restart xvmess
+systemctl restart xtrojan
 service cron restart
 clear
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
@@ -334,21 +335,21 @@ echo -e "Path WS  :/shanum"
 echo -e "UserID  :${uuid}"
 echo -e "Dibuat  :$hariini"
 echo -e "Kadaluarsa  :$exp"
-echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "><><><><><><><><><><><><><><"
 #echo -e "VMESS QUIC TLS: ${vmessquic}"
-#echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+#echo -e "><><><><><><><><><><><><><><"
 echo -e "VMESS WS TLS: ${vmess1}"
-echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "><><><><><><><><><><><><><><"
 echo -e "VMESS WS NONTLS: ${vmess2}"
-echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "><><><><><><><><><><><><><><"
 echo -e "VMESS GRPC TLS: ${vmessgrpc}"
-echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "><><><><><><><><><><><><><><"
 echo -e "VMESS GRPC NONTLS: ${vmessgrpcnon}"
-echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "><><><><><><><><><><><><><><"
 echo -e "VMESS H2C TLS: ${vmesshdua}"
-echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "><><><><><><><><><><><><><><"
 echo -e "VMESS HTTP TLS: ${vmesshttp}"
-echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "><><><><><><><><><><><><><><"
 echo -e "VMESS HTTP NONTLS: ${vmesshttpnon}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m🔰LUXURY EDITION ZEROSSL🔰\e[m"   
