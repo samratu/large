@@ -81,15 +81,10 @@ sed -i '/#trojan-http-tls$/a\### '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
 sed -i '/#trojan-http-nontls$/a\### '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
-sed -i '/#xray-ss-udp$/a\### '"$user $exp"'\
-},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
-sed -i '/#xray-ss-tls$/a\### '"$user $exp"'\
-},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
-sed -i '/#xray-ss-nontls$/a\### '"$user $exp"'\
-},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
-sed -i '/"'""$uuid""'"$/a\,"'""$uuid""'"' /etc/trojan-go/config.json
-exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
+sed -i '/#trojan-http-nontls$/a\### '"$user $exp"'\
+},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
 
+exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 hariini=`date -d "0 days" +"%Y-%m-%d"`
 echo -e "### $user $exp" >> /etc/trojan-go/akun.conf
 systemctl restart trojan-go.service
@@ -132,25 +127,25 @@ echo -e "Port QUIC  :${tquic}"
 echo -e "Sandi :${uuid}"
 echo -e "Dibuat  :$hariini"
 echo -e "Kadaluarsa  :$exp"
-echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "<><><><><><><><><><><><><><>"
 echo -e "TROJAN QUIC: ${trojanquic}"
-echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "<><><><><><><><><><><><><><>"
 echo -e "TROJAN GRPC: ${trojangrpc}"
-echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "<><><><><><><><><><><><><><>"
 echo -e "TROJAN XTLS: ${trojanxtls}"
-echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "<><><><><><><><><><><><><><>"
 echo -e "TROJAN GFW: ${trojangfw}"
-echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "<><><><><><><><><><><><><><>"
 echo -e "TROJAN H2C: ${trojanhdua}"
-echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "<><><><><><><><><><><><><><>"
 echo -e "TROJAN WS TLS: ${trojantls}"
-echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "<><><><><><><><><><><><><><>"
 echo -e "TROJAN WS NONTLS: ${trojannontls}"
-echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "<><><><><><><><><><><><><><>"
 echo -e "TROJAN HTTP TLS: ${trojanhttp}"
-echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "<><><><><><><><><><><><><><>"
 echo -e "TROJAN HTTP NONTLS: ${trojanhttpnon}"
-echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "<><><><><><><><><><><><><><>"
 echo -e "TROJAN GO: ${trojango}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m🔰LUXURY EDITION ZEROSSL🔰\e[m"   
