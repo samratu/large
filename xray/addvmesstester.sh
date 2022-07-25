@@ -120,6 +120,16 @@ until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 			exit 1
 		fi
 	done
+until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
+		read -rp "User: " -e user
+		CLIENT_EXISTS=$(grep -w $user /etc/xray/xtrojan.json | wc -l)
+
+		if [[ ${CLIENT_EXISTS} == '1' ]]; then
+			echo ""
+			echo "A Client Username Was Already Created, Please Enter New Username"
+			exit 1
+		fi
+	done
 sed -i '/#vmess-grpc-tls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
 sed -i '/#vmess-grpc-tls$/a\### '"$user $exp"'\
@@ -197,16 +207,20 @@ until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 	done
 sed -i '/#vmess-quic$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/xvless.json
+sed -i '/#vmess-quic$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/xtrojan.json
+sed -i '/#vmess-quic$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/xvmess.json
 cat>/etc/xray/vmess-$user-tls.json<<EOF
       {
       "v": "4",
       "ps": "🔰VMESS QUIC TLS ${user}",
-      "add": "${domain}",
+      "add": "${MYIP}",
       "port": "${vmquic}",
       "id": "${uuid}",
       "aid": "0",
       "net": "quic",
-      "path": "shanumquic",
+      "path": "/shanumquic",
       "type": "none",
       "host": "$domain",
       "tls": "tls"
