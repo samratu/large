@@ -15,11 +15,10 @@ LIGHT='\033[0;37m'
 MYIP=$(wget -qO- ipinfo.io/ip);
 clear
 domain=$(cat /etc/xray/domain)
-sstls="$(cat ~/log-install.txt | grep -w "SHADOWSOCKS WS TLS" | cut -d: -f2|sed 's/ //g')"
-sstcp="$(cat ~/log-install.txt | grep -w "SHADOWSOCKS TCP" | cut -d: -f2|sed 's/ //g')"
-ssnontls="$(cat ~/log-install.txt | grep -w "SHADOWSOCKS WS NON TLS" | cut -d: -f2|sed 's/ //g')"
-ssudp="$(cat ~/log-install.txt | grep -w "SHADOWSOCKS UDP" | cut -d: -f2|sed 's/ //g')"
-ssnew="$(cat ~/log-install.txt | grep -w "SHADOWSOCKS 2022" | cut -d: -f2|sed 's/ //g')"
+sstls="$(cat ~/log-install.txt | grep -w "SHADOWSOCKS 2022 WS TLS" | cut -d: -f2|sed 's/ //g')"
+sstcp="$(cat ~/log-install.txt | grep -w "SHADOWSOCKS 2022 TCP" | cut -d: -f2|sed 's/ //g')"
+ssnontls="$(cat ~/log-install.txt | grep -w "SHADOWSOCKS 2022 WS NON TLS" | cut -d: -f2|sed 's/ //g')"
+
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 		read -rp "Password : " -e user
 		CLIENT_EXISTS=$(grep -w $user /etc/xray/xss.json | wc -l)
@@ -44,8 +43,8 @@ sed -i '/#ss-nontls$/a\### '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xss.json
 sed -i '/#ss-grpc$/a\### '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xss.json
-cat>/etc/xray/ss-$user-new.json<<EOF
-      {
+cat>/etc/xray/ss-$user-tcp.json<<EOF
+{
   "inbounds": [
     {
       "port": 212,
@@ -53,33 +52,99 @@ cat>/etc/xray/ss-$user-new.json<<EOF
       "settings": {
         "method": "2022-blake3-aes-128-gcm",
         "password": "$passwd:${user}",
-        "network": "tcp,udp"
+        "network": "tcp",
+        "port": "$sstcp",
+        "security": "tls"
       }
-    },
+    }
 EOF
 
-tmp5=$(echo -n "2022-blake3-aes-128-gcm:$passwd:${user}@${domain}:$ssnew" | base64 -w0)
-shadowsocksnew="ss://$tmp5#$user"
+cat>/etc/xray/ss-$user-tls.json<<EOF
+{
+  "inbounds": [
+    {
+      "port": 2053,
+      "protocol": "shadowsocks",
+      "settings": {
+        "method": "2022-blake3-aes-128-gcm",
+        "password": "$passwd:${user}",
+        "network": "ws",
+        "port": "$sstls",
+        "path": "/gandring-ws",
+        "host": "$domain",
+        "security": "tls"
+      }
+    }
+EOF
+
+cat>/etc/xray/ss-$user-nontls.json<<EOF
+{
+  "inbounds": [
+    {
+      "port": 2052,
+      "protocol": "shadowsocks",
+      "settings": {
+        "method": "2022-blake3-aes-128-gcm",
+        "password": "$passwd:${user}",
+        "network": "ws",
+        "port": "$ssnontls",
+        "path": "/gandring-ws",
+        "host": "$domain",
+        "security": "none"
+      }
+    }
+EOF
+
+cat>/etc/xray/ss-$user-tls.json<<EOF
+{
+  "inbounds": [
+    {
+      "port": 2096,
+      "protocol": "shadowsocks",
+      "settings": {
+        "method": "2022-blake3-aes-128-gcm",
+        "password": "$passwd:${user}",
+        "network": "grpc",
+        "port": "$ssgrpc",
+        "path": "/gandring-grpc",
+        "host": "$domain",
+        "security": "tls"
+      }
+    }
+EOF
+
+tmp1=$(echo -n "2022-blake3-aes-128-gcm:$passwd:${user}@${domain}:$sstcp" | base64 -w0)
+tmp2=$(echo -n "2022-blake3-aes-128-gcm:$passwd:${user}@${domain}:$sstls" | base64 -w0)
+tmp3=$(echo -n "2022-blake3-aes-128-gcm:$passwd:${user}@${domain}:$ssnontls" | base64 -w0)
+tmp4=$(echo -n "2022-blake3-aes-128-gcm:$passwd:${user}@${domain}:$ssgrpc" | base64 -w0)
+
+shadowsocks1="ss://$tmp1#$user"
+shadowsocks2="ss://$tmp2#$user"
+shadowsocks3="ss://$tmp3#$user"
+shadowsocks4="ss://$tmp4#$user"
+
 systemctl restart xray.service
 systemctl restart xss.service
 systemctl restart xtrojan.service
 service cron restart
 clear
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "\033[1;46m      🔰AKUN SHADOWSOCKS 🔰       \e[m"   
+echo -e "\033[1;46m    🔰AKUN SHADOWSOCKS 2022🔰     \e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "Remarks     : ${user}"
 echo -e "IP/Host     : ${MYIP}"
 echo -e "Address     : ${domain}"
-#echo -e "Port TLS    : ${tls}"
-echo -e "Port SS     : $ssnew"
+echo -e "Port SS TCP : $sstcp"
+echo -e "Port SS WS TLS : $sstls"
+echo -e "Port SS WS NON TLS : $ssnontls"
+echo -e "Port SS GRPC  : $ssgrpc"
 echo -e "Security    : 2022-blake3-aes-128-gcm"
 echo -e "Network     : tcp,udp"
 echo -e "Password    : ${user}"
 echo -e "Created     : $hariini"
 echo -e "Expired     : $exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "Link SS new : ${shadowsocksnew}"
+echo -e "SS 2022 TCP: ${shadowsocksnew}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m  🔰LUXURY EDITION BY ZEROSSL🔰   \e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
