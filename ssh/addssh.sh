@@ -1,4 +1,4 @@
-5#!/bin/bash
+#!/bin/bash
 
 # ==========================================
 # Color
@@ -76,11 +76,8 @@ echo -e "OVPN TCP:http://$MYIP:88/tcp.ovpn"
 echo -e "OVPN UDP:http://$MYIP:88/udp.ovpn"
 echo -e "OVPN SSL:http://$MYIP:88/ssl.ovpn"
 echo -e "<><><><><><><><><><><><><><>"
-echo -e "Payload SSH WEBSOCKET"
-echo -e "GET wss://bug.com/ HTTP/1.1[crlf]Host:[host][crlf]Connection: Keep-Alive[crlf]User-Agent: [ua][crlf]Upgrade:websocket[crlf][crlf]"
-echo -e "<><><><><><><><><><><><><><>"
-echo -e "Payload OVPN WEBSOCKET"
-echo -e "GET / HTTP/1.1[crlf]Host: $domain[crlf]Upgrade: websocket[crlf][crlf]"
+echo -e "Payload SSH & OVPN WEBSOCKET"
+GET /HTTP/1.1[crlf]Host: ${domain}[crlf]Upgrade:websocket[crlf]Connection: Keep-Alive[crlf]User-Agent: [ua][crlf][crlf]"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m🔰LUXURY EDITION ZEROSSL🔰\e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
