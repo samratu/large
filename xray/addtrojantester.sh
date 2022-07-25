@@ -60,23 +60,23 @@ exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#trojan-grpc$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
 sed -i '/#trojan-grpc$/a\#&# '"$user $exp"'\
-},{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
+},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvmess.json
 sed -i '/#trojan-xtls$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","flow": "'""xtls-rprx-direct""'", "email": "'""$user""'"' /etc/xray/xtrojan.json
 sed -i '/#trojan-hdua$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
 sed -i '/#trojan-hdua$/a\#&# '"$user $exp"'\
-},{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
+},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvmess.json
 sed -i '/#trojan-tls$/a\#&# '"$user $exp"'\
-},{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
+},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvmess.json
 sed -i '/#trojan-gfw$/a\#&# '"$user $exp"'\
-},{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
+},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvmess.json
 sed -i '/#trojan-nontls$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
 sed -i '/#trojan-quic$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
 sed -i '/#trojan-http-tls$/a\#&# '"$user $exp"'\
-},{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/xvmess.json
+},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvmess.json
 sed -i '/#trojan-http-tls$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
 sed -i '/#trojan-http-nontls$/a\#&# '"$user $exp"'\
@@ -89,7 +89,7 @@ sed -i '/#xray-ss-nontls$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
 sed -i '/"'""$uuid""'"$/a\,"'""$uuid""'"' /etc/trojan-go/config.json
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
-#exp2=`date -d "$masaaktif seconds" +"%Y-%m-%d"`
+
 hariini=`date -d "0 days" +"%Y-%m-%d"`
 echo -e "### $user $exp" >> /etc/trojan-go/akun.conf
 systemctl restart trojan-go.service
