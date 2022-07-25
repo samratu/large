@@ -390,6 +390,7 @@ Documentation=https://t.me/zerossl
 After=network.target nss-lookup.target
 
 [Service]
+User=www-data
 User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
@@ -411,6 +412,7 @@ Documentation=https://t.me/zerossl
 After=network.target nss-lookup.target
 
 [Service]
+User=www-data
 User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
@@ -433,6 +435,7 @@ Documentation=https://t.me/zerossl
 After=network.target nss-lookup.target
 
 [Service]
+User=www-data
 User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
@@ -455,6 +458,7 @@ Documentation=https://t.me/zerossl
 After=network.target nss-lookup.target
 
 [Service]
+User=www-data
 User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
@@ -477,6 +481,7 @@ Documentation=https://t.me/zerossl
 After=network.target nss-lookup.target
 
 [Service]
+User=www-data
 User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
