@@ -10,63 +10,70 @@ BLUE='\033[0;34m'
 PURPLE='\033[0;35m'
 CYAN='\033[0;36m'
 LIGHT='\033[0;37m'
-# // Export Banner Status Information
-export EROR="[${RED} EROR ${NC}]"
-export INFO="[${YELLOW} INFO ${NC}]"
-export OKEY="[${GREEN} OKEY ${NC}]"
-export PENDING="[${YELLOW} PENDING ${NC}]"
-export SEND="[${YELLOW} SEND ${NC}]"
-export RECEIVE="[${YELLOW} RECEIVE ${NC}]"
 # ==========================================
 # Getting
-MYIP=$(wget -qO- ipinfo.io/ip);
+MYIP=$(wget -qO- https://ipv4.icanhazip.com);
+MYIP6=$(wget -qO- https://ipv6.icanhazip.com);
 clear
-function cektrojangrpc() {
+domain=$(cat /etc/xray/domain)
+
+uuid=$(cat /proc/sys/kernel/random/uuid)
+tgrpc="$(cat ~/log-install.txt | grep -w "TROJAN GRPC" | cut -d: -f2|sed 's/ //g')"
+until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${user_EXISTS} == '0' ]]; do
+		read -rp "Password : " -e user
+		user_EXISTS=$(grep -w $user /etc/xray/xtrojan.json | wc -l)
+
+		if [[ ${user_EXISTS} == '1' ]]; then
+			echo ""
+			echo -e "Username ${RED}${user}${NC} Already On VPS Please Choose Another"
+			exit 1
+		fi
+	done
+uuid=$(cat /proc/sys/kernel/random/uuid)
+tgrpc="$(cat ~/log-install.txt | grep -w "TROJAN GRPC" | cut -d: -f2|sed 's/ //g')"
+until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${user_EXISTS} == '0' ]]; do
+		read -rp "Password : " -e user
+		user_EXISTS=$(grep -w $user /etc/xray/xvmess.json | wc -l)
+
+		if [[ ${user_EXISTS} == '1' ]]; then
+			echo ""
+			echo -e "Username ${RED}${user}${NC} Already On VPS Please Choose Another"
+			exit 1
+		fi
+	done
+uuid=$(cat /proc/sys/kernel/random/uuid)
+read -p "Expired (Days) : " masaaktif
+#read -p "Expired (Seconds) : " masaaktif
+hariini=`date -d "0 days" +"%Y-%m-%d"`
+exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
+#exp2=`date -d "$masaaktif seconds" +"%Y-%m-%d"`
+sed -i '/#trojan-grpc$/a\### '"$user $exp"'\
+},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
+sed -i '/#trojan-grpc$/a\### '"$user $exp"'\
+},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvmess.json
+trojangrpc="trojan://${uuid}@${domain}:$tgrpc?mode=gun&security=tls&type=grpc&serviceName=/gandringgrpc&sni=${domain}#%F0%9F%94%B0TROJAN+GRPC+TLS+${user}"
+systemctl restart xray.service
+systemctl restart xtrojan.service
+systemctl restart xvless
+systemctl restart xvmess
+service cron restart
 clear
-echo -n > /tmp/other.txt
-data=( `cat /etc/xray/config.json | grep '###' | cut -d ' ' -f 2 | sort | uniq`);
-data=( `cat /etc/xray/xvmess.json | grep '###' | cut -d ' ' -f 2 | sort | uniq`);
-data=( `cat /etc/xray/xvless.json | grep '###' | cut -d ' ' -f 2 | sort | uniq`);
-data=( `cat /etc/xray/xtrojan.json | grep '###' | cut -d ' ' -f 2 | sort | uniq`);
-data=( `cat /etc/xray/xss.json | grep '###' | cut -d ' ' -f 2 | sort | uniq`);
-echo "-------------------------------";
-echo "-----=[ XRAY User Login ]=-----";
-echo "-------------------------------";
-for akun in "${data[@]}"
-do
-if [[ -z "$akun" ]]; then
-akun="tidakada"
-fi
-echo -n > /tmp/ipxray.txt
-data2=( `cat /var/log/xray/access.log | tail -n 500 | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | sort | uniq`);
-for ip in "${data2[@]}"
-do
-jum=$(cat /var/log/xray/access.log | grep -w "$akun" | tail -n 500 | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | grep -w "$ip" | sort | uniq)
-if [[ "$jum" = "$ip" ]]; then
-echo "$jum" >> /tmp/ipxray.txt
-else
-echo "$ip" >> /tmp/other.txt
-fi
-jum2=$(cat /tmp/ipxray.txt)
-sed -i "/$jum2/d" /tmp/other.txt > /dev/null 2>&1
-done
-jum=$(cat /tmp/ipxray.txt)
-if [[ -z "$jum" ]]; then
-echo > /dev/null
-else
-jum2=$(cat /tmp/ipxray.txt | nl)
-lastlogin=$(cat /var/log/xray/access.log | grep -w "$akun" | tail -n 500 | cut -d " " -f 2 | tail -1)
-echo -e "user :${GREEN} ${akun} ${NC}
-${RED}Online Jam ${NC}: ${lastlogin} wib";
-echo -e "$jum2";
-echo "-------------------------------"
-fi
-rm -rf /tmp/ipxray.txt
-done
-rm -rf /tmp/other.txt
-echo ""
-read -n 1 -s -r -p "Press any key to back on menu"
-menu
-}
-echo "----------------------------------------"
-echo "Script By @zerossl"
+echo -e ""
+echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "\033[1;46m  🔰 AKUN TROJAN GRPC 🔰  \e[m"       
+echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "Nama  :${user}"
+echo -e "IP/Host  :${MYIP}"
+echo -e "Address  :${domain}"
+echo -e "Protocol  :grpc"
+echo -e "ServiceName  :/gandringgrpc"
+echo -e "Port  :${tgrpc}"
+echo -e "Password  :${uuid}"
+echo -e "Created  :$hariini"
+echo -e "Expired  :$exp"
+#echo -e "Expired     :$exp2"
+echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "TROJAN GRPC:  ${trojangrpc}"
+echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "\033[1;46m🔰LUXURY EDITION ZEROSSL🔰\e[m"   
+echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
