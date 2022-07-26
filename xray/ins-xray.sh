@@ -157,6 +157,52 @@ cat > /etc/xray/config.json << END
       }
     }
 END
+#path_key="/root/.acme.sh/$domain_ecc/$domain.key"
+# Buat Config Xray
+cat > /usr/local/etc/xray/%i.json << END
+{
+  "log": {
+    "access": "/var/log/xray/access.log",
+    "error": "/var/log/xray/error.log",
+    "loglevel": "info"
+  },
+  "inbounds": [
+    {
+      "port": 2095,
+      "protocol": "vmess",
+      "settings": {
+        "clients": [
+          {
+            "id": "${uuid1}",
+            "alterId": 32
+#xray-vmess-tls
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "certificates": [
+            {
+              "certificateFile": "${path_crt}",
+              "keyFile": "${path_key}"
+            }
+          ]
+        },
+        "tcpSettings": {},
+        "kcpSettings": {},
+        "httpSettings": {},
+        "wsSettings": {
+          "path": "/vmess/",
+          "headers": {
+            "Host": ""
+          }
+        },
+        "quicSettings": {}
+      }
+    }
+END
 
 uuid=$(cat /proc/sys/kernel/random/uuid)
 domain=$(cat /root/domain)
@@ -383,6 +429,28 @@ cat > /etc/xray/xss.json << END
 END
 
 # / / Installation Xray Service
+cat > /etc/systemd/system/xray@.service << END
+[Unit]
+Description=Xray Service
+Documentation=https://github.com/xtls
+After=network.target nss-lookup.target
+
+[Service]
+User=www-data
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+NoNewPrivileges=true
+ExecStart=/usr/local/bin/xray run -config /usr/local/etc/xray/%i.json
+Restart=on-failure
+RestartPreventExitStatus=23
+LimitNPROC=10000
+LimitNOFILE=1000000
+
+[Install]
+WantedBy=multi-user.target
+END
+
+# / / Installation Xray Service
 cat > /etc/systemd/system/xray.service << END
 [Unit]
 Description=XRAY ROUTING DAM COLO PENGKOL BY WISNU
@@ -390,13 +458,15 @@ Documentation=https://t.me/zerossl
 After=network.target nss-lookup.target
 
 [Service]
-User=root
+User=www-data
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
-ExecStart=/usr/local/bin/xray -config /etc/xray/config.json
+ExecStart=/usr/local/bin/xray run -config /etc/xray/config.json
 Restart=on-failure
 RestartPreventExitStatus=23
+LimitNPROC=10000
+LimitNOFILE=1000000
 
 [Install]
 WantedBy=multi-user.target
@@ -409,13 +479,15 @@ Documentation=https://t.me/zerossl
 After=network.target nss-lookup.target
 
 [Service]
-User=root
+User=www-data
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
-ExecStart=/usr/local/bin/xray -config /etc/xray/xvmess.json
+ExecStart=/usr/local/bin/xray run -config /etc/xray/xvmess.json
 Restart=on-failure
 RestartPreventExitStatus=23
+LimitNPROC=10000
+LimitNOFILE=1000000
 
 [Install]
 WantedBy=multi-user.target
@@ -429,13 +501,15 @@ Documentation=https://t.me/zerossl
 After=network.target nss-lookup.target
 
 [Service]
-User=root
+User=www-data
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
-ExecStart=/usr/local/bin/xray -config /etc/xray/xss.json
+ExecStart=/usr/local/bin/xray run -config /etc/xray/xss.json
 Restart=on-failure
 RestartPreventExitStatus=23
+LimitNPROC=10000
+LimitNOFILE=1000000
 
 [Install]
 WantedBy=multi-user.target
@@ -449,13 +523,15 @@ Documentation=https://t.me/zerossl
 After=network.target nss-lookup.target
 
 [Service]
-User=root
+User=www-data
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
-ExecStart=/usr/local/bin/xray -config /etc/xray/xtrojan.json
+ExecStart=/usr/local/bin/xray run -config /etc/xray/xtrojan.json
 Restart=on-failure
 RestartPreventExitStatus=23
+LimitNPROC=10000
+LimitNOFILE=1000000
 
 [Install]
 WantedBy=multi-user.target
@@ -469,13 +545,15 @@ Documentation=https://t.me/zerossl
 After=network.target nss-lookup.target
 
 [Service]
-User=root
+User=www-data
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
-ExecStart=/usr/local/bin/xray -config /etc/xray/xvless.json
+ExecStart=/usr/local/bin/xray run -config /etc/xray/xvless.json
 Restart=on-failure
 RestartPreventExitStatus=23
+LimitNPROC=10000
+LimitNOFILE=1000000
 
 [Install]
 WantedBy=multi-user.target
@@ -488,23 +566,31 @@ systemctl restart xray.service
 
 ##restart&start service
 systemctl daemon-reload
+systemctl enable xray@xtrojan.service
+systemctl restart xray@xtrojan.service
 systemctl enable xtrojan.service
 systemctl restart xtrojan.service
 
 ##restart&start service
 systemctl daemon-reload
+systemctl enable xray@xvless.service
+systemctl restart xray@xvless.service
 systemctl enable xvless.service
 systemctl start xvless.service
 systemctl restart xvless.service
 
 ##restart&start service
 systemctl daemon-reload
+systemctl enable xray@xss.service
+systemctl restart xray@xss.service
 systemctl enable xss.service
 systemctl start xss.service
 systemctl restart xss.service
 
 ##restart&start service
 systemctl daemon-reload
+systemctl enable xray@xvmess.service
+systemctl restart xray@xvmess.service
 systemctl enable xvmess.service
 systemctl start xvmess.service
 systemctl restart xvmess.service
@@ -617,7 +703,7 @@ cat > /etc/trojan-go/config.json << END
 {
   "run_type": "server",
   "local_addr": "0.0.0.0",
-  "local_port": 2082,
+  "local_port": 2083,
   "remote_addr": "127.0.0.1",
   "remote_port": 88,
   "log_level": 1,
@@ -659,7 +745,7 @@ cat > /etc/trojan-go/config.json << END
   },
   "websocket": {
     "enabled": true,
-    "path": "/trojango",
+    "path": "/gandring-go",
     "host": "$domain"
   },
     "api": {
@@ -685,13 +771,15 @@ Documentation=t.me/zerossl
 After=network.target nss-lookup.target
 
 [Service]
-User=root
+Type=simple
+StandardError=journal
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
-ExecStart=/usr/local/bin/trojan-go -config /etc/trojan-go/config.json
+ExecStart="/usr/local/bin/trojan-go" -config "/etc/trojan-go/config.json"
+LimitNOFILE=51200
 Restart=on-failure
-RestartPreventExitStatus=23
+RestartSec=1s
 
 [Install]
 WantedBy=multi-user.target
