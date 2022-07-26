@@ -199,68 +199,9 @@ echo "status" >> .profile
 
 # install webserver
 apt -y install nginx php php-fpm php-cli php-mysql libxml-parser-perl
-cd
-sleep 1
-echo -e "[ ${green}INFO$NC ] Settings nginx" 
 rm /etc/nginx/sites-enabled/default >/dev/null 2>&1
 rm /etc/nginx/sites-available/default >/dev/null 2>&1
-
-cat>  /etc/nginx/nginx.conf <<-END
-user www-data;
-
-worker_processes 1;
-pid /var/run/nginx.pid;
-
-events {
-	multi_accept on;
-    worker_connections 1024;
-}
-
-http {
-	gzip on;
-	gzip_vary on;
-	gzip_comp_level 5;
-	gzip_types    text/plain application/x-javascript text/xml text/css;
-
-	autoindex on;
-    sendfile on;
-    tcp_nopush on;
-    tcp_nodelay on;
-    keepalive_timeout 65;
-    types_hash_max_size 2048;
-    server_tokens off;
-    include /etc/nginx/mime.types;
-    default_type application/octet-stream;
-    access_log /var/log/nginx/access.log;
-    error_log /var/log/nginx/error.log;
-    client_max_body_size 32M;
-	client_header_buffer_size 8m;
-	large_client_header_buffers 8 8m;
-
-	fastcgi_buffer_size 8m;
-	fastcgi_buffers 8 8m;
-
-	fastcgi_read_timeout 600;
-
-	set_real_ip_from 204.93.240.0/24;
-	set_real_ip_from 204.93.177.0/24;
-	set_real_ip_from 199.27.128.0/21;
-	set_real_ip_from 173.245.48.0/20;
-	set_real_ip_from 103.21.244.0/22;
-	set_real_ip_from 103.22.200.0/22;
-	set_real_ip_from 103.31.4.0/22;
-	set_real_ip_from 141.101.64.0/18;
-	set_real_ip_from 108.162.192.0/18;
-	set_real_ip_from 190.93.240.0/20;
-	set_real_ip_from 188.114.96.0/20;
-	set_real_ip_from 197.234.240.0/22;
-	set_real_ip_from 198.41.128.0/17;
-	real_ip_header     CF-Connecting-IP;
-
-  include /etc/nginx/conf.d/*.conf;
-}
-END
-#curl https://${wisnuvpn}/nginx.conf > /etc/nginx/nginx.conf
+curl https://${wisnuvpn}/nginx.conf > /etc/nginx/nginx.conf
 #curl https://${wisnuvpn}/default.conf > /etc/nginx/conf.d/default.conf
 curl https://${wisnuvpn}/vps.conf > /etc/nginx/conf.d/vps.conf
 sed -i 's/listen = \/var\/run\/php-fpm.sock/listen = 127.0.0.1:9000/g' /etc/php/fpm/pool.d/www.conf
@@ -306,7 +247,7 @@ echo "Port 2242" >> /etc/ssh/sshd_config
 # install dropbear
 apt -y install dropbear
 sed -i 's/NO_START=1/NO_START=0/g' /etc/default/dropbear
-sed -i 's/DROPBEAR_PORT=22/DROPBEAR_PORT=700/g' /etc/default/dropbear
+sed -i 's/DROPBEAR_PORT=22/DROPBEAR_PORT=200/g' /etc/default/dropbear
 sed -i 's/DROPBEAR_EXTRA_ARGS=/DROPBEAR_EXTRA_ARGS="-p 300 -p 1153"/g' /etc/default/dropbear
 echo "/bin/false" >> /etc/shells
 echo "/usr/sbin/nologin" >> /etc/shells
@@ -370,7 +311,7 @@ RUN=yes
 # systemd users: don't forget to modify /lib/systemd/system/sslh.service
 DAEMON=/usr/sbin/sslh
 
-DAEMON_OPTS="--user sslh --listen 0.0.0.0:2087 --ssl 127.0.0.1:500 --ssh 127.0.0.1:300 ---openvpn 127.0.0.1:1194 --ssh 127.0.0.1:700 --http 127.0.0.1:2086 --pidfile /var/run/sslh/sslh.pid -n"
+DAEMON_OPTS="--user sslh --listen 0.0.0.0:2087 --ssl 127.0.0.1:500 --ssh 127.0.0.1:300 ---openvpn 127.0.0.1:700 --http 127.0.0.1:2086 --pidfile /var/run/sslh/sslh.pid -n"
 
 END
 
@@ -432,11 +373,8 @@ connect = 127.0.0.1:2087
 
 [openvpn]
 accept = 900
-connect = 127.0.0.1:1194
+connect = 127.0.0.1:700
 
-[stunnelws]
-accept = 222
-connect = 700
 END
 
 # make a certificate
@@ -739,8 +677,6 @@ wget -O status "https://${wisnuvpnnnnn}/status.sh"
 wget -O status2 "https://${wisnuvpnnnnn}/status2.sh"
 wget -O status3 "https://${wisnuvpnnnnn}/status3.sh"
 wget -O status4 "https://${wisnuvpnnnnn}/status4.sh"
-wget -O ins-sshws "https://${wisnuvpnnnnn}/ins-sshws.sh"
-chmod +x ins-sshws
 
 chmod +x addssh
 chmod +x trialssh
