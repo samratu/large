@@ -41,6 +41,11 @@ echo -e "26\e[1;33m) Hapus Akun TROJAN QUIC \e[m"
 echo -e "27\e[1;33m) Perpanjang Masa Aktif Akun TROJAN QUIC \e[m"
 echo -e "28\e[1;33m) Cek User Login TROJAN QUIC \e[m"
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "29\e[1;33m) Buat Akun TROJAN KCP \e[m"
+echo -e "30\e[1;33m) Hapus Akun TROJAN KCP  \e[m"
+echo -e "31\e[1;33m) Perpanjang Masa Aktif Akun TROJAN KCP \e[m"
+echo -e "32\e[1;33m) Cek User Login TROJAN KCP \e[m"
+echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "00\e[1;31m) Menu Utama \e[m"
 echo -e "xx\e[1;31m) Keluar \e[m"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
@@ -132,6 +137,18 @@ renewtrojanquic
 ;;
 28)
 cektrojanquic
+;;
+29)
+addtrojankcp
+;;
+30)
+deltrojankcp
+;;
+31)
+renewtrojankcp
+;;
+32)
+cektrojankcp
 ;;
 0)
 menu
