@@ -35,7 +35,7 @@ exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 hariini=`date -d "0 days" +"%Y-%m-%d"`
 echo -e "### $user $exp" >> /etc/trojan-go/akun.conf
 systemctl restart trojan-go.service
-link="trojan-go://${uuid}@${domain}:${trgo}/?sni=${domain}&type=ws&host=${domain}&path=/gandring&encryption=none#$user"
+link="trojan-go://${uuid}@${domain}:${trgo}/?sni=${domain}&type=ws&host=${domain}&path=/gandring-go&encryption=none#$user"
 clear
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m      🔰 AKUN TROJAN-GO 🔰        \e[m"   
@@ -46,7 +46,7 @@ echo -e "Address: ${domain}"
 echo -e "Port: ${trgo}"
 echo -e "Key: ${uuid}"
 echo -e "Encryption: none"
-echo -e "Path: /gandring"
+echo -e "Path: /gandring-go"
 echo -e "Created: $hariini"
 echo -e "Expired: $exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
