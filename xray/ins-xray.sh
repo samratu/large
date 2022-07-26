@@ -390,16 +390,13 @@ Documentation=https://t.me/zerossl
 After=network.target nss-lookup.target
 
 [Service]
-User=www-data
 User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
-ExecStart=/usr/local/bin/xray run -config /etc/xray/config.json
+ExecStart=/usr/local/bin/xray -config /etc/xray/config.json
 Restart=on-failure
 RestartPreventExitStatus=23
-LimitNPROC=10000
-LimitNOFILE=1000000
 
 [Install]
 WantedBy=multi-user.target
@@ -412,16 +409,13 @@ Documentation=https://t.me/zerossl
 After=network.target nss-lookup.target
 
 [Service]
-User=www-data
 User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
-ExecStart=/usr/local/bin/xray run -config /etc/xray/xvmess.json
+ExecStart=/usr/local/bin/xray -config /etc/xray/xvmess.json
 Restart=on-failure
 RestartPreventExitStatus=23
-LimitNPROC=10000
-LimitNOFILE=1000000
 
 [Install]
 WantedBy=multi-user.target
@@ -435,16 +429,13 @@ Documentation=https://t.me/zerossl
 After=network.target nss-lookup.target
 
 [Service]
-User=www-data
 User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
-ExecStart=/usr/local/bin/xray run -config /etc/xray/xss.json
+ExecStart=/usr/local/bin/xray -config /etc/xray/xss.json
 Restart=on-failure
 RestartPreventExitStatus=23
-LimitNPROC=10000
-LimitNOFILE=1000000
 
 [Install]
 WantedBy=multi-user.target
@@ -458,16 +449,13 @@ Documentation=https://t.me/zerossl
 After=network.target nss-lookup.target
 
 [Service]
-User=www-data
 User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
-ExecStart=/usr/local/bin/xray run -config /etc/xray/xtrojan.json
+ExecStart=/usr/local/bin/xray -config /etc/xray/xtrojan.json
 Restart=on-failure
 RestartPreventExitStatus=23
-LimitNPROC=10000
-LimitNOFILE=1000000
 
 [Install]
 WantedBy=multi-user.target
@@ -481,16 +469,13 @@ Documentation=https://t.me/zerossl
 After=network.target nss-lookup.target
 
 [Service]
-User=www-data
 User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
-ExecStart=/usr/local/bin/xray run -config /etc/xray/xvless.json
+ExecStart=/usr/local/bin/xray -config /etc/xray/xvless.json
 Restart=on-failure
 RestartPreventExitStatus=23
-LimitNPROC=10000
-LimitNOFILE=1000000
 
 [Install]
 WantedBy=multi-user.target
@@ -498,6 +483,7 @@ END
 
 systemctl daemon-reload
 systemctl enable xray.service
+systemctl start xray.service
 systemctl restart xray.service
 
 ##restart&start service
@@ -508,6 +494,7 @@ systemctl restart xtrojan.service
 ##restart&start service
 systemctl daemon-reload
 systemctl enable xvless.service
+systemctl start xvless.service
 systemctl restart xvless.service
 
 ##restart&start service
@@ -519,6 +506,7 @@ systemctl restart xss.service
 ##restart&start service
 systemctl daemon-reload
 systemctl enable xvmess.service
+systemctl start xvmess.service
 systemctl restart xvmess.service
 
 # // Enable & Start Service
