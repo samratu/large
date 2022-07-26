@@ -429,28 +429,6 @@ cat > /etc/xray/xss.json << END
 END
 
 # / / Installation Xray Service
-cat > /etc/systemd/system/xray@.service << END
-[Unit]
-Description=Xray Service
-Documentation=https://github.com/xtls
-After=network.target nss-lookup.target
-
-[Service]
-User=www-data
-CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-NoNewPrivileges=true
-ExecStart=/usr/local/bin/xray run -config /usr/local/etc/xray/%i.json
-Restart=on-failure
-RestartPreventExitStatus=23
-LimitNPROC=10000
-LimitNOFILE=1000000
-
-[Install]
-WantedBy=multi-user.target
-END
-
-# / / Installation Xray Service
 cat > /etc/systemd/system/xray.service << END
 [Unit]
 Description=XRAY ROUTING DAM COLO PENGKOL BY WISNU
@@ -566,31 +544,23 @@ systemctl restart xray.service
 
 ##restart&start service
 systemctl daemon-reload
-systemctl enable xray@xtrojan.service
-systemctl restart xray@xtrojan.service
 systemctl enable xtrojan.service
 systemctl restart xtrojan.service
 
 ##restart&start service
 systemctl daemon-reload
-systemctl enable xray@xvless.service
-systemctl restart xray@xvless.service
 systemctl enable xvless.service
 systemctl start xvless.service
 systemctl restart xvless.service
 
 ##restart&start service
 systemctl daemon-reload
-systemctl enable xray@xss.service
-systemctl restart xray@xss.service
 systemctl enable xss.service
 systemctl start xss.service
 systemctl restart xss.service
 
 ##restart&start service
 systemctl daemon-reload
-systemctl enable xray@xvmess.service
-systemctl restart xray@xvmess.service
 systemctl enable xvmess.service
 systemctl start xvmess.service
 systemctl restart xvmess.service
@@ -722,7 +692,7 @@ cat > /etc/trojan-go/config.json << END
     "cipher": "",
     "curves": "",
     "prefer_server_cipher": false,
-    "sni": "$domain",
+    "sni": "${domain}",
     "alpn": [
       "http/1.1"
     ],
@@ -746,7 +716,7 @@ cat > /etc/trojan-go/config.json << END
   "websocket": {
     "enabled": true,
     "path": "/gandring-go",
-    "host": "$domain"
+    "host": "${domain}"
   },
     "api": {
     "enabled": false,
