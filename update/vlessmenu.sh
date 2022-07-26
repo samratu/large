@@ -36,6 +36,11 @@ echo -e "22\e[1;33m) Hapus Akun VLESS QUIC \e[m"
 echo -e "23\e[1;33m) Perpanjang Masa Aktif Akun VLESS QUIC \e[m"
 echo -e "24\e[1;33m) Cek User Login VLESS QUIC \e[m"
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "25\e[1;33m) Buat Akun VLESS KCP \e[m"
+echo -e "26\e[1;33m) Hapus Akun VLESS KCP \e[m"
+echo -e "27\e[1;33m) Perpanjang Masa Aktif Akun VLESS KCP \e[m"
+echo -e "28\e[1;33m) Cek User Login VLESS KCP \e[m"
+echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "00\e[1;31m) Menu Utama \e[m"
 echo -e "xx\e[1;31m) Keluar \e[m"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
@@ -115,6 +120,18 @@ renewvlessquic
 ;;
 24)
 cekvlessquic
+;;
+25)
+addvlesskcp
+;;
+26)
+delvlesskcp
+;;
+27)
+renewvlesskcp
+;;
+28)
+cekvlesskcp
 ;;
 0)
 menu
