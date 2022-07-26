@@ -202,7 +202,7 @@ apt -y install nginx php php-fpm php-cli php-mysql libxml-parser-perl
 rm /etc/nginx/sites-enabled/default >/dev/null 2>&1
 rm /etc/nginx/sites-available/default >/dev/null 2>&1
 curl https://${wisnuvpn}/nginx.conf > /etc/nginx/nginx.conf
-#curl https://${wisnuvpn}/default.conf > /etc/nginx/conf.d/default.conf
+curl https://${wisnuvpn}/xvmess.conf > /etc/nginx/conf.d/xvmess.conf
 curl https://${wisnuvpn}/vps.conf > /etc/nginx/conf.d/vps.conf
 sed -i 's/listen = \/var\/run\/php-fpm.sock/listen = 127.0.0.1:9000/g' /etc/php/fpm/pool.d/www.conf
 useradd -m vps;
