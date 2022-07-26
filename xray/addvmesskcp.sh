@@ -17,7 +17,7 @@ MYIP=$(wget -qO- https://ipv4.icanhazip.com);
 MYIP6=$(wget -qO- https://ipv6.icanhazip.com);
 clear
 domain=$(cat /etc/xray/domain)
-tls="$(cat ~/log-install.txt | grep -w "VMESS WS TLS" | cut -d: -f2|sed 's/ //g')"
+vmkcp="$(cat ~/log-install.txt | grep -w "VMESS KCP" | cut -d: -f2|sed 's/ //g')"
 nontls="$(cat ~/log-install.txt | grep -w "VMESS WS NON TLS" | cut -d: -f2|sed 's/ //g')"
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 		read -rp "Username : " -e user
@@ -80,7 +80,7 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "net": "kcp",
       "path": "shanumkcp",
       "type": "none",
-      "host": "${domain}",
+      "host": "",
       "tls": "none"
 }
 EOF
