@@ -68,6 +68,111 @@ cat>/etc/xray/ss-$user-tcp.json<<EOF
     }
 EOF
 
+cat>/etc/xray/SS2022-TCP-TLS-$user.json<<EOF
+{
+  "dns": {
+    "hosts": {
+      "domain:googleapis.cn": "googleapis.com"
+    },
+    "servers": [
+      "8.8.8.8"
+    ]
+  },
+  "inbounds": [
+    {
+      "listen": "127.0.0.1",
+      "port": 10808,
+      "protocol": "socks",
+      "settings": {
+        "auth": "noauth",
+        "udp": true,
+        "userLevel": 8
+      },
+      "sniffing": {
+        "destOverride": [
+          "http",
+          "tls"
+        ],
+        "enabled": true
+      },
+      "tag": "socks"
+    },
+    {
+      "listen": "127.0.0.1",
+      "port": 10809,
+      "protocol": "http",
+      "settings": {
+        "userLevel": 8
+      },
+      "tag": "http"
+    }
+  ],
+  "log": {
+    "loglevel": "warning"
+  },
+  "outbounds": [
+    {
+      "mux": {
+        "concurrency": 8,
+        "enabled": true
+      },
+      "protocol": "shadowsocks",
+      "settings": {
+        "servers": [
+          {
+            "address": "${domain}",
+            "level": 8,
+            "method": "2022-blake3-aes-128-gcm",
+            "ota": false,
+            "password": "GESuWIqYcq34MSCDTOck0g==:${user}",
+            "port": 443
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true,
+          "serverName": "${domain}"
+        }
+      },
+      "tag": "proxy"
+    },
+    {
+      "protocol": "freedom",
+      "settings": {},
+      "tag": "direct"
+    },
+    {
+      "protocol": "blackhole",
+      "settings": {
+        "response": {
+          "type": "http"
+        }
+      },
+      "tag": "block"
+    }
+  ],
+  "routing": {
+    "domainMatcher": "mph",
+    "domainStrategy": "IPIfNonMatch",
+    "rules": [
+      {
+        "ip": [
+          "8.8.8.8"
+        ],
+        "outboundTag": "proxy",
+        "port": "53",
+        "type": "field"
+      }
+    ]
+  }
+}
+EOF
+cat /etc/xray/SS2022-TCP-TLS-$user.json >> /home/vps/public_html/SS2022-TCP-TLS-$user.txt
+
+
 cat>/etc/xray/SS2022-WS-TLS-$user.json<<EOF
 {
   "dns": {
@@ -428,13 +533,15 @@ echo -e "Password    : ${user}"
 echo -e "Created     : $hariini"
 echo -e "Expired     : $exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "SS 2022 TCP: ${shadowsocks1}"
+echo -e "SS 2022 TCP : ${shadowsocks1}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "SOCKS5 WS TLS: http://$MYIP:88/SS2022-WS-TLS-$user.txt"
+echo -e "SS2022 TCP TLS: http://$MYIP:88/SS2022-TCP-TLS-$user.txt"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "SOCKS5 WS NON TLS: http://$MYIP:88/SS2022-WS-NONTLS-$user.txt"
+echo -e "SS2022 WS TLS: http://$MYIP:88/SS2022-WS-TLS-$user.txt"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "SOCKS5 GRPC: http://$MYIP:88/SS2022-GRPC-$user.txt"
+echo -e "SS2022 WS NON TLS: http://$MYIP:88/SS2022-WS-NONTLS-$user.txt"
+echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "SS2022 GRPC: http://$MYIP:88/SS2022-GRPC-$user.txt"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m  🔰LUXURY EDITION BY ZEROSSL🔰   \e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
