@@ -17,9 +17,9 @@ clear
 domain=$(cat /etc/xray/domain)
 
 uuid=$(cat /proc/sys/kernel/random/uuid)
-stls="$(cat ~/log-install.txt | grep -w "SOSCKS5 WS TLS" | cut -d: -f2|sed 's/ //g')"
-snontls="$(cat ~/log-install.txt | grep -w "SOSCKS5 WS NON TLS" | cut -d: -f2|sed 's/ //g')"
-sgrpc="$(cat ~/log-install.txt | grep -w "SOSCKS5 GRPC TLS" | cut -d: -f2|sed 's/ //g')"
+stls="$(cat ~/log-install.txt | grep -w "SOCKS5 WS TLS" | cut -d: -f2|sed 's/ //g')"
+snontls="$(cat ~/log-install.txt | grep -w "SOCKS5 WS NON TLS" | cut -d: -f2|sed 's/ //g')"
+sgrpc="$(cat ~/log-install.txt | grep -w "SOCKS5 GRPC TLS" | cut -d: -f2|sed 's/ //g')"
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${user_EXISTS} == '0' ]]; do
 		read -rp "Password : " -e user
 		user_EXISTS=$(grep -w $user /etc/xray/xvmess.json | wc -l)
@@ -164,7 +164,7 @@ cat>/etc/xray/SOCKS5-WS-TLS-$user.json<<EOF
 EOF
 cat > /home/vps/public_html/SOCKS5-WS-TLS-$user.txt<<END
 
-cat>/etc/xray/SOCKS5-WS-TLS-$user.json<<EOF
+cat>/etc/xray/SOCKS5-WS-NONTLS-$user.json<<EOF
 {
 "dns": {
 "hosts": {
