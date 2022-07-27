@@ -46,101 +46,357 @@ sed -i '/#socks-grpc$/a\### '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
 sed -i '/#socks-grpc$/a\### '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
-cat>/etc/xray/socks-$user-tls.json<<EOF
+cat>/etc/xray/SOCKS5-WS-TLS-$user.json<<EOF
 {
-  "add": "$domain",
-  "port": "443",
-  "auth": "password",
-  "accounts": [
-    {
-      "user": "${user}",
-      "pass": "${user}"
-    }
-  ],
-  "udp": true
+"dns": {
+"hosts": {
+"domain:googleapis.cn": "googleapis.com"
+},
+"servers": [
+"1.1.1.1"
+]
+},
+"inbounds": [
+{
+"listen": "127.0.0.1",
+"port": "10808",
+"protocol": "socks",
+"settings": {
+"auth": "noauth",
+"udp": true,
+"userLevel": 8
+},
+"sniffing": {
+"destOverride": [
+"http",
+"tls"
+],
+"enabled": true
+},
+"tag": "socks"
+},
+{
+"listen": "127.0.0.1",
+"port": "10809",
+"protocol": "http",
+"settings": {
+"userLevel": 8
+},
+"tag": "http"
+}
+],
+"log": {
+"loglevel": "warning"
+},
+"outbounds": [
+{
+"mux": {
+"concurrency": 8,
+"enabled": true
+},
+"protocol": "socks",
+"settings": {
+"servers": [
+{
+"address": "$domain",
+"port": 443,
+"users": [
+{
+"level": 0,
+"user": "$user",
+"pass": "$user"
+}
+]
+}
+]
+},
+"streamSettings": {
+"network": "ws",
+"security": "tls",
+"tlsSettings": {
+"allowInsecure": true,
+"serverName": "$domain"
+},
+"wsSettings": {
+"headers": {
+"Host": "$domain"
+},
+"path": "/gandring-socksws"
+}
+},
+"tag": "proxy"
+},
+{
+"protocol": "freedom",
+"settings": {},
+"tag": "direct"
+},
+{
+"protocol": "blackhole",
+"settings": {
+"response": {
+"type": "http"
+}
+},
+"tag": "block"
+}
+],
+"policy": {
+"levels": {
+"8": {
+"connIdle": 300,
+"downlinkOnly": 1,
+"handshake": 4,
+"uplinkOnly": 1
+}
+},
+"system": {
+"statsOutboundDownlink": true,
+"statsOutboundUplink": true
+}
+},
+"routing": {
+"domainStrategy": "Asls",
+"rules": []
+},
+"stats": {}
 }
 EOF
+cat > /home/vps/public_html/SOCKS5-WS-TLS-$user.txt<<END
 
 cat>/etc/xray/SOCKS5-WS-TLS-$user.json<<EOF
 {
-        "listen": "127.0.0.1",
-        "port": "443",
-        "protocol": "socks",
-        "settings": {
-          "auth": "password",
-             "accounts": [
-          {
-                 "user": "${user}",
-                 "pass": "${user}"
-#socks-tls
-           }
-          ],
-         "level": 0,
-          "udp": true
-       },
-       "streamSettings":{
-          "network": "ws",
-             "wsSettings": {
-               "path": "/gandring-socksws"
-           }
-        }
-     },
-EOF
-cat > /home/vps/public_html/SOCKS5-WS-TLS-$user.json.txt<<END
-
-cat>/etc/xray/SICKS5-WS-NONTLS-$user.json<<EOF
+"dns": {
+"hosts": {
+"domain:googleapis.cn": "googleapis.com"
+},
+"servers": [
+"1.1.1.1"
+]
+},
+"inbounds": [
 {
-        "listen": "127.0.0.1",
-        "port": "80",
-        "protocol": "socks",
-        "settings": {
-          "auth": "password",
-             "accounts": [
-          {
-                 "user": "${user}",
-                 "pass": "${user}"
-#socks-tls
-           }
-          ],
-         "level": 0,
-          "udp": true
-       },
-       "streamSettings":{
-          "network": "ws",
-             "wsSettings": {
-               "path": "/gandring-socksws"
-           }
-        }
-     },
+"listen": "127.0.0.1",
+"port": "10808",
+"protocol": "socks",
+"settings": {
+"auth": "noauth",
+"udp": true,
+"userLevel": 8
+},
+"sniffing": {
+"destOverride": [
+"http",
+"tls"
+],
+"enabled": true
+},
+"tag": "socks"
+},
+{
+"listen": "127.0.0.1",
+"port": "10809",
+"protocol": "http",
+"settings": {
+"userLevel": 8
+},
+"tag": "http"
+}
+],
+"log": {
+"loglevel": "warning"
+},
+"outbounds": [
+{
+"mux": {
+"concurrency": 8,
+"enabled": true
+},
+"protocol": "socks",
+"settings": {
+"servers": [
+{
+"address": "$domain",
+"port": 80,
+"users": [
+{
+"level": 0,
+"user": "$user",
+"pass": "$user"
+}
+]
+}
+]
+},
+"streamSettings": {
+"network": "ws",
+"security": "none",
+"tlsSettings": {
+"allowInsecure": true,
+"serverName": "$domain"
+},
+"wsSettings": {
+"headers": {
+"Host": "$domain"
+},
+"path": "/gandring-socksws"
+}
+},
+"tag": "proxy"
+},
+{
+"protocol": "freedom",
+"settings": {},
+"tag": "direct"
+},
+{
+"protocol": "blackhole",
+"settings": {
+"response": {
+"type": "http"
+}
+},
+"tag": "block"
+}
+],
+"policy": {
+"levels": {
+"8": {
+"connIdle": 300,
+"downlinkOnly": 1,
+"handshake": 4,
+"uplinkOnly": 1
+}
+},
+"system": {
+"statsOutboundDownlink": true,
+"statsOutboundUplink": true
+}
+},
+"routing": {
+"domainStrategy": "Asls",
+"rules": []
+},
+"stats": {}
+}
 EOF
-cat > /home/vps/public_html/SOCKS5-WS-NONTLS-$user.json.txt<<END
+cat > /home/vps/public_html/SOCKS5-WS-NONTLS-$user.txt<<END
 
 cat>/etc/xray/SOCKS5-GRPC-$user.json<<EOF
 {
-        "listen": "127.0.0.1",
-        "port": "443",
-        "protocol": "socks",
-        "settings": {
-          "auth": "password",
-             "accounts": [
-          {
-                 "user": "${user}",
-                 "pass": "${user}"
-#socks-grpc
-           }
-          ],
-         "level": 0,
-          "udp": true
-       },
-       "streamSettings":{
-          "network": "grpc",
-             "grpcSettings": {
-               "path": "gandring-socksgrpc"
-           }
-        }
-     },
+"dns": {
+"hosts": {
+"domain:googleapis.cn": "googleapis.com"
+},
+"servers": [
+"1.1.1.1"
+]
+},
+"inbounds": [
+{
+"listen": "127.0.0.1",
+"port": "10808",
+"protocol": "socks",
+"settings": {
+"auth": "noauth",
+"udp": true,
+"userLevel": 8
+},
+"sniffing": {
+"destOverride": [
+"http",
+"tls"
+],
+"enabled": true
+},
+"tag": "socks"
+},
+{
+"listen": "127.0.0.1",
+"port": "10809",
+"protocol": "http",
+"settings": {
+"userLevel": 8
+},
+"tag": "http"
+}
+],
+"log": {
+"loglevel": "warning"
+},
+"outbounds": [
+{
+"mux": {
+"concurrency": 8,
+"enabled": true
+},
+"protocol": "socks",
+"settings": {
+"servers": [
+{
+"address": "$domain",
+"port": 443,
+"users": [
+{
+"level": 0,
+"user": "$user",
+"pass": "$user"
+}
+]
+}
+]
+},
+"streamSettings": {
+"grpcSettings": {
+                         "multiMode": true,
+                             "serviceName": "gandring-socksgrpc"
+                               },
+"network": "grpc",
+"security": "tls",
+"tlsSettings": {
+"allowInsecure": true,
+"serverName": "$domain"
+}
+},
+"tag": "proxy"
+},
+{
+"protocol": "freedom",
+"settings": {},
+"tag": "direct"
+},
+{
+"protocol": "blackhole",
+"settings": {
+"response": {
+"type": "http"
+}
+},
+"tag": "block"
+}
+],
+"policy": {
+"levels": {
+"8": {
+"connIdle": 300,
+"downlinkOnly": 1,
+"handshake": 4,
+"uplinkOnly": 1
+}
+},
+"system": {
+"statsOutboundDownlink": true,
+"statsOutboundUplink": true
+}
+},
+"routing": {
+"domainStrategy": "Asls",
+"rules": []
+},
+"stats": {}
+}
 EOF
-cat > /home/vps/public_html/SOCKS5-GRPC-$user.json.txt<<END
+cat > /home/vps/public_html/SOCKS5-GRPC-$user.txt<<END
 
 tmp1=$(echo -n "${user}:${user}@${domain}:$stls" | base64 -w0)
 tmp2=$(echo -n "${user}:${user}@${domain}:$snontls" | base64 -w0)
