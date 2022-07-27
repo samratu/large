@@ -18,7 +18,7 @@ domain=$(cat /etc/xray/domain)
 sstls="$(cat ~/log-install.txt | grep -w "SHADOWSOCKS 2022 WS TLS" | cut -d: -f2|sed 's/ //g')"
 sstcp="$(cat ~/log-install.txt | grep -w "SHADOWSOCKS 2022 TCP" | cut -d: -f2|sed 's/ //g')"
 ssnontls="$(cat ~/log-install.txt | grep -w "SHADOWSOCKS 2022 WS NON TLS" | cut -d: -f2|sed 's/ //g')"
-
+ssgrpc="$(cat ~/log-install.txt | grep -w "SHADOWSOCKS 2022 GRPC TLS" | cut -d: -f2|sed 's/ //g')"
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 		read -rp "Password : " -e user
 		CLIENT_EXISTS=$(grep -w $user /etc/xray/xss.json | wc -l)
@@ -37,12 +37,20 @@ hariini=`date -d "0 days" +"%Y-%m-%d"`
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#ss-tcp$/a\### '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xss.json
+sed -i '/#ss-tcp$/a\### '"$user $exp"'\
+},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvmess.json
 sed -i '/#ss-tls$/a\### '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xss.json
+sed -i '/#ss-tls$/a\### '"$user $exp"'\
+},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvmess.json
 sed -i '/#ss-nontls$/a\### '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xss.json
+sed -i '/#ss-nontls$/a\### '"$user $exp"'\
+},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvmess.json
 sed -i '/#ss-grpc$/a\### '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xss.json
+sed -i '/#ss-grpc$/a\### '"$user $exp"'\
+},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvmess.json
 cat>/etc/xray/ss-$user-tcp.json<<EOF
 {
   "inbounds": [
@@ -81,7 +89,7 @@ cat>/etc/xray/ss-$user-nontls.json<<EOF
 {
   "inbounds": [
     {
-      "port": 2052,
+      "port": 80,
       "protocol": "shadowsocks",
       "settings": {
         "method": "2022-blake3-aes-128-gcm",
@@ -106,7 +114,7 @@ cat>/etc/xray/ss-$user-tls.json<<EOF
         "password": "$passwd:${user}",
         "network": "grpc",
         "port": "$ssgrpc",
-        "path": "/gandring-grpc",
+        "path": "gandring-ssgrpc",
         "host": "$domain",
         "security": "tls"
       }
@@ -123,6 +131,7 @@ shadowsocks2="ss://$tmp2#$user"
 shadowsocks3="ss://$tmp3#$user"
 shadowsocks4="ss://$tmp4#$user"
 
+systemctl restart xvmess
 systemctl restart xray.service
 systemctl restart xss.service
 systemctl restart xtrojan.service
