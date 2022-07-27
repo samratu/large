@@ -97,7 +97,7 @@ cat>/etc/xray/SS2022-WS-NONTLS-$user.json<<EOF
         "password": "$passwd:${user}",
         "network": "ws",
         "port": "$ssnontls",
-        "path": "/gandring-ssws",
+        "path": "/gandring-ws",
         "host": "$domain",
         "security": "none"
       }
@@ -116,7 +116,7 @@ cat>/etc/xray/SS2022-GRPC-$user.json<<EOF
         "password": "$passwd:${user}",
         "network": "grpc",
         "port": "$ssgrpc",
-        "path": "gandring-ssgrpc",
+        "path": "gandring-grpc",
         "host": "$domain",
         "security": "tls"
       }
