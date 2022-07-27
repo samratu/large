@@ -1,4 +1,4 @@
-#!/bin/bash
+ #!/bin/bash
 # @ Copyrigt 2017 By zerossl
 # Color
 RED='\033[0;31m'
@@ -678,7 +678,7 @@ cat > /etc/trojan-go/config.json << END
 {
   "run_type": "server",
   "local_addr": "0.0.0.0",
-  "local_port": 30130,
+  "local_port": 2096,
   "remote_addr": "127.0.0.1",
   "remote_port": 88,
   "log_level": 1,
