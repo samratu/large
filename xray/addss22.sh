@@ -31,26 +31,27 @@ until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 	done
 passwd=$GESuWIqYcq34MSCDTOck0g==
 uuid=$(cat /proc/sys/kernel/random/uuid)
-password=$(openssl rand -base64 16)
+base64=$(openssl rand -base64 16)
+password=$base64
 read -p "Expired (Days) : " masaaktif
 hariini=`date -d "0 days" +"%Y-%m-%d"`
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#ss-tcp$/a\### '"$user $exp"'\
-},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xss.json
+},{"password": "'""$base64""'","email": "'""$user""'"' /etc/xray/xss.json
 sed -i '/#ss-tcp$/a\### '"$user $exp"'\
-},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvmess.json
+},{"password": "'""$base64""'","email": "'""$user""'"' /etc/xray/xvmess.json
 sed -i '/#ss-tls$/a\### '"$user $exp"'\
-},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xss.json
+},{"password": "'""$base64""'","email": "'""$user""'"' /etc/xray/xss.json
 sed -i '/#ss-tls$/a\### '"$user $exp"'\
-},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvmess.json
+},{"password": "'""$base64""'","email": "'""$user""'"' /etc/xray/xvmess.json
 sed -i '/#ss-nontls$/a\### '"$user $exp"'\
-},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xss.json
+},{"password": "'""$base64""'","email": "'""$user""'"' /etc/xray/xss.json
 sed -i '/#ss-nontls$/a\### '"$user $exp"'\
-},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvmess.json
+},{"password": "'""$base64""'","email": "'""$user""'"' /etc/xray/xvmess.json
 sed -i '/#ss-grpc$/a\### '"$user $exp"'\
-},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xss.json
+},{"password": "'""$base64""'","email": "'""$user""'"' /etc/xray/xss.json
 sed -i '/#ss-grpc$/a\### '"$user $exp"'\
-},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvmess.json
+},{"password": "'""$base64""'","email": "'""$user""'"' /etc/xray/xvmess.json
 cat>/etc/xray/ss-$user-tcp.json<<EOF
 {
   "inbounds": [
@@ -69,58 +70,329 @@ EOF
 
 cat>/etc/xray/SS2022-WS-TLS-$user.json<<EOF
 {
+  "dns": {
+    "hosts": {
+      "domain:googleapis.cn": "googleapis.com"
+    },
+    "servers": [
+      "8.8.8.8"
+    ]
+  },
   "inbounds": [
     {
-      "port": 443,
+      "listen": "127.0.0.1",
+      "port": 10808,
+      "protocol": "socks",
+      "settings": {
+        "auth": "noauth",
+        "udp": true,
+        "userLevel": 8
+      },
+      "sniffing": {
+        "destOverride": [
+          "http",
+          "tls"
+        ],
+        "enabled": true
+      },
+      "tag": "socks"
+    },
+    {
+      "listen": "127.0.0.1",
+      "port": 10809,
+      "protocol": "http",
+      "settings": {
+        "userLevel": 8
+      },
+      "tag": "http"
+    }
+  ],
+  "log": {
+    "loglevel": "warning"
+  },
+  "outbounds": [
+    {
+      "mux": {
+        "concurrency": 8,
+        "enabled": true
+      },
       "protocol": "shadowsocks",
       "settings": {
-        "method": "2022-blake3-aes-128-gcm",
-        "password": "$passwd:${user}",
+        "servers": [
+          {
+            "address": "$domain",
+            "level": 8,
+            "method": "2022-blake3-aes-128-gcm",
+            "ota": false,
+            "password": "GESuWIqYcq34MSCDTOck0g==:$password",
+            "port": 443
+          }
+        ]
+      },
+        "streamSettings": {
         "network": "ws",
-        "port": "$sstls",
-        "path": "/gandring-ws",
-        "host": "$domain",
-        "security": "tls"
-      }
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true,
+          "serverName": "$domain"
+        },
+        "wsSettings": {
+          "headers": {
+            "Host": "$domain"
+          },
+          "path": "/gandring-ws"
+        }
+      },
+      "tag": "proxy"
+    },
+    {
+      "protocol": "freedom",
+      "settings": {},
+      "tag": "direct"
+    },
+    {
+      "protocol": "blackhole",
+      "settings": {
+        "response": {
+          "type": "http"
+        }
+      },
+      "tag": "block"
     }
+  ],
+  "routing": {
+    "domainMatcher": "mph",
+    "domainStrategy": "IPIfNonMatch",
+    "rules": [
+      {
+        "ip": [
+          "8.8.8.8"
+        ],
+        "outboundTag": "proxy",
+        "port": "53",
+        "type": "field"
+      }
+    ]
+  }
+}
 EOF
 cat /etc/xray/SS2022-WS-TLS-$user.json >> /home/vps/public_html/SS2022-WS-TLS-$user.txt
 
 cat>/etc/xray/SS2022-WS-NONTLS-$user.json<<EOF
 {
+  "dns": {
+    "hosts": {
+      "domain:googleapis.cn": "googleapis.com"
+    },
+    "servers": [
+      "8.8.8.8"
+    ]
+  },
   "inbounds": [
     {
-      "port": 80,
+      "listen": "127.0.0.1",
+      "port": 10808,
+      "protocol": "socks",
+      "settings": {
+        "auth": "noauth",
+        "udp": true,
+        "userLevel": 8
+      },
+      "sniffing": {
+        "destOverride": [
+          "http",
+          "tls"
+        ],
+        "enabled": true
+      },
+      "tag": "socks"
+    },
+    {
+      "listen": "127.0.0.1",
+      "port": 10809,
+      "protocol": "http",
+      "settings": {
+        "userLevel": 8
+      },
+      "tag": "http"
+    }
+  ],
+  "log": {
+    "loglevel": "warning"
+  },
+  "outbounds": [
+    {
+      "mux": {
+        "concurrency": 8,
+        "enabled": true
+      },
       "protocol": "shadowsocks",
       "settings": {
-        "method": "2022-blake3-aes-128-gcm",
-        "password": "$passwd:${user}",
+        "servers": [
+          {
+            "address": "$domain",
+            "level": 8,
+            "method": "2022-blake3-aes-128-gcm",
+            "ota": false,
+            "password": "GESuWIqYcq34MSCDTOck0g==:$password",
+            "port": 80
+          }
+        ]
+      },
+        "streamSettings": {
         "network": "ws",
-        "port": "$ssnontls",
-        "path": "/gandring-ws",
-        "host": "$domain",
-        "security": "none"
-      }
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true,
+          "serverName": "$domain"
+        },
+        "wsSettings": {
+          "headers": {
+            "Host": "$domain"
+          },
+          "path": "/gandring-ws"
+        }
+      },
+      "tag": "proxy"
+    },
+    {
+      "protocol": "freedom",
+      "settings": {},
+      "tag": "direct"
+    },
+    {
+      "protocol": "blackhole",
+      "settings": {
+        "response": {
+          "type": "http"
+        }
+      },
+      "tag": "block"
     }
+  ],
+  "routing": {
+    "domainMatcher": "mph",
+    "domainStrategy": "IPIfNonMatch",
+    "rules": [
+      {
+        "ip": [
+          "8.8.8.8"
+        ],
+        "outboundTag": "proxy",
+        "port": "53",
+        "type": "field"
+      }
+    ]
+  }
+}
 EOF
 cat /etc/xray/SS2022-WS-NONTLS-$user.json >> /home/vps/public_html/SS2022-WS-NONTLS-$user.txt
 
 cat>/etc/xray/SS2022-GRPC-$user.json<<EOF
 {
+  "dns": {
+    "hosts": {
+      "domain:googleapis.cn": "googleapis.com"
+    },
+    "servers": [
+      "8.8.8.8"
+    ]
+  },
   "inbounds": [
     {
-      "port": 443,
+      "listen": "127.0.0.1",
+      "port": 10808,
+      "protocol": "socks",
+      "settings": {
+        "auth": "noauth",
+        "udp": true,
+        "userLevel": 8
+      },
+      "sniffing": {
+        "destOverride": [
+          "http",
+          "tls"
+        ],
+        "enabled": true
+      },
+      "tag": "socks"
+    },
+    {
+      "listen": "127.0.0.1",
+      "port": 10809,
+      "protocol": "http",
+      "settings": {
+        "userLevel": 8
+      },
+      "tag": "http"
+    }
+  ],
+  "log": {
+    "loglevel": "warning"
+  },
+  "outbounds": [
+    {
+      "mux": {
+        "concurrency": 8,
+        "enabled": false
+      },
       "protocol": "shadowsocks",
       "settings": {
-        "method": "2022-blake3-aes-128-gcm",
-        "password": "$passwd:${user}",
+        "servers": [
+          {
+            "address": "$domain",
+            "level": 8,
+            "method": "2022-blake3-aes-128-gcm",
+            "ota": false,
+            "password": "GESuWIqYcq34MSCDTOck0g==:$password",
+            "port": 443
+          }
+        ]
+      },
+      "streamSettings": {
+        "grpcSettings": {
+          "multiMode": true,
+          "serviceName": "gandring-grpc"
+        },
         "network": "grpc",
-        "port": "$ssgrpc",
-        "path": "gandring-grpc",
-        "host": "$domain",
-        "security": "tls"
-      }
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true,
+          "serverName": "$domain"
+        }
+      },
+      "tag": "proxy"
+    },
+    {
+      "protocol": "freedom",
+      "settings": {},
+      "tag": "direct"
+    },
+    {
+      "protocol": "blackhole",
+      "settings": {
+        "response": {
+          "type": "http"
+        }
+      },
+      "tag": "block"
     }
+  ],
+  "routing": {
+    "domainMatcher": "mph",
+    "domainStrategy": "IPIfNonMatch",
+    "rules": [
+      {
+        "ip": [
+          "8.8.8.8"
+        ],
+        "outboundTag": "proxy",
+        "port": "53",
+        "type": "field"
+      }
+    ]
+  }
+}
 EOF
 cat /etc/xray/SS2022-GRPC-$user.json >> /home/vps/public_html/SS2022-GRPC-$user.txt
 
@@ -156,13 +428,13 @@ echo -e "Password    : ${user}"
 echo -e "Created     : $hariini"
 echo -e "Expired     : $exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "SS 2022 TCP: ${shadowsocksnew}"
+echo -e "SS 2022 TCP: ${shadowsocks1}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "SOCKS5 WS TLS: http://$MYIP:88/SS2023-WS-TLS-$user.txt"
+echo -e "SOCKS5 WS TLS: http://$MYIP:88/SS2022-WS-TLS-$user.txt"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "SOCKS5 WS NON TLS: http://$MYIP:88/SS2022-WS-NONTLS-$user.txt"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "SOCKS5 GRPC: http://$MYIP:88/SS2023-GRPC-$user.txt"
+echo -e "SOCKS5 GRPC: http://$MYIP:88/SS2022-GRPC-$user.txt"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m  🔰LUXURY EDITION BY ZEROSSL🔰   \e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
