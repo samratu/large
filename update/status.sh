@@ -635,7 +635,6 @@ else
       sstatus62=$AKTIF
       mantap+=("hore65")
 fi
-fi
 if [[ $status63 == "" ]]; then
       sstatus63=$ERROR
       ingfo+=("VMESS QUIC TLS")
