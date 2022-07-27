@@ -17,7 +17,7 @@ clear
 domain=$(cat /etc/xray/domain)
 
 uuid=$(cat /proc/sys/kernel/random/uuid)
-tkcp="$(cat ~/log-install.txt | grep -w "TROJAN KCP" | cut -d: -f2|sed 's/ //g')"
+tkcp="$(cat ~/log-install.txt | grep -w "TROJAN KCP TLS" | cut -d: -f2|sed 's/ //g')"
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${user_EXISTS} == '0' ]]; do
 		read -rp "Password : " -e user
 		user_EXISTS=$(grep -w $user /etc/xray/xtrojan.json | wc -l)
@@ -46,10 +46,13 @@ sed -i '/#trojan-kcp$/a\### '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvmess.json
 sed -i '/#trojan-kcp$/a\### '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
+sed -i '/#trojan-kcp$/a\### '"$user $exp"'\
+},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xless.json
 trojankcp="trojan://$uuid@$domain:$tkcp?sni=$domain&seed=gandringkcp&security=tls&type=kcp&headerType=none#%F0%9F%94%B0TROJAN+KCP+TLS+$user"
 systemctl restart xray.service
 systemctl restart xtrojan.service
 systemctl restart xvmess.service
+systemctl restart xvless
 service cron restart
 clear
 echo -e ""
