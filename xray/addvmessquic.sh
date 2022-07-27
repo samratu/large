@@ -66,6 +66,8 @@ exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#vmess-quic$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'"' /etc/xray/xvmess.json
 sed -i '/#vmess-quic$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'"' /etc/xray/xvless.json
+sed -i '/#vmess-quic$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'"' /etc/xray/xtrojan.json
 #sed -i '/#vmess-nontls$/a\### '"$user $exp"'\
 #},{"id": "'""$uuid""'"' /etc/xray/config.json
