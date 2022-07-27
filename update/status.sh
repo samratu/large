@@ -94,6 +94,8 @@ status65=$(systemctl status xray             | grep -i "active (running)")
 status66=$(systemctl status xray             | grep -i "active (running)")
 status67=$(systemctl status xray             | grep -i "active (running)")
 status68=$(systemctl status xray             | grep -i "active (running)")
+status69=$(systemctl status xray             | grep -i "active (running)")
+status70=$(systemctl status xray             | grep -i "active (running)")
 #======================================
 if [[ $status01 == "" ]]; then
       sstatus01=$ERROR
@@ -848,7 +850,7 @@ echo -e "$bl🔰 $off $bl SHADOWSOCKS WS NON TLS      $off : $sstatus64🔰"
 echo -e "$bl🔰 $off $bl SHADOWSOCKS 2022 TCP        $off : $sstatus65🔰"
 echo -e "$bl🔰 $off $bl SHADOWSOCKS 2022 GRPC       $off : $sstatus66🔰"
 echo -e "$bl🔰 $off $bl SHADOWSOCKS 2022 WS TLS     $off : $sstatus67🔰"
-echo -e "$bl🔰 $off $bl SHADOWSOCKS 2022 WS NON TLS $off : $sstatus68🔰"
+echo -e "$bl🔰 $off $bl SHADOWSOCKS 2022 WS NOTLS   $off : $sstatus68🔰"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\E[43;1;46m             🔰 SOLO THE SPIRIT OF JAVA 🔰              \E[0m"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
