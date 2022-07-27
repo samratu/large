@@ -705,7 +705,7 @@ cat > /etc/trojan-go/config.json << END
     "reuse_session": true,
     "plain_http_response": "",
     "fallback_addr": "127.0.0.1",
-    "fallback_port": 2082,
+    "fallback_port": 8443,
     "fingerprint": "firefox"
   },
   "tcp": {
