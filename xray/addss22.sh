@@ -84,6 +84,7 @@ cat>/etc/xray/SS2022-WS-TLS-$user.json<<EOF
       }
     }
 EOF
+cat /etc/xray/SS2022-WS-TLS-$user.json >> /home/vps/public_html/SS2022-WS-TLS-$user.txt
 
 cat>/etc/xray/SS2022-WS-NONTLS-$user.json<<EOF
 {
@@ -102,6 +103,7 @@ cat>/etc/xray/SS2022-WS-NONTLS-$user.json<<EOF
       }
     }
 EOF
+cat /etc/xray/SS2022-WS-NONTLS-$user.json >> /home/vps/public_html/SS2022-WS-NONTLS-$user.txt
 
 cat>/etc/xray/SS2022-GRPC-$user.json<<EOF
 {
@@ -120,6 +122,7 @@ cat>/etc/xray/SS2022-GRPC-$user.json<<EOF
       }
     }
 EOF
+cat /etc/xray/SS2022-GRPC-$user.json >> /home/vps/public_html/SS2022-GRPC-$user.txt
 
 tmp1=$(echo -n "2022-blake3-aes-128-gcm:$passwd:${user}@${domain}:$sstcp" | base64 -w0)
 tmp2=$(echo -n "2022-blake3-aes-128-gcm:$passwd:${user}@${domain}:$sstls" | base64 -w0)
