@@ -103,7 +103,7 @@ cat>/etc/xray/ss-$user-nontls.json<<EOF
     }
 EOF
 
-cat>/etc/xray/ss-$user-tls.json<<EOF
+cat>/etc/xray/ss-$user-grpc.json<<EOF
 {
   "inbounds": [
     {
@@ -155,5 +155,11 @@ echo -e "Expired     : $exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "SS 2022 TCP: ${shadowsocksnew}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "SOCKS5 WS TLS: http://$MYIP:88/SS2023-WS-TLS-$user.txt"
+echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "SOCKS5 WS NON TLS: http://$MYIP:88/SS2022-WS-NONTLS-$user.txt"
+echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "SOCKS5 GRPC: http://$MYIP:88/SS2023-GRPC-$user.txt"
+echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m  🔰LUXURY EDITION BY ZEROSSL🔰   \e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
