@@ -32,7 +32,17 @@ until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 	done
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 		read -rp "Username : " -e user
-		CLIENT_EXISTS=$(grep -w $user /usr/local/etc/xray/xvmess.json | wc -l)
+		CLIENT_EXISTS=$(grep -w $user /etc/xray/xvmess.json | wc -l)
+
+		if [[ ${CLIENT_EXISTS} == '1' ]]; then
+			echo ""
+			echo -e "Username ${RED}${user}${NC} Already On VPS Please Choose Another"
+			exit 1
+		fi
+	done
+until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
+		read -rp "Username : " -e user
+		CLIENT_EXISTS=$(grep -w $user /etc/xray/xtrojan.json | wc -l)
 
 		if [[ ${CLIENT_EXISTS} == '1' ]]; then
 			echo ""
@@ -47,10 +57,12 @@ exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#vless-hdua$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvless.json
 sed -i '/#vless-hdua$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
+sed -i '/#vless-hdua$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvmess.json
 sed -i '/#vless-hdua-nontls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvless.json
-vlesshdua="vless://${uuid}@${domain}:$vlhdua?type=http&security=tls&path=/wisnuhttp&encryption=none#%F0%9F%94%B0VLESS+H2C+TLS+${user}"
+vlesshdua="vless://${uuid}@${domain}:$vlhdua?type=http&security=tls&path=wisnuhttp&encryption=none#%F0%9F%94%B0VLESS+H2C+TLS+${user}"
 vlesshduanon="vless://${uuid}@${domain}:$vlhduanon?type=http&security=none&path=gandring&encryption=none#${user}"
 systemctl restart xvless.service
 systemctl restart xray.service
@@ -66,7 +78,7 @@ echo -e "IP/Host  :${MYIP}"
 echo -e "Address  :${domain}"
 echo -e "Port  :$vlhdua"
 echo -e "Protokol  :H2"
-echo -e "Path  :/wisnuhttp"
+echo -e "Path  :wisnuhttp"
 echo -e "UserID  :${uuid}"
 echo -e "Dibuat  :$hariini"
 echo -e "Kadaluarsa  :$exp"
