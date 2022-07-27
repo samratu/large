@@ -55,7 +55,7 @@ cat>/etc/xray/ss-$user-tcp.json<<EOF
 {
   "inbounds": [
     {
-      "port": 212,
+      "port": 443,
       "protocol": "shadowsocks",
       "settings": {
         "method": "2022-blake3-aes-128-gcm",
@@ -67,11 +67,11 @@ cat>/etc/xray/ss-$user-tcp.json<<EOF
     }
 EOF
 
-cat>/etc/xray/ss-$user-tls.json<<EOF
+cat>/etc/xray/SS2022-WS-TLS-$user.json<<EOF
 {
   "inbounds": [
     {
-      "port": 2053,
+      "port": 443,
       "protocol": "shadowsocks",
       "settings": {
         "method": "2022-blake3-aes-128-gcm",
@@ -85,7 +85,7 @@ cat>/etc/xray/ss-$user-tls.json<<EOF
     }
 EOF
 
-cat>/etc/xray/ss-$user-nontls.json<<EOF
+cat>/etc/xray/SS2022-WS-NONTLS-$user.json<<EOF
 {
   "inbounds": [
     {
@@ -96,18 +96,18 @@ cat>/etc/xray/ss-$user-nontls.json<<EOF
         "password": "$passwd:${user}",
         "network": "ws",
         "port": "$ssnontls",
-        "path": "/gandring-ws",
+        "path": "/gandring-ssws",
         "host": "$domain",
         "security": "none"
       }
     }
 EOF
 
-cat>/etc/xray/ss-$user-grpc.json<<EOF
+cat>/etc/xray/SS2022-GRPC-$user.json<<EOF
 {
   "inbounds": [
     {
-      "port": 2096,
+      "port": 443,
       "protocol": "shadowsocks",
       "settings": {
         "method": "2022-blake3-aes-128-gcm",
