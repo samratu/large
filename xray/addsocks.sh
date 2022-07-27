@@ -135,7 +135,7 @@ cat>/etc/xray/SOCKS5-GRPC-$user.json<<EOF
        "streamSettings":{
           "network": "grpc",
              "grpcSettings": {
-               "path": "/gandring-socksgrpc"
+               "path": "gandring-socksgrpc"
            }
         }
      },
