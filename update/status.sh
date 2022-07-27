@@ -660,7 +660,7 @@ else
       mantap+=("hore68")
 fi
 if [[ $status67 == "" ]]; then
-      sstatus58=$ERROR
+      sstatus67=$ERROR
       ingfo+=("SHADOWSOCKS GRPC")
       dahlah+=("err69")
 else
@@ -681,8 +681,6 @@ if [[ $jumlah2 == "" ]] || [[ $jumlah2 -eq 0 ]]; then
 else
     let njir=${jumlah2}
     jumlah_error=$njir
-fi
-
 #=================================================================================================
 clear
 # VPS Information
@@ -883,34 +881,3 @@ echo -e "  ⛔️ JUMLAH LAYANAN RUNNING TROUBLE [ ${red}$jumlah_error${off} ]"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\E[43;1;46m             🔰 LUXURY EDITION ZEROSSL 🔰               \E[0m"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "\e[0;33m   ⇱ PRESS K FOR ENGLISH VERSION MENU 🇺🇸⇲   \e[m"
-echo -e "\e[0;33m   ⇱ PRESS M UNTUK  MENU INDONESIAN VERSION 🇮🇩⇲ \e[m"
-echo -e "\e[0;33m   ⇱ PRESS S UNTUK UJI SPEED SERVER ⇲ \e[m"
-read -p "   ⇱ TEKAN A/I/U UNTUK REFRESH] ⇲: " menu
-echo -e ""
-case $menu in
-k)
-clear
-menuu
-;;
-m)
-clear
-menu
-;;
-a)
-clear
-status2
-;;
-i)
-clear
-status3
-;;
-u)
-clear
-status4
-;;
-s)
-clear
-speedtest
-;;
-esac
