@@ -61,6 +61,10 @@ exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 #exp2=`date -d "$masaaktif seconds" +"%Y-%m-%d"`
 sed -i '/#vmess-http-tls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/xvmess.json
+sed -i '/#vmess-http-tls$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/xtrojan.json
+sed -i '/#vmess-http-tls$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/xvless.json
 sed -i '/#vmess-http-nontls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/xtrojan.json
 sed -i '/#vmess-http-nontls$/a\### '"$user $exp"'\
@@ -74,7 +78,7 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "tcp",
-      "path": "/shanumtcp",
+      "path": "shanumtcp",
       "type": "http",
       "host": "ngerinya.bayanganmantan.net",
       "tls": "tls"
@@ -117,7 +121,7 @@ echo -e "Port TLS  :${vmhttp}"
 echo -e "Port NON TLS  :${vmhttpnon}"
 echo -e "Network  :tcp"
 echo -e "Host  :${domain}"
-echo -e "Path  :/shanumtcp"
+echo -e "Path  :shanumtcp"
 echo -e "uuId  :${uuid}"
 echo -e "Dibuat  :$hariini"
 echo -e "Kadaluarsa  :$exp"
