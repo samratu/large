@@ -18,10 +18,10 @@ clear
 Password=$Username
 domain=$(cat /etc/xray/domain)
 vmgrpc="$(cat ~/log-install.txt | grep -w "VMESS GRPC TLS" | cut -d: -f2|sed 's/ //g')"
-vquic="$(cat ~/log-install.txt | grep -w "VLESS QUIC" | cut -d: -f2|sed 's/ //g')"
-tquic="$(cat ~/log-install.txt | grep -w "TROJAN QUIC" | cut -d: -f2|sed 's/ //g')"
+vquic="$(cat ~/log-install.txt | grep -w "VLESS QUIC TLS" | cut -d: -f2|sed 's/ //g')"
+tquic="$(cat ~/log-install.txt | grep -w "TROJAN QUIC TLS" | cut -d: -f2|sed 's/ //g')"
 vmhdua="$(cat ~/log-install.txt | grep -w "VMESS H2C TLS" | cut -d: -f2|sed 's/ //g')"
-vmquic="$(cat ~/log-install.txt | grep -w "VMESS QUIC" | cut -d: -f2|sed 's/ //g')"
+vmquic="$(cat ~/log-install.txt | grep -w "VMESS QUIC TLS" | cut -d: -f2|sed 's/ //g')"
 vmhttp="$(cat ~/log-install.txt | grep -w "VMESS HTTP TLS" | cut -d: -f2|sed 's/ //g')"
 vmhttpnon="$(cat ~/log-install.txt | grep -w "VMESS HTTP NON TLS" | cut -d: -f2|sed 's/ //g')"
 tls="$(cat ~/log-install.txt | grep -w "VMESS WS TLS" | cut -d: -f2|sed 's/ //g')"
@@ -38,19 +38,22 @@ vlhttpnon="$(cat ~/log-install.txt | grep -w "VLESS HTTP NON TLS" | cut -d: -f2|
 tls="$(cat ~/log-install.txt | grep -w "VMESS WS TLS" | cut -d: -f2|sed 's/ //g')"
 nontls="$(cat ~/log-install.txt | grep -w "VMESS WS NON TLS" | cut -d: -f2|sed 's/ //g')"
 uuid=$(cat /proc/sys/kernel/random/uuid)
-tgrpc="$(cat ~/log-install.txt | grep -w "TROJAN GRPC" | cut -d: -f2|sed 's/ //g')"
+tgrpc="$(cat ~/log-install.txt | grep -w "TROJAN GRPC TLS" | cut -d: -f2|sed 's/ //g')"
 txtls="$(cat ~/log-install.txt | grep -w "TROJAN XTLS" | cut -d: -f2|sed 's/ //g')"
 tgfw="$(cat ~/log-install.txt | grep -w "TROJAN GFW" | cut -d: -f2|sed 's/ //g')"
-thdua="$(cat ~/log-install.txt | grep -w "TROJAN H2C" | cut -d: -f2|sed 's/ //g')"
+thdua="$(cat ~/log-install.txt | grep -w "TROJAN H2C TLS" | cut -d: -f2|sed 's/ //g')"
 thttp="$(cat ~/log-install.txt | grep -w "TROJAN HTTP TLS" | cut -d: -f2|sed 's/ //g')"
 thttpnon="$(cat ~/log-install.txt | grep -w "TROJAN HTTP NON TLS" | cut -d: -f2|sed 's/ //g')"
 ttls="$(cat ~/log-install.txt | grep -w "TROJAN WS TLS" | cut -d: -f2|sed 's/ //g')"
 tnontls="$(cat ~/log-install.txt | grep -w "TROJAN WS NON TLS" | cut -d: -f2|sed 's/ //g')"
 trgo="$(cat ~/log-install.txt | grep -w "TROJAN GO" | cut -d: -f2|sed 's/ //g')"
-ssudp="$(cat ~/log-install.txt | grep -w "SHADOWSOCKS UDP" | cut -d: -f2|sed 's/ //g')"
+ssudp="$(cat ~/log-install.txt | grep -w "SHADOWSOCKS TCP" | cut -d: -f2|sed 's/ //g')"
 sswstls="$(cat ~/log-install.txt | grep -w "SHADOWSOCKS WS TLS" | cut -d: -f2|sed 's/ //g')"
 sswsnontls="$(cat ~/log-install.txt | grep -w "SHADOWSOCKS WS NON TLS" | cut -d: -f2|sed 's/ //g')"
-
+sstls="$(cat ~/log-install.txt | grep -w "SHADOWSOCKS 2022 WS NON TLS" | cut -d: -f2|sed 's/ //g')"
+ssnontls="$(cat ~/log-install.txt | grep -w "SHADOWSOCKS 2022 WS NON TLS" | cut -d: -f2|sed 's/ //g')"
+ssgrpc="$(cat ~/log-install.txt | grep -w "SHADOWSOCKS 2022 GRPC" | cut -d: -f2|sed 's/ //g')"
+sstcp="$(cat ~/log-install.txt | grep -w "SHADOWSOCKS 2022 TCP" | cut -d: -f2|sed 's/ //g')"
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 		read -rp "Username : " -e user
 		CLIENT_EXISTS=$(grep -w $user /etc/xray/config.json | wc -l)
