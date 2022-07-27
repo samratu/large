@@ -48,6 +48,8 @@ sed -i '/#socks-grpc$/a\### '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
 cat>/etc/xray/socks-$user-tls.json<<EOF
 {
+  "add": "$domain",
+  "port": "443",
   "auth": "password",
   "accounts": [
     {
@@ -59,7 +61,7 @@ cat>/etc/xray/socks-$user-tls.json<<EOF
 }
 EOF
 
-cat>/etc/xray/socks-$user-tls.json<<EOF
+cat>/etc/xray/SOCKS5-WS-TLS-$user.json<<EOF
 {
         "listen": "127.0.0.1",
         "port": "443",
@@ -84,9 +86,9 @@ cat>/etc/xray/socks-$user-tls.json<<EOF
         }
      },
 EOF
-cat > /home/vps/public_html/socks-$user-tls.json.txt<<END
+cat > /home/vps/public_html/SOCKS5-WS-TLS-$user.json.txt<<END
 
-cat>/etc/xray/socks-$user-nontls.json<<EOF
+cat>/etc/xray/SICKS5-WS-NONTLS-$user.json<<EOF
 {
         "listen": "127.0.0.1",
         "port": "80",
@@ -111,9 +113,9 @@ cat>/etc/xray/socks-$user-nontls.json<<EOF
         }
      },
 EOF
-cat > /home/vps/public_html/socks-$user-nontls.json.txt<<END
+cat > /home/vps/public_html/SOCKS5-WS-NONTLS-$user.json.txt<<END
 
-cat>/etc/xray/socks-$user-grpc.json<<EOF
+cat>/etc/xray/SOCKS5-GRPC-$user.json<<EOF
 {
         "listen": "127.0.0.1",
         "port": "443",
@@ -138,7 +140,7 @@ cat>/etc/xray/socks-$user-grpc.json<<EOF
         }
      },
 EOF
-cat > /home/vps/public_html/socks-$user-grpc.json.txt<<END
+cat > /home/vps/public_html/SOCKS5-GRPC-$user.json.txt<<END
 
 tmp1=$(echo -n "${user}:${user}@${domain}:$stls" | base64 -w0)
 tmp2=$(echo -n "${user}:${user}@${domain}:$snontls" | base64 -w0)
@@ -150,10 +152,15 @@ systemctl restart xtrojan
 systemctl restart xss
 systemctl restart xvmess.service
 systemctl restart xray.service
-rm -rf /etc/xray/socks-$user-tls.json
-rm -rf /etc/xray/socks-$user-nontls.json
-rm -rf /etc/xray/socks-$user-grpc.json
+
+cat /etc/xray/SOCKS5-GRPC-$user.json >> /home/vps/public_html/SOCKS5-GRPC-$user.txt
+cat /etc/xray/SOCKS5-WS-TLS-$user.json >> /home/vps/public_html/SOCKS5-WS-TLS-$user.txt
+cat /etc/xray/SOCKS5-WS-NONTLS-$user.json >> /home/vps/public_html/SOCKS5-WS-NONTLS-$user.txt
 service cron restart
+
+rm -rf /etc/xray/SOCKS5-WS-TLS-$user.json
+rm -rf /etc/xray/SOCKS5-WS-NONTLS-$user.json
+rm -rf /etc/xray/SOCKS5-GRPC-$user.json
 clear
 echo -e ""
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
@@ -173,11 +180,11 @@ echo -e "Expired  : $exp"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "SOCKS5 TCP: ${socks1}"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "SOCKS5 WS TLS: http://$MYIP:88/SOCKS-WS-TLS-$user.txt"
+echo -e "SOCKS5 WS TLS: http://$MYIP:88/SOCKS5-WS-TLS-$user.txt"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "SOCKS5 WS NON TLS: http://$MYIP:88/SOCKS-WS-NONTLS-$user.txt"
+echo -e "SOCKS5 WS NON TLS: http://$MYIP:88/SOCKS5-WS-NONTLS-$user.txt"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "SOCKS5 GRPC: http://$MYIP:88/SOCKS-GRPC-$user.txt"
+echo -e "SOCKS5 GRPC: http://$MYIP:88/SOCKS5-GRPC-$user.txt"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m🔰LUXURY EDITION ZEROSSL🔰\e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
