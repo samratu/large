@@ -25,7 +25,27 @@ until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 	done
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 		read -rp "User: " -e user
-		CLIENT_EXISTS=$(grep -w $user /usr/local/etc/xray/xvmess.json | wc -l)
+		CLIENT_EXISTS=$(grep -w $user /etc/xray/xvmess.json | wc -l)
+
+		if [[ ${CLIENT_EXISTS} == '1' ]]; then
+			echo ""
+			echo "A Client Username Was Already Created, Please Enter New Username"
+			exit 1
+		fi
+	done
+until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
+		read -rp "User: " -e user
+		CLIENT_EXISTS=$(grep -w $user /etc/xray/xvless.json | wc -l)
+
+		if [[ ${CLIENT_EXISTS} == '1' ]]; then
+			echo ""
+			echo "A Client Username Was Already Created, Please Enter New Username"
+			exit 1
+		fi
+	done
+until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
+		read -rp "User: " -e user
+		CLIENT_EXISTS=$(grep -w $user /etc/xray/xtrojan.json | wc -l)
 
 		if [[ ${CLIENT_EXISTS} == '1' ]]; then
 			echo ""
@@ -40,7 +60,7 @@ hariini=`date -d "0 days" +"%Y-%m-%d"`
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 #exp2=`date -d "$masaaktif seconds" +"%Y-%m-%d"`
 sed -i '/#vmess-hdua$/a\### '"$user $exp"'\
-},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
+},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/xtrojan.json
 sed -i '/#vmess-hdua$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/xvmess.json
 sed -i '/#vmess-hdua$/a\### '"$user $exp"'\
@@ -56,7 +76,7 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "http",
-      "path": "/shanumhttp",
+      "path": "shanumhttp",
       "type": "none",
       "host": "",
       "tls": "tls"
@@ -85,7 +105,7 @@ echo -e "IP  :${MYIP}"
 echo -e "Port TLS  :${vmhdua}"
 echo -e "Network  :h2"
 echo -e "Host  :${domain}"
-echo -e "Path  :/shanumhttp"
+echo -e "Path  :shanumhttp"
 echo -e "Uuid  :${uuid}"
 echo -e "Dibuat  :$hariini"
 echo -e "Kadaluarsa  :$exp"
