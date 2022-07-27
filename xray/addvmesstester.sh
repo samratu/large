@@ -23,8 +23,8 @@ vmhttpnon="$(cat ~/log-install.txt | grep -w "VMESS HTTP NON TLS" | cut -d: -f2|
 vmgrpc="$(cat ~/log-install.txt | grep -w "VMESS GRPC TLS" | cut -d: -f2|sed 's/ //g')"
 vmgrpcnon="$(cat ~/log-install.txt | grep -w "VMESS GRPC NON TLS" | cut -d: -f2|sed 's/ //g')"
 vmhdua="$(cat ~/log-install.txt | grep -w "VMESS H2C TLS" | cut -d: -f2|sed 's/ //g')"
-vmquic="$(cat ~/log-install.txt | grep -w "VMESS QUIC" | cut -d: -f2|sed 's/ //g')"
-
+vmquic="$(cat ~/log-install.txt | grep -w "VMESS QUIC TLS" | cut -d: -f2|sed 's/ //g')"
+vmkcp="$(cat ~/log-install.txt | grep -w "VMESS KCP TLS" | cut -d: -f2|sed 's/ //g')"
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 		read -rp "Username : " -e user
 		CLIENT_EXISTS=$(grep -w $user /etc/xray/config.json | wc -l)
@@ -51,6 +51,10 @@ hariini=`date -d "0 days" +"%Y-%m-%d"`
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#vmess-tls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'"' /etc/xray/xvmess.json
+sed -i '/#vmess-tls$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'"' /etc/xray/xvless.json
+sed -i '/#vmess-tls$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'"' /etc/xray/xtrojan.json
 sed -i '/#vmess-nontls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'"' /etc/xray/config.json
 cat>/etc/xray/vmess-$user-tls.json<<EOF
@@ -134,6 +138,10 @@ sed -i '/#vmess-grpc-tls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
 sed -i '/#vmess-grpc-tls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/xvmess.json
+sed -i '/#vmess-grpc-tls$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/xvless.json
+sed -i '/#vmess-grpc-tls$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/xtrojan.json
 sed -i '/#vmess-grpc-nontls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
 cat>/etc/xray/vmess-$user-tls.json<<EOF
@@ -237,8 +245,8 @@ sed -i '/#vmess-hdua$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
 sed -i '/#vmess-hdua$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/xvmess.json
-#sed -i '/#none$/a\### '"$user $exp"'\
-#},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
+sed -i '/#vmess-hdua$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/xtrojan.json
 cat>/etc/xray/vmess-$user-tls.json<<EOF
       {
       "v": "4",
@@ -248,7 +256,7 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "http",
-      "path": "/shanumhttp",
+      "path": "shanumhttp",
       "type": "none",
       "host": "",
       "tls": "tls"
@@ -260,6 +268,36 @@ vmesshdua="vmess://$(base64 -w 0 /etc/xray/vmess-$user-tls.json)"
 #vmessgrpclink2="vmess://$(base64 -w 0 /etc/xray/$user-none.json)"
 rm -rf /etc/xray/vmess-$user-tls.json
 rm -rf /etc/xray/vmess-hdua-$user-nontls.json
+
+sed -i '/#vmess-kcp$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/xvless.json
+sed -i '/#vmess-kcp$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
+sed -i '/#vmess-kcp$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/xvmess.json
+sed -i '/#vmess-kcp$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/xtrojan.json
+cat>/etc/xray/vmess-$user-tls.json<<EOF
+      {
+      "v": "4",
+      "ps": "🔰VMESS KCP TLS ${user}",
+      "add": "${domain}",
+      "port": "${vmkcp}",
+      "id": "${uuid}",
+      "aid": "0",
+      "net": "kcp",
+      "path": "shanumkcp",
+      "type": "none",
+      "host": "",
+      "tls": "tls"
+}
+EOF
+vmesskcp_base641=$( base64 -w 0 <<< $vmess_json1)
+vmesskcp_base642=$( base64 -w 0 <<< $vmess_json2)
+vmesskcp="vmess://$(base64 -w 0 /etc/xray/vmess-$user-tls.json)"
+#vmesshttpnon="vmess://$(base64 -w 0 /etc/xray/vmess-$user-nontls.json)"
+rm -rf /etc/xray/vmess-$user-tls.json
+rm -rf /etc/xray/vmess-$user-nontls.json
 
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 		read -rp "User: " -e user
@@ -286,6 +324,8 @@ sed -i '/#vmess-http-tls$/a\### '"$user $exp"'\
 sed -i '/#vmess-http-nontls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/xtrojan.json
 sed -i '/#vmess-http-nontls$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/xvless.json
+sed -i '/#vmess-http-nontls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
 cat>/etc/xray/vmess-$user-tls.json<<EOF
       {
@@ -296,12 +336,19 @@ cat>/etc/xray/vmess-$user-tls.json<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "tcp",
-      "path": "/shanumtcp",
+      "path": "shanumtcp",
       "type": "http",
       "host": "${domain}",
       "tls": "tls"
 }
 EOF
+vmesshttp_base641=$( base64 -w 0 <<< $vmess_json1)
+vmesshttp_base642=$( base64 -w 0 <<< $vmess_json2)
+vmesshttp="vmess://$(base64 -w 0 /etc/xray/vmess-$user-tls.json)"
+vmesshttpnon="vmess://$(base64 -w 0 /etc/xray/vmess-$user-nontls.json)"
+rm -rf /etc/xray/vmess-$user-tls.json
+rm -rf /etc/xray/vmess-$user-nontls.json
+
 cat>/etc/xray/vmess-$user-nontls.json<<EOF
       {
       "v": "4",
