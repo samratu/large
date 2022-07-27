@@ -29,6 +29,16 @@ until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 			exit 1
 		fi
 	done
+until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
+		read -rp "Password : " -e user
+		CLIENT_EXISTS=$(grep -w $user /etc/xray/xvmess.json | wc -l)
+
+		if [[ ${CLIENT_EXISTS} == '1' ]]; then
+			echo ""
+			echo -e "Username ${RED}${CLIENT_NAME}${NC} Already On VPS Please Choose Another"
+			exit 1
+		fi
+	done
 passwd=$GESuWIqYcq34MSCDTOck0g==
 uuid=$(cat /proc/sys/kernel/random/uuid)
 base64=$(openssl rand -base64 16)
