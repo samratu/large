@@ -38,16 +38,41 @@ until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${user_EXISTS} == '0' ]]; do
 			exit 1
 		fi
 	done
+until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${user_EXISTS} == '0' ]]; do
+		read -rp "Password : " -e user
+		user_EXISTS=$(grep -w $user /etc/xray/xvless.json | wc -l)
+
+		if [[ ${user_EXISTS} == '1' ]]; then
+			echo ""
+			echo -e "Username ${RED}${user}${NC} Already On VPS Please Choose Another"
+			exit 1
+		fi
+	done
+until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${user_EXISTS} == '0' ]]; do
+		read -rp "Password : " -e user
+		user_EXISTS=$(grep -w $user /etc/xray/config.json | wc -l)
+
+		if [[ ${user_EXISTS} == '1' ]]; then
+			echo ""
+			echo -e "Username ${RED}${user}${NC} Already On VPS Please Choose Another"
+			exit 1
+		fi
+	done
 uuid=$(cat /proc/sys/kernel/random/uuid)
 read -p "Expired (Days) : " masaaktif
 hariini=`date -d "0 days" +"%Y-%m-%d"`
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#trojan-http-tls$/a\### '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvmess.json
+sed -i '/#trojan-http-tls$/a\### '"$user $exp"'\
+},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvless.json
+sed -i '/#trojan-http-tls$/a\### '"$user $exp"'\
+},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
 sed -i '/#trojan-http-nontls$/a\### '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
-
-trojanhttp="trojan://$uuid@${domain}:$thttp?type=tcp&security=tls&path=/gandringtcp&host=${domain}&headerType=http#%F0%9F%94%B0TROJAN)+HTTP+TLS+${user}"
+sed -i '/#trojan-http-nontls$/a\### '"$user $exp"'\
+},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
+trojanhttp="trojan://$uuid@${domain}:$thttp?type=tcp&security=tls&path=gandringtcp&host=${domain}&headerType=http#%F0%9F%94%B0TROJAN)+HTTP+TLS+${user}"
 trojanhttpnon="trojan://$uuid@${domain}:$thttpnon?type=tcp&security=none&host=${domain}&headerType=http#%F0%9F%94%B0TROJAN+HTTP+NONTLS+${user}"
 systemctl restart xray.service
 systemctl restart xtrojan.service
@@ -62,7 +87,7 @@ echo -e "Nama  :${user}"
 echo -e "IP/Host  :${MYIP}"
 echo -e "Address  :${domain}"
 echo -e "Protocol  :tcp"
-echo -e "Path  :/gandringtcp"
+echo -e "Path  :gandringtcp"
 echo -e "Port  :${thttp}"
 echo -e "Password  :${uuid}"
 echo -e "Created  :$hariini"
