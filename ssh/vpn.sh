@@ -177,7 +177,7 @@ systemctl start openvpn
 /etc/init.d/openvpn restart
 
 cd /home/vps/public_html/
-zip cfg.zip tcp.ovpn udp.ovpn ssl.ovpn > /dev/null 2>&1
+zip gandring.zip tcp.ovpn udp.ovpn ssl.ovpn > /dev/null 2>&1
 cd
 cat <<'mySiteOvpn' > /home/vps/public_html/index.html
 <!DOCTYPE html>
@@ -193,7 +193,7 @@ cat <<'mySiteOvpn' > /home/vps/public_html/index.html
 
 <li class="list-group-item justify-content-between align-items-center" style="margin-bottom:1em;"><p>SSL <span class="badge light-blue darken-4">Android/iOS/PC/Modem</span><br /><small></small></p><a class="btn btn-outline-success waves-effect btn-sm" href="http://IP-ADDRESSS:88/ssl.ovpn" style="float:right;"><i class="fa fa-download"></i> Download</a></li>
 
-<li class="list-group-item justify-content-between align-items-center" style="margin-bottom:1em;"><p> ALL.zip <span class="badge light-blue darken-4">Android/iOS/PC/Modem</span><br /><small></small></p><a class="btn btn-outline-success waves-effect btn-sm" href="http://IP-ADDRESSS:88/cfg.zip" style="float:right;"><i class="fa fa-download"></i> Download</a></li>
+<li class="list-group-item justify-content-between align-items-center" style="margin-bottom:1em;"><p> ALL.zip <span class="badge light-blue darken-4">Android/iOS/PC/Modem</span><br /><small></small></p><a class="btn btn-outline-success waves-effect btn-sm" href="http://IP-ADDRESSS:88/gandring.zip" style="float:right;"><i class="fa fa-download"></i> Download</a></li>
 
 </ul></div></div></div></div></body></html>
 mySiteOvpn
