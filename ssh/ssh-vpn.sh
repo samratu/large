@@ -647,7 +647,7 @@ wget -O renewssws "https://${wisnuvpnn}/renewssws.sh"
 wget -O renewsocks "https://${wisnuvpnn}/renewsocks.sh"
 wget -O renewxrayss "https://${wisnuvpnn}/renewxrayss.sh"
 wget -O deltrojantester "https://${wisnuvpnn}/deltrojantester.sh"
-wget -O delvmesstester "https://${wisnuvpnn}/delvmesstester.sh"
+wget -O delvlesstester "https://${wisnuvpnn}/delvlesstester.sh"
 wget -O delvmesstester "https://${wisnuvpnn}/delvmesstester.sh"
 wget -O cektrojantester "https://${wisnuvpnn}/cektrojantester.sh"
 
