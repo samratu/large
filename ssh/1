@@ -104,7 +104,7 @@ grpc_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 grpc_set_header Host $http_host;
 grpc_pass grpc://127.0.0.1:30090;
 }
-location = /gandring
+location = /shanum-ws
 {
 proxy_redirect off;
 proxy_pass http://127.0.0.1:10100;
@@ -114,5 +114,13 @@ proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 proxy_set_header Upgrade $http_upgrade;
 proxy_set_header Connection "upgrade";
 proxy_set_header Host $http_host;
+}
+location ^~ /shanum-grpc
+{
+proxy_redirect off;
+grpc_set_header X-Real-IP $remote_addr;
+grpc_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+grpc_set_header Host $http_host;
+grpc_pass grpc://127.0.0.1:10110;
 }
         }
