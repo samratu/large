@@ -44,8 +44,8 @@ status17=$(systemctl status sslh             | grep -i "active (running)")
 status18=$(systemctl status privoxy          | grep -i "active (running)")
 status19=$(systemctl status ws-tls           | grep -i "active (running)")
 status19=$(systemctl status ws-nontls        | grep -i "active (running)")
-status20=$(systemctl status ovpnws           | grep -i "active (running)")
-status21=$(systemctl status wstunnel         | grep -i "active (running)")
+status20=$(systemctl status ovpn-tls         | grep -i "active (running)")
+status21=$(systemctl status ws-ovpn          | grep -i "active (running)")
 status22=$(systemctl status wg-quick@wg0     | grep -i "active (exited)")
 status23=$(systemctl status shadowsocks-libev| grep -i "active (running)")
 status23=$(systemctl status shadowsocks-libev| grep -i "active (running)")
@@ -328,327 +328,327 @@ if [[ $status27 == "" ]]; then
       ingfo+=("VMESS GRPC TLS")
       dahlah+=("err29")
 else
-      sstatus28=$AKTIF
+      sstatus27=$AKTIF
       mantap+=("hore29")
 fi
-if [[ $status29 == "" ]]; then
-      sstatus29=$ERROR
+if [[ $status28 == "" ]]; then
+      sstatus28=$ERROR
       ingfo+=("VMESS GRPC NON TLS")
       dahlah+=("err30")
 else
-      sstatus29=$AKTIF
+      sstatus28=$AKTIF
       mantap+=("hore30")
 fi
-if [[ $status30 == "" ]]; then
-      sstatus30=$ERROR
+if [[ $status29 == "" ]]; then
+      sstatus29=$ERROR
       ingfo+=("VMESS HTTP TLS")
       dahlah+=("err31")
 else
-      sstatus30=$AKTIF
+      sstatus29=$AKTIF
       mantap+=("hore31")
 fi
-if [[ $status31 == "" ]]; then
-      sstatus31=$ERROR
+if [[ $status30 == "" ]]; then
+      sstatus30=$ERROR
       ingfo+=("VMESS HTTP NON TLS")
       dahlah+=("err32")
 else
-      sstatus31=$AKTIF
+      sstatus30=$AKTIF
       mantap+=("hore32")
 fi
-if [[ $status32 == "" ]]; then
-      sstatus32=$ERROR
+if [[ $status31 == "" ]]; then
+      sstatus31=$ERROR
       ingfo+=("VMESS H2C TLS")
       dahlah+=("err33")
 else
-      sstatus32=$AKTIF
+      sstatus31=$AKTIF
       mantap+=("hore33")
 fi
-if [[ $status33 == "" ]]; then
-      sstatus33=$ERROR
+if [[ $status32 == "" ]]; then
+      sstatus32=$ERROR
       ingfo+=("VMESS QUIC TLS")
       dahlah+=("err34")
 else
-      sstatus33=$AKTIF
+      sstatus32=$AKTIF
       mantap+=("hore34")
 fi
-if [[ $status34 == "" ]]; then
-      sstatus34=$ERROR
+if [[ $status33 == "" ]]; then
+      sstatus33=$ERROR
       ingfo+=("VMESS KCP TLS")
       dahlah+=("err35")
 else
-      sstatus34=$AKTIF
+      sstatus33=$AKTIF
       mantap+=("hore35")
 fi
-if [[ $status35 == "" ]]; then
-      sstatus35=$ERROR
+if [[ $status34 == "" ]]; then
+      sstatus34=$ERROR
       ingfo+=("VLESS WS TLS")
       dahlah+=("err36")
 else
-      sstatus35=$AKTIF
+      sstatus34=$AKTIF
       mantap+=("hore36")
 fi
-if [[ $status36 == "" ]]; then
-      sstatus36=$ERROR
+if [[ $status35 == "" ]]; then
+      sstatus35=$ERROR
       ingfo+=("VLESS WS NON TLS")
       dahlah+=("err37")
 else
-      sstatus36=$AKTIF
+      sstatus35=$AKTIF
       mantap+=("hore37")
 fi
-if [[ $status37 == "" ]]; then
-      sstatus37=$ERROR
+if [[ $status36 == "" ]]; then
+      sstatus36=$ERROR
       ingfo+=("VLESS GRPC TLS")
       dahlah+=("err38")
 else
-      sstatus37=$AKTIF
+      sstatus36=$AKTIF
       mantap+=("hore38")
 fi
-if [[ $status38 == "" ]]; then
-      sstatus38=$ERROR
+if [[ $status37 == "" ]]; then
+      sstatus37=$ERROR
       ingfo+=("VLESS GRPC NON TLS")
       dahlah+=("err39")
 else
-      sstatus38=$AKTIF
+      sstatus37=$AKTIF
       mantap+=("hore39")
 fi
-if [[ $status39 == "" ]]; then
-      sstatus39=$ERROR
+if [[ $status38 == "" ]]; then
+      sstatus38=$ERROR
       ingfo+=("VLESS GFW TLS")
       dahlah+=("err40")
 else
-      sstatus39=$AKTIF
+      sstatus38=$AKTIF
       mantap+=("hore40")
 fi
-if [[ $status40 == "" ]]; then
-      sstatus40=$ERROR
+if [[ $status39 == "" ]]; then
+      sstatus39=$ERROR
       ingfo+=("VLESS HTTP TLS")
       dahlah+=("err41")
 else
-      sstatus40=$AKTIF
+      sstatus39=$AKTIF
       mantap+=("hore41")
 fi
-if [[ $status41 == "" ]]; then
-      sstatus41=$ERROR
+if [[ $status40 == "" ]]; then
+      sstatus40=$ERROR
       ingfo+=("VLESS HTTP NON TLS")
       dahlah+=("err42")
 else
-      sstatus41=$AKTIF
+      sstatus4p=$AKTIF
       mantap+=("hore42")
 fi
-if [[ $status42 == "" ]]; then
-      sstatus42=$ERROR
+if [[ $status41 == "" ]]; then
+      sstatus41=$ERROR
       ingfo+=("VLESS H2C TLS")
       dahlah+=("err43")
 else
-      sstatus42=$AKTIF
+      sstatus41=$AKTIF
       mantap+=("hore43")
 fi
-if [[ $status43 == "" ]]; then
-      sstatus43=$ERROR
+if [[ $status42 == "" ]]; then
+      sstatus42=$ERROR
       ingfo+=("VLESS QUIC TLS")
       dahlah+=("err44")
 else
-      sstatus43=$AKTIF
+      sstatus42=$AKTIF
       mantap+=("hore44")
 fi
-if [[ $status44 == "" ]]; then
-      sstatus44=$ERROR
+if [[ $status43 == "" ]]; then
+      sstatus43=$ERROR
       ingfo+=("VLESS KCP TLS")
       dahlah+=("err45")
 else
-      sstatus44=$AKTIF
+      sstatus43=$AKTIF
       mantap+=("hore45")
 fi
-if [[ $status45 == "" ]]; then
-      sstatus45=$ERROR
+if [[ $status44 == "" ]]; then
+      sstatus44=$ERROR
       ingfo+=("TROJAN XTLS")
       dahlah+=("err46")
 else
-      sstatus45=$AKTIF
+      sstatus44=$AKTIF
       mantap+=("hore46")
 fi
-if [[ $status46 == "" ]]; then
-      sstatus46=$ERROR
+if [[ $status45 == "" ]]; then
+      sstatus45=$ERROR
       ingfo+=("TROJAN GFW")
       dahlah+=("err47")
 else
-      sstatus46=$AKTIF
+      sstatus45=$AKTIF
       mantap+=("hore47")
 fi
-if [[ $status47 == "" ]]; then
-      sstatus47=$ERROR
+if [[ $status46 == "" ]]; then
+      sstatus46=$ERROR
       ingfo+=("TROJAN HTTP TLS")
       dahlah+=("err48")
 else
-      sstatus47=$AKTIF
+      sstatus46=$AKTIF
       mantap+=("hore48")
 fi
-if [[ $status48 == "" ]]; then
-      sstatus48=$ERROR
+if [[ $status47 == "" ]]; then
+      sstatus47=$ERROR
       ingfo+=("TROJAN HTTP NON TLS")
       dahlah+=("err49")
 else
-      sstatus48=$AKTIF
+      sstatus47=$AKTIF
       mantap+=("hore49")
 fi
-if [[ $status49 == "" ]]; then
-      sstatus49=$ERROR
+if [[ $status48 == "" ]]; then
+      sstatus48=$ERROR
       ingfo+=("TROJAN H2C TLS")
       dahlah+=("err50")
 else
-      sstatus49=$AKTIF
+      sstatus48=$AKTIF
       mantap+=("hore50")
 fi
-if [[ $status50 == "" ]]; then
-      sstatus50=$ERROR
+if [[ $status49 == "" ]]; then
+      sstatus49=$ERROR
       ingfo+=("TROJAN KCP TLS")
       dahlah+=("err51")
 else
-      sstatus50=$AKTIF
+      sstatus49=$AKTIF
       mantap+=("hore51")
 fi
-if [[ $status51 == "" ]]; then
-      sstatus51=$ERROR
+if [[ $status50 == "" ]]; then
+      sstatus50=$ERROR
       ingfo+=("TROJAN QUIC TLS")
       dahlah+=("err52")
 else
-      sstatus51=$AKTIF
+      sstatus50=$AKTIF
       mantap+=("hore52")
 fi
-if [[ $status52 == "" ]]; then
-      sstatus52=$ERROR
+if [[ $status51 == "" ]]; then
+      sstatus51=$ERROR
       ingfo+=("TROJAN GRPC")
       dahlah+=("err53")
 else
-      sstatus52=$AKTIF
+      sstatus51=$AKTIF
       mantap+=("hore53")
 fi
-if [[ $status53 == "" ]]; then
-      sstatus53=$ERROR
+if [[ $status52 == "" ]]; then
+      sstatus52=$ERROR
       ingfo+=("TROJAN WS TLS")
       dahlah+=("err54")
 else
-      sstatus53=$AKTIF
+      sstatus52=$AKTIF
       mantap+=("hore54")
 fi
-if [[ $status54 == "" ]]; then
-      sstatus54=$ERROR
+if [[ $status53 == "" ]]; then
+      sstatus53=$ERROR
       ingfo+=("TROJAN WS NON TLS")
       dahlah+=("err55")
 else
-      sstatus54=$AKTIF
+      sstatus53=$AKTIF
       mantap+=("hore55")
 fi
-if [[ $status55 == "" ]]; then
-      sstatus55=$ERROR
+if [[ $status54 == "" ]]; then
+      sstatus54=$ERROR
       ingfo+=("TROJAN GO")
       dahlah+=("err56")
 else
-      sstatus55=$AKTIF
+      sstatus54=$AKTIF
       mantap+=("hore56")
 fi
-if [[ $status56 == "" ]]; then
-      sstatus56=$ERROR
+if [[ $status55 == "" ]]; then
+      sstatus55=$ERROR
       ingfo+=("XRAY MT PROTO")
       dahlah+=("err57")
 else
-      sstatus56=$AKTIF
+      sstatus55=$AKTIF
       mantap+=("hore57")
 fi
-if [[ $status57 == "" ]]; then
-      sstatus57=$ERROR
+if [[ $status56 == "" ]]; then
+      sstatus56=$ERROR
       ingfo+=("SOCKS5 WS TLS")
       dahlah+=("err58")
 else
-      sstatus57=$AKTIF
+      sstatus56=$AKTIF
       mantap+=("hore58")
 fi
-if [[ $status58 == "" ]]; then
-      sstatus58=$ERROR
+if [[ $status57 == "" ]]; then
+      sstatus57=$ERROR
       ingfo+=("SOCKS5 WS NON TLS")
       dahlah+=("err59")
 else
-      sstatus58=$AKTIF
+      sstatus57=$AKTIF
       mantap+=("hore59")
 fi
-if [[ $status59 == "" ]]; then
-      sstatus59=$ERROR
+if [[ $status58 == "" ]]; then
+      sstatus58=$ERROR
       ingfo+=("SOCKS5 TCP TLS")
       dahlah+=("err60")
 else
-      sstatus59=$AKTIF
+      sstatus58=$AKTIF
       mantap+=("hore60")
 fi
-if [[ $status60 == "" ]]; then
-      sstatus60=$ERROR
+if [[ $status59 == "" ]]; then
+      sstatus59=$ERROR
       ingfo+=("SOCKS5 GRPC TLS")
       dahlah+=("err61")
 else
-      sstatus60=$AKTIF
+      sstatus59=$AKTIF
       mantap+=("hore61")
 fi
-if [[ $status61 == "" ]]; then
-      sstatus61=$ERROR
+if [[ $status60 == "" ]]; then
+      sstatus60=$ERROR
       ingfo+=("SHADOWSOCKS WS TLS")
       dahlah+=("err62")
 else
-      sstatus61=$AKTIF
+      sstatus60=$AKTIF
       mantap+=("hore62")
 fi
-if [[ $status62 == "" ]]; then
-      sstatus62=$ERROR
+if [[ $status61 == "" ]]; then
+      sstatus61=$ERROR
       ingfo+=("SHADOWSOCKS WS NON TLS")
       dahlah+=("err63")
 else
-      sstatus62=$AKTIF
+      sstatus61=$AKTIF
       mantap+=("hore63")
 fi
-if [[ $status63 == "" ]]; then
-      sstatus63=$ERROR
+if [[ $status62 == "" ]]; then
+      sstatus62=$ERROR
       ingfo+=("SHADOWSOCKS TCP TLS")
       dahlah+=("err64")
 else
-      sstatus63=$AKTIF
+      sstatus62=$AKTIF
       mantap+=("hore64")
 fi
-if [[ $status64 == "" ]]; then
-      sstatus64=$ERROR
+if [[ $status63 == "" ]]; then
+      sstatus63=$ERROR
       ingfo+=("SHADOWSOCKS GRPC TLS")
       dahlah+=("err65")
 else
-      sstatus64=$AKTIF
+      sstatus63=$AKTIF
       mantap+=("hore65")
 fi
-if [[ $status65 == "" ]]; then
-      sstatus65=$ERROR
+if [[ $status64 == "" ]]; then
+      sstatus64=$ERROR
       ingfo+=("SS 2022 WS TLS")
       dahlah+=("err66")
 else
-      sstatus65=$AKTIF
+      sstatus64=$AKTIF
       mantap+=("hore66")
 fi
-if [[ $status66 == "" ]]; then
-      sstatus66=$ERROR
+if [[ $status65 == "" ]]; then
+      sstatus65=$ERROR
       ingfo+=("SS 2022 WS NON TLS")
       dahlah+=("err67")
 else
-      sstatus66=$AKTIF
+      sstatus65=$AKTIF
       mantap+=("hore67")
 fi
-if [[ $status67 == "" ]]; then
-      sstatus67=$ERROR
+if [[ $status66 == "" ]]; then
+      sstatus66=$ERROR
       ingfo+=("SS 2022 TCP TLS")
       dahlah+=("err68")
 else
-      sstatus67=$AKTIF
+      sstatus66=$AKTIF
       mantap+=("hore68")
 fi
-if [[ $status68 == "" ]]; then
-      sstatus68=$ERROR
+if [[ $status67 == "" ]]; then
+      sstatus67=$ERROR
       ingfo+=("SS 2022 GRPC TLS")
       dahlah+=("err69")
 else
-      sstatus68=$AKTIF
+      sstatus667=$AKTIF
       mantap+=("hore69")
 fi
 jumlah1="${#mantap[@]}"
@@ -857,10 +857,10 @@ echo -e "$bl🔰 $off $bd SHADOWSOCKS WS TLS          $off : $sstatus62🔰"
 echo -e "$bl🔰 $off $bd SHADOWSOCKS WS NON TLS      $off : $sstatus63🔰"
 echo -e "$bl🔰 $off $bd SHADOWSOCKS TCP TLS         $off : $sstatus64🔰"
 echo -e "$bl🔰 $off $bd SHADOWSOCKS GRPC TLS        $off : $sstatus65🔰"
-echo -e "$bl🔰 $off $bd SS 2022 WS TLS              $off : $sstatus66🔰"
-echo -e "$bl🔰 $off $bd SS 2022 WS NON TLS          $off : $sstatus67🔰"
-echo -e "$bl🔰 $off $bd SS 2022 TCP TLS             $off : $sstatus68🔰"
-echo -e "$bl🔰 $off $bd SS 2022 GRPC TLS            $off : $sstatus69🔰"
+echo -e "$bl🔰 $off $bd SS 2022 WS TLS              $off : $sstatus65🔰"
+echo -e "$bl🔰 $off $bd SS 2022 WS NON TLS          $off : $sstatus65🔰"
+echo -e "$bl🔰 $off $bd SS 2022 TCP TLS             $off : $sstatus66🔰"
+echo -e "$bl🔰 $off $bd SS 2022 GRPC TLS            $off : $sstatus67🔰"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\E[46;1;46m             🔰 SOLO THE SPIRIT OF JAVA 🔰              \E[0m"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
