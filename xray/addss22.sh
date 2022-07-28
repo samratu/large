@@ -42,6 +42,7 @@ until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 passwd=$GESuWIqYcq34MSCDTOck0g==
 uuid=$(cat /proc/sys/kernel/random/uuid)
 base64=$(openssl rand -base64 16)
+Username=Password
 password=$base64
 read -p "Expired (Days) : " masaaktif
 hariini=`date -d "0 days" +"%Y-%m-%d"`
