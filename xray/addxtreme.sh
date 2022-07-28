@@ -275,6 +275,409 @@ vmessquic_base641=$( base64 -w 0 <<< $vmess_json1)
 vmessquic="vmess://$(base64 -w 0 /etc/xray/vmess-$user-tls.json)"
 rm -rf /etc/xray/vmess-$user-tls.json
 
+uuid=$(cat /proc/sys/kernel/random/uuid)
+stls="$(cat ~/log-install.txt | grep -w "SOCKS5 WS TLS" | cut -d: -f2|sed 's/ //g')"
+snontls="$(cat ~/log-install.txt | grep -w "SOCKS5 WS NON TLS" | cut -d: -f2|sed 's/ //g')"
+sgrpc="$(cat ~/log-install.txt | grep -w "SOCKS5 GRPC TLS" | cut -d: -f2|sed 's/ //g')"
+until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${user_EXISTS} == '0' ]]; do
+		read -rp "Password : " -e user
+		user_EXISTS=$(grep -w $user /etc/xray/xvmess.json | wc -l)
+
+		if [[ ${user_EXISTS} == '1' ]]; then
+			echo ""
+			echo -e "Username ${RED}${user}${NC} Already On VPS Please Choose Another"
+			exit 1
+		fi
+	done
+uuid=$(cat /proc/sys/kernel/random/uuid)
+read -p "Expired (Days) : " masaaktif
+hariini=`date -d "0 days" +"%Y-%m-%d"`
+exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
+sed -i '/#socks-tls$/a\### '"$user $exp"'\
+},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvmess.json
+sed -i '/#socks-tls$/a\### '"$user $exp"'\
+},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
+sed -i '/#socks-tls$/a\### '"$user $exp"'\
+},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
+sed -i '/#socks-grpc$/a\### '"$user $exp"'\
+},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvmess.json
+sed -i '/#socks-grpc$/a\### '"$user $exp"'\
+},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
+sed -i '/#socks-grpc$/a\### '"$user $exp"'\
+},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
+cat>/etc/xray/SOCKS5-WS-TLS-$user.json<<EOF
+{
+"dns": {
+"hosts": {
+"domain:googleapis.cn": "googleapis.com"
+},
+"servers": [
+"1.1.1.1"
+]
+},
+"inbounds": [
+{
+"listen": "127.0.0.1",
+"port": "10808",
+"protocol": "socks",
+"settings": {
+"auth": "noauth",
+"udp": true,
+"userLevel": 8
+},
+"sniffing": {
+"destOverride": [
+"http",
+"tls"
+],
+"enabled": true
+},
+"tag": "socks"
+},
+{
+"listen": "127.0.0.1",
+"port": "10809",
+"protocol": "http",
+"settings": {
+"userLevel": 8
+},
+"tag": "http"
+}
+],
+"log": {
+"loglevel": "warning"
+},
+"outbounds": [
+{
+"mux": {
+"concurrency": 8,
+"enabled": true
+},
+"protocol": "socks",
+"settings": {
+"servers": [
+{
+"address": "$domain",
+"port": 443,
+"users": [
+{
+"level": 0,
+"user": "$user",
+"pass": "$user"
+}
+]
+}
+]
+},
+"streamSettings": {
+"network": "ws",
+"security": "tls",
+"tlsSettings": {
+"allowInsecure": true,
+"serverName": "$domain"
+},
+"wsSettings": {
+"headers": {
+"Host": "$domain"
+},
+"path": "/wisnu-ws"
+}
+},
+"tag": "proxy"
+},
+{
+"protocol": "freedom",
+"settings": {},
+"tag": "direct"
+},
+{
+"protocol": "blackhole",
+"settings": {
+"response": {
+"type": "http"
+}
+},
+"tag": "block"
+}
+],
+"policy": {
+"levels": {
+"8": {
+"connIdle": 300,
+"downlinkOnly": 1,
+"handshake": 4,
+"uplinkOnly": 1
+}
+},
+"system": {
+"statsOutboundDownlink": true,
+"statsOutboundUplink": true
+}
+},
+"routing": {
+"domainStrategy": "Asls",
+"rules": []
+},
+"stats": {}
+}
+EOF
+cat > /home/vps/public_html/SOCKS5-WS-TLS-$user.txt<<END
+
+cat>/etc/xray/SOCKS5-WS-NONTLS-$user.json<<EOF
+{
+"dns": {
+"hosts": {
+"domain:googleapis.cn": "googleapis.com"
+},
+"servers": [
+"1.1.1.1"
+]
+},
+"inbounds": [
+{
+"listen": "127.0.0.1",
+"port": "10808",
+"protocol": "socks",
+"settings": {
+"auth": "noauth",
+"udp": true,
+"userLevel": 8
+},
+"sniffing": {
+"destOverride": [
+"http",
+"tls"
+],
+"enabled": true
+},
+"tag": "socks"
+},
+{
+"listen": "127.0.0.1",
+"port": "10809",
+"protocol": "http",
+"settings": {
+"userLevel": 8
+},
+"tag": "http"
+}
+],
+"log": {
+"loglevel": "warning"
+},
+"outbounds": [
+{
+"mux": {
+"concurrency": 8,
+"enabled": true
+},
+"protocol": "socks",
+"settings": {
+"servers": [
+{
+"address": "$domain",
+"port": 80,
+"users": [
+{
+"level": 0,
+"user": "$user",
+"pass": "$user"
+}
+]
+}
+]
+},
+"streamSettings": {
+"network": "ws",
+"security": "none",
+"tlsSettings": {
+"allowInsecure": true,
+"serverName": "$domain"
+},
+"wsSettings": {
+"headers": {
+"Host": "$domain"
+},
+"path": "/wisnu-ws"
+}
+},
+"tag": "proxy"
+},
+{
+"protocol": "freedom",
+"settings": {},
+"tag": "direct"
+},
+{
+"protocol": "blackhole",
+"settings": {
+"response": {
+"type": "http"
+}
+},
+"tag": "block"
+}
+],
+"policy": {
+"levels": {
+"8": {
+"connIdle": 300,
+"downlinkOnly": 1,
+"handshake": 4,
+"uplinkOnly": 1
+}
+},
+"system": {
+"statsOutboundDownlink": true,
+"statsOutboundUplink": true
+}
+},
+"routing": {
+"domainStrategy": "Asls",
+"rules": []
+},
+"stats": {}
+}
+EOF
+cat > /home/vps/public_html/SOCKS5-WS-NONTLS-$user.txt<<END
+
+cat>/etc/xray/SOCKS5-GRPC-$user.json<<EOF
+{
+"dns": {
+"hosts": {
+"domain:googleapis.cn": "googleapis.com"
+},
+"servers": [
+"1.1.1.1"
+]
+},
+"inbounds": [
+{
+"listen": "127.0.0.1",
+"port": "10808",
+"protocol": "socks",
+"settings": {
+"auth": "noauth",
+"udp": true,
+"userLevel": 8
+},
+"sniffing": {
+"destOverride": [
+"http",
+"tls"
+],
+"enabled": true
+},
+"tag": "socks"
+},
+{
+"listen": "127.0.0.1",
+"port": "10809",
+"protocol": "http",
+"settings": {
+"userLevel": 8
+},
+"tag": "http"
+}
+],
+"log": {
+"loglevel": "warning"
+},
+"outbounds": [
+{
+"mux": {
+"concurrency": 8,
+"enabled": true
+},
+"protocol": "socks",
+"settings": {
+"servers": [
+{
+"address": "$domain",
+"port": 443,
+"users": [
+{
+"level": 0,
+"user": "$user",
+"pass": "$user"
+}
+]
+}
+]
+},
+"streamSettings": {
+"grpcSettings": {
+                         "multiMode": true,
+                             "serviceName": "wisnu-grpc"
+                               },
+"network": "grpc",
+"security": "tls",
+"tlsSettings": {
+"allowInsecure": true,
+"serverName": "$domain"
+}
+},
+"tag": "proxy"
+},
+{
+"protocol": "freedom",
+"settings": {},
+"tag": "direct"
+},
+{
+"protocol": "blackhole",
+"settings": {
+"response": {
+"type": "http"
+}
+},
+"tag": "block"
+}
+],
+"policy": {
+"levels": {
+"8": {
+"connIdle": 300,
+"downlinkOnly": 1,
+"handshake": 4,
+"uplinkOnly": 1
+}
+},
+"system": {
+"statsOutboundDownlink": true,
+"statsOutboundUplink": true
+}
+},
+"routing": {
+"domainStrategy": "Asls",
+"rules": []
+},
+"stats": {}
+}
+EOF
+cat > /home/vps/public_html/SOCKS5-GRPC-$user.txt<<END
+
+tmp1=$(echo -n "${user}:${user}@${domain}:$stls" | base64 -w0)
+tmp2=$(echo -n "${user}:${user}@${domain}:$snontls" | base64 -w0)
+tmp3=$(echo -n "${user}:${user}@${domain}:$sgrpc" | base64 -w0)
+socks1="socks://$tmp1#$user"
+socks2="socks://$tmp2#$user"
+socks3="socks://$tmp3#$user"
+
+cat /etc/xray/SOCKS5-GRPC-$user.json >> /home/vps/public_html/SOCKS5-GRPC-$user.txt
+cat /etc/xray/SOCKS5-WS-TLS-$user.json >> /home/vps/public_html/SOCKS5-WS-TLS-$user.txt
+cat /etc/xray/SOCKS5-WS-NONTLS-$user.json >> /home/vps/public_html/SOCKS5-WS-NONTLS-$user.txt
+service cron restart
+
+rm -rf /etc/xray/SOCKS5-WS-TLS-$user.json
+rm -rf /etc/xray/SOCKS5-WS-NONTLS-$user.json
+rm -rf /etc/xray/SOCKS5-GRPC-$user.json
+
+systemctl restart xtrojan
+systemctl restart xss
+systemctl restart xvmess.service
+systemctl restart xray.service
+
 vlessquic="vless://$uuid@$MYIP:$vquic?sni=$domain&key=wisnuquic&security=tls&encryption=none&headerType=none&quicSecurity=$domain&type=quic#%F0%9F%94%B0VLESS+QUIC+TLS+$user"
 vlesshttpnon="vless://${uuid}@${domain}:$vlhttpnon?host=${domain}&security=none&type=tcp&headerType=http&encryption=none#%F0%9F%94%B0VLESS+HTTP+NONTLS+${user}"
 vlesshttp="vless://${uuid}@${domain}:$vlhttp?sni=${domain}&host=${domain}&type=tcp&security=tls&path=/wisnutcp&headerType=http&encryption=none#%F0%9F%94%B0VLESS+HTTP+TLS+${user}"
