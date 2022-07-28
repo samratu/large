@@ -9,9 +9,9 @@ LISTENING_PORT = sys.argv[1]
 PASS = ''
 
 # CONST
-BUFLEN = 8192 * 4
+BUFLEN = 8192 * 2
 TIMEOUT = 300
-DEFAULT_HOST = '127.0.0.1:2087'
+DEFAULT_HOST = '127.0.0.1:22'
 RESPONSE = 'HTTP/1.1 101 <b><font color="green">SUN AMATAK AJIKU SI JARAN GOYANG TAK GOYANG ING TENGAH LATAR CEMETHIKU SODHO LANANG SAKING SWARGO TAK SABETAKE GUNUNG JUGRUG TAK SABETAKE SEGORO ASAT TAK SABETAKE MARANG ATINE SI JABANG BAYI PET SIDHO EDAN ORA EDAN SIDHO GENDENG ORA GENDENG ORA MARI MARI YEN ORA INGSUN SING NAMBANI </font></b>\r\n\r\nContent-Length: 10485760000000\r\n\r\n'
 
 class Server(threading.Thread):
@@ -170,7 +170,6 @@ class ConnectionHandler(threading.Thread):
             if self.method=='CONNECT':
                 port = 443
             else:
-                port = 2086
                 port = sys.argv[1]
 
         (soc_family, soc_type, proto, _, address) = socket.getaddrinfo(host, port)[0]
