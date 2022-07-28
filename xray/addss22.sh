@@ -61,11 +61,11 @@ sed -i '/#ss-grpc$/a\### '"$user $exp"'\
 },{"password": "'""$base64""'","email": "'""$user""'"' /etc/xray/xss.json
 sed -i '/#ss-grpc$/a\### '"$user $exp"'\
 },{"password": "'""$base64""'","email": "'""$user""'"' /etc/xray/xvmess.json
-cat>/etc/xray/ss-$user-tcp.json<<EOF
+cat>/etc/xray/SS22-UDP-$user.json<<EOF
 {
   "inbounds": [
     {
-      "port": 443,
+      "port": $sstcp,
       "protocol": "shadowsocks",
       "settings": {
         "method": "2022-blake3-aes-128-gcm",
