@@ -680,11 +680,11 @@ cat > /etc/trojan-go/config.json << END
   "local_addr": "0.0.0.0",
   "local_port": 2053,
   "remote_addr": "127.0.0.1",
-  "remote_port": 88,
+  "remote_port": 8},
   "log_level": 1,
   "log_file": "/var/log/trojan-go/trojan-go.log",
   "password": [
-      "$uuid"
+        "${uuid}"
   ],
   "disable_http_check": true,
   "udp_timeout": 60,
@@ -697,7 +697,7 @@ cat > /etc/trojan-go/config.json << END
     "cipher": "",
     "curves": "",
     "prefer_server_cipher": false,
-    "sni": "$domain",
+    "sni": "${domain}",
     "alpn": [
       "http/1.1"
     ],
@@ -721,7 +721,7 @@ cat > /etc/trojan-go/config.json << END
   "websocket": {
     "enabled": true,
     "path": "/gandring-go",
-    "host": "$domain"
+    "host": "${domain}"
   },
     "api": {
     "enabled": false,
