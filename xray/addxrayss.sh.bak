@@ -46,6 +46,8 @@ hariini=`date -d "0 days" +"%Y-%m-%d"`
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#xray-ss-tls$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
+sed -i '/#xray-ss-tcp$/a\#&# '"$user $exp"'\
+},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
 sed -i '/#xray-ss-tls$/a\#&# '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvmess.json
 sed -i '/#xray-ss-grpc$/a\#&# '"$user $exp"'\
@@ -67,6 +69,111 @@ cat>/etc/xray/ss-tcp-$user.json<<EOF
 EOF
 tmp1=$(echo -n "aes-128-gcm:${user}@${domain}:$sstcp" | base64 -w0)
 shadow1="ss://$tmp1#$user"
+
+cat>/etc/xray/SS-TCP-TLS-$user.json<<EOF
+{
+ "dns": {
+    "servers": [
+      "8.8.8.8",
+      "8.8.4.4"
+    ]
+  },
+ "inbounds": [
+   {
+      "port": 10808,
+      "protocol": "socks",
+      "settings": {
+        "auth": "noauth",
+        "udp": true,
+        "userLevel": 8
+      },
+      "sniffing": {
+        "destOverride": [
+          "http",
+          "tls"
+        ],
+        "enabled": true
+      },
+      "tag": "socks"
+    },
+    {
+      "port": 10809,
+      "protocol": "http",
+      "settings": {
+        "userLevel": 8
+      },
+      "tag": "http"
+    }
+  ],
+  "log": {
+    "loglevel": "none"
+  },
+  "outbounds": [
+    {
+      "mux": {
+        "enabled": true
+      },
+      "protocol": "shadowsocks",
+      "settings": {
+        "servers": [
+          {
+            "address": "${domain}",
+            "level": 8,
+            "method": "aes-128-gcm",
+            "password": "${uuid}",
+            "port": 212
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true,
+          "serverName": "${domain}"
+        }
+      },
+      "tag": "proxy"
+    },
+    {
+      "protocol": "freedom",
+      "settings": {},
+      "tag": "direct"
+    },
+    {
+      "protocol": "blackhole",
+      "settings": {
+        "response": {
+          "type": "http"
+        }
+      },
+      "tag": "block"
+    }
+  ],
+  "policy": {
+    "levels": {
+      "8": {
+        "connIdle": 300,
+        "downlinkOnly": 1,
+        "handshake": 4,
+        "uplinkOnly": 1
+      }
+    },
+    "system": {
+      "statsOutboundUplink": true,
+      "statsOutboundDownlink": true
+    }
+  },
+  "routing": {
+    "domainStrategy": "Asls",
+"rules": []
+  },
+  "stats": {}
+}
+EOF
+cat>/etc/xray/SS-TCP-TLS-$user.json /home/vps/public_html/SS-TCP-TLS-$user.txt
+tmp1=$(echo -n "aes-128-gcm:${user}@${domain}:$sstcp" | base64 -w0)
+shadow1="ss://$tmp2#$user"
 
 cat>/etc/xray/SS-WS-TLS-$user.json<<EOF
 {
