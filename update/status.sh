@@ -213,7 +213,7 @@ else
 fi
 if [[ $status13 == "" ]]; then
       sstatus13=$ERROR
-      ingfo+=("SQUID")
+      ingfo+=("SQUID 4")
       dahlah+=("err13")
 else
       sstatus13=$AKTIF
@@ -253,7 +253,7 @@ else
 fi
 if [[ $status18 == "" ]]; then
       sstatus18=$ERROR
-      ingfo+=("Privoxy")
+      ingfo+=("PRIVOXY")
       dahlah+=("err18")
 else
       sstatus18=$AKTIF
@@ -290,14 +290,6 @@ if [[ $status20 == "" ]]; then
 else
       sstatus20=$AKTIF
       mantap+=("hore21")
-fi
-if [[ $status21 == "" ]]; then
-      sstatus21=$ERROR
-      ingfo+=("WEBSOCKET WIREGUARD")
-      dahlah+=("err22")
-else
-      sstatus21=$AKTIF
-      mantap+=("hore22")
 fi
 if [[ $status22 == "" ]]; then
       sstatus22=$ERROR
@@ -635,6 +627,7 @@ else
       sstatus62=$AKTIF
       mantap+=("hore65")
 fi
+fi
 if [[ $status63 == "" ]]; then
       sstatus63=$ERROR
       ingfo+=("VMESS QUIC TLS")
@@ -660,7 +653,7 @@ else
       mantap+=("hore68")
 fi
 if [[ $status67 == "" ]]; then
-      sstatus67=$ERROR
+      sstatus58=$ERROR
       ingfo+=("SHADOWSOCKS GRPC")
       dahlah+=("err69")
 else
@@ -681,6 +674,7 @@ if [[ $jumlah2 == "" ]] || [[ $jumlah2 -eq 0 ]]; then
 else
     let njir=${jumlah2}
     jumlah_error=$njir
+fi
 #=================================================================================================
 clear
 # VPS Information
@@ -803,76 +797,75 @@ echo -e "WAKTU : $jam wib $harini"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\E[43;1;46m              🍏 STATUS LAYANAN SERVER 🍏               \E[0m"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "$bl🈳️ $off $gl DROPBEAR                    $off : $sstatus01🈳️"
-echo -e "$bl🈳️ $off $gl OPENSSH                     $off : $sstatus02🈳️"
-echo -e "$bl🈳️ $off $gl STUNNEL5                    $off : $sstatus03🈳️"
-echo -e "$bl🈳️ $off $gl OPENVPN                     $off : $sstatus04🈳️"
-echo -e "$bl🈳️ $off $gl OHP DROPBEAR                $off : $sstatus05🈳️"
-echo -e "$bl🈳️ $off $gl OHP OVPN                    $off : $sstatus06🈳️"
-echo -e "$bl🈳️ $off $gl OHP SSH                     $off : $sstatus07🈳️"
-echo -e "$bl🈳️ $off $gl IPSEC                       $off : $sstatus08🈳️"
-echo -e "$bl🈳️ $off $gl SSTP                        $off : $sstatus09🈳️"
-echo -e "$bl🈳️ $off $gl PPTP                        $off : $sstatus10🈳️"
-echo -e "$bl🈳️ $off $gl L2TP                        $off : $sstatus11🈳️"
-echo -e "$bl🈳️ $off $gl NGINX                       $off : $sstatus12🈳️"
-echo -e "$bl🈳️ $off $gl SQUID                       $off : $sstatus13🈳️"
-echo -e "$bl🈳️ $off $gl CRON SERVICE                $off : $sstatus14🈳️"
-echo -e "$bl🈳️ $off $gl FAIL2BAN SERVICE            $off : $sstatus15🈳️"
-echo -e "$bl🈳️ $off $gl VNSTAT SERVICE              $off : $sstatus16🈳️"
-echo -e "$bl🈳️ $off $gl SSLH SERVICE                $off : $sstatus17🈳️"
-echo -e "$bl🈳️ $off $gl PRIVOXY                     $off : $sstatus18🈳️"
-echo -e "$bl🈳️ $off $gl WEBSOCKET TLS               $off : $sstatus19🈳️"
-echo -e "$bl🈳️ $off $gl WEBSOCKET NON TLS           $off : $sstatus19🈳️"
-echo -e "$bl🈳️ $off $gl WEBSOCKET OpenVPN           $off : $sstatus20🈳️"
-echo -e "$bl🈳️ $off $gl WEBSOCKET OpenVPN TLS       $off : $sstatus20🈳️"
-echo -e "$bl🈳️ $off $gl WEBSOCKET wireguard         $off : $sstatus21🈳️"
-echo -e "$bl🈳️ $off $gl WIREGUARD                   $off : $sstatus22🈳️"
-echo -e "$bl🈳️ $off $gl SHADOWSOCKS OBFS            $off : $sstatus23🈳️"
-echo -e "$bl🈳️ $off $gl SHADOWSOCKS HTTP            $off : $sstatus23🈳️"
-echo -e "$bl🈳️ $off $gl SHADOWSOCKSR                $off : $sstatus24🈳️"
-echo -e "$bl🈳️ $off $gl VMESS WS TLS                $off : $sstatus25🈳️"
-echo -e "$bl🈳️ $off $gl VMESS WS NON TLS            $off : $sstatus26🈳️"
-echo -e "$bl🈳️ $off $gl VMESS GRPC TLS              $off : $sstatus27🈳️"
-echo -e "$bl🈳️ $off $gl VMESS GRPC NON TLS          $off : $sstatus28🈳️"
-echo -e "$bl🈳️ $off $gl VMESS HTTP TLS              $off : $sstatus29🈳️"
-echo -e "$bl🈳️ $off $gl VMESS HTTP NON TLS          $off : $sstatus30🈳️"
-echo -e "$bl🈳️ $off $gl VMESS H2C TLS               $off : $sstatus31🈳️"
-echo -e "$bl🈳️ $off $gl VMESS QUIC TLS              $off : $sstatus50🈳️"
-echo -e "$bl🈳️ $off $gl VLESS KCP TLS               $off : $sstatus51🈳️"
-echo -e "$bl🈳️ $off $gl VLESS WS TLS                $off : $sstatus32🈳️"
-echo -e "$bl🈳️ $off $gl VLESS WS NON TLS            $off : $sstatus33🈳️"
-echo -e "$bl🈳️ $off $gl VLESS GRPC TLS              $off : $sstatus34🈳️"
-echo -e "$bl🈳️ $off $gl VLESS GRPC NON TLS          $off : $sstatus35🈳️"
-echo -e "$bl🈳️ $off $gl VLESS XTLS                  $off : $sstatus36🈳️"
-echo -e "$bl🈳️ $off $gl VLESS HTTP TLS              $off : $sstatus37🈳️"
-echo -e "$bl🈳️ $off $gl VLESS HTTP NON TLS          $off : $sstatus38🈳️"
-echo -e "$bl🈳️ $off $gl VLESS H2C TLS               $off : $sstatus39🈳️"
-echo -e "$bl🈳️ $off $gl VLESS QUIC TLS              $off : $sstatus51🈳️"
-echo -e "$bl🈳️ $off $gl VLESS KCP TLS               $off : $sstatus51🈳️"
-echo -e "$bl🈳️ $off $gl TROJAN XTLS                 $off : $sstatus40🈳️"
-echo -e "$bl🈳️ $off $gl TROJAN GO                   $off : $sstatus41🈳️"
-echo -e "$bl🈳️ $off $gl TROJAN HTTP                 $off : $sstatus42🈳️"
-echo -e "$bl🈳️ $off $gl TROJAN H2C                  $off : $sstatus43🈳️"
-echo -e "$bl🈳️ $off $gl TROJAN GRPC                 $off : $sstatus44🈳️"
-echo -e "$bl🈳 ️$off $gl TROJAN WS TLS               $off : $sstatus45🈳️"
-echo -e "$bl🈳️ $off $gl TROJAN KCP TLS              $off : $sstatus53🈳️"
-echo -e "$bl🈳️ $off $gl TROJAN QUIC TLS             $off : $sstatus53🈳️"
-echo -e "$bl🈳️ $off $gl TROJAN WS NON TLS           $off : $sstatus46🈳️"
-echo -e "$bl🈳️ $off $gl XRAY SHADOWSOCKS            $off : $sstatus47🈳️"
-echo -e "$bl🈳️ $off $gl XRAY MT PROTO               $off : $sstatus48🈳️"
-echo -e "$bl🈳️ $off $gl SOCKS5 WEBSOCKET            $off : $sstatus49🈳️"
-echo -e "$bl🈳️ $off $gl SOCKS5 TCP                  $off : $sstatus52🈳️"
-echo -e "$bl🈳️ $off $gl SOCKS5 GRPC                 $off : $sstatus52🈳️"
-echo -e "$bl🈳️ $off $gl SOCKS5 WS TLS               $off : $sstatus52🈳️"
-echo -e "$bl🈳️ $off $gl SOCKS5 WS NON TLS           $off : $sstatus52🈳️"
-echo -e "$bl🈳️ $off $gl SHADOWSOCKS WS NON TLS      $off : $sstatus55🈳️"
-echo -e "$bl🈳️ $off $gl SHADOWSOCKS WS TLS          $off : $sstatus55🈳️"
-echo -e "$bl🈳️ $off $gl SHADOWSOCKS GRPC            $off : $sstatus55🈳️"
-echo -e "$bl🈳️ $off $gl SHADOWSOCKS  TCP            $off : $sstatus55🈳️"
-echo -e "$bl🈳️ $off $gl SHADOWSOCKS 2022 TCP        $off : $sstatus55🈳️"
-echo -e "$bl🈳️ $off $gl SHADOWSOCKS 2022 GRPC       $off : $sstatus56🈳️"
-echo -e "$bl🈳️ $off $gl SHADOWSOCKS 2022 WS TLS     $off : $sstatus57🈳️"
-echo -e "$bl🈳️ $off $gl SHADOWSOCKS 2022 WS NON TLS $off : $sstatus58🈳️"
+echo -e "$op🈳️ $off $blu DROPBEAR                    $off : $sstatus01🈳️"
+echo -e "$op🈳️ $off $blu OPENSSH                     $off : $sstatus02🈳️"
+echo -e "$op🈳️ $off $blu STUNNEL5                    $off : $sstatus03🈳️"
+echo -e "$op🈳️ $off $blu OPENVPN                     $off : $sstatus04🈳️"
+echo -e "$op🈳️ $off $blu OHP DROPBEAR                $off : $sstatus05🈳️"
+echo -e "$op🈳️ $off $blu OHP OVPN                    $off : $sstatus06🈳️"
+echo -e "$op🈳️ $off $blu OHP SSH                     $off : $sstatus07🈳️"
+echo -e "$op🈳️ $off $blu IPSEC                       $off : $sstatus08🈳️"
+echo -e "$op🈳️ $off $blu SSTP                        $off : $sstatus09🈳️"
+echo -e "$op🈳️ $off $blu PPTP                        $off : $sstatus10🈳️"
+echo -e "$op🈳️ $off $blu L2TP                        $off : $sstatus11🈳️"
+echo -e "$op🈳️ $off $blu NGINX                       $off : $sstatus12🈳️"
+echo -e "$op🈳️ $off $blu SQUID 4                     $off : $sstatus13🈳️"
+echo -e "$op🈳️ $off $blu CRON SERVICE                $off : $sstatus14🈳️"
+echo -e "$op🈳️ $off $blu FAIL2BAN SERVICE            $off : $sstatus15🈳️"
+echo -e "$op🈳️ $off $blu VNSTAT SERVICE              $off : $sstatus16🈳️"
+echo -e "$op🈳️ $off $blu SSLH SERVICE                $off : $sstatus17🈳️"
+echo -e "$op🈳️ $off $blu PRIVOXY                     $off : $sstatus18🈳️"
+echo -e "$op🈳️ $off $blu WEBSOCKET TLS               $off : $sstatus19🈳️"
+echo -e "$op🈳️ $off $blu WEBSOCKET NON TLS           $off : $sstatus19🈳️"
+echo -e "$op🈳️ $off $blu WEBSOCKET OpenVPN           $off : $sstatus20🈳️"
+echo -e "$op🈳️ $off $blu WEBSOCKET OpenVPN TLS       $off : $sstatus20🈳️"
+echo -e "$op🈳️ $off $blu WIREGUARD                   $off : $sstatus22🈳️"
+echo -e "$op🈳️ $off $blu SHADOWSOCKS OBFS            $off : $sstatus23🈳️"
+echo -e "$op🈳️ $off $blu SHADOWSOCKS HTTP            $off : $sstatus23🈳️"
+echo -e "$op🈳️ $off $blu SHADOWSOCKSR                $off : $sstatus24🈳️"
+echo -e "$op🈳️ $off $blu VMESS WS TLS                $off : $sstatus25🈳️"
+echo -e "$op🈳️ $off $blu VMESS WS NON TLS            $off : $sstatus26🈳️"
+echo -e "$op🈳️ $off $blu VMESS GRPC TLS              $off : $sstatus27🈳️"
+echo -e "$op🈳️ $off $blu VMESS GRPC NON TLS          $off : $sstatus28🈳️"
+echo -e "$op🈳️ $off $blu VMESS HTTP TLS              $off : $sstatus29🈳️"
+echo -e "$op🈳️ $off $blu VMESS HTTP NON TLS          $off : $sstatus30🈳️"
+echo -e "$op🈳️ $off $blu VMESS H2C TLS               $off : $sstatus31🈳️"
+echo -e "$op🈳️ $off $blu VMESS QUIC TLS              $off : $sstatus32🈳️"
+echo -e "$op🈳️ $off $blu VLESS KCP TLS               $off : $sstatus33🈳️"
+echo -e "$op🈳️ $off $blu VLESS WS TLS                $off : $sstatus34🈳️"
+echo -e "$op🈳️ $off $blu VLESS WS NON TLS            $off : $sstatus35🈳️"
+echo -e "$op🈳️ $off $blu VLESS GRPC TLS              $off : $sstatus36🈳️"
+echo -e "$op🈳️ $off $blu VLESS GRPC NON TLS          $off : $sstatus37🈳️"
+echo -e "$op🈳️ $off $blu VLESS XTLS                  $off : $sstatus38🈳️"
+echo -e "$op🈳️ $off $blu VLESS HTTP TLS              $off : $sstatus39🈳️"
+echo -e "$op🈳️ $off $blu VLESS HTTP NON TLS          $off : $sstatus40🈳️"
+echo -e "$op🈳️ $off $blu VLESS H2C TLS               $off : $sstatus41🈳️"
+echo -e "$op🈳️ $off $blu VLESS QUIC TLS              $off : $sstatus42🈳️"
+echo -e "$op🈳️ $off $blu VLESS KCP TLS               $off : $sstatus43🈳️"
+echo -e "$op🈳️ $off $blu TROJAN XTLS                 $off : $sstatus44🈳️"
+echo -e "$op🈳️ $off $blu TROJAN GO                   $off : $sstatus45🈳️"
+echo -e "$op🈳️ $off $blu TROJAN HTTP                 $off : $sstatus46🈳️"
+echo -e "$op🈳️ $off $blu TROJAN H2C                  $off : $sstatus47🈳️"
+echo -e "$op🈳️ $off $blu TROJAN GRPC                 $off : $sstatus48🈳️"
+echo -e "$op🈳 ️$off $blu TROJAN WS TLS               $off : $sstatus49🈳️"
+echo -e "$op🈳️ $off $blu TROJAN KCP TLS              $off : $sstatus50🈳️"
+echo -e "$op🈳️ $off $blu TROJAN QUIC TLS             $off : $sstatus51🈳️"
+echo -e "$op🈳️ $off $blu TROJAN WS NON TLS           $off : $sstatus52🈳️"
+echo -e "$op🈳️ $off $blu XRAY SHADOWSOCKS            $off : $sstatus53🈳️"
+echo -e "$op🈳️ $off $blu XRAY MT PROTO               $off : $sstatus54🈳️"
+echo -e "$op🈳️ $off $blu SOCKS5 WEBSOCKET            $off : $sstatus55🈳️"
+echo -e "$op🈳️ $off $blu SOCKS5 TCP                  $off : $sstatus56🈳️"
+echo -e "$op🈳️ $off $blu SOCKS5 GRPC                 $off : $sstatus57🈳️"
+echo -e "$op🈳️ $off $blu SOCKS5 WS TLS               $off : $sstatus58🈳️"
+echo -e "$op🈳️ $off $blu SOCKS5 WS NON TLS           $off : $sstatus59🈳️"
+echo -e "$op🈳️ $off $blu SHADOWSOCKS WS NON TLS      $off : $sstatus60🈳️"
+echo -e "$op🈳️ $off $blu SHADOWSOCKS WS TLS          $off : $sstatus61🈳️"
+echo -e "$op🈳️ $off $blu SHADOWSOCKS GRPC            $off : $sstatus62🈳️"
+echo -e "$op🈳️ $off $blu SHADOWSOCKS  TCP            $off : $sstatus63🈳️"
+echo -e "$op🈳️ $off $blu SHADOWSOCKS 2022 TCP        $off : $sstatus64🈳️"
+echo -e "$op🈳️ $off $blu SHADOWSOCKS 2022 GRPC       $off : $sstatus65🈳️"
+echo -e "$op🈳️ $off $blu SHADOWSOCKS 2022 WS TLS     $off : $sstatus66🈳️"
+echo -e "$op🈳️ $off $blu SHADOWSOCKS 2022 WS NON TLS $off : $sstatus67🈳️"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\E[43;1;46m             🈳️ SOLO THE SPIRIT OF JAVA 🈳️              \E[0m"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
