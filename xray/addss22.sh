@@ -57,8 +57,6 @@ sed -i '/#ss-tls$/a\### '"$user $exp"'\
 },{"password": "'""$base64""'","email": "'""$user""'"' /etc/xray/xvmess.json
 sed -i '/#ss-nontls$/a\### '"$user $exp"'\
 },{"password": "'""$base64""'","email": "'""$user""'"' /etc/xray/xss.json
-sed -i '/#ss-nontls$/a\### '"$user $exp"'\
-},{"password": "'""$base64""'","email": "'""$user""'"' /etc/xray/xvmess.json
 sed -i '/#ss-grpc$/a\### '"$user $exp"'\
 },{"password": "'""$base64""'","email": "'""$user""'"' /etc/xray/xss.json
 sed -i '/#ss-grpc$/a\### '"$user $exp"'\
@@ -71,7 +69,7 @@ cat>/etc/xray/ss-$user-tcp.json<<EOF
       "protocol": "shadowsocks",
       "settings": {
         "method": "2022-blake3-aes-128-gcm",
-        "password": "$passwd:${user}",
+        "password": "$passwd:${base64}",
         "network": "tcp",
         "port": "$sstcp",
         "security": "tls"
@@ -135,7 +133,7 @@ cat>/etc/xray/SS2022-TCP-TLS-$user.json<<EOF
             "level": 8,
             "method": "2022-blake3-aes-128-gcm",
             "ota": false,
-            "password": "GESuWIqYcq34MSCDTOck0g==:${user}",
+            "password": "GESuWIqYcq34MSCDTOck0g==:${base64}",
             "port": 443
           }
         ]
@@ -240,7 +238,7 @@ cat>/etc/xray/SS2022-WS-TLS-$user.json<<EOF
             "level": 8,
             "method": "2022-blake3-aes-128-gcm",
             "ota": false,
-            "password": "GESuWIqYcq34MSCDTOck0g==:$password",
+            "password": "GESuWIqYcq34MSCDTOck0g==:$base64",
             "port": 443
           }
         ]
@@ -350,7 +348,7 @@ cat>/etc/xray/SS2022-WS-NONTLS-$user.json<<EOF
             "level": 8,
             "method": "2022-blake3-aes-128-gcm",
             "ota": false,
-            "password": "GESuWIqYcq34MSCDTOck0g==:$password",
+            "password": "GESuWIqYcq34MSCDTOck0g==:$base64",
             "port": 80
           }
         ]
@@ -460,7 +458,7 @@ cat>/etc/xray/SS2022-GRPC-$user.json<<EOF
             "level": 8,
             "method": "2022-blake3-aes-128-gcm",
             "ota": false,
-            "password": "GESuWIqYcq34MSCDTOck0g==:$password",
+            "password": "GESuWIqYcq34MSCDTOck0g==:$base64",
             "port": 443
           }
         ]
