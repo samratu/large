@@ -654,10 +654,10 @@ sudo iptables -A OUTPUT -p tcp --sport 10808 -m conntrack --ctstate ESTABLISHED 
 sudo iptables -A OUTPUT -p udp --sport 10808 -m conntrack --ctstate ESTABLISHED -j ACCEPT
 sudo iptables -A OUTPUT -p tcp --dport 10808 -m conntrack --ctstate ESTABLISHED -j ACCEPT
 sudo iptables -A OUTPUT -p udp --dport 10808 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-iptables-save > /etc/iptables.up.rules
-iptables-restore -t < /etc/iptables.up.rules
-netfilter-persistent save >/dev/null 2>&1
-snetfilter-persistent reload >/dev/null 2>&1
+sudo iptables-save > /etc/iptables.up.rules
+sudo iptables-restore -t < /etc/iptables.up.rules
+sudo netfilter-persistent save >/dev/null 2>&1
+sudo netfilter-persistent reload >/dev/null 2>&1
 
 # Install Trojan Go
 latest_version="$(curl -s "https://api.github.com/repos/p4gefau1t/trojan-go/releases" | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
@@ -678,7 +678,7 @@ cat > /etc/trojan-go/config.json << END
 {
   "run_type": "server",
   "local_addr": "0.0.0.0",
-  "local_port": 2096,
+  "local_port": 2053,
   "remote_addr": "127.0.0.1",
   "remote_port": 88,
   "log_level": 1,
@@ -691,13 +691,13 @@ cat > /etc/trojan-go/config.json << END
   "ssl": {
     "verify": false,
     "verify_hostname": false,
-    "cert": "/etc/ssl/private/fullchain.pem",
-    "key": "/etc/ssl/private/privkey.pem",
+    "cert": "/etc/xray/xray.crt",
+    "key": "/etc/xray/xray.key",
     "key_password": "",
     "cipher": "",
     "curves": "",
     "prefer_server_cipher": false,
-    "sni": "${domain}",
+    "sni": "$domain",
     "alpn": [
       "http/1.1"
     ],
@@ -705,7 +705,7 @@ cat > /etc/trojan-go/config.json << END
     "reuse_session": true,
     "plain_http_response": "",
     "fallback_addr": "127.0.0.1",
-    "fallback_port": 2096,
+    "fallback_port": 0,
     "fingerprint": "firefox"
   },
   "tcp": {
@@ -721,7 +721,7 @@ cat > /etc/trojan-go/config.json << END
   "websocket": {
     "enabled": true,
     "path": "/gandring-go",
-    "host": "${domain}"
+    "host": "$domain"
   },
     "api": {
     "enabled": false,
@@ -741,20 +741,18 @@ END
 # Installing Trojan Go Service
 cat > /etc/systemd/system/trojan-go.service << END
 [Unit]
-Description=TROJAN-GO ROUTING ACTIVATED BY ZEROSSL
-Documentation=t.me/zerossl
+Description=Trojan-Go Service Mod By ZEROSSL
+Documentation=https://t.me/zerossl
 After=network.target nss-lookup.target
 
 [Service]
-Type=simple
-StandardError=journal
+User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
-ExecStart="/usr/local/bin/trojan-go" -config "/etc/trojan-go/config.json"
-LimitNOFILE=51200
+ExecStart=/usr/local/bin/trojan-go -config /etc/trojan-go/config.json
 Restart=on-failure
-RestartSec=1s
+RestartPreventExitStatus=23
 
 [Install]
 WantedBy=multi-user.target
@@ -765,19 +763,18 @@ cat > /etc/trojan-go/uuid.txt << END
 $uuid
 END
 
+# restart
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2052 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2053 -j ACCEPT
+iptables-save > /etc/iptables.up.rules
+iptables-restore -t < /etc/iptables.up.rules
+netfilter-persistent save
+netfilter-persistent reload
 systemctl daemon-reload
 systemctl stop trojan-go
 systemctl start trojan-go
 systemctl enable trojan-go
 systemctl restart trojan-go
-
-# restart
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 30130 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2096 -j ACCEPT
-iptables-save > /etc/iptables.up.rules
-iptables-restore -t < /etc/iptables.up.rules
-netfilter-persistent save >/dev/null 2>&1
-netfilter-persistent reload >/dev/null 2>&1
 
 cd
 mkdir /etc/stunnel5
