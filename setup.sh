@@ -115,7 +115,7 @@ echo -e " 🔰 PORT DROPBEAR : 200, 300" |tee -a log-install.txt
 echo -e " 🔰 PORT SQUID : 3128, 3228" |tee -a log-install.txt
 echo -e " 🔰 Badvpn : 7100, 7200, 7300-7900" |tee -a log-install.txt
 echo -e " 🔰 Nginx : 88" |tee -a log-install.txt
-echo -e " 🔰 WIREGUARD : 2053" |tee -a log-install.txt
+echo -e " 🔰 WIREGUARD : 591" |tee -a log-install.txt
 echo -e " 🔰 L2TP/IPSEC VPN : 1701" |tee -a log-install.txt
 echo -e " 🔰 PPTP VPN : 1732" |tee -a log-install.txt
 echo -e " 🔰 SSTP VPN : 666" |tee -a log-install.txt
