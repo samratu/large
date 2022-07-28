@@ -733,7 +733,7 @@ cat>/etc/xray/ss-$user-tcp.json<<EOF
       "protocol": "shadowsocks",
       "settings": {
         "method": "2022-blake3-aes-128-gcm",
-        "password": "$passwd:${user}",
+        "password": "$passwd:$base64",
         "network": "tcp",
         "port": "$sstcp",
         "security": "tls"
@@ -797,7 +797,7 @@ cat>/etc/xray/SS2022-TCP-TLS-$user.json<<EOF
             "level": 8,
             "method": "2022-blake3-aes-128-gcm",
             "ota": false,
-            "password": "GESuWIqYcq34MSCDTOck0g==:${user}",
+            "password": "GESuWIqYcq34MSCDTOck0g==:$base64",
             "port": 443
           }
         ]
@@ -902,7 +902,7 @@ cat>/etc/xray/SS2022-WS-TLS-$user.json<<EOF
             "level": 8,
             "method": "2022-blake3-aes-128-gcm",
             "ota": false,
-            "password": "GESuWIqYcq34MSCDTOck0g==:$password",
+            "password": "GESuWIqYcq34MSCDTOck0g==:$base64",
             "port": 443
           }
         ]
@@ -1012,7 +1012,7 @@ cat>/etc/xray/SS2022-WS-NONTLS-$user.json<<EOF
             "level": 8,
             "method": "2022-blake3-aes-128-gcm",
             "ota": false,
-            "password": "GESuWIqYcq34MSCDTOck0g==:$password",
+            "password": "GESuWIqYcq34MSCDTOck0g==:$base64",
             "port": 80
           }
         ]
@@ -1122,7 +1122,7 @@ cat>/etc/xray/SS2022-GRPC-$user.json<<EOF
             "level": 8,
             "method": "2022-blake3-aes-128-gcm",
             "ota": false,
-            "password": "GESuWIqYcq34MSCDTOck0g==:$password",
+            "password": "GESuWIqYcq34MSCDTOck0g==:$base64",
             "port": 443
           }
         ]
@@ -1174,10 +1174,10 @@ cat>/etc/xray/SS2022-GRPC-$user.json<<EOF
 EOF
 cat /etc/xray/SS2022-GRPC-$user.json >> /home/vps/public_html/SS2022-GRPC-$user.txt
 
-tmp1=$(echo -n "2022-blake3-aes-128-gcm:$passwd:${user}@${domain}:$sstcp" | base64 -w0)
-tmp2=$(echo -n "2022-blake3-aes-128-gcm:$passwd:${user}@${domain}:$sstls" | base64 -w0)
-tmp3=$(echo -n "2022-blake3-aes-128-gcm:$passwd:${user}@${domain}:$ssnontls" | base64 -w0)
-tmp4=$(echo -n "2022-blake3-aes-128-gcm:$passwd:${user}@${domain}:$ssgrpc" | base64 -w0)
+tmp1=$(echo -n "2022-blake3-aes-128-gcm:$passwd:$base64@${domain}:$sstcp" | base64 -w0)
+tmp2=$(echo -n "2022-blake3-aes-128-gcm:$passwd:$base64@${domain}:$sstls" | base64 -w0)
+tmp3=$(echo -n "2022-blake3-aes-128-gcm:$passwd:$base64@${domain}:$ssnontls" | base64 -w0)
+tmp4=$(echo -n "2022-blake3-aes-128-gcm:$passwd:$base64@${domain}:$ssgrpc" | base64 -w0)
 
 shadowsocks1="ss://$tmp1#$user"
 shadowsocks2="ss://$tmp2#$user"
