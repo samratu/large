@@ -121,7 +121,7 @@ cat>/etc/xray/SOCKS5-WS-TLS-$user.json<<EOF
 "headers": {
 "Host": "$domain"
 },
-"path": "/gandring-socksws"
+"path": "/wisnu-ws"
 }
 },
 "tag": "proxy"
@@ -239,7 +239,7 @@ cat>/etc/xray/SOCKS5-WS-NONTLS-$user.json<<EOF
 "headers": {
 "Host": "$domain"
 },
-"path": "/gandring-socksws"
+"path": "/wisnu-ws"
 }
 },
 "tag": "proxy"
@@ -349,7 +349,7 @@ cat>/etc/xray/SOCKS5-GRPC-$user.json<<EOF
 "streamSettings": {
 "grpcSettings": {
                          "multiMode": true,
-                             "serviceName": "gandring-socksgrpc"
+                             "serviceName": "wisnu-grpc"
                                },
 "network": "grpc",
 "security": "tls",
@@ -426,8 +426,8 @@ echo -e "Remarks  : ${user}"
 echo -e "IP/Host  : ${MYIP}"
 echo -e "Address  : ${domain}"
 echo -e "Protocol : tcp,udp,ws,grpc"
-echo -e "ServiceName: gandring-socksgrpc"
-echo -e "Path WS : /gandring-socksws"
+echo -e "ServiceName: wisnu-grpc"
+echo -e "Path WS : /wisnu-ws"
 echo -e "Port TLS : ${stls}"
 echo -e "Port WS NON TLS : ${snontls}"
 echo -e "Password : ${user}"
