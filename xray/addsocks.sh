@@ -554,23 +554,19 @@ cat>/etc/xray/SOCKS5-GRPC-NONTLS-$user.json<<EOF
 EOF
 cat /etc/xray/SOCKS5-GRPC-NONTLS-$user.json >> /home/vps/public_html/SOCKS5-GRPC-NONTLS-$user.txt
 
-tmp1=$(echo -n "${user}:${pass}@${domain}:$stls" | base64 -w0)
+tmp1=$(echo -n "${user}:${pass}" | base64 -w0)
 tmp2=$(echo -n "${user}:${pass}@${domain}:$snontls" | base64 -w0)
 tmp3=$(echo -n "${user}:${pass}@${domain}:$sgrpc" | base64 -w0)
 tmp4=$(echo -n "${user}:${pass}@${domain}:$sgrpcnon" | base64 -w0)
-socks1="socks://$tmp1#$user"
-socks2="socks://$tmp2#$user"
-socks3="socks://$tmp3#$user"
-socks4="socks://$tmp4#$user"
+socks1="socks://$tmp1@${domain}:$stls#$user"
+socks2="socks://$tmp2@${domain}:$snontls#$user"
+socks3="socks://$tmp3@${domain}:$sgrpc#$user"
+socks4="socks://$tmp4@${domain}:$sgrpcnon#$user"
 systemctl restart xtrojan
 systemctl restart xss
 systemctl restart xvmess.service
 systemctl restart xray.service
 
-cat /etc/xray/SOCKS5-GRPC-TLS-$user.json >> /home/vps/public_html/SOCKS5-GRPC-TLS-$user.txt
-cat /etc/xray/SOCKS5-GRPC-NONTLS-$user.json >> /home/vps/public_html/SOCKS5-GRPC-NONTLS-$user.txt
-cat /etc/xray/SOCKS5-WS-TLS-$user.json >> /home/vps/public_html/SOCKS5-WS-TLS-$user.txt
-cat /etc/xray/SOCKS5-WS-NONTLS-$user.json >> /home/vps/public_html/SOCKS5-WS-NONTLS-$user.txt
 service cron restart
 
 rm -rf /etc/xray/SOCKS5-WS-TLS-$user.json
@@ -587,7 +583,7 @@ echo -e "IP/Host  : ${MYIP}"
 echo -e "Address  : ${domain}"
 echo -e "Protocol : tcp,udp,ws,grpc"
 echo -e "ServiceName: wisnu-grpc"
-echo -e "Path WS : /wisnu-ws"
+echo -e "Path WS  : /wisnu-ws"
 echo -e "Port TLS : ${stls}"
 echo -e "Port NON TLS : ${snontls}"
 echo -e "Port TCP : ${stcp}"
