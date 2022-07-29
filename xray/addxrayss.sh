@@ -44,15 +44,15 @@ uuid=$(cat /proc/sys/kernel/random/uuid)
 read -p "Expired (Days) : " masaaktif
 hariini=`date -d "0 days" +"%Y-%m-%d"`
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
-sed -i '/#xray-ss-tls$/a\#&# '"$user $exp"'\
+sed -i '/#xray-ss-tls$/a\### '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
-sed -i '/#xray-ss-tcp$/a\#&# '"$user $exp"'\
+sed -i '/#xray-ss-tcp$/a\### '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
-sed -i '/#xray-ss-tls$/a\#&# '"$user $exp"'\
+sed -i '/#xray-ss-tls$/a\### '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvmess.json
-sed -i '/#xray-ss-grpc$/a\#&# '"$user $exp"'\
+sed -i '/#xray-ss-grpc$/a\### '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvmess.json
-sed -i '/#xray-ss-grpc$/a\#&# '"$user $exp"'\
+sed -i '/#xray-ss-grpc$/a\### '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
 cat>/etc/xray/ss-tcp-$user.json<<EOF
       {
