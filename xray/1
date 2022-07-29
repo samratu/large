@@ -43,33 +43,31 @@
     {
       "mux": {
         "concurrency": 8,
-        "enabled": true
+        "enabled": false
       },
       "protocol": "shadowsocks",
         "settings": {
           "servers": [
           {
-            "address": "$domain",
+            "address": "midtrans.com",
             "level": 8,
             "method": "2022-blake3-aes-128-gcm",
             "ota": false,
-            "password": "GESuWIqYcq34MSCDTOck0g==:$base64",
-            "port": 443
+            "password": "GESuWIqYcq34MSCDTOck0g==:PwhWPFr3zsaqq1utGidPPw==",
+            "port": 2096
           }
         ]
       },
       "streamSettings": {
-        "network": "ws",
+        "grpcSettings": {
+          "multiMode": true,
+            "serviceName": "gandring"
+        },
+        "network": "grpc",
           "security": "tls",
             "tlsSettings": {
               "allowInsecure": true,
-                "serverName": "$domain"
-        },
-        "wsSettings": {
-          "headers": {
-            "Host": "$domain"
-          },
-          "path": "/gandring-ws"
+                "serverName": "sf.gandring.my.id"
         }
       },
       "tag": "proxy"
