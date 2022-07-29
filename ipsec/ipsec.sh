@@ -30,23 +30,16 @@ OS=$ID
 ver=$VERSION_ID
 bigecho() { echo; echo "## $1"; echo; }
 bigecho "VPN setup in progress... Please be patient."
-echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 # Create and change to working dir
 mkdir -p /opt/src
 cd /opt/src
-
 bigecho "Trying to auto discover IP of this server..."
-echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 PUBLIC_IP=$(wget -qO- ipinfo.io/ip);
-
 bigecho "Installing packages required for the VPN..."
-echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 if [[ ${OS} == "centos" ]]; then
 epel_url="https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm"
 yum -y install epel-release || yum -y install "$epel_url" 
-
 bigecho "Installing packages required for the VPN..."
-echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 REPO1='--enablerepo=epel'
 REPO2='--enablerepo=*server-*optional*'
 REPO3='--enablerepo=*releases-optional*'
@@ -73,8 +66,7 @@ apt-get -y install libnss3-dev libnspr4-dev pkg-config \
   libcurl4-nss-dev flex bison gcc make libnss3-tools \
   libevent-dev ppp xl2tpd pptpd
 fi
-bigecho "Compiling and installing Libreswan..."
-echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+bigecho "Compiling and installing Libreswan"
 SWAN_VER=3.32
 swan_file="libreswan-$SWAN_VER.tar.gz"
 swan_url1="https://github.com/libreswan/libreswan/archive/v$SWAN_VER.tar.gz"
@@ -99,12 +91,13 @@ if ! grep -qs IFLA_XFRM_LINK /usr/include/linux/if_link.h; then
 fi
 if [[ ${OS} == "debian" ]]; then
 if [ "$(packaging/utils/lswan_detect.sh init)" = "systemd" ]; then
-  apt-get -y install libsystemd-dev
+apt update -y
+apt-get -y install libsystemd-dev
   fi
 elif [[ ${OS} == "ubuntu" ]]; then
 if [ "$(packaging/utils/lswan_detect.sh init)" = "systemd" ]; then
-  apt-get -y install libsystemd-dev
-fi
+apt update -y
+apt-get -y install libsystemd-dev
 fi
 NPROCS=$(grep -c ^processor /proc/cpuinfo)
 [ -z "$NPROCS" ] && NPROCS=1
@@ -115,9 +108,7 @@ cd /opt/src || exit 1
 if ! /usr/local/sbin/ipsec --version 2>/dev/null | grep -qF "$SWAN_VER"; then
   exiterr "Libreswan $SWAN_VER failed to build."
 fi
-
-bigecho "Creating VPN configuration..."
-echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+bigecho "Creating VPN configuration"
 L2TP_NET=192.168.42.0/24
 L2TP_LOCAL=192.168.42.1
 L2TP_POOL=192.168.42.10-192.168.42.250
@@ -131,7 +122,6 @@ DNS_SRVS="\"$DNS_SRV1 $DNS_SRV2\""
 # Create IPsec config
 cat > /etc/ipsec.conf <<EOF
 version 2.0
-
 config setup
   virtual-private=%v4:10.0.0.0/8,%v4:192.168.0.0/16,%v4:172.16.0.0/12,%v4:!$L2TP_NET,%v4:!$XAUTH_NET
   protostack=netkey
@@ -216,7 +206,7 @@ ipcp-accept-remote
 noccp
 auth
 mtu 1280
-mru 1280
+mtu 1280
 proxyarp
 lcp-echo-failure 4
 lcp-echo-interval 30
@@ -229,7 +219,6 @@ cat >> /etc/ppp/options.xl2tpd <<EOF
 ms-dns $DNS_SRV2
 EOF
 fi
-
 # Create VPN credentials
 cat > /etc/ppp/chap-secrets <<EOF
 "$VPN_USER" l2tpd "$VPN_PASSWORD" *
@@ -263,10 +252,8 @@ novj
 novjccomp
 nologfd
 END
-
-bigecho "Updating IPTables rules....."
-echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-service fail2ban stop >/dev/null 2>&1
+bigecho "Updating IPTables rules"
+service fail2ban stop >/dev/null
 iptables -t nat -I POSTROUTING -s 192.168.43.0/24 -o $NET_IFACE -j MASQUERADE
 iptables -t nat -I POSTROUTING -s 192.168.42.0/24 -o $NET_IFACE -j MASQUERADE
 iptables -t nat -I POSTROUTING -s 192.168.41.0/24 -o $NET_IFACE -j MASQUERADE
@@ -279,24 +266,21 @@ iptables-restore -t < /etc/iptables.up.rules
 netfilter-persistent save
 netfilter-persistent reload
 fi
-
-bigecho "Enabling services on boot....."
-echo -e "\033[1;31m══════════════════════════════════\033[0m"
+bigecho "Enabling services on boot"
+systemctl daemon-reload
 systemctl enable xl2tpd
 systemctl enable ipsec
 systemctl enable pptpd
 
 for svc in fail2ban ipsec xl2tpd; do
-  update-rc.d "$svc" enable >/dev/null 2>&1
+  update-rc.d "$svc" enable >/dev/null
   systemctl enable "$svc" 2>/dev/null
 done
-
-bigecho "Starting services......"
-echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+bigecho "Starting services"
 sysctl -e -q -p
 chmod 600 /etc/ipsec.secrets* /etc/ppp/chap-secrets* /etc/ipsec.d/passwd*
-echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 mkdir -p /run/pluto
+systemctl daemon-reload
 service fail2ban restart 2>/dev/null
 service ipsec restart 2>/dev/null
 service xl2tpd restart 2>/dev/null
