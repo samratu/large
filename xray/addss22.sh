@@ -61,24 +61,9 @@ sed -i '/#ss-grpc$/a\### '"$user $exp"'\
 },{"password": "'""$base64""'","email": "'""$user""'"' /etc/xray/xss.json
 sed -i '/#ss-grpc$/a\### '"$user $exp"'\
 },{"password": "'""$base64""'","email": "'""$user""'"' /etc/xray/xvmess.json
-cat>/etc/xray/SS22-UDP-$user.json<<EOF
+cat>/etc/xray/SS22-TCP-TLS-$user.json<<EOF
 {
-  "inbounds": [
-    {
-      "port": $sstcp,
-      "protocol": "shadowsocks",
-      "settings": {
-        "method": "2022-blake3-aes-128-gcm",
-        "password": "$passwd:${base64}",
-        "network": "tcp",
-        "port": "$sstcp",
-        "security": "tls"
-      }
-    }
-EOF
-
-cat>/etc/xray/SS2022-TCP-TLS-$user.json<<EOF
-{
+  "{
   "dns": {
     "hosts": {
       "domain:googleapis.cn": "googleapis.com"
@@ -90,30 +75,30 @@ cat>/etc/xray/SS2022-TCP-TLS-$user.json<<EOF
   "inbounds": [
     {
       "listen": "127.0.0.1",
-      "port": 10808,
-      "protocol": "socks",
-      "settings": {
-        "auth": "noauth",
-        "udp": true,
-        "userLevel": 8
-      },
-      "sniffing": {
-        "destOverride": [
-          "http",
-          "tls"
-        ],
-        "enabled": true
-      },
-      "tag": "socks"
+        "port": 10808,
+          "protocol": "socks",
+            "settings": {
+              "auth": "noauth",
+                "udp": true,
+                  "userLevel": 8
+             },
+             "sniffing": {
+               "destOverride": [
+                 "http",
+                   "tls"
+            ],
+            "enabled": true
+        },
+        "tag": "socks"
     },
     {
       "listen": "127.0.0.1",
-      "port": 10809,
-      "protocol": "http",
-      "settings": {
-        "userLevel": 8
-      },
-      "tag": "http"
+        "port": 10809,
+          "protocol": "http",
+            "settings": {
+              "userLevel": 8
+        },
+        "tag": "http"
     }
   ],
   "log": {
@@ -126,38 +111,38 @@ cat>/etc/xray/SS2022-TCP-TLS-$user.json<<EOF
         "enabled": true
       },
       "protocol": "shadowsocks",
-      "settings": {
-        "servers": [
+        "settings": {
+          "servers": [
           {
             "address": "${domain}",
             "level": 8,
             "method": "2022-blake3-aes-128-gcm",
             "ota": false,
-            "password": "GESuWIqYcq34MSCDTOck0g==:${base64}",
+            "password": "GESuWIqYcq34MSCDTOck0g==:$base64",
             "port": 443
           }
         ]
       },
       "streamSettings": {
         "network": "tcp",
-        "security": "tls",
-        "tlsSettings": {
-          "allowInsecure": true,
-          "serverName": "${domain}"
-        }
+          "security": "tls",
+            "tlsSettings": {
+              "allowInsecure": true,
+                "serverName": "${domain}"
+          }
+        },
+        "tag": "proxy"
       },
-      "tag": "proxy"
-    },
-    {
-      "protocol": "freedom",
-      "settings": {},
-      "tag": "direct"
-    },
-    {
-      "protocol": "blackhole",
-      "settings": {
-        "response": {
-          "type": "http"
+      {
+       "protocol": "freedom",
+       "settings": {},
+       "tag": "direct"
+      },
+      {
+       "protocol": "blackhole",
+         "settings": {
+           "response": {
+             "type": "http"
         }
       },
       "tag": "block"
@@ -165,25 +150,25 @@ cat>/etc/xray/SS2022-TCP-TLS-$user.json<<EOF
   ],
   "routing": {
     "domainMatcher": "mph",
-    "domainStrategy": "IPIfNonMatch",
-    "rules": [
-      {
-        "ip": [
+      "domainStrategy": "IPIfNonMatch",
+        "rules": [
+         {
+          "ip": [
           "8.8.8.8"
-        ],
-        "outboundTag": "proxy",
-        "port": "53",
-        "type": "field"
-      }
-    ]
-  }
+         ],
+         "outboundTag": "proxy",
+           "port": "53",
+             "type": "field"
+         }
+      ]
+   }
 }
 EOF
 cat /etc/xray/SS2022-TCP-TLS-$user.json >> /home/vps/public_html/SS2022-TCP-TLS-$user.txt
 
-
 cat>/etc/xray/SS2022-WS-TLS-$user.json<<EOF
 {
+  "{
   "dns": {
     "hosts": {
       "domain:googleapis.cn": "googleapis.com"
@@ -195,12 +180,12 @@ cat>/etc/xray/SS2022-WS-TLS-$user.json<<EOF
   "inbounds": [
     {
       "listen": "127.0.0.1",
-      "port": 10808,
-      "protocol": "socks",
-      "settings": {
-        "auth": "noauth",
-        "udp": true,
-        "userLevel": 8
+        "port": 10808,
+          "protocol": "socks",
+            "settings": {
+              "auth": "noauth",
+                "udp": true,
+                  "userLevel": 8
       },
       "sniffing": {
         "destOverride": [
@@ -213,10 +198,10 @@ cat>/etc/xray/SS2022-WS-TLS-$user.json<<EOF
     },
     {
       "listen": "127.0.0.1",
-      "port": 10809,
-      "protocol": "http",
-      "settings": {
-        "userLevel": 8
+        "port": 10809,
+          "protocol": "http",
+            "settings": {
+              "userLevel": 8
       },
       "tag": "http"
     }
@@ -231,8 +216,8 @@ cat>/etc/xray/SS2022-WS-TLS-$user.json<<EOF
         "enabled": true
       },
       "protocol": "shadowsocks",
-      "settings": {
-        "servers": [
+        "settings": {
+          "servers": [
           {
             "address": "$domain",
             "level": 8,
@@ -243,12 +228,12 @@ cat>/etc/xray/SS2022-WS-TLS-$user.json<<EOF
           }
         ]
       },
-        "streamSettings": {
+      "streamSettings": {
         "network": "ws",
-        "security": "tls",
-        "tlsSettings": {
-          "allowInsecure": true,
-          "serverName": "$domain"
+          "security": "tls",
+            "tlsSettings": {
+              "allowInsecure": true,
+                "serverName": "$domain"
         },
         "wsSettings": {
           "headers": {
@@ -261,14 +246,14 @@ cat>/etc/xray/SS2022-WS-TLS-$user.json<<EOF
     },
     {
       "protocol": "freedom",
-      "settings": {},
-      "tag": "direct"
+        "settings": {},
+          "tag": "direct"
     },
     {
       "protocol": "blackhole",
-      "settings": {
-        "response": {
-          "type": "http"
+        "settings": {
+          "response": {
+            "type": "http"
         }
       },
       "tag": "block"
@@ -276,18 +261,18 @@ cat>/etc/xray/SS2022-WS-TLS-$user.json<<EOF
   ],
   "routing": {
     "domainMatcher": "mph",
-    "domainStrategy": "IPIfNonMatch",
-    "rules": [
+      "domainStrategy": "IPIfNonMatch",
+        "rules": [
       {
         "ip": [
           "8.8.8.8"
         ],
         "outboundTag": "proxy",
-        "port": "53",
-        "type": "field"
-      }
-    ]
-  }
+          "port": "53",
+            "type": "field"
+         }
+      ]
+   }
 }
 EOF
 cat /etc/xray/SS2022-WS-TLS-$user.json >> /home/vps/public_html/SS2022-WS-TLS-$user.txt
@@ -305,12 +290,12 @@ cat>/etc/xray/SS2022-WS-NONTLS-$user.json<<EOF
   "inbounds": [
     {
       "listen": "127.0.0.1",
-      "port": 10808,
-      "protocol": "socks",
-      "settings": {
-        "auth": "noauth",
-        "udp": true,
-        "userLevel": 8
+        "port": 10808,
+          "protocol": "socks",
+            "settings": {
+              "auth": "noauth",
+                "udp": true,
+                  "userLevel": 8
       },
       "sniffing": {
         "destOverride": [
@@ -323,10 +308,10 @@ cat>/etc/xray/SS2022-WS-NONTLS-$user.json<<EOF
     },
     {
       "listen": "127.0.0.1",
-      "port": 10809,
-      "protocol": "http",
-      "settings": {
-        "userLevel": 8
+        "port": 10809,
+          "protocol": "http",
+            "settings": {
+              "userLevel": 8
       },
       "tag": "http"
     }
@@ -341,8 +326,8 @@ cat>/etc/xray/SS2022-WS-NONTLS-$user.json<<EOF
         "enabled": true
       },
       "protocol": "shadowsocks",
-      "settings": {
-        "servers": [
+        "settings": {
+          "servers": [
           {
             "address": "$domain",
             "level": 8,
@@ -353,12 +338,12 @@ cat>/etc/xray/SS2022-WS-NONTLS-$user.json<<EOF
           }
         ]
       },
-        "streamSettings": {
+      "streamSettings": {
         "network": "ws",
-        "security": "none",
-        "tlsSettings": {
-          "allowInsecure": true,
-          "serverName": "$domain"
+          "security": "none",
+            "tlsSettings": {
+              "allowInsecure": true,
+                "serverName": "$domain"
         },
         "wsSettings": {
           "headers": {
@@ -371,14 +356,14 @@ cat>/etc/xray/SS2022-WS-NONTLS-$user.json<<EOF
     },
     {
       "protocol": "freedom",
-      "settings": {},
-      "tag": "direct"
+        "settings": {},
+          "tag": "direct"
     },
     {
       "protocol": "blackhole",
-      "settings": {
-        "response": {
-          "type": "http"
+        "settings": {
+          "response": {
+            "type": "http"
         }
       },
       "tag": "block"
@@ -386,18 +371,18 @@ cat>/etc/xray/SS2022-WS-NONTLS-$user.json<<EOF
   ],
   "routing": {
     "domainMatcher": "mph",
-    "domainStrategy": "IPIfNonMatch",
-    "rules": [
+      "domainStrategy": "IPIfNonMatch",
+        "rules": [
       {
         "ip": [
           "8.8.8.8"
         ],
         "outboundTag": "proxy",
-        "port": "53",
-        "type": "field"
-      }
-    ]
-  }
+          "port": "53",
+            "type": "field"
+         }
+      ]
+   }
 }
 EOF
 cat /etc/xray/SS2022-WS-NONTLS-$user.json >> /home/vps/public_html/SS2022-WS-NONTLS-$user.txt
@@ -415,12 +400,12 @@ cat>/etc/xray/SS2022-GRPC-$user.json<<EOF
   "inbounds": [
     {
       "listen": "127.0.0.1",
-      "port": 10808,
-      "protocol": "socks",
-      "settings": {
-        "auth": "noauth",
-        "udp": true,
-        "userLevel": 8
+        "port": 10808,
+          "protocol": "socks",
+            "settings": {
+              "auth": "noauth",
+                "udp": true,
+                  "userLevel": 8
       },
       "sniffing": {
         "destOverride": [
@@ -433,10 +418,10 @@ cat>/etc/xray/SS2022-GRPC-$user.json<<EOF
     },
     {
       "listen": "127.0.0.1",
-      "port": 10809,
-      "protocol": "http",
-      "settings": {
-        "userLevel": 8
+        "port": 10809,
+          "protocol": "http",
+            "settings": {
+              "userLevel": 8
       },
       "tag": "http"
     }
@@ -451,8 +436,8 @@ cat>/etc/xray/SS2022-GRPC-$user.json<<EOF
         "enabled": false
       },
       "protocol": "shadowsocks",
-      "settings": {
-        "servers": [
+        "settings": {
+          "servers": [
           {
             "address": "$domain",
             "level": 8,
@@ -466,27 +451,27 @@ cat>/etc/xray/SS2022-GRPC-$user.json<<EOF
       "streamSettings": {
         "grpcSettings": {
           "multiMode": true,
-          "serviceName": "gandring-grpc"
+            "serviceName": "gandring-grpc"
         },
         "network": "grpc",
-        "security": "tls",
-        "tlsSettings": {
-          "allowInsecure": true,
-          "serverName": "$domain"
+          "security": "tls",
+            "tlsSettings": {
+              "allowInsecure": true,
+                "serverName": "$domain"
         }
       },
       "tag": "proxy"
     },
     {
       "protocol": "freedom",
-      "settings": {},
-      "tag": "direct"
+        "settings": {},
+          "tag": "direct"
     },
     {
       "protocol": "blackhole",
-      "settings": {
-        "response": {
-          "type": "http"
+        "settings": {
+          "response": {
+            "type": "http"
         }
       },
       "tag": "block"
@@ -494,26 +479,26 @@ cat>/etc/xray/SS2022-GRPC-$user.json<<EOF
   ],
   "routing": {
     "domainMatcher": "mph",
-    "domainStrategy": "IPIfNonMatch",
-    "rules": [
+      "domainStrategy": "IPIfNonMatch",
+        "rules": [
       {
         "ip": [
           "8.8.8.8"
         ],
         "outboundTag": "proxy",
-        "port": "53",
-        "type": "field"
-      }
-    ]
-  }
+          "port": "53",
+            "type": "field"
+         }
+      ]
+   }
 }
 EOF
 cat /etc/xray/SS2022-GRPC-$user.json >> /home/vps/public_html/SS2022-GRPC-$user.txt
 
-tmp1=$(echo -n "2022-blake3-aes-128-gcm:$passwd:${user}@${domain}:$sstcp" | base64 -w0)
-tmp2=$(echo -n "2022-blake3-aes-128-gcm:$passwd:${user}@${domain}:$sstls" | base64 -w0)
-tmp3=$(echo -n "2022-blake3-aes-128-gcm:$passwd:${user}@${domain}:$ssnontls" | base64 -w0)
-tmp4=$(echo -n "2022-blake3-aes-128-gcm:$passwd:${user}@${domain}:$ssgrpc" | base64 -w0)
+tmp1=$(echo -n "2022-blake3-aes-128-gcm:$passwd:$base64@${domain}:$sstcp" | base64 -w0)
+tmp2=$(echo -n "2022-blake3-aes-128-gcm:$passwd:$base64@${domain}:$sstls" | base64 -w0)
+tmp3=$(echo -n "2022-blake3-aes-128-gcm:$passwd:$base64@${domain}:$ssnontls" | base64 -w0)
+tmp4=$(echo -n "2022-blake3-aes-128-gcm:$passwd:$base64@${domain}:$ssgrpc" | base64 -w0)
 
 shadowsocks1="ss://$tmp1#$user"
 shadowsocks2="ss://$tmp2#$user"
