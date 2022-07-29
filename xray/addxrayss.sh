@@ -65,13 +65,13 @@ read -p "Expired (Days) : " masaaktif
 hariini=`date -d "0 days" +"%Y-%m-%d"`
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#xray-ss-tls$/a\### '"$user $exp"'\
-},{"method": "'""aes-128-gcm""'","password": "'""$uuid""'"' /etc/xray/config.json
+},{"method": "'""aes-128-gcm""'","level": "'""0""'","password": "'""$uuid""'"' /etc/xray/xvmess.json
 sed -i '/#xray-ss-tcp$/a\### '"$user $exp"'\
 },{"method": "'""aes-128-gcm""'","password": "'""$uuid""'"' /etc/xray/config.json
 sed -i '/#xray-ss-tls$/a\### '"$user $exp"'\
 },{"method": "'""aes-128-gcm""'","password": "'""$uuid""'"' /etc/xray/xvmess.json
 sed -i '/#xray-ss-grpc$/a\### '"$user $exp"'\
-},{"method": "'""aes-128-gcm""'","password": "'""$uuid""'"' /etc/xray/xvmess.json
+},{"method": "'""aes-128-gcm""'","level": "'""0""'","password": "'""$uuid""'"' /etc/xray/xvmess.json
 sed -i '/#xray-ss-grpc$/a\### '"$user $exp"'\
 },{"method": "'""aes-128-gcm""'","password": "'""$uuid""'"' /etc/xray/config.json
 cat>/etc/xray/ss-tcp-$user.json<<EOF
