@@ -26,7 +26,7 @@ declare ingfo=()
 #=====================================
 status01=$(systemctl status dropbear         | grep -i "active (running)")
 status02=$(systemctl status sshd             | grep -i "active (running)")
-status03=$(systemctl status stunnel4         | grep -i "active (running)")
+status03=$(systemctl status stunnel5         | grep -i "active (running)")
 status04=$(systemctl status openvpn          | grep -i "active (exited)")
 status05=$(systemctl status dropbear-ohp     | grep -i "active (running)")
 status06=$(systemctl status openvpn-ohp      | grep -i "active (running)")
@@ -436,7 +436,7 @@ if [[ $status40 == "" ]]; then
       ingfo+=("VLESS HTTP NON TLS")
       dahlah+=("err42")
 else
-      sstatus4p=$AKTIF
+      sstatus40=$AKTIF
       mantap+=("hore42")
 fi
 if [[ $status41 == "" ]]; then
@@ -668,7 +668,7 @@ if [[ $status67 == "" ]]; then
       ingfo+=("SS 2022 GRPC TLS")
       dahlah+=("err69")
 else
-      sstatus667=$AKTIF
+      sstatus67=$AKTIF
       mantap+=("hore69")
 fi
 if [[ $status67 == "" ]]; then
@@ -676,7 +676,7 @@ if [[ $status67 == "" ]]; then
       ingfo+=("SS 2022 GRPC NON TLS")
       dahlah+=("err69")
 else
-      sstatus667=$AKTIF
+      sstatus67=$AKTIF
       mantap+=("hore69")
 fi
 jumlah1="${#mantap[@]}"
@@ -901,3 +901,4 @@ echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━�
 echo -e "\E[46;1;46m            🔰 LUXURY EDITION BY ZEROSSL 🔰             \E[0m"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e ""
+ 
