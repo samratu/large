@@ -36,11 +36,14 @@ echo "deb http://deb.debian.org/debian stretch-backports main" | tee /etc/apt/so
 apt update -y
 apt -t stretch-backports install shadowsocks-libev -y
 apt -t stretch-backports install simple-obfs -y
-elif [[ "$ver" = "10" ]]; then
+elif [[ $OS == 'debian' ]]; then
+if [[ "$ver" = "10" ]]; then
 echo "deb http://deb.debian.org/debian buster-backports main" | tee /etc/apt/sources.list.d/buster-backports.list
 apt update
 apt -t buster-backports install shadowsocks-libev -y
 apt -t buster-backports install simple-obfs -y
+elif [[ $OS == 'debian' ]]; then
+if [[ "$ver" = "11" ]]; then
 echo "deb http://deb.debian.org/debian bullseye-backports main" | tee /etc/apt/sources.list.d/bullseye-backports.list
 apt update
 apt -t bullseye-backports install shadowsocks-libev -y
