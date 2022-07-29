@@ -40,6 +40,36 @@ until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 			exit 1
 		fi
 	done
+until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
+		read -rp "Password : " -e user
+		CLIENT_EXISTS=$(grep -w $user /etc/xray/xtrojan.json | wc -l)
+
+		if [[ ${CLIENT_EXISTS} == '1' ]]; then
+			echo ""
+			echo -e "Username ${RED}${CLIENT_NAME}${NC} Already On VPS Please Choose Another"
+			exit 1
+		fi
+	done
+until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
+		read -rp "Password : " -e user
+		CLIENT_EXISTS=$(grep -w $user /etc/xray/xvless.json | wc -l)
+
+		if [[ ${CLIENT_EXISTS} == '1' ]]; then
+			echo ""
+			echo -e "Username ${RED}${CLIENT_NAME}${NC} Already On VPS Please Choose Another"
+			exit 1
+		fi
+	done
+until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
+		read -rp "Password : " -e user
+		CLIENT_EXISTS=$(grep -w $user /etc/xray/config.json | wc -l)
+
+		if [[ ${CLIENT_EXISTS} == '1' ]]; then
+			echo ""
+			echo -e "Username ${RED}${CLIENT_NAME}${NC} Already On VPS Please Choose Another"
+			exit 1
+		fi
+	done
 passwd=$GESuWIqYcq34MSCDTOck0g==
 uuid=$(cat /proc/sys/kernel/random/uuid)
 base64=$(openssl rand -base64 16)
@@ -120,7 +150,7 @@ cat>/etc/xray/SS22-TCP-TLS-$user.json<<EOF
             "method": "2022-blake3-aes-128-gcm",
             "ota": false,
             "password": "GESuWIqYcq34MSCDTOck0g==:$base64",
-            "port": 443
+            "port": 414
           }
         ]
       },
@@ -604,17 +634,20 @@ cat>/etc/xray/SS2022-GRPC-NONTLS-$user.json<<EOF
 EOF
 cat /etc/xray/SS2022-GRPC-NONTLS-$user.json >> /home/vps/public_html/SS2022-GRPC-NONTLS-$user.txt
 
-tmp1=$(echo -n "2022-blake3-aes-128-gcm:$passwd:$base64@${domain}:$sstcp" | base64 -w0)
-tmp2=$(echo -n "2022-blake3-aes-128-gcm:$passwd:$base64@${domain}:$sstls" | base64 -w0)
-tmp3=$(echo -n "2022-blake3-aes-128-gcm:$passwd:$base64@${domain}:$ssnontls" | base64 -w0)
-tmp4=$(echo -n "2022-blake3-aes-128-gcm:$passwd:$base64@${domain}:$ssgrpc" | base64 -w0)
+tmp1=$(echo -n "2022-blake3-aes-128-gcm:$passwd:$base64" | base64 -w0)
+tmp2=$(echo -n "2022-blake3-aes-128-gcm:$passwd:$base64" | base64 -w0)
+tmp3=$(echo -n "2022-blake3-aes-128-gcm:$passwd:$base64" | base64 -w0)
+tmp4=$(echo -n "2022-blake3-aes-128-gcm:$passwd:$base64" | base64 -w0)
+tmp5=$(echo -n "2022-blake3-aes-128-gcm:$passwd:$base64" | base64 -w0)
 
-shadowsocks1="ss://$tmp1#$user"
-shadowsocks2="ss://$tmp2#$user"
-shadowsocks3="ss://$tmp3#$user"
-shadowsocks4="ss://$tmp4#$user"
+shadowsocks1="ss://$tmp1@$domain:$sstcp#$user"
+shadowsocks2="ss://$tmp2@$domain:$sstls#$user"
+shadowsocks3="ss://$tmp3@$domain:$ssnontls#$user"
+shadowsocks4="ss://$tmp4@$domain:$ssgrpc#$user"
+shadowsocks5="ss://$tmp5@$domain:$ssgrpcnon#$user"
 
 systemctl restart xvmess
+systemctl restart xvless
 systemctl restart xray.service
 systemctl restart xss.service
 systemctl restart xtrojan.service
@@ -626,7 +659,8 @@ echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━�
 echo -e "Remarks     : ${user}"
 echo -e "IP/Host     : ${MYIP}"
 echo -e "Address     : ${domain}"
-echo -e "Port TLS : $sstcp"
+echo -e "Port TCP    : $sstcp"
+echo -e "Port TLS    : $sstls"
 echo -e "Port NON TLS : $ssnontls"
 echo -e "Security    : aes-128-gcm"
 echo -e "Security    : 2022-blake3-aes-128-gcm"
