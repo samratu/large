@@ -18,7 +18,39 @@ clear
 read -p "Username : " Login
 read -p "Password : " Pass
 read -p "Expired (Days): " masaaktif
+until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
+		read -rp "Username : " -e user
+		CLIENT_EXISTS=$(grep -w $user /etc/xray/config.json | wc -l)
+                CLIENT_EXISTS=$(grep -w $user /etc/xray/xvless.json | wc -l)
+                CLIENT_EXISTS=$(grep -w $user /etc/xray/xtrojan.json | wc -l)
+                CLIENT_EXISTS=$(grep -w $user /etc/xray/xvmess.json | wc -l)
+                CLIENT_EXISTS=$(grep -w $user /etc/xray/xss.json | wc -l)
+		if [[ ${CLIENT_EXISTS} == '1' ]]; then
+	        echo -e "Username ${RED}${CLIENT_NAME}${NC} Nama pengguna telah digunakan mohon gunaka nama lain"
+	        exit 1
+		fi
+	done
+clear
 
+if [ -e "/var/log/auth.log" ]; then
+        LOG="/var/log/auth.log";
+fi
+if [ -e "/var/log/secure" ]; then
+        LOG="/var/log/secure";
+fi
+                
+data=( `ps aux | grep -i dropbear | awk '{print $2}'`);
+cat $LOG | grep -i dropbear | grep -i "Password auth succeeded" > /tmp/login-db.txt;
+for PID in "${data[@]}"
+do
+        cat /tmp/login-db.txt | grep "dropbear\[$PID\]" > /tmp/login-db-pid.txt;
+        NUM=`cat /tmp/login-db-pid.txt | wc -l`;
+        USER=`cat /tmp/login-db-pid.txt | awk '{print $10}'`;
+        IP=`cat /tmp/login-db-pid.txt | awk '{print $12}'`;
+        if [ $NUM -eq 1 ]; then
+                echo "$PID - $USER - $IP";
+                fi
+done
 MYIP=$(wget -qO- ipinfo.io/ip);
 MYIP6=$(wget -qO- https://ipv6.icanhazip.com);
 ws="$(cat ~/log-install.txt | grep -w "WEBSOCKET TLS" | cut -d: -f2|sed 's/ //g')"
@@ -46,7 +78,7 @@ expi=`date -d "$masaaktif days" +"%Y-%m-%d"`
 systemctl restart ws-tls
 systemctl restart ws-nontls
 systemctl restart stunnel5
-systemctl restart  ws-ovpn
+systemctl restart ws-ovpn
 systemctl restart ovpn-tls
 systemctl restart ssh-ohp
 systemctl restart dropbear-ohp
