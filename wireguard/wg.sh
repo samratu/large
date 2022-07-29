@@ -29,7 +29,6 @@ elif [[ -e /etc/centos-release ]]; then
 	source /etc/os-release
 	OS=centos
 fi
-
 Green_font_prefix="\033[32m" && Red_font_prefix="\033[31m" && Green_background_prefix="\033[42;37m" && Red_background_prefix="\033[41;37m" && Font_color_suffix="\033[0m"
 Info="${Green_font_prefix}[information]${Font_color_suffix}"
 
@@ -53,10 +52,10 @@ elif [[ $OS == 'debian' ]]; then
         echo "deb http://deb.debian.org/debian buster-backports main" | sudo tee /etc/apt/sources.list.d/buster-backports.list
 	echo "deb http://deb.debian.org/debian/ unstable main" >/etc/apt/sources.list.d/unstable.list
 	printf 'Package: *\nPin: release a=unstable\nPin-Priority: 90\n' >/etc/apt/preferences.d/limit-unstable
-	apt update
+	apt update -y
 	apt install -y wireguard-tools iptables iptables-persistent
 	apt install -y linux-headers-$(uname -r)
-        sudo apt update 
+        sudo apt update -y
         sudo apt -t buster-backports install wireguard wireguard-tools wireguard-dkms linux-headers-$(uname -r)
 elif [[ ${OS} == 'centos' ]]; then
 	curl -Lo /etc/yum.repos.d/wireguard.repo https://copr.fedorainfracloud.org/coprs/jdoss/wireguard/repo/epel-7/jdoss-wireguard-epel-7.repo
@@ -108,7 +107,6 @@ systemctl enable "wg-quick@wg0"
 # Check if WireGuard is running
 systemctl is-active --quiet "wg-quick@wg0"
 WG_RUNNING=$?
-
 # Tambahan
 cd /usr/bin
 wget -O addwg "https://${wisnuvpn}/addwg.sh"
