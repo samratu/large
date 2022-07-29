@@ -96,7 +96,11 @@ status67=$(systemctl status xray             | grep -i "active (running)")
 status68=$(systemctl status xray             | grep -i "active (running)")
 status69=$(systemctl status xray             | grep -i "active (running)")
 status70=$(systemctl status xray             | grep -i "active (running)")
-status71=$(systemctl status xray             | grep -i "active (running)")
+status67=$(systemctl status xray             | grep -i "active (running)")
+status67=$(systemctl status xray             | grep -i "active (running)")
+status57=$(systemctl status xray             | grep -i "active (running)")
+status67=$(systemctl status xray             | grep -i "active (running)")
+
 #======================================
 if [[ $status01 == "" ]]; then
       sstatus01=$ERROR
@@ -587,6 +591,14 @@ else
       sstatus59=$AKTIF
       mantap+=("hore61")
 fi
+if [[ $status59 == "" ]]; then
+      sstatus59=$ERROR
+      ingfo+=("SOCKS5 GRPC NON TLS")
+      dahlah+=("err61")
+else
+      sstatus59=$AKTIF
+      mantap+=("hore61")
+fi
 if [[ $status60 == "" ]]; then
       sstatus60=$ERROR
       ingfo+=("SHADOWSOCKS WS TLS")
@@ -619,6 +631,14 @@ else
       sstatus63=$AKTIF
       mantap+=("hore65")
 fi
+if [[ $status63 == "" ]]; then
+      sstatus63=$ERROR
+      ingfo+=("SHADOWSOCKS GRPC NON TLS")
+      dahlah+=("err65")
+else
+      sstatus63=$AKTIF
+      mantap+=("hore65")
+fi
 if [[ $status64 == "" ]]; then
       sstatus64=$ERROR
       ingfo+=("SS 2022 WS TLS")
@@ -646,6 +666,14 @@ fi
 if [[ $status67 == "" ]]; then
       sstatus67=$ERROR
       ingfo+=("SS 2022 GRPC TLS")
+      dahlah+=("err69")
+else
+      sstatus667=$AKTIF
+      mantap+=("hore69")
+fi
+if [[ $status67 == "" ]]; then
+      sstatus67=$ERROR
+      ingfo+=("SS 2022 GRPC NON TLS")
       dahlah+=("err69")
 else
       sstatus667=$AKTIF
@@ -853,14 +881,17 @@ echo -e "$bl🔰 $off $bd SOCKS5 WS TLS               $off : $sstatus58🔰"
 echo -e "$bl🔰 $off $bd SOCKS5 WS NON TLS           $off : $sstatus59🔰"
 echo -e "$bl🔰 $off $bd SOCKS5 TCP TLS              $off : $sstatus60🔰"
 echo -e "$bl🔰 $off $bd SOCKS5 GRPC TLS             $off : $sstatus61🔰"
+echo -e "$bl🔰 $off $bd SOCKS5 GRPC NON TLS         $off : $sstatus61🔰"
 echo -e "$bl🔰 $off $bd SHADOWSOCKS WS TLS          $off : $sstatus62🔰"
 echo -e "$bl🔰 $off $bd SHADOWSOCKS WS NON TLS      $off : $sstatus63🔰"
 echo -e "$bl🔰 $off $bd SHADOWSOCKS TCP TLS         $off : $sstatus64🔰"
 echo -e "$bl🔰 $off $bd SHADOWSOCKS GRPC TLS        $off : $sstatus65🔰"
+echo -e "$bl🔰 $off $bd SHADOWSOCKS GRPC NON TLS    $off : $sstatus65🔰"
 echo -e "$bl🔰 $off $bd SS 2022 WS TLS              $off : $sstatus65🔰"
 echo -e "$bl🔰 $off $bd SS 2022 WS NON TLS          $off : $sstatus65🔰"
 echo -e "$bl🔰 $off $bd SS 2022 TCP TLS             $off : $sstatus66🔰"
 echo -e "$bl🔰 $off $bd SS 2022 GRPC TLS            $off : $sstatus67🔰"
+echo -e "$bl🔰 $off $bd SS 2022 GRPC NON TLS        $off : $sstatus67🔰"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\E[46;1;46m             🔰 SOLO THE SPIRIT OF JAVA 🔰              \E[0m"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
