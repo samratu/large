@@ -171,7 +171,7 @@ cat>/etc/xray/SS-TCP-TLS-$user.json<<EOF
   "stats": {}
 }
 EOF
-cat>/etc/xray/SS-TCP-TLS-$user.json /home/vps/public_html/SS-TCP-TLS-$user.txt
+cat /etc/xray/SS-TCP-TLS-$user.json >> /home/vps/public_html/SS-TCP-TLS-$user.txt
 tmp1=$(echo -n "aes-128-gcm:${user}@${domain}:$sstcp" | base64 -w0)
 shadow1="ss://$tmp2#$user"
 
@@ -282,7 +282,8 @@ cat>/etc/xray/SS-WS-TLS-$user.json<<EOF
   "stats": {}
 }
 EOF
-cat>/etc/xray/SS-WS-TLS-$user.json /home/vps/public_html/SS-WS-TLS-$user.txt
+cat /etc/xray/SS-WS-TLS-$user.json >> /home/vps/public_html/SS-WS-TLS-$user.txt
+
 tmp2=$(echo -n "aes-128-gcm:${user}@${domain}:$sstls" | base64 -w0)
 shadow2="ss://$tmp2#$user"
 
@@ -393,7 +394,7 @@ cat>/etc/xray/SS-WS-NON-TLS-$user.json<<EOF
   "stats": {}
 }
 EOF
-cat>/etc/xray/SS-WS-NON-TLS-$user.json /home/vps/public_html/SS-WS-NON-TLS-$user.txt
+cat /etc/xray/SS-WS-NON-TLS-$user.json >> /home/vps/public_html/SS-WS-NON-TLS-$user.txt
 tmp3=$(echo -n "aes-128-gcm:${user}@${domain}:$ssnontls" | base64 -w0)
 shadow3="ss://$tmp3#$user"
 
@@ -503,7 +504,7 @@ cat>/etc/xray/SS-GRPC-TLS-$user.json<<EOF
 
 }
 EOF
-cat>/etc/xray/SS-GRPC-TLS-$user.json /home/vps/public_html/SS-GRPC-TLS-$user.txt
+cat /etc/xray/SS-GRPC-TLS-$user.json >> /home/vps/public_html/SS-GRPC-TLS-$user.txt
 tmp4=$(echo -n "aes-128-gcm:${user}@${domain}:$ssgrpc" | base64 -w0)
 shadow4="ss://$tmp4#$user"
 
@@ -522,6 +523,8 @@ echo -e "Address     : ${domain}"
 #echo -e "Port TLS    : ${tls}"
 echo -e "Port NON TLS  : $ssnontls"
 echo -e "Security    : aes-128-gcm"
+echo -e "Path WS     : /shanum-ws"
+echo -e "Path GRPC   : shanum-grpc"
 echo -e "Network     : tcp,udp,ws,grpc"
 echo -e "Password    : ${user}"
 echo -e "Created     : $hariini"
