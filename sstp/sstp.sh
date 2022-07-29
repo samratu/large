@@ -28,13 +28,18 @@ if [[ "$ver" = "18.04" ]]; then
 yoi=Ubuntu18
 elif [[ "$ver" = "20.04" ]]; then
 yoi=Ubuntu20
+elif [[ "$ver" = "21.04" ]]; then
+yoi=Ubuntu21
+elif [[ "$ver" = "22.04" ]]; then
+yoi=Ubuntu22
 fi
 elif [[ $OS == 'debian' ]]; then
 if [[ "$ver" = "9" ]]; then
 yoi=Debian9
 elif [[ "$ver" = "10" ]]; then
 yoi=Debian10
-fi
+elif [[ "$ver" = "11" ]]; then
+yoi=Debian11
 fi
 mkdir /home/sstp
 touch /home/sstp/sstp_account
@@ -69,17 +74,17 @@ sed -i $MYIP2 /etc/accel-ppp.conf
 chmod +x /etc/accel-ppp.conf
 systemctl start accel-ppp
 systemctl enable accel-ppp
-#gen cert sstp
+gen cert sstp
 cd /home/sstp
-openssl genrsa -out ca.key 4096
-openssl req -new -x509 -days 1059 -key ca.key -out ca.crt \
+openssl genrsa -out ca.key 2048
+openssl req -new -x509 -days 3650 -key ca.key -out ca.crt \
 -subj "/C=ID/ST=Jawa-Tengah/L=Sukoharjo/O=GANDRING-VPN/OU=GANDRING/CN=GANDRING-VPN/emailAddress=djarumpentol01@gmail.com"
 #-subj "/C=US/ST=California/L=San-Fransisco/O=Cloudflare Inc./OU=www.cloudflare.com/CN=Managed CA f04e6b9f08b2fe102b1106b9aa860b8e/emailAddress=djarumpentol01@gmail.com"
-openssl genrsa -out server.key 4096
+openssl genrsa -out server.key 2048
 openssl req -new -key server.key -out ca.csr \
 -subj "/C=ID/ST=Jawa-Tengah/L=Sukoharjo/O=GANDRING-VPN/OU=GANDRING/CN=GANDRING-VPN/emailAddress=djarumpentol01@gmail.com"
 #-subj "/C=US/ST=California/L=San-Fransisco/O=Cloudflare Inc./OU=www.cloudflare.com/CN=Managed CA f04e6b9f08b2fe102b1106b9aa860b8e/emailAddress=djarumpentol01@gmail.com"
-openssl x509 -req -days 1059 -in ca.csr -CA ca.crt -CA key ca.key -set_serial 01 -out server.crt
+openssl x509 -req -days 3650 -in ca.csr -CA ca.crt -CA key ca.key -set_serial 01 -out server.crt
 cp /home/sstp/server.crt /home/vps/public_html/server.crt
 iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 666 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 666 -j ACCEPT
