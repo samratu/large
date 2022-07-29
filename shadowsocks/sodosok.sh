@@ -14,23 +14,18 @@ LIGHT='\033[0;37m'
 # ==========================================
 # Getting
 MYIP=$(wget -qO- ipinfo.io/ip);
-
 # Link Hosting Kalian
 wisnuvpn="raw.githubusercontent.com/samratu/large/sae/shadowsocks"
-
 source /etc/os-release
 OS=$ID
 ver=$VERSION_ID
-
 #Install_Packages
-echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo "Install Paket..."
 apt-get install --no-install-recommends build-essential autoconf libtool libssl-dev libpcre3-dev libev-dev asciidoc xmlto automake -y
 echo "Install Paket Selesai BUILD UP BY WISNU COKRO SATRIO"
-echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 #Install_Shadowsocks_libev
-echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo "\e[1;31m Installing Shadowsocks-libev BY WISNU COKRO SATRIO....."
+echo "Installing Shadowsocks-libev BY WISNU COKRO SATRIO"
+apt update -y
 apt-get install software-properties-common -y
 if [[ $OS == 'ubuntu' ]]; then
 apt install shadowsocks-libev -y
@@ -38,7 +33,7 @@ apt install simple-obfs -y
 elif [[ $OS == 'debian' ]]; then
 if [[ "$ver" = "9" ]]; then
 echo "deb http://deb.debian.org/debian stretch-backports main" | tee /etc/apt/sources.list.d/stretch-backports.list
-apt update
+apt update -y
 apt -t stretch-backports install shadowsocks-libev -y
 apt -t stretch-backports install simple-obfs -y
 elif [[ "$ver" = "10" ]]; then
@@ -46,12 +41,13 @@ echo "deb http://deb.debian.org/debian buster-backports main" | tee /etc/apt/sou
 apt update
 apt -t buster-backports install shadowsocks-libev -y
 apt -t buster-backports install simple-obfs -y
-fi
+echo "deb http://deb.debian.org/debian bullseye-backports main" | tee /etc/apt/sources.list.d/bullseye-backports.list
+apt update
+apt -t bullseye-backports install shadowsocks-libev -y
+apt -t bullseye-backports install simple-obfs -y
 fi
 echo "Install Shadowsocks-libev Selesai"
-echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 #Server konfigurasi
-echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo "Konfigurasi Server."
 cat > /etc/shadowsocks-libev/config.json <<END
 {   
@@ -65,15 +61,11 @@ cat > /etc/shadowsocks-libev/config.json <<END
     "mode":"tcp_and_udp",
 }
 END
-echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 #mulai ~shadowsocks-libev~ server
-echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo "mulai ss server"
 systemctl enable shadowsocks-libev.service
 systemctl start shadowsocks-libev.service
-echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 #buat client config
-echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo "buat config obfs"
 cat > /etc/shadowsocks-libev.json <<END
 {
@@ -90,9 +82,7 @@ cat > /etc/shadowsocks-libev.json <<END
 }
 END
 chmod +x /etc/shadowsocks-libev.json
-echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "">>"/etc/shadowsocks-libev/akun.conf"
-echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo "Menambahkan Perintah Shadowsocks-libev"
 iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2444:3442 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2444:3442 -j ACCEPT
