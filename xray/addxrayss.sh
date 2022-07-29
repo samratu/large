@@ -62,7 +62,7 @@ cat>/etc/xray/ss-tcp-$user.json<<EOF
       "protocol": "shadowsocks",
       "settings": {
         "method": "aes-128-gcm",
-        "password": "${user}",
+        "password": "$user",
         "network": "tcp,udp"
       }
     },
@@ -75,22 +75,22 @@ cat>/etc/xray/SS-TCP-TLS-$user.json<<EOF
  "dns": {
     "servers": [
       "8.8.8.8",
-      "8.8.4.4"
+        "8.8.4.4"
     ]
   },
  "inbounds": [
    {
-      "port": 10808,
+    "port": 10808,
       "protocol": "socks",
-      "settings": {
-        "auth": "noauth",
-        "udp": true,
-        "userLevel": 8
+        "settings": {
+          "auth": "noauth",
+            "udp": true,
+              "userLevel": 0
       },
       "sniffing": {
         "destOverride": [
           "http",
-          "tls"
+            "tls"
         ],
         "enabled": true
       },
@@ -98,9 +98,9 @@ cat>/etc/xray/SS-TCP-TLS-$user.json<<EOF
     },
     {
       "port": 10809,
-      "protocol": "http",
-      "settings": {
-        "userLevel": 8
+        "protocol": "http",
+          "settings": {
+            "userLevel": 0
       },
       "tag": "http"
     }
@@ -114,37 +114,37 @@ cat>/etc/xray/SS-TCP-TLS-$user.json<<EOF
         "enabled": true
       },
       "protocol": "shadowsocks",
-      "settings": {
-        "servers": [
+        "settings": {
+          "servers": [
           {
-            "address": "${domain}",
-            "level": 8,
-            "method": "aes-128-gcm",
-            "password": "${uuid}",
-            "port": 212
+           "address": "${domain}",
+             "level": 0,
+               "method": "aes-128-gcm",
+                 "password": "${uuid}",
+                   "port": 212
           }
         ]
       },
       "streamSettings": {
         "network": "tcp",
-        "security": "tls",
-        "tlsSettings": {
-          "allowInsecure": true,
-          "serverName": "${domain}"
+          "security": "tls",
+            "tlsSettings": {
+              "allowInsecure": true,
+                "serverName": "${domain}"
         }
       },
       "tag": "proxy"
     },
     {
       "protocol": "freedom",
-      "settings": {},
-      "tag": "direct"
+        "settings": {},
+          "tag": "direct"
     },
     {
       "protocol": "blackhole",
-      "settings": {
-        "response": {
-          "type": "http"
+        "settings": {
+          "response": {
+            "type": "http"
         }
       },
       "tag": "block"
@@ -152,27 +152,27 @@ cat>/etc/xray/SS-TCP-TLS-$user.json<<EOF
   ],
   "policy": {
     "levels": {
-      "8": {
+      "0": {
         "connIdle": 300,
-        "downlinkOnly": 1,
-        "handshake": 4,
-        "uplinkOnly": 1
+          "downlinkOnly": 1,
+            "handshake": 4,
+              "uplinkOnly": 1
       }
     },
     "system": {
       "statsOutboundUplink": true,
-      "statsOutboundDownlink": true
+        "statsOutboundDownlink": true
     }
   },
   "routing": {
     "domainStrategy": "Asls",
-"rules": []
+      "rules": []
   },
   "stats": {}
 }
 EOF
 cat /etc/xray/SS-TCP-TLS-$user.json >> /home/vps/public_html/SS-TCP-TLS-$user.txt
-tmp1=$(echo -n "aes-128-gcm:${user}@${domain}:$sstcp" | base64 -w0)
+tmp1=$(echo -n "aes-128-gcm:$user@${domain}:$sstcp" | base64 -w0)
 shadow1="ss://$tmp2#$user"
 
 cat>/etc/xray/SS-WS-TLS-$user.json<<EOF
@@ -180,22 +180,22 @@ cat>/etc/xray/SS-WS-TLS-$user.json<<EOF
  "dns": {
     "servers": [
       "8.8.8.8",
-      "8.8.4.4"
+        "8.8.4.4"
     ]
   },
  "inbounds": [
    {
-      "port": 10808,
-      "protocol": "socks",
-      "settings": {
-        "auth": "noauth",
-        "udp": true,
-        "userLevel": 8
+     "port": 10808,
+       "protocol": "socks",
+         "settings": {
+           "auth": "noauth",
+             "udp": true,
+               "userLevel": 0
       },
       "sniffing": {
         "destOverride": [
           "http",
-          "tls"
+            "tls"
         ],
         "enabled": true
       },
@@ -203,39 +203,39 @@ cat>/etc/xray/SS-WS-TLS-$user.json<<EOF
     },
     {
       "port": 10809,
-      "protocol": "http",
-      "settings": {
-        "userLevel": 8
+        "protocol": "http",
+          "settings": {
+            "userLevel": 0
       },
       "tag": "http"
     }
   ],
   "log": {
-    "loglevel": "none"
+   "loglevel": "none"
   },
   "outbounds": [
     {
       "mux": {
-        "enabled": true
+       "enabled": true
       },
       "protocol": "shadowsocks",
-      "settings": {
-        "servers": [
+        "settings": {
+          "servers": [
           {
-            "address": "${domain}",
-            "level": 8,
-            "method": "aes-128-gcm",
-            "password": "${uuid}",
-            "port": 443
+           "address": "${domain}",
+             "level": 0,
+               "method": "aes-128-gcm",
+                 "password": "${uuid}",
+                   "port": 443
           }
         ]
       },
       "streamSettings": {
         "network": "ws",
-        "security": "tls",
-        "tlsSettings": {
-          "allowInsecure": true,
-          "serverName": "${domain}"
+          "security": "tls",
+            "tlsSettings": {
+              "allowInsecure": true,
+                "serverName": "${domain}"
         },
         "wsSettings": {
           "headers": {
@@ -248,14 +248,14 @@ cat>/etc/xray/SS-WS-TLS-$user.json<<EOF
     },
     {
       "protocol": "freedom",
-      "settings": {},
-      "tag": "direct"
+        "settings": {},
+          "tag": "direct"
     },
     {
       "protocol": "blackhole",
-      "settings": {
-        "response": {
-          "type": "http"
+        "settings": {
+          "response": {
+            "type": "http"
         }
       },
       "tag": "block"
@@ -263,21 +263,21 @@ cat>/etc/xray/SS-WS-TLS-$user.json<<EOF
   ],
   "policy": {
     "levels": {
-      "8": {
+      "0": {
         "connIdle": 300,
-        "downlinkOnly": 1,
-        "handshake": 4,
-        "uplinkOnly": 1
+          "downlinkOnly": 1,
+            "handshake": 4,
+             "uplinkOnly": 1
       }
     },
     "system": {
       "statsOutboundUplink": true,
-      "statsOutboundDownlink": true
+        "statsOutboundDownlink": true
     }
   },
   "routing": {
     "domainStrategy": "Asls",
-"rules": []
+      "rules": []
   },
   "stats": {}
 }
@@ -290,24 +290,24 @@ shadow2="ss://$tmp2#$user"
 cat>/etc/xray/SS-WS-NON-TLS-$user.json<<EOF
 {
  "dns": {
-    "servers": [
-      "8.8.8.8",
-      "8.8.4.4"
+   "servers": [
+     "8.8.8.8",
+       "8.8.4.4"
     ]
   },
  "inbounds": [
    {
-      "port": 10808,
-      "protocol": "socks",
-      "settings": {
-        "auth": "noauth",
-        "udp": true,
-        "userLevel": 8
+     "port": 10808,
+       "protocol": "socks",
+         "settings": {
+           "auth": "noauth",
+             "udp": true,
+               "userLevel": 0
       },
       "sniffing": {
         "destOverride": [
           "http",
-          "tls"
+            "tls"
         ],
         "enabled": true
       },
@@ -315,9 +315,9 @@ cat>/etc/xray/SS-WS-NON-TLS-$user.json<<EOF
     },
     {
       "port": 10809,
-      "protocol": "http",
-      "settings": {
-        "userLevel": 8
+        "protocol": "http",
+          "settings": {
+            "userLevel": 0
       },
       "tag": "http"
     }
@@ -331,23 +331,23 @@ cat>/etc/xray/SS-WS-NON-TLS-$user.json<<EOF
         "enabled": true
       },
       "protocol": "shadowsocks",
-      "settings": {
-        "servers": [
+        "settings": {
+          "servers": [
           {
-            "address": "${domain}",
-            "level": 8,
-            "method": "aes-128-gcm",
-            "password": "${uuid}",
-            "port": 443
+           "address": "${domain}",
+             "level": 0,
+               "method": "aes-128-gcm",
+                 "password": "${uuid}",
+                   "port": 80
           }
         ]
       },
       "streamSettings": {
         "network": "ws",
-        "security": "tls",
-        "tlsSettings": {
-          "allowInsecure": true,
-          "serverName": "${domain}"
+          "security": "none",
+            "tlsSettings": {
+              "allowInsecure": true,
+                "serverName": "${domain}"
         },
         "wsSettings": {
           "headers": {
@@ -357,17 +357,17 @@ cat>/etc/xray/SS-WS-NON-TLS-$user.json<<EOF
         }
       },
       "tag": "proxy"
-    },
-    {
-      "protocol": "freedom",
-      "settings": {},
-      "tag": "direct"
-    },
-    {
-      "protocol": "blackhole",
-      "settings": {
-        "response": {
-          "type": "http"
+      },
+      {
+        "protocol": "freedom",
+         "settings": {},
+           "tag": "direct"
+      },
+      {
+        "protocol": "blackhole",
+          "settings": {
+            "response": {
+              "type": "http"
         }
       },
       "tag": "block"
@@ -375,21 +375,21 @@ cat>/etc/xray/SS-WS-NON-TLS-$user.json<<EOF
   ],
   "policy": {
     "levels": {
-      "8": {
+      "0": {
         "connIdle": 300,
-        "downlinkOnly": 1,
-        "handshake": 4,
-        "uplinkOnly": 1
+          "downlinkOnly": 1,
+            "handshake": 4,
+              "uplinkOnly": 1
       }
     },
     "system": {
       "statsOutboundUplink": true,
-      "statsOutboundDownlink": true
+        "statsOutboundDownlink": true
     }
   },
   "routing": {
     "domainStrategy": "Asls",
-"rules": []
+      "rules": []
   },
   "stats": {}
 }
@@ -400,35 +400,35 @@ shadow3="ss://$tmp3#$user"
 
 cat>/etc/xray/SS-GRPC-TLS-$user.json<<EOF
 {
-    "dns": {
-    "servers": [
-      "8.8.8.8",
-      "8.8.4.4"
+ "dns": {
+   "servers": [
+     "8.8.8.8",
+       "8.8.4.4"
     ]
   },
  "inbounds": [
    {
-      "port": 10808,
+    "port": 10808,
       "protocol": "socks",
-      "settings": {
-        "auth": "noauth",
-        "udp": true,
-        "userLevel": 8
+        "settings": {
+          "auth": "noauth",
+            "udp": true,
+              "userLevel": 0
       },
       "sniffing": {
         "destOverride": [
           "http",
-          "tls"
+            "tls"
         ],
         "enabled": true
       },
       "tag": "socks"
     },
     {
-      "port": 10809,
-      "protocol": "http",
-      "settings": {
-        "userLevel": 8
+     "port": 10809,
+       "protocol": "http",
+         "settings": {
+           "userLevel": 0
       },
       "tag": "http"
     }
@@ -442,41 +442,41 @@ cat>/etc/xray/SS-GRPC-TLS-$user.json<<EOF
         "enabled": true
       },
       "protocol": "shadowsocks",
-      "settings": {
-        "servers": [
+        "settings": {
+          "servers": [
           {
-            "address": "${domain}",
-            "level": 8,
-            "method": "aes-128-gcm",
-            "password": "${uuid}",
-            "port": 443
+           "address": "${domain}",
+             "level": 0,
+               "method": "aes-128-gcm",
+                 "password": "${uuid}",
+                   "port": 443
           }
         ]
       },
       "streamSettings": {
         "grpcSettings": {
           "multiMode": true,
-          "serviceName": "shanum-grpc"
+            "serviceName": "shanum-grpc"
         },
         "network": "grpc",
-        "security": "tls",
-        "tlsSettings": {
-          "allowInsecure": true,
-          "serverName": "$domain"
+          "security": "tls",
+            "tlsSettings": {
+              "allowInsecure": true,
+                "serverName": "$domain"
         }
       },
       "tag": "proxy"
     },
     {
-      "protocol": "freedom",
-      "settings": {},
-      "tag": "direct"
+     "protocol": "freedom",
+       "settings": {},
+         "tag": "direct"
     },
     {
-      "protocol": "blackhole",
-      "settings": {
-        "response": {
-          "type": "http"
+     "protocol": "blackhole",
+       "settings": {
+         "response": {
+           "type": "http"
         }
       },
       "tag": "block"
@@ -484,24 +484,23 @@ cat>/etc/xray/SS-GRPC-TLS-$user.json<<EOF
   ],
   "policy": {
     "levels": {
-      "8": {
+      "0": {
         "connIdle": 300,
-        "downlinkOnly": 1,
-        "handshake": 4,
-        "uplinkOnly": 1
+          "downlinkOnly": 1,
+            "handshake": 4,
+              "uplinkOnly": 1
       }
     },
     "system": {
       "statsOutboundUplink": true,
-      "statsOutboundDownlink": true
+        "statsOutboundDownlink": true
     }
   },
   "routing": {
     "domainStrategy": "Asls",
-"rules": []
+      "rules": []
   },
   "stats": {}
-
 }
 EOF
 cat /etc/xray/SS-GRPC-TLS-$user.json >> /home/vps/public_html/SS-GRPC-TLS-$user.txt
