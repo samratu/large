@@ -16,10 +16,10 @@ MYIP=$(wget -qO- ipinfo.io/ip);
 clear
 domain=$(cat /etc/xray/domain)
 sstls="$(cat ~/log-install.txt | grep -w "SHADOWSOCKS WS TLS" | cut -d: -f2|sed 's/ //g')"
-sstcp="$(cat ~/log-install.txt | grep -w "SHADOWSOCKS TCP" | cut -d: -f2|sed 's/ //g')"
+sstcp="$(cat ~/log-install.txt | grep -w "SHADOWSOCKS TCP TLS" | cut -d: -f2|sed 's/ //g')"
 ssnontls="$(cat ~/log-install.txt | grep -w "SHADOWSOCKS WS NON TLS" | cut -d: -f2|sed 's/ //g')"
 ssgrpc="$(cat ~/log-install.txt | grep -w "SHADOWSOCKS WS GRPC TLS" | cut -d: -f2|sed 's/ //g')"
-
+ssgrpcnon="$(cat ~/log-install.txt | grep -w "SHADOWSOCKS WS GRPC NON TLS" | cut -d: -f2|sed 's/ //g')"
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 		read -rp "Password : " -e user
 		CLIENT_EXISTS=$(grep -w $user /etc/xray/config.json | wc -l)
@@ -287,7 +287,7 @@ cat /etc/xray/SS-WS-TLS-$user.json >> /home/vps/public_html/SS-WS-TLS-$user.txt
 tmp2=$(echo -n "aes-128-gcm:${user}@${domain}:$sstls" | base64 -w0)
 shadow2="ss://$tmp2#$user"
 
-cat>/etc/xray/SS-WS-NON-TLS-$user.json<<EOF
+cat>/etc/xray/SS-WS-NONTLS-$user.json<<EOF
 {
  "dns": {
    "servers": [
@@ -394,7 +394,7 @@ cat>/etc/xray/SS-WS-NON-TLS-$user.json<<EOF
   "stats": {}
 }
 EOF
-cat /etc/xray/SS-WS-NON-TLS-$user.json >> /home/vps/public_html/SS-WS-NON-TLS-$user.txt
+cat /etc/xray/SS-WS-NONTLS-$user.json >> /home/vps/public_html/SS-WS-NONTLS-$user.txt
 tmp3=$(echo -n "aes-128-gcm:${user}@${domain}:$ssnontls" | base64 -w0)
 shadow3="ss://$tmp3#$user"
 
@@ -504,6 +504,119 @@ cat>/etc/xray/SS-GRPC-TLS-$user.json<<EOF
 }
 EOF
 cat /etc/xray/SS-GRPC-TLS-$user.json >> /home/vps/public_html/SS-GRPC-TLS-$user.txt
+
+cat>/etc/xray/SS-GRPC-NONTLS-$user.json<<EOF
+{
+ "dns": {
+   "hosts": {
+     "domain:googleapis.cn": "googleapis.com"
+     },
+     "servers": [
+       "1.1.1.1"
+    ]
+   },
+   "inbounds": [
+     {
+      "listen": "127.0.0.1",
+        "port": "10808",
+          "protocol": "socks",
+            "settings": {
+              "auth": "noauth",
+                "udp": true,
+                  "userLevel": 0
+            },
+            "sniffing": {
+              "destOverride": [
+                "http",
+                  "tls"
+              ],
+              "enabled": true
+            },
+            "tag": "socks"
+     },
+     {
+      "listen": "127.0.0.1",
+        "port": "10809",
+          "protocol": "http",
+            "settings": {
+              "userLevel": 0
+           },
+           "tag": "http"
+         }
+       ],
+       "log": {
+         "loglevel": "warning"
+     },
+     "outbounds": [
+       {
+        "mux": {
+          "concurrency": 8,
+            "enabled": true
+     },
+     "protocol": "shadowsocks",
+      "settings": {
+        "servers": [
+          {
+            "address": "${domain}",
+            "level": 0,
+            "method": "aes-128-gcm",
+            "password": "${uuid}",
+            "port": 80
+          }
+        ]
+      },
+      "streamSettings": {
+        "grpcSettings": {
+          "multiMode": true,
+            "serviceName": "shanum-grpc"
+        },
+        "network": "grpc",
+          "security": "none",
+            "tlsSettings": {
+              "allowInsecure": true,
+                "serverName": "$domain"
+            }
+          },
+          "tag": "proxy"
+        },
+        {
+         "protocol": "freedom",
+           "settings": {},
+             "tag": "direct"
+         },
+         {
+          "protocol": "blackhole",
+            "settings": {
+              "response": {
+                "type": "http"
+             }
+           },
+           "tag": "block"
+         }
+       ],
+       "policy": {
+         "levels": {
+           "0": {
+             "connIdle": 300,
+               "downlinkOnly": 1,
+                 "handshake": 4,
+                   "uplinkOnly": 1
+          }
+        },
+        "system": {
+          "statsOutboundDownlink": true,
+            "statsOutboundUplink": true
+        }
+      },
+      "routing": {
+        "domainStrategy": "Asls",
+          "rules": []
+    },
+    "stats": {}
+}
+EOF
+cat /etc/xray/SS-GRPC-NONTLS-$user.json >> /home/vps/public_html/SS-GRPC-NONTLS-$user.txt
+
 tmp4=$(echo -n "aes-128-gcm:${user}@${domain}:$ssgrpc" | base64 -w0)
 shadow4="ss://$tmp4#$user"
 
@@ -519,7 +632,7 @@ echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━�
 echo -e "Remarks     : ${user}"
 echo -e "IP/Host     : ${MYIP}"
 echo -e "Address     : ${domain}"
-#echo -e "Port TLS    : ${tls}"
+echo -e "Port TLS    : ${sstls}"
 echo -e "Port NON TLS  : $ssnontls"
 echo -e "Security    : aes-128-gcm"
 echo -e "Path WS     : /shanum-ws"
@@ -537,7 +650,9 @@ echo -e "SS WS TLS: http://$MYIP:88/SS-WS-TLS-$user.txt"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "SS WS NON TLS: http://$MYIP:88/SS-WS-NONTLS-$user.txt"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "SS GRPC: http://$MYIP:88/SS-GRPC-TLS-$user.txt"
+echo -e "SS GRPC TLS: http://$MYIP:88/SS-GRPC-TLS-$user.txt"
+echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "SS GRPC NON TLS: http://$MYIP:88/SS-GRPC-NONTLS-$user.txt"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m  🔰LUXURY EDITION BY ZEROSSL🔰   \e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
