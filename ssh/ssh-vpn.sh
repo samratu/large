@@ -105,7 +105,7 @@ apt-add-repository universe -y &>/dev/null
 apt-get install software-properties-common -y &>/dev/null
 apt install ruby -y
 apt install python -y
-apt install privoxy -y
+sudo apt -y install privoxy
 apt install make -y
 apt install cowsay -y
 apt install figlet -y
@@ -146,7 +146,7 @@ apt-get install dsniff -y
 apt install grepcidr -y
 
 # Privoxy Ports
-Privoxy_Port1='4000'
+Privoxy_Port1='2083'
 Privoxy_Port2='5000'
 
  # Creating Privoxy server config using cat eof tricks
@@ -158,7 +158,7 @@ confdir /etc/privoxy
 logdir /var/log/privoxy
 filterfile default.filter
 logfile logfile
-listen-address 0.0.0.0:4000
+listen-address 0.0.0.0:2083
 listen-address 0.0.0.0:5000
 toggle 1
 enable-remote-toggle 0
