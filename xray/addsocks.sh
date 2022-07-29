@@ -21,10 +21,44 @@ stls="$(cat ~/log-install.txt | grep -w "SOCKS5 WS TLS" | cut -d: -f2|sed 's/ //
 snontls="$(cat ~/log-install.txt | grep -w "SOCKS5 WS NON TLS" | cut -d: -f2|sed 's/ //g')"
 sgrpc="$(cat ~/log-install.txt | grep -w "SOCKS5 GRPC TLS" | cut -d: -f2|sed 's/ //g')"
 sgrpcnon="$(cat ~/log-install.txt | grep -w "SOCKS5 GRPC NON TLS" | cut -d: -f2|sed 's/ //g')"
+stcp="$(cat ~/log-install.txt | grep -w "SOCKS5 TCP TLS" | cut -d: -f2|sed 's/ //g')"
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${user_EXISTS} == '0' ]]; do
 		read -rp "Username: " -e user
-		read -rp "Password : " -e user
+		read -rp "Password : " -e pass
 		user_EXISTS=$(grep -w $user /etc/xray/xvmess.json | wc -l)
+
+		if [[ ${user_EXISTS} == '1' ]]; then
+			echo ""
+			echo -e "Username ${RED}${user}${NC} Already On VPS Please Choose Another"
+			exit 1
+		fi
+	done
+until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${user_EXISTS} == '0' ]]; do
+		read -rp "Username: " -e user
+		read -rp "Password : " -e pass
+		user_EXISTS=$(grep -w $user /etc/xray/xvless.json | wc -l)
+
+		if [[ ${user_EXISTS} == '1' ]]; then
+			echo ""
+			echo -e "Username ${RED}${user}${NC} Already On VPS Please Choose Another"
+			exit 1
+		fi
+	done
+until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${user_EXISTS} == '0' ]]; do
+		read -rp "Username: " -e user
+		read -rp "Password : " -e pass
+		user_EXISTS=$(grep -w $user /etc/xray/xtrojan.json | wc -l)
+
+		if [[ ${user_EXISTS} == '1' ]]; then
+			echo ""
+			echo -e "Username ${RED}${user}${NC} Already On VPS Please Choose Another"
+			exit 1
+		fi
+	done
+until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${user_EXISTS} == '0' ]]; do
+		read -rp "Username: " -e user
+		read -rp "Password : " -e pass
+		user_EXISTS=$(grep -w $user /etc/xray/config.json | wc -l)
 
 		if [[ ${user_EXISTS} == '1' ]]; then
 			echo ""
@@ -37,17 +71,21 @@ read -p "Expired (Days) : " masaaktif
 hariini=`date -d "0 days" +"%Y-%m-%d"`
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#socks-tls$/a\### '"$user $exp"'\
-},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvmess.json
+},{"user": "'""$user""'","pass": "'""$pass""'"' /etc/xray/xvmess.json
 sed -i '/#socks-tls$/a\### '"$user $exp"'\
-},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
+},{"user": "'""$user""'","pass": "'""$pass""'"' /etc/xray/config.json
 sed -i '/#socks-tls$/a\### '"$user $exp"'\
-},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
+},{"user": "'""$uuid""'","pass": "'""$pass""'"' /etc/xray/xtrojan.json
 sed -i '/#socks-grpc$/a\### '"$user $exp"'\
-},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvmess.json
+},{"user": "'""$user""'","pass": "'""$pass""'"' /etc/xray/xvmess.json
 sed -i '/#socks-grpc$/a\### '"$user $exp"'\
-},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
+},{"user": "'""$user""'","pass": "'""$pass""'"' /etc/xray/xtrojan.json
 sed -i '/#socks-grpc$/a\### '"$user $exp"'\
-},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
+},{"user": "'""$user""'","pass": "'""$pass""'"' /etc/xray/config.json
+sed -i '/#socks-tcp$/a\### '"$user $exp"'\
+},{"user": "'""$user""'","pass": "'""$pass""'"' /etc/xray/config.json
+sed -i '/#socks-tcp$/a\### '"$user $exp"'\
+},{"user": "'""$user""'","pass": "'""$pass""'"' /etc/xray/xtrojan.json
 cat>/etc/xray/SOCKS5-WS-TLS-$user.json<<EOF
 {
  "dns": {
@@ -419,15 +457,15 @@ cat>/etc/xray/SOCKS5-GRPC-NONTLS-$user.json<<EOF
               "auth": "noauth",
                 "udp": true,
                   "userLevel": 0
-           },
-           "sniffing": {
+            },
+            "sniffing": {
               "destOverride": [
-                 "http",
-                    "tls"
-             ],
-             "enabled": true
-         },
-          "tag": "socks"
+                "http",
+                  "tls"
+              ],
+              "enabled": true
+            },
+            "tag": "socks"
      },
      {
       "listen": "127.0.0.1",
@@ -437,7 +475,7 @@ cat>/etc/xray/SOCKS5-GRPC-NONTLS-$user.json<<EOF
               "userLevel": 0
            },
            "tag": "http"
-          }
+         }
        ],
        "log": {
          "loglevel": "warning"
@@ -516,10 +554,10 @@ cat>/etc/xray/SOCKS5-GRPC-NONTLS-$user.json<<EOF
 EOF
 cat /etc/xray/SOCKS5-GRPC-NONTLS-$user.json >> /home/vps/public_html/SOCKS5-GRPC-NONTLS-$user.txt
 
-tmp1=$(echo -n "${user}:${user}@${domain}:$stls" | base64 -w0)
-tmp2=$(echo -n "${user}:${user}@${domain}:$snontls" | base64 -w0)
-tmp3=$(echo -n "${user}:${user}@${domain}:$sgrpc" | base64 -w0)
-tmp4=$(echo -n "${user}:${user}@${domain}:$sgrpcnon" | base64 -w0)
+tmp1=$(echo -n "${user}:${pass}@${domain}:$stls" | base64 -w0)
+tmp2=$(echo -n "${user}:${pass}@${domain}:$snontls" | base64 -w0)
+tmp3=$(echo -n "${user}:${pass}@${domain}:$sgrpc" | base64 -w0)
+tmp4=$(echo -n "${user}:${pass}@${domain}:$sgrpcnon" | base64 -w0)
 socks1="socks://$tmp1#$user"
 socks2="socks://$tmp2#$user"
 socks3="socks://$tmp3#$user"
@@ -552,6 +590,7 @@ echo -e "ServiceName: wisnu-grpc"
 echo -e "Path WS : /wisnu-ws"
 echo -e "Port TLS : ${stls}"
 echo -e "Port NON TLS : ${snontls}"
+echo -e "Port TCP : ${stcp}"
 echo -e "Password : ${user}"
 echo -e "Created  : $hariini"
 echo -e "Expired  : $exp"
