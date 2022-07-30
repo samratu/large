@@ -92,7 +92,7 @@ cat > /etc/openvpn/ssl.ovpn <<-END
 client
 dev tun
 proto tcp
-remote xxxxxxxxx 2083
+remote xxxxxxxxx 443
 resolv-retry infinite
 route-method exe
 nobind
