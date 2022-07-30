@@ -751,8 +751,6 @@ MEMORY=$(($total_r2am/1024))
 download=`grep -e "lo:" -e "wlan0:" -e "eth0" /proc/net/dev  | awk '{print $2}' | paste -sd+ - | bc`
 downloadsize=$(($download/1073741824))
 
-#trafik
-trafik=${vnstat -t}
 # UPLOAD
 upload=`grep -e "lo:" -e "wlan0:" -e "eth0" /proc/net/dev | awk '{print $10}' | paste -sd+ - | bc`
 uploadsize=$(($upload/1073741824))
@@ -797,25 +795,26 @@ tipeos2=$(uname -m)
 
 # GETTING DOMAIN NAME
 Domen="$(cat /etc/xray/domain)"
+cname=$( awk -F: '/model name/ {name=$2} END {print name}' /proc/cpuinfo )
+	cores=$( awk -F: '/model name/ {core++} END {print core}' /proc/cpuinfo )
+	freq=$( awk -F: ' /cpu MHz/ {freq=$2} END {print freq}' /proc/cpuinfo )
+	tram=$( free -m | awk 'NR==2 {print $2}' )
+	swap=$( free -m | awk 'NR==4 {print $2}' )
+	up=$(uptime|awk '{ $1=$2=$(NF-6)=$(NF-5)=$(NF-4)=$(NF-3)=$(NF-2)=$(NF-1)=$NF=""; print }')
 
 # ECHOING RESULT
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "\E[46;1;46m            🔰 SPESIFIKASI LINUX SERVER 🔰              \E[0m"
+echo -e "\E[43;1;46m            🔰 SPESIFIKASI LINUX SERVER 🔰              \E[0m"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "🔰        ⇱ Hostname  : $HOSTNAME"                                                                                                                     
-echo -e "🔰        ⇱ OS Name   : $Tipe"                                                                                                                          
-echo -e "🔰        ⇱ Processor : $tipeprosesor"                                                                                                      
-echo -e "🔰        ⇱ Proc Core : $totalcore"                                                                                                             
-echo -e "🔰        ⇱ Virtual   : $typevps"                                                                                                                     
-echo -e "🔰        ⇱ Cpu Usage : $cpu_usage"                                                                                                   .            
-echo -e "🔰        ⇱ Total RAM : ${totalram}MB"                                                                                                                                       
-echo -e "🔰        ⇱ Avaible   : ${MEMORY}MB"
-echo -e "🔰        ⇱ Uptime    : $(uptime -p | cut -d " " -f 2-10)"
-echo -e "🔰        ⇱ Domain    : $Domen"                                                                                                                         
-echo -e "🔰        ⇱ ISP Name  : $NAMAISP"                                                                                                                                  
-echo -e "🔰        ⇱ Region    : $REGION"                                                                                                                                                                                                       
-echo -e "🔰        ⇱ Date      : $harini"                                                                                                                                                    
-echo -e "🔰        ⇱ Time      : $jam ( WIB )"                                                                               
+echo -e "LINUX : $typevps $Tipe $VERSION"                                                                                                                                                                                              
+echo -e "KERNEL: $kernelku"
+echo -e "CORE  : $totalcore @$freq MHz CPU TERPAKAI $cpu_usage"                                                                                                                                                                                
+echo -e "CPU   : $tipeprosesor"
+echo -e "RAM   : ${totalram}MB  SISA RAM : ${MEMORY}MB"                                                                                                                                                                                   
+echo -e "ONLINE: $(uptime -p | cut -d " " -f 2-10)"                                                                                                                                                                       
+echo -e "HOST  : $HOSTNAME $Domen"
+echo -e "ISP   : $NAMAISP $REGION"                                                                                                                                                                                                                                                                                                                                      
+echo -e "WAKTU : $jam wib $harini"                                                                        
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\E[46;1;46m              🔰 STATUS LAYANAN SERVER 🔰               \E[0m"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
