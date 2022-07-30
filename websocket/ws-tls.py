@@ -79,7 +79,6 @@ class Server(threading.Thread):
         finally:
             self.threadsLock.release()
 
-
 class ConnectionHandler(threading.Thread):
     def __init__(self, socClient, server, addr):
         threading.Thread.__init__(self)
@@ -170,6 +169,11 @@ class ConnectionHandler(threading.Thread):
             if self.method=='CONNECT':
                 port = 443
             else:
+                port = 80
+                port = 3128
+                port = 3228
+                port = 4000
+                port = 5000
                 port = sys.argv[1]
 
         (soc_family, soc_type, proto, _, address) = socket.getaddrinfo(host, port)[0]
@@ -220,7 +224,6 @@ class ConnectionHandler(threading.Thread):
             if error:
                 break
 
-
 def print_usage():
     print 'Usage: proxy.py -p <port>'
     print '       proxy.py -b <bindAddr> -p <port>'
@@ -243,7 +246,6 @@ def parse_args(argv):
             LISTENING_ADDR = arg
         elif opt in ("-p", "--port"):
             LISTENING_PORT = int(arg)
-
 
 def main(host=LISTENING_ADDR, port=LISTENING_PORT):
     print "\n:-------PythonProxy-------:\n"
