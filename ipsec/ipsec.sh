@@ -2,8 +2,7 @@
 # Debian 9 & 10 64bit
 # Ubuntu 18.04 & 20.04 bit
 # Centos 7 & 8 64bit 
-# Mod By SL
-# SL
+# Mod By gandring
 # ==========================================
 # Color
 RED='\033[0;31m'
