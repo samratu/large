@@ -59,31 +59,31 @@ echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━�
 read -p "Silahkan Pilih Angka [ 1 - 0 ] : " menu
 echo -e ""
 case $menu in
-1)
+01)
 addss
 ;;
-2)
+02)
 delss
 ;;
-3)
+03)
 renewss
 ;;
-4)
+04)
 cekss
 ;;
-5)
+05)
 addssr
 ;;
-6)
+06)
 delssr
 ;;
-7)
+07)
 renewssr
 ;;
-8)
+08)
 ssr
 ;;
-9)
+09)
 addxrayss
 ;;
 10)
