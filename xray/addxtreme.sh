@@ -94,76 +94,96 @@ until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 			exit 1
 		fi
 	done
+passwd=$GESuWIqYcq34MSCDTOck0g==
 uuid=$(cat /proc/sys/kernel/random/uuid)
+base64=$(openssl rand -base64 16)
+Username=Password
+password=$base64
 read -p "Expired (Days) : " masaaktif
-#read -p "Expired (Seconds) : " masaaktif
 hariini=`date -d "0 days" +"%Y-%m-%d"`
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
-#exp2=`date -d "$masaaktif seconds" +"%Y-%m-%d"`
-sed -i '/#vless-xtls$/a\### '"$user $exp"'\
-},{"id": "'""$uuid""'","flow": "'""xtls-rprx-direct""'", "email": "'""$user""'"' /etc/xray/xvmess.json
-sed -i '/#trojan-xtls$/a\### '"$user $exp"'\
-},{"password": "'""$uuid""'","flow": "'""xtls-rprx-direct""'", "email": "'""$user""'"' /etc/xray/xtrojan.json
+#sed -i '/#vless-xtls$/a\### '"$user $exp"'\
+#},{"id": "'""$uuid""'","flow": "'""xtls-rprx-direct""'", "email": "'""$user""'"' /etc/xray/xvmess.json
+#sed -i '/#trojan-xtls$/a\### '"$user $exp"'\
+#},{"password": "'""$uuid""'","flow": "'""xtls-rprx-direct""'", "email": "'""$user""'"' /etc/xray/xtrojan.json
 sed -i '/#vless-tls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvmess.json
-sed -i '/#vless-tls$/a\### '"$user $exp"'\
-},{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
-sed -i '/#vless-grpc-tls$/a\### '"$user $exp"'\
-},{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
-sed -i '/#vless-http-tls$/a\### '"$user $exp"'\
-},{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvmess.json
+#sed -i '/#vless-tls$/a\### '"$user $exp"'\
+#},{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
 sed -i '/#vless-grpc-tls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvmess.json
+#sed -i '/#vless-http-tls$/a\### '"$user $exp"'\
+#},{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvmess.json
 sed -i '/#vless-grpc-tls$/a\### '"$user $exp"'\
-},{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
-sed -i '/#vless-hdua$/a\### '"$user $exp"'\
-},{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
-sed -i '/#vless-hdua$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvmess.json
+#sed -i '/#vless-grpc-tls$/a\### '"$user $exp"'\
+#},{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
+#sed -i '/#vless-hdua$/a\### '"$user $exp"'\
+#},{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
+#sed -i '/#vless-hdua$/a\### '"$user $exp"'\
+#},{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvmess.json
 sed -i '/#trojan-tls$/a\### '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvmess.json
-sed -i '/#trojan-tls$/a\### '"$user $exp"'\
-},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
-sed -i '/#trojan-gfw$/a\### '"$user $exp"'\
-},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvmess.json
-sed -i '/#trojan-quic$/a\### '"$user $exp"'\
-},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
-sed -i '/#trojan-quic$/a\### '"$user $exp"'\
-},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvmess.json
-sed -i '/#vless-quic$/a\### '"$user $exp"'\
-},{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
-sed -i '/#vless-quic$/a\### '"$user $exp"'\
-},{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvmess.json
-sed -i '/#trojan-hdua$/a\### '"$user $exp"'\
-},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
-sed -i '/#trojan-http-tls$/a\### '"$user $exp"'\
-},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvmess.json
-sed -i '/#trojan-hdua$/a\### '"$user $exp"'\
-},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvmess.json
+#sed -i '/#trojan-tls$/a\### '"$user $exp"'\
+#},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
+#sed -i '/#trojan-gfw$/a\### '"$user $exp"'\
+#},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvmess.json
+#sed -i '/#trojan-quic$/a\### '"$user $exp"'\
+#},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
+#sed -i '/#trojan-quic$/a\### '"$user $exp"'\
+#},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvmess.json
+#sed -i '/#vless-quic$/a\### '"$user $exp"'\
+#},{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
+#sed -i '/#vless-quic$/a\### '"$user $exp"'\
+#},{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvmess.json
+#sed -i '/#trojan-hdua$/a\### '"$user $exp"'\
+#},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
+#sed -i '/#trojan-http-tls$/a\### '"$user $exp"'\
+#},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvmess.json
+#sed -i '/#trojan-hdua$/a\### '"$user $exp"'\
+#},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvmess.json
 sed -i '/#trojan-grpc$/a\### '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvmess.json
-sed -i '/#trojan-grpc$/a\### '"$user $exp"'\
-},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
-sed -i '/#socks-grpc$/a\### '"$user $exp"'\
-},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
+#sed -i '/#trojan-grpc$/a\### '"$user $exp"'\
+#},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
 sed -i '/#socks-tls$/a\### '"$user $exp"'\
-},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
+},{"user": "'""$user""'","pass": "'""$user""'"' /etc/xray/xvmess.json
 sed -i '/#socks-tls$/a\### '"$user $exp"'\
-},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvmess.json
+},{"user": "'""$user""'","pass": "'""$user""'"' /etc/xray/config.json
+sed -i '/#socks-tls$/a\### '"$user $exp"'\
+},{"user": "'""$user""'","pass": "'""$user""'"' /etc/xray/xtrojan.json
 sed -i '/#socks-grpc$/a\### '"$user $exp"'\
-},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
+},{"user": "'""$user""'","pass": "'""$user""'"' /etc/xray/xvmess.json
 sed -i '/#socks-grpc$/a\### '"$user $exp"'\
-},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvmess.json
+},{"user": "'""$user""'","pass": "'""$user""'"' /etc/xray/xtrojan.json
+sed -i '/#socks-grpc$/a\### '"$user $exp"'\
+},{"user": "'""$user""'","pass": "'""$user""'"' /etc/xray/config.json
+sed -i '/#socks-grpc$/a\### '"$user $exp"'\
+},{"user": "'""$user""'","pass": "'""$user""'"' /etc/xray/xvless.json
+sed -i '/#socks-tcp$/a\### '"$user $exp"'\
+},{"user": "'""$user""'","pass": "'""$user""'"' /etc/xray/config.json
+sed -i '/#socks-tcp$/a\### '"$user $exp"'\
+},{"user": "'""$user""'","pass": "'""$user""'"' /etc/xray/xvmess.json
+sed -i '/#socks-tcp$/a\### '"$user $exp"'\
+},{"user": "'""$user""'","pass": "'""$user""'"' /etc/xray/xvless.json
+sed -i '/#socks-tcp$/a\### '"$user $exp"'\
+},{"user": "'""$user""'","pass": "'""$user""'"' /etc/xray/xtrojan.json
 sed -i '/#ss-tls$/a\### '"$user $exp"'\
-},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xtrojan.json
+},{"user": "'""$user""'","pass": "'""$user""'"' /etc/xray/xtrojan.json
+sed -i '/#ss-tcp$/a\### '"$user $exp"'\
+},{"password": "'""$base64""'","email": "'""$user""'"' /etc/xray/xss.json
+sed -i '/#ss-tcp$/a\### '"$user $exp"'\
+},{"password": "'""$base64""'","email": "'""$user""'"' /etc/xray/xvmess.json
 sed -i '/#ss-tls$/a\### '"$user $exp"'\
-},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvmess.json
+},{"password": "'""$base64""'","email": "'""$user""'"' /etc/xray/xss.json
+sed -i '/#ss-tls$/a\### '"$user $exp"'\
+},{"password": "'""$base64""'","email": "'""$user""'"' /etc/xray/xvmess.json
+sed -i '/#ss-nontls$/a\### '"$user $exp"'\
+},{"password": "'""$base64""'","email": "'""$user""'"' /etc/xray/xss.json
 sed -i '/#ss-grpc$/a\### '"$user $exp"'\
-},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/xvmess.json
-sed -i '/#vmess-tls$/a\### '"$user $exp"'\
-},{"id": "'""$uuid""'"' /etc/xray/xvmess.json
-sed -i '/#vmess-tls$/a\### '"$user $exp"'\
-},{"id": "'""$uuid""'"' /etc/xray/xtrojan.json
+},{"password": "'""$base64""'","email": "'""$user""'"' /etc/xray/xss.json
+sed -i '/#ss-grpc$/a\### '"$user $exp"'\
+},{"password": "'""$base64""'","email": "'""$user""'"' /etc/xray/xvmess.json
 cat>/etc/xray/vmess-$user-tls.json<<EOF
       {
       "v": "4",
@@ -328,28 +348,6 @@ uuid=$(cat /proc/sys/kernel/random/uuid)
 read -p "Expired (Days) : " masaaktif
 hariini=`date -d "0 days" +"%Y-%m-%d"`
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
-sed -i '/#socks-tls$/a\### '"$user $exp"'\
-},{"user": "'""$user""'","pass": "'""$user""'"' /etc/xray/xvmess.json
-sed -i '/#socks-tls$/a\### '"$user $exp"'\
-},{"user": "'""$user""'","pass": "'""$user""'"' /etc/xray/config.json
-sed -i '/#socks-tls$/a\### '"$user $exp"'\
-},{"user": "'""$user""'","pass": "'""$user""'"' /etc/xray/xtrojan.json
-sed -i '/#socks-grpc$/a\### '"$user $exp"'\
-},{"user": "'""$user""'","pass": "'""$user""'"' /etc/xray/xvmess.json
-sed -i '/#socks-grpc$/a\### '"$user $exp"'\
-},{"user": "'""$user""'","pass": "'""$user""'"' /etc/xray/xtrojan.json
-sed -i '/#socks-grpc$/a\### '"$user $exp"'\
-},{"user": "'""$user""'","pass": "'""$user""'"' /etc/xray/config.json
-sed -i '/#socks-grpc$/a\### '"$user $exp"'\
-},{"user": "'""$user""'","pass": "'""$user""'"' /etc/xray/xvless.json
-sed -i '/#socks-tcp$/a\### '"$user $exp"'\
-},{"user": "'""$user""'","pass": "'""$user""'"' /etc/xray/config.json
-sed -i '/#socks-tcp$/a\### '"$user $exp"'\
-},{"user": "'""$user""'","pass": "'""$user""'"' /etc/xray/xvmess.json
-sed -i '/#socks-tcp$/a\### '"$user $exp"'\
-},{"user": "'""$user""'","pass": "'""$user""'"' /etc/xray/xvless.json
-sed -i '/#socks-tcp$/a\### '"$user $exp"'\
-},{"user": "'""$user""'","pass": "'""$user""'"' /etc/xray/xtrojan.json
 
 cat>/etc/xray/SOCKS5-TCP-TLS-$user.json<<EOF
 {
@@ -974,28 +972,6 @@ until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 			exit 1
 		fi
 	done
-passwd=$GESuWIqYcq34MSCDTOck0g==
-uuid=$(cat /proc/sys/kernel/random/uuid)
-base64=$(openssl rand -base64 16)
-Username=Password
-password=$base64
-read -p "Expired (Days) : " masaaktif
-hariini=`date -d "0 days" +"%Y-%m-%d"`
-exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
-sed -i '/#ss-tcp$/a\### '"$user $exp"'\
-},{"password": "'""$base64""'","email": "'""$user""'"' /etc/xray/xss.json
-sed -i '/#ss-tcp$/a\### '"$user $exp"'\
-},{"password": "'""$base64""'","email": "'""$user""'"' /etc/xray/xvmess.json
-sed -i '/#ss-tls$/a\### '"$user $exp"'\
-},{"password": "'""$base64""'","email": "'""$user""'"' /etc/xray/xss.json
-sed -i '/#ss-tls$/a\### '"$user $exp"'\
-},{"password": "'""$base64""'","email": "'""$user""'"' /etc/xray/xvmess.json
-sed -i '/#ss-nontls$/a\### '"$user $exp"'\
-},{"password": "'""$base64""'","email": "'""$user""'"' /etc/xray/xss.json
-sed -i '/#ss-grpc$/a\### '"$user $exp"'\
-},{"password": "'""$base64""'","email": "'""$user""'"' /etc/xray/xss.json
-sed -i '/#ss-grpc$/a\### '"$user $exp"'\
-},{"password": "'""$base64""'","email": "'""$user""'"' /etc/xray/xvmess.json
 cat>/etc/xray/SS22-TCP-TLS-$user.json<<EOF
 {
   "{
