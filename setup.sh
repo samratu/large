@@ -109,9 +109,9 @@ echo -e " 🔰 >>> Service & Port" |tee -a log-install.txt
 echo -e " 🔰 PORT OPENSSH : 22" |tee -a log-install.txt
 echo -e " 🔰 PORT OPENVPN TCP : 700" |tee -a log-install.txt
 echo -e " 🔰 PORT OPENVPN UDP : 800" |tee -a log-install.txt
-echo -e " 🔰 PORT OPENVPN SSL : 800" |tee -a log-install.txt
+echo -e " 🔰 PORT OPENVPN SSL : 443" |tee -a log-install.txt
 echo -e " 🔰 PORT STUNNEL5 : 500, 600" |tee -a log-install.txt
-echo -e " 🔰 PORT DROPBEAR : 200, 300" |tee -a log-install.txt
+echo -e " 🔰 PORT DROPBEAR : 2083, 2082" |tee -a log-install.txt
 echo -e " 🔰 PORT SQUID : 3128, 3228" |tee -a log-install.txt
 echo -e " 🔰 Badvpn : 7100, 7200, 7300-7900" |tee -a log-install.txt
 echo -e " 🔰 Nginx : 88" |tee -a log-install.txt
