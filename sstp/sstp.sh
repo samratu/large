@@ -28,18 +28,12 @@ if [[ "$ver" = "18.04" ]]; then
 yoi=Ubuntu18
 elif [[ "$ver" = "20.04" ]]; then
 yoi=Ubuntu20
-elif [[ "$ver" = "21.04" ]]; then
-yoi=Ubuntu21
-elif [[ "$ver" = "22.04" ]]; then
-yoi=Ubuntu22
 fi
 elif [[ $OS == 'debian' ]]; then
 if [[ "$ver" = "9" ]]; then
 yoi=Debian9
 elif [[ "$ver" = "10" ]]; then
 yoi=Debian10
-elif [[ "$ver" = "11" ]]; then
-yoi=Debian11
 fi
 mkdir /home/sstp
 touch /home/sstp/sstp_account
