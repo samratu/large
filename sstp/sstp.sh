@@ -1,5 +1,5 @@
 #!/bin/bash
-# My Telegram : https://t.me/zerossl
+# SL
 # ==========================================
 # Color
 RED='\033[0;31m'
@@ -13,7 +13,6 @@ LIGHT='\033[0;37m'
 # ==========================================
 # Getting
 MYIP=$(wget -qO- ipinfo.io/ip);
-
 # Link Hosting Kalian
 wisnuvpn="raw.githubusercontent.com/samratu/large/sae/sstp"
 
@@ -35,23 +34,18 @@ yoi=Debian9
 elif [[ "$ver" = "10" ]]; then
 yoi=Debian10
 fi
+fi
 mkdir /home/sstp
 touch /home/sstp/sstp_account
 touch /var/lib/wisnucs/data-user-sstp
 #detail nama perusahaan
 country=ID
-state=Jawa-Tengah
-locality=Sukoharjo
-organization=gandringVPN
-organizationalunit=gandring
+state=JAWA-TENGAH
+locality=SUKOHARJO
+organization=VPN-EXPLORER
+organizationalunit=EXPLORER
 commonname=gandring
 email=djarumpentol01@gmail.com
-#export KEY_COUNTRY="US"
-#export KEY_PROVINCE="California"
-#export KEY_CITY="San-Fransisco"
-#export KEY_ORG="Cloudflare Inc."
-#export KEY_EMAIL="djarumpentol01@gmail.com"
-#export KEY_OU="www.cloidflare.com"
 
 #install sstp
 apt-get install -y build-essential cmake gcc linux-headers-`uname -r` git libpcre3-dev libssl-dev liblua5.1-0-dev ppp
@@ -68,17 +62,15 @@ sed -i $MYIP2 /etc/accel-ppp.conf
 chmod +x /etc/accel-ppp.conf
 systemctl start accel-ppp
 systemctl enable accel-ppp
-gen cert sstp
+#gen cert sstp
 cd /home/sstp
-openssl genrsa -out ca.key 2048
+openssl genrsa -out ca.key 4096
 openssl req -new -x509 -days 3650 -key ca.key -out ca.crt \
--subj "/C=ID/ST=Jawa-Tengah/L=Sukoharjo/O=GANDRING-VPN/OU=GANDRING/CN=GANDRING-VPN/emailAddress=djarumpentol01@gmail.com"
-#-subj "/C=US/ST=California/L=San-Fransisco/O=Cloudflare Inc./OU=www.cloudflare.com/CN=Managed CA f04e6b9f08b2fe102b1106b9aa860b8e/emailAddress=djarumpentol01@gmail.com"
-openssl genrsa -out server.key 2048
-openssl req -new -key server.key -out ca.csr \
--subj "/C=ID/ST=Jawa-Tengah/L=Sukoharjo/O=GANDRING-VPN/OU=GANDRING/CN=GANDRING-VPN/emailAddress=djarumpentol01@gmail.com"
-#-subj "/C=US/ST=California/L=San-Fransisco/O=Cloudflare Inc./OU=www.cloudflare.com/CN=Managed CA f04e6b9f08b2fe102b1106b9aa860b8e/emailAddress=djarumpentol01@gmail.com"
-openssl x509 -req -days 3650 -in ca.csr -CA ca.crt -CA key ca.key -set_serial 01 -out server.crt
+-subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
+openssl genrsa -out server.key 4096
+openssl req -new -key server.key -out ia.csr \
+-subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
+openssl x509 -req -days 3650 -in ia.csr -CA ca.crt -CAkey ca.key -set_serial 01 -out server.crt
 cp /home/sstp/server.crt /home/vps/public_html/server.crt
 iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 666 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 666 -j ACCEPT
