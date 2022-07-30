@@ -371,7 +371,7 @@ accept = 500
 connect = 127.0.0.1:2087
 
 [openvpn]
-accept = 2083
+accept = 800
 connect = 127.0.0.1:700
 
 END
