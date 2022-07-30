@@ -44,6 +44,8 @@ echo -e "[ ${green}INFO${NC} ] Debian ver 9 detected... "
 sleep 1
 echo -e "[ ${green}INFO${NC} ] Installing shadowsocks for $OS $ver ... "
 
+if [ -f "/etc/apt/sources.list.d/bullseye-backports.list" ]; then
+detect=( `cat /etc/apt/sources.list.d/bullseye-backports.list | grep -ow "buster-backports"` )
 if [ -f "/etc/apt/sources.list.d/buster-backports.list" ]; then
 detect=( `cat /etc/apt/sources.list.d/buster-backports.list | grep -ow "stretch-backports"` )
 if [ "$detect" != "stretch-backports" ]; then
@@ -74,12 +76,11 @@ else
 touch /etc/apt/sources.list.d/buster-backports.list
 echo "deb http://deb.debian.org/debian buster-backports main" >> /etc/apt/sources.list.d/buster-backports.list
 fi
+fi
 
 apt update -y  > /dev/null 2>&1
 apt -t buster-backports install shadowsocks-libev -y > /dev/null 2>&1
 apt -t buster-backports install simple-obfs -y > /dev/null 2>&1
-fi
-
 elif [[ "$ver" = "11" ]]; then
 sleep 1
 echo -e "[ ${green}INFO${NC} ] Debian ver 11 detected... "
