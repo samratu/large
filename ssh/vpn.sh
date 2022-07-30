@@ -113,7 +113,6 @@ cd
 echo '<ca>' >> /etc/openvpn/tcp.ovpn
 cat /etc/openvpn/server/ca.crt >> /etc/openvpn/tcp.ovpn
 echo '</ca>' >> /etc/openvpn/tcp.ovpn
-
 echo '<cert>' >> /etc/openvpn/tcp.ovpn
 cat /etc/openvpn/server/server.crt >> /etc/openvpn/tcp.ovpn
 echo '</cert>' >> /etc/openvpn/tcp.ovpn
@@ -125,7 +124,6 @@ cp /etc/openvpn/tcp.ovpn /home/vps/public_html/tcp.ovpn
 echo '<ca>' >> /etc/openvpn/udp.ovpn
 cat /etc/openvpn/server/ca.crt >> /etc/openvpn/udp.ovpn
 echo '</ca>' >> /etc/openvpn/udp.ovpn
-
 echo '<cert>' >> /etc/openvpn/udp.ovpn
 cat /etc/openvpn/server/server.crt >> /etc/openvpn/udp.ovpn
 echo '</cert>' >> /etc/openvpn/udp.ovpn
@@ -137,7 +135,6 @@ cp /etc/openvpn/udp.ovpn /home/vps/public_html/udp.ovpn
 echo '<ca>' >> /etc/openvpn/ssl.ovpn
 cat /etc/openvpn/server/ca.crt >> /etc/openvpn/ssl.ovpn
 echo '</ca>' >> /etc/openvpn/ssl.ovpn
-
 echo '<cert>' >> /etc/openvpn/ssl.ovpn
 cat /etc/openvpn/server/server.crt >> /etc/openvpn/ssl.ovpn
 echo '</cert>' >> /etc/openvpn/ssl.ovpn
