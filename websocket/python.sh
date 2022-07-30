@@ -7,7 +7,7 @@
 wisnuvpn="raw.githubusercontent.com/samratu/large/sae/websocket"
 
 # Getting Proxy Template
-wget -q -O /usr/local/bin/ovpn-tls https://${wisnuvpn}/ovpn-tls.py
+wget -q -O /usr/local/bin/ovpn-tls https://${wisnuvpn}/ws-ovpn.py
 chmod +x /usr/local/bin/ovpn-tls
 
 # Installing Service
