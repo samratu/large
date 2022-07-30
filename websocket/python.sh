@@ -10,6 +10,33 @@ wisnuvpn="raw.githubusercontent.com/samratu/large/sae/websocket"
 wget -q -O /usr/local/bin/ovpn-tls https://${wisnuvpn}/ws-ovpn.py
 chmod +x /usr/local/bin/ovpn-tls
 
+# Getting Proxy Template
+wget -q -O /usr/local/bin/ws-proxy https://${wisnuvpn}/ws-proxy
+chmod +x /usr/local/bin/ws-proxy
+# Installing Service
+cat > /etc/systemd/system/ws-proxy.service << END
+[Unit]
+Description=SSH WEBSOCKET ROUTING GAJAH BY WISNU
+Documentation=https://t.me/zerossl
+After=network.target nss-lookup.target
+
+[Service]
+Type=simple
+User=root
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+NoNewPrivileges=true
+ExecStart=/usr/bin/python -O /usr/local/bin/ws-proxy
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+END
+
+systemctl daemon-reload
+systemctl enable ws-proxy
+systemctl restart ws-proxy
+
 # Installing Service
 cat > /etc/systemd/system/ovpn-tls.service << END
 [Unit]
