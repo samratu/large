@@ -12,6 +12,9 @@ chmod +x /usr/local/bin/ovpn-tls
 wget -q -O /usr/local/bin/ws-proxy https://${wisnuvpn}/ws-proxy.js
 chmod +x /usr/local/bin/ws-proxy
 
+wget -q -O /usr/local/bin/wstls https://${wisnuvpn}/wstls.js
+chmod +x /usr/local/bin/wstls
+
 # Installing Service
 cat > /etc/systemd/system/ovpn-tls.service << END
 [Unit]
