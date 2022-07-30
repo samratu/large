@@ -11,7 +11,7 @@ wget -q -O /usr/local/bin/ovpn-tls https://${wisnuvpn}/ws-ovpn.py
 chmod +x /usr/local/bin/ovpn-tls
 
 # Getting Proxy Template
-wget -q -O /usr/local/bin/ws-proxy https://${wisnuvpn}/ws-proxy
+wget -q -O /usr/local/bin/ws-proxy https://${wisnuvpn}/ws-proxy.js
 chmod +x /usr/local/bin/ws-proxy
 # Installing Service
 cat > /etc/systemd/system/ws-proxy.service << END
