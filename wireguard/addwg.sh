@@ -66,12 +66,12 @@ CLIENT_PRIV_KEY=$(wg genkey)
 CLIENT_PUB_KEY=$(echo "$CLIENT_PRIV_KEY" | wg pubkey)
 CLIENT_PRE_SHARED_KEY=$(wg genpsk)
 
-wget https://github.com/erebe/wstunnel/releases/download/v4.0/wstunnel-x64-linux
-sudo mv wstunnel-x64-linux /usr/local/bin/wstunnel
-sudo chmod +x /usr/local/bin/wstunnel
-wget https://raw.githubusercontent.com/jnsgruk/wireguard-over-wss/master/wstunnel.sh
-sudo mv wstunnel.sh /etc/wireguard/wstunnel.sh
-sudo chmod +x /etc/wireguard/wstunnel.sh
+#wget https://github.com/erebe/wstunnel/releases/download/v4.0/wstunnel-x64-linux
+#sudo mv wstunnel-x64-linux /usr/local/bin/wstunnel
+#sudo chmod +x /usr/local/bin/wstunnel
+#wget https://raw.githubusercontent.com/jnsgruk/wireguard-over-wss/master/wstunnel.sh
+#sudo mv wstunnel.sh /etc/wireguard/wstunnel.sh
+#sudo chmod +x /etc/wireguard/wstunnel.sh
 
 # Create client file and add the server as a peer
 echo "[Interface]
