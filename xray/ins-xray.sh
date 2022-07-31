@@ -583,20 +583,25 @@ chmod +x /usr/local/bin/trojan-go
 mkdir /var/log/trojan-go/
 touch /etc/trojan-go/akun.conf
 touch /var/log/trojan-go/trojan-go.log
-
+mkdir -p /usr/lib/trojan-go >/dev/null 2>&1
+	wget -q -N --no-check-certificate https://github.com/p4gefau1t/trojan-go/releases/download/$(curl -fsSL https://api.github.com/repos/p4gefau1t/trojan-go/releases | grep '"tag_name":' | head -n 1 | sed -E 's/.*"([^"]+)".*/\1/')/trojan-go-linux-amd64.zip 
+	unzip -o -d /usr/lib/trojan-go/ ./trojan-go-linux-amd64.zip >/dev/null 2>&1
+	mv /usr/lib/trojan-go/trojan-go /usr/local/bin/ >/dev/null 2>&1
+	chmod +x /usr/local/bin/trojan-go
+    rm -rf ./trojan-go-linux-amd64.zip >/dev/null 2>&1
 sleep 1
 echo -e "[ ${green}INFO$NC ] Setting config trojan-go"
 cat <<EOF > /etc/trojan-go/config.json
 {
   "run_type": "server",
   "local_addr": "0.0.0.0",
-  "local_port": 2096,
+  "local_port": 2053,
   "remote_addr": "127.0.0.1",
-  "remote_port": 80,
+  "remote_port": 88,
   "log_level": 1,
   "log_file": "/var/log/trojan-go.log",
   "password": [
-        "$uidTrojanGo"
+        "$uuid"
   ],
   "disable_http_check": true,
   "udp_timeout": 60,
@@ -609,7 +614,7 @@ cat <<EOF > /etc/trojan-go/config.json
     "cipher": "",
     "curves": "",
     "prefer_server_cipher": false,
-    "sni": "",
+    "sni": "$domain",
     "alpn": [
       "http/1.1"
     ],
@@ -627,7 +632,7 @@ cat <<EOF > /etc/trojan-go/config.json
   },
   "websocket": {
     "enabled": true,
-    "path": "/scvps",
+    "path": "/gandring-go",
     "host": "${domain}"
   },
   "api": {
