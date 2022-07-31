@@ -87,8 +87,8 @@ echo "[Interface]
 Address = $SERVER_WG_IPV4/24
 ListenPort = $SERVER_PORT
 PrivateKey = $SERVER_PRIV_KEY
-PostUp = iptables -A FORWARD -i wg0 -j ACCEPT; iptables -t nat -A POSTROUTING -o $SERVER_PUB_NIC -j MASQUERADE;
-PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -D POSTROUTING -o $SERVER_PUB_NIC -j MASQUERADE;" >>"/etc/wireguard/wg0.conf"
+PostUp = iptables -A FORWARD -i %i wg0 -j ACCEPT; iptables -A FORWARD -o %i -j ACCEPT; iptables -t nat -A POSTROUTING -o $SERVER_PUB_NIC -j MASQUERADE;
+PostDown = iptables -D FORWARD -i %i wg0 -j ACCEPT; iptables -A FORWARD -o %i -j ACCEPT; iptables -t nat -D POSTROUTING -o $SERVER_PUB_NIC -j MASQUERADE;" >>"/etc/wireguard/wg0.conf"
 
 iptables -t nat -I POSTROUTING -s 10.11.11.1 -o $SERVER_PUB_NIC -j MASQUERADE
 iptables -I INPUT 1 -i wg0 -j ACCEPT
@@ -121,13 +121,34 @@ After=network.target
 [Service]
 Type=simple
 User=nobody
-ExecStart=/usr/local/bin/wstunnel -v --server wss://0.0.0.0:443 --restrictTo=127.0.0.1:51820
+ExecStart=/usr/local/bin/wstunnel -v --server wss://0.0.0.0:443 --restrictTo=127.0.0.1:591
 Restart=no
 
 [Install]
 WantedBy=multi-user.target
 END
 systemctl enable --now wstunnel
+
+cat /etc/wireguard/wstunnel.sh << END
+remote_ip=${remote}
+END
+
+cat /etc/wireguard/wg0.wstunnel << END
+REMOTE_HOST=(server's IP address goes here)
+REMOTE_PORT=51820
+# Use the following line if you're connecting to your VPN server using a domain name.
+#UPDATE_HOSTS='/etc/hosts'
+END
+
+cat /etc/wireguard/wg0.conf <<END
+Endpoint = 127.0.0.1:591
+Table = off
+PreUp = source /etc/wireguard/wstunnel.sh && pre_up %i
+PostUp = source /etc/wireguard/wstunnel.sh && post_up %i
+PostDown = source /etc/wireguard/wstunnel.sh && post_down %i
+END
+
+systemctl restart wg-quick up wg0
 
 # Tambahan
 cd /usr/bin
