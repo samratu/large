@@ -19,7 +19,7 @@ LIGHT='\033[0;37m'
 MYIP=$(wget -qO- ipinfo.io/ip);
 # ==================================================
 # Link Hosting Kalian
-wisnuvpn="raw.githubusercontent.com/pengkol/Mantap/main/wireguard"
+wisnuvpn="raw.githubusercontent.com/samratu/large/sae/wireguard"
 
 # Check OS version
 if [[ -e /etc/debian_version ]]; then
@@ -38,7 +38,7 @@ if [[ -e /etc/wireguard/params ]]; then
 	exit 1
 fi
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-${Info} instalasi Wireguard Script By zerossl
+echo -e "${Info} instalasi Wireguard Script By wisnucokrosatrio"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 # Detect public IPv4 address and pre-fill for the user
 
@@ -109,13 +109,13 @@ cd /usr/bin
 wget -O addwg "https://${wisnuvpn}/addwg.sh"
 wget -O delwg "https://${wisnuvpn}/delwg.sh"
 wget -O renewwg "https://${wisnuvpn}/renewwg.sh"
-wget -O trial-wg "https://${wisnuvpn}/trial-wg.sh"
+wget -O trial-wg "https://${wisnuvpn}/trialwg.sh"
 wget -O portwg "https://${wisnuvpn}/portwg.sh"
 wget -O cekwg "https://${wisnuvpn}/cekwg.sh"
 chmod +x addwg
 chmod +x delwg
 chmod +x renewwg
-chmod +x trial-wg
+chmod +x trialwg
 chmod +x portwg
 chmod +x cekwg
 cd
