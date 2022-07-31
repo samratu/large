@@ -6,7 +6,7 @@ MYIP=$(curl -sS ipv4.icanhazip.com)
 
 clear
 # Load params
-WgTrial=trial`</dev/urandom tr -dc A-Z0-9 | head -c4`
+WgTrial=tes`</dev/urandom tr -dc A-Z0-9 | head -c4`
 Hariii=1
 source /etc/wireguard/params
 source /var/lib/wisnucs/ipvps.conf
@@ -98,4 +98,4 @@ AllowedIPs = $CLIENT_ADDRESS/32" >>"/etc/wireguard/$SERVER_WG_NIC.conf"
    	rm -f /root/wg0-client-$WgTrial.conf
 read -n 1 -s -r -p "Press any key to back on menu"
 
-trial-menu
+menu
