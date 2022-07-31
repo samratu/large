@@ -19,7 +19,7 @@ LIGHT='\033[0;37m'
 MYIP=$(wget -qO- ipinfo.io/ip);
 # ==================================================
 # Link Hosting Kalian
-wisnuvpn="raw.githubusercontent.com/samratu/large/sae/wireguard"
+wisnuvpn="raw.githubusercontent.com/pengkol/Mantap/main/wireguard"
 
 # Check OS version
 if [[ -e /etc/debian_version ]]; then
@@ -29,6 +29,7 @@ elif [[ -e /etc/centos-release ]]; then
 	source /etc/os-release
 	OS=centos
 fi
+
 Green_font_prefix="\033[32m" && Red_font_prefix="\033[31m" && Green_background_prefix="\033[42;37m" && Red_background_prefix="\033[41;37m" && Font_color_suffix="\033[0m"
 Info="${Green_font_prefix}[information]${Font_color_suffix}"
 
@@ -37,7 +38,7 @@ if [[ -e /etc/wireguard/params ]]; then
 	exit 1
 fi
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "${Info} instalasi Wireguard Script By zerossl"
+${Info} instalasi Wireguard Script By zerossl
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 # Detect public IPv4 address and pre-fill for the user
 
@@ -46,23 +47,18 @@ SERVER_PUB_NIC=$(ip -o $ANU -4 route show to default | awk '{print $5}');
 
 # Install WireGuard tools and module
 	if [[ $OS == 'ubuntu' ]]; then
-	sudo apt update -y
-        sudo apt -y install wireguard wireguard-tools linux-headers-$(uname -r)
+	apt install -y wireguard
 elif [[ $OS == 'debian' ]]; then
-        echo "deb http://deb.debian.org/debian buster-backports main" | sudo tee /etc/apt/sources.list.d/buster-backports.list
 	echo "deb http://deb.debian.org/debian/ unstable main" >/etc/apt/sources.list.d/unstable.list
 	printf 'Package: *\nPin: release a=unstable\nPin-Priority: 90\n' >/etc/apt/preferences.d/limit-unstable
-	apt update -y
+	apt update
 	apt install -y wireguard-tools iptables iptables-persistent
 	apt install -y linux-headers-$(uname -r)
-        sudo apt update -y
-        sudo apt -t buster-backports install wireguard wireguard-tools wireguard-dkms linux-headers-$(uname -r)
 elif [[ ${OS} == 'centos' ]]; then
 	curl -Lo /etc/yum.repos.d/wireguard.repo https://copr.fedorainfracloud.org/coprs/jdoss/wireguard/repo/epel-7/jdoss-wireguard-epel-7.repo
 	yum -y update
 	yum -y install wireguard-dkms wireguard-tools
 	fi
-sudo apt install openresolv -y
 apt install iptables iptables-persistent -y
 # Make sure the directory exists (this does not seem the be the case on fedora)
 mkdir /etc/wireguard >/dev/null 2>&1
@@ -87,15 +83,15 @@ echo "[Interface]
 Address = $SERVER_WG_IPV4/24
 ListenPort = $SERVER_PORT
 PrivateKey = $SERVER_PRIV_KEY
-PostUp = iptables -A FORWARD -i wg0 -j ACCEPT; iptables -A FORWARD -o -j ACCEPT; iptables -t nat -A POSTROUTING -o $SERVER_PUB_NIC -j MASQUERADE;
-PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; iptables -A FORWARD -o -j ACCEPT; iptables -t nat -D POSTROUTING -o $SERVER_PUB_NIC -j MASQUERADE;" >>"/etc/wireguard/wg0.conf"
+PostUp = iptables -A FORWARD -i wg0 -j ACCEPT; iptables -t nat -A POSTROUTING -o $SERVER_PUB_NIC -j MASQUERADE;
+PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -D POSTROUTING -o $SERVER_PUB_NIC -j MASQUERADE;" >>"/etc/wireguard/wg0.conf"
 
 iptables -t nat -I POSTROUTING -s 10.11.11.1 -o $SERVER_PUB_NIC -j MASQUERADE
 iptables -I INPUT 1 -i wg0 -j ACCEPT
 iptables -I FORWARD 1 -i $SERVER_PUB_NIC -o wg0 -j ACCEPT
 iptables -I FORWARD 1 -i wg0 -o $SERVER_PUB_NIC -j ACCEPT
-iptables -I INPUT 1 -i $SERVER_PUB_NIC -p udp --dport 2053 -j ACCEPT
-iptables -I INPUT 1 -i $SERVER_PUB_NIC -p tcp --dport 2053 -j ACCEPT
+iptables -I INPUT 1 -i $SERVER_PUB_NIC -p udp --dport 591 -j ACCEPT
+iptables -I INPUT 1 -i $SERVER_PUB_NIC -p tcp --dport 591 -j ACCEPT
 iptables-save > /etc/iptables.up.rules
 iptables-restore -t < /etc/iptables.up.rules
 netfilter-persistent save
@@ -108,55 +104,19 @@ systemctl enable "wg-quick@wg0"
 systemctl is-active --quiet "wg-quick@wg0"
 WG_RUNNING=$?
 
-#wget https://github.com/erebe/wstunnel/releases/download/v4.0/wstunnel-x64-linux
-#mv wstunnel-x64-linux /usr/local/bin/wstunnel
-#chmod uo+x /usr/local/bin/wstunnel
-#setcap CAP_NET_BIND_SERVICE=+eip /usr/local/bin/wstunnel
-
-#cat /etc/systemd/system/wstunnel.service << END
-#[Unit]
-#Description=Tunnel WireGuard UDP over websocket
-#After=network.target
-
-#[Service]
-#Type=simple
-#User=nobody
-#ExecStart=/usr/local/bin/wstunnel -v --server wss://0.0.0.0:443 --restrictTo=127.0.0.1:591
-#Restart=no
-
-#[Install]
-#WantedBy=multi-user.target
-#END
-#systemctl enable --now wstunnel
-
-#cat /etc/wireguard/wstunnel.sh << END
-#remote_ip=${remote}
-#END
-
-#cat /etc/wireguard/wg0.wstunnel << END
-#REMOTE_HOST=(server's IP address goes here)
-#REMOTE_PORT=51820
-# Use the following line if you're connecting to your VPN server using a domain name.
-#UPDATE_HOSTS='/etc/hosts'
-#END
-
-#cat /etc/wireguard/wg0.conf <<END
-#Endpoint = 127.0.0.1:591
-#Table = off
-#PreUp = source /etc/wireguard/wstunnel.sh && pre_up %i
-#PostUp = source /etc/wireguard/wstunnel.sh && post_up %i
-#PostDown = source /etc/wireguard/wstunnel.sh && post_down %i
-#END
-
-#systemctl restart wg-quick up wg0
-
 # Tambahan
 cd /usr/bin
 wget -O addwg "https://${wisnuvpn}/addwg.sh"
 wget -O delwg "https://${wisnuvpn}/delwg.sh"
 wget -O renewwg "https://${wisnuvpn}/renewwg.sh"
+wget -O trial-wg "https://${wisnuvpn}/trial-wg.sh"
+wget -O portwg "https://${wisnuvpn}/portwg.sh"
+wget -O cekwg "https://${wisnuvpn}/cekwg.sh"
 chmod +x addwg
 chmod +x delwg
 chmod +x renewwg
+chmod +x trial-wg
+chmod +x portwg
+chmod +x cekwg
 cd
 rm -f /root/wg.sh
