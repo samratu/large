@@ -6,8 +6,13 @@
 wisnuvpn="raw.githubusercontent.com/samratu/large/sae/websocket"
 
 # Getting Proxy Template
+wget -q -O /usr/local/bin/ws-proxy https://${wisnuvpn}/ws-proxy.js
+chmod +x /usr/local/bin/ws-proxy
+
+# Getting Proxy Template
 wget -q -O /usr/local/bin/ovpn-tls https://${wisnuvpn}/ovpn-tls.py
 chmod +x /usr/local/bin/ovpn-tls
+
 
 # Installing Service
 cat > /etc/systemd/system/ovpn-tls.service << END
@@ -21,7 +26,7 @@ User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
-ExecStart=/usr/bin/python -O /usr/local/bin/ovpn-tls 2083
+ExecStart=/usr/bin/python -O /usr/local/bin/ovpn-tls
 Restart=on-failure
 
 [Install]
@@ -48,7 +53,7 @@ User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
-ExecStart=/usr/bin/python -O /usr/local/bin/ws-nontls 2086
+ExecStart=/usr/bin/python -O /usr/local/bin/ws-nontls
 Restart=on-failure
 
 [Install]
@@ -75,7 +80,7 @@ User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
-ExecStart=/usr/bin/python -O /usr/local/bin/ws-ovpn 8080
+ExecStart=/usr/bin/python -O /usr/local/bin/ws-ovpn
 Restart=on-failure
 
 [Install]
@@ -103,7 +108,7 @@ User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
-ExecStart=/usr/bin/python -O /usr/local/bin/ws-tls 2087
+ExecStart=/usr/bin/python -O /usr/local/bin/ws-tls
 Restart=on-failure
 
 [Install]
