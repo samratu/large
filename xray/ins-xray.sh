@@ -591,7 +591,8 @@ mkdir -p /usr/lib/trojan-go >/dev/null 2>&1
     rm -rf ./trojan-go-linux-amd64.zip >/dev/null 2>&1
 sleep 1
 echo -e "[ ${green}INFO$NC ] Setting config trojan-go"
-cat <<EOF > /etc/trojan-go/config.json
+# Buat Config Trojan Go
+cat > /etc/trojan-go/config.json << END
 {
   "run_type": "server",
   "local_addr": "0.0.0.0",
@@ -599,17 +600,17 @@ cat <<EOF > /etc/trojan-go/config.json
   "remote_addr": "127.0.0.1",
   "remote_port": 88,
   "log_level": 1,
-  "log_file": "/var/log/trojan-go.log",
+  "log_file": "/var/log/trojan-go/trojan-go.log",
   "password": [
-        "$uuid"
+      "$uuid"
   ],
   "disable_http_check": true,
   "udp_timeout": 60,
   "ssl": {
     "verify": false,
     "verify_hostname": false,
-    "cert": "/root/.acme.sh/${domain}_ecc/fullchain.cer",
-    "key": "/root/.acme.sh/${domain}_ecc/${domain}.key",
+    "cert": "/etc/ssl/private/fullchain.pem",
+    "key": "/etc/ssl/private/privkey.pem",
     "key_password": "",
     "cipher": "",
     "curves": "",
@@ -621,21 +622,26 @@ cat <<EOF > /etc/trojan-go/config.json
     "session_ticket": true,
     "reuse_session": true,
     "plain_http_response": "",
-    "fallback_addr": "",
-    "fallback_port": 0,
-    "fingerprint": ""
+    "fallback_addr": "127.0.0.1",
+    "fallback_port": 2053,
+    "fingerprint": "firefox"
   },
   "tcp": {
     "no_delay": true,
     "keep_alive": true,
     "prefer_ipv4": true
   },
+  "mux": {
+    "enabled": false,
+    "concurrency": 8,
+    "idle_timeout": 60
+  },
   "websocket": {
     "enabled": true,
-    "path": "/gandring-go",
-    "host": "${domain}"
+    "path": "/gandring",
+    "host": "$domain"
   },
-  "api": {
+    "api": {
     "enabled": false,
     "api_addr": "",
     "api_port": 0,
@@ -648,36 +654,33 @@ cat <<EOF > /etc/trojan-go/config.json
     }
   }
 }
-EOF
+END
 
-sleep 1
-echo -e "[ ${green}INFO$NC ] Creating service trojan-go"
-cat <<EOF> /etc/systemd/system/trojan-go.service
+# Installing Trojan Go Service
+cat > /etc/systemd/system/trojan-go.service << END
 [Unit]
-Description=Trojan-Go - An unidentifiable mechanism that helps you bypass GFW
-Documentation=https://p4gefau1t.github.io/trojan-go/
+Description=Trojan-Go Service Mod By zerossl
+Documentation=https://t.me/zerossl
 After=network.target nss-lookup.target
 
 [Service]
-Type=simple
-StandardError=journal
+User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
-ExecStart="/usr/local/bin/trojan-go" -config "/etc/trojan-go/config.json"
+ExecStart=/usr/local/bin/trojan-go -config /etc/trojan-go/config.json
 LimitNOFILE=51200
 Restart=on-failure
-RestartSec=1s
+RestartPreventExitStatus=23
 
 [Install]
 WantedBy=multi-user.target
+END
 
-EOF
-chmod +x /etc/trojan-go/config.json
-
-cat <<EOF > /etc/trojan-go/uuid.txt
+# Trojan Go Uuid
+cat > /etc/trojan-go/uuid.txt << END
 $uuid
-EOF
+END
 
 # restart
 # // Enable & Start Service
@@ -688,7 +691,7 @@ sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 443 -j ACCEPT
 sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 80 -j ACCEPT
 sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2083 -j ACCEPT
 sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 8880 -j ACCEPT
-sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 8101 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 8080 -j ACCEPT
 sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2053 -j ACCEPT
 
 sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2096 -j ACCEPT
@@ -697,7 +700,7 @@ sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 443 -j ACCEPT
 sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 80 -j ACCEPT
 sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2083 -j ACCEPT
 sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 8880 -j ACCEPT
-sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 8101 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 8080 -j ACCEPT
 sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2053 -j ACCEPT
 sudo iptables-save > /etc/iptables.up.rules
 sudo iptables-restore -t < /etc/iptables.up.rules
