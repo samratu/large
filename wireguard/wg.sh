@@ -107,6 +107,28 @@ systemctl enable "wg-quick@wg0"
 # Check if WireGuard is running
 systemctl is-active --quiet "wg-quick@wg0"
 WG_RUNNING=$?
+
+wget https://github.com/erebe/wstunnel/releases/download/v4.0/wstunnel-x64-linux
+mv wstunnel-x64-linux /usr/local/bin/wstunnel
+chmod uo+x /usr/local/bin/wstunnel
+setcap CAP_NET_BIND_SERVICE=+eip /usr/local/bin/wstunnel
+
+cat /etc/systemd/system/wstunnel.service << END
+[Unit]
+Description=Tunnel WireGuard UDP over websocket
+After=network.target
+
+[Service]
+Type=simple
+User=nobody
+ExecStart=/usr/local/bin/wstunnel -v --server wss://0.0.0.0:443 --restrictTo=127.0.0.1:51820
+Restart=no
+
+[Install]
+WantedBy=multi-user.target
+END
+systemctl enable --now wstunnel
+
 # Tambahan
 cd /usr/bin
 wget -O addwg "https://${wisnuvpn}/addwg.sh"
