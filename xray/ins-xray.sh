@@ -570,17 +570,6 @@ systemctl enable xvmess.service
 systemctl start xvmess.service
 systemctl restart xvmess.service
 
-# // Enable & Start Service
-# Accept port Xray
-sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 443 -j ACCEPT
-sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 443 -j ACCEPT
-sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 80 -j ACCEPT
-sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 80 -j ACCEPT
-sudo iptables-save > /etc/iptables.up.rules
-sudo iptables-restore -t < /etc/iptables.up.rules
-sudo netfilter-persistent save >/dev/null 2>&1
-sudo netfilter-persistent reload >/dev/null 2>&1
-
 # Install Trojan Go
 latest_version="$(curl -s "https://api.github.com/repos/p4gefau1t/trojan-go/releases" | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
 trojango_link="https://github.com/p4gefau1t/trojan-go/releases/download/v${latest_version}/trojan-go-linux-amd64.zip"
@@ -595,57 +584,53 @@ mkdir /var/log/trojan-go/
 touch /etc/trojan-go/akun.conf
 touch /var/log/trojan-go/trojan-go.log
 
-# Buat Config Trojan Go
-cat > /etc/trojan-go/config.json << END
+sleep 1
+echo -e "[ ${green}INFO$NC ] Setting config trojan-go"
+cat <<EOF > /etc/trojan-go/config.json
 {
   "run_type": "server",
   "local_addr": "0.0.0.0",
-  "local_port": 2053,
+  "local_port": 2096,
   "remote_addr": "127.0.0.1",
-  "remote_port": 88,
+  "remote_port": 80,
   "log_level": 1,
-  "log_file": "/var/log/trojan-go/trojan-go.log",
+  "log_file": "/var/log/trojan-go.log",
   "password": [
-        "${uuid}"
+        "$uidTrojanGo"
   ],
   "disable_http_check": true,
   "udp_timeout": 60,
   "ssl": {
     "verify": false,
     "verify_hostname": false,
-    "cert": "/etc/ssl/private/fullchain.pem",
-    "key": "/etc/ssl/private/privkey.pem",
+    "cert": "/root/.acme.sh/${domain}_ecc/fullchain.cer",
+    "key": "/root/.acme.sh/${domain}_ecc/${domain}.key",
     "key_password": "",
     "cipher": "",
     "curves": "",
     "prefer_server_cipher": false,
-    "sni": "${domain}",
+    "sni": "",
     "alpn": [
       "http/1.1"
     ],
     "session_ticket": true,
     "reuse_session": true,
     "plain_http_response": "",
-    "fallback_addr": "127.0.0.1",
+    "fallback_addr": "",
     "fallback_port": 0,
-    "fingerprint": "firefox"
+    "fingerprint": ""
   },
   "tcp": {
     "no_delay": true,
     "keep_alive": true,
     "prefer_ipv4": true
   },
-  "mux": {
-    "enabled": false,
-    "concurrency": 8,
-    "idle_timeout": 60
-  },
   "websocket": {
     "enabled": true,
-    "path": "/gandring-go",
+    "path": "/scvps",
     "host": "${domain}"
   },
-    "api": {
+  "api": {
     "enabled": false,
     "api_addr": "",
     "api_port": 0,
@@ -658,40 +643,62 @@ cat > /etc/trojan-go/config.json << END
     }
   }
 }
-END
+EOF
 
-# Installing Trojan Go Service
-cat > /etc/systemd/system/trojan-go.service << END
+sleep 1
+echo -e "[ ${green}INFO$NC ] Creating service trojan-go"
+cat <<EOF> /etc/systemd/system/trojan-go.service
 [Unit]
-Description=Trojan-Go Service Mod By ZEROSSL
-Documentation=https://t.me/zerossl
+Description=Trojan-Go - An unidentifiable mechanism that helps you bypass GFW
+Documentation=https://p4gefau1t.github.io/trojan-go/
 After=network.target nss-lookup.target
 
 [Service]
-User=root
+Type=simple
+StandardError=journal
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
-ExecStart=/usr/local/bin/trojan-go -config /etc/trojan-go/config.json
+ExecStart="/usr/local/bin/trojan-go" -config "/etc/trojan-go/config.json"
+LimitNOFILE=51200
 Restart=on-failure
-RestartPreventExitStatus=23
+RestartSec=1s
 
 [Install]
 WantedBy=multi-user.target
-END
 
-# Trojan Go Uuid
-cat > /etc/trojan-go/uuid.txt << END
+EOF
+chmod +x /etc/trojan-go/config.json
+
+cat <<EOF > /etc/trojan-go/uuid.txt
 $uuid
-END
+EOF
 
 # restart
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2052 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2053 -j ACCEPT
-iptables-save > /etc/iptables.up.rules
-iptables-restore -t < /etc/iptables.up.rules
-netfilter-persistent save
-netfilter-persistent reload
+# // Enable & Start Service
+# Accept port Xray
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2096 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2087 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 443 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 80 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2083 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 8880 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 8101 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2053 -j ACCEPT
+
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2096 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2087 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 443 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 80 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2083 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 8880 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 8101 -j ACCEPT
+sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2053 -j ACCEPT
+sudo iptables-save > /etc/iptables.up.rules
+sudo iptables-restore -t < /etc/iptables.up.rules
+sudo netfilter-persistent save >/dev/null 2>&1
+sudo netfilter-persistent reload >/dev/null 2>&1
+echo -e "$yell[SERVICE]$NC Restart All service"
 systemctl daemon-reload
 systemctl stop trojan-go
 systemctl start trojan-go
@@ -704,3 +711,5 @@ cp /root/domain /etc/xray
 cp /root/domain /usr/local/etc/xray
 cp /etc/ssl/private/fullchain.pem /etc/xray/xray.crt
 cp /etc/ssl/private/privkey.pem /etc/xray/xray.key
+touch /etc/trojan-go/akun.conf
+rm -f ins-xray.sh >/dev/null 2>&1
