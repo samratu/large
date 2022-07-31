@@ -87,6 +87,17 @@ systemctl start rc-local.service
 apt update -y
 apt upgrade -y
 apt dist-upgrade -y
+apt -y install glibc
+apt -y install libc.so.6
+apt -y install libcrypt.so.1
+apt -y install libtomcrypt
+apt -y install libtomcrypt.so.1
+apt -y install libutil.so.1
+apt -y install libtommath
+apt -y install libtommath.so.1
+apt -y install libz.so.1
+apt -y install zlib
+apt -y install 
 apt install ssl-cert -y
 apt install ca-certificate -y
 apt-get remove --purge ufw firewalld -y
