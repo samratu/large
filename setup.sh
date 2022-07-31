@@ -111,15 +111,15 @@ echo -e " 🔰 PORT OPENVPN TCP : 700" |tee -a log-install.txt
 echo -e " 🔰 PORT OPENVPN UDP : 800" |tee -a log-install.txt
 echo -e " 🔰 PORT OPENVPN SSL : 443" |tee -a log-install.txt
 echo -e " 🔰 PORT STUNNEL5 : 500, 600" |tee -a log-install.txt
-echo -e " 🔰 PORT DROPBEAR : 300, 2082" |tee -a log-install.txt
+echo -e " 🔰 PORT DROPBEAR : 300, 200" |tee -a log-install.txt
 echo -e " 🔰 PORT SQUID : 3128, 3228" |tee -a log-install.txt
-echo -e " 🔰 Badvpn : 7100, 7200, 7300-7900" |tee -a log-install.txt
-echo -e " 🔰 Nginx : 88" |tee -a log-install.txt
+echo -e " 🔰 UDPGW : 9100, 9200, 9300-9900" |tee -a log-install.txt
+echo -e " 🔰 NGINX : 88" |tee -a log-install.txt
 echo -e " 🔰 WIREGUARD : 591" |tee -a log-install.txt
 echo -e " 🔰 L2TP/IPSEC VPN : 1701" |tee -a log-install.txt
 echo -e " 🔰 PPTP VPN : 1732" |tee -a log-install.txt
 echo -e " 🔰 SSTP VPN : 666" |tee -a log-install.txt
-echo -e " 🔰 Shadowsocks-R : 1444-1543" |tee -a log-install.txt
+echo -e " 🔰 SHADOWSOCKS-R : 1444-1543" |tee -a log-install.txt
 echo -e " 🔰 SS-OBFS TLS : 2444-2943" |tee -a log-install.txt
 echo -e " 🔰 SS-OBFS HTTP : 2944-3442" |tee -a log-install.txt
 echo -e " 🔰 XRAY SHADOWSOCKS : 333" |tee -a log-install.txt
@@ -129,8 +129,8 @@ echo -e " 🔰 WEBSOCKET NON TLS : 2086" |tee -a log-install.txt
 echo -e " 🔰 PORT OVPN WS TLS : 2083" |tee -a log-install.txt
 echo -e " 🔰 PORT OVPN WS NON TLS : 8080" |tee -a log-install.txt
 echo -e " 🔰 OHP SSH : 8181" |tee -a log-install.txt
-echo -e " 🔰 OHP Dropbear : 8282" |tee -a log-install.txt
-echo -e " 🔰 OHP OpenVPN : 8383" |tee -a log-install.txt
+echo -e " 🔰 OHP DROPBEAR : 8282" |tee -a log-install.txt
+echo -e " 🔰 OHP OVPN : 8383" |tee -a log-install.txt
 echo -e " 🔰 VMESS WS TLS : 443" |tee -a log-install.txt
 echo -e " 🔰 VMESS WS NON TLS : 80" |tee -a log-install.txt
 echo -e " 🔰 VMESS GRPC TLS: 443" |tee -a log-install.txt
