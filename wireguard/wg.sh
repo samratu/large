@@ -87,8 +87,8 @@ echo "[Interface]
 Address = $SERVER_WG_IPV4/24
 ListenPort = $SERVER_PORT
 PrivateKey = $SERVER_PRIV_KEY
-PostUp = iptables -A FORWARD -i %i wg0 -j ACCEPT; iptables -A FORWARD -o %i -j ACCEPT; iptables -t nat -A POSTROUTING -o $SERVER_PUB_NIC -j MASQUERADE;
-PostDown = iptables -D FORWARD -i %i wg0 -j ACCEPT; iptables -A FORWARD -o %i -j ACCEPT; iptables -t nat -D POSTROUTING -o $SERVER_PUB_NIC -j MASQUERADE;" >>"/etc/wireguard/wg0.conf"
+PostUp = iptables -A FORWARD -i wg0 -j ACCEPT; iptables -A FORWARD -o -j ACCEPT; iptables -t nat -A POSTROUTING -o $SERVER_PUB_NIC -j MASQUERADE;
+PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; iptables -A FORWARD -o -j ACCEPT; iptables -t nat -D POSTROUTING -o $SERVER_PUB_NIC -j MASQUERADE;" >>"/etc/wireguard/wg0.conf"
 
 iptables -t nat -I POSTROUTING -s 10.11.11.1 -o $SERVER_PUB_NIC -j MASQUERADE
 iptables -I INPUT 1 -i wg0 -j ACCEPT
@@ -140,7 +140,7 @@ WG_RUNNING=$?
 #UPDATE_HOSTS='/etc/hosts'
 #END
 
-cat /etc/wireguard/wg0.conf <<END
+#cat /etc/wireguard/wg0.conf <<END
 #Endpoint = 127.0.0.1:591
 #Table = off
 #PreUp = source /etc/wireguard/wstunnel.sh && pre_up %i
