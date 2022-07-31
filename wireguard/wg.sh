@@ -108,47 +108,47 @@ systemctl enable "wg-quick@wg0"
 systemctl is-active --quiet "wg-quick@wg0"
 WG_RUNNING=$?
 
-wget https://github.com/erebe/wstunnel/releases/download/v4.0/wstunnel-x64-linux
-mv wstunnel-x64-linux /usr/local/bin/wstunnel
-chmod uo+x /usr/local/bin/wstunnel
-setcap CAP_NET_BIND_SERVICE=+eip /usr/local/bin/wstunnel
+#wget https://github.com/erebe/wstunnel/releases/download/v4.0/wstunnel-x64-linux
+#mv wstunnel-x64-linux /usr/local/bin/wstunnel
+#chmod uo+x /usr/local/bin/wstunnel
+#setcap CAP_NET_BIND_SERVICE=+eip /usr/local/bin/wstunnel
 
-cat /etc/systemd/system/wstunnel.service << END
-[Unit]
-Description=Tunnel WireGuard UDP over websocket
-After=network.target
+#cat /etc/systemd/system/wstunnel.service << END
+#[Unit]
+#Description=Tunnel WireGuard UDP over websocket
+#After=network.target
 
-[Service]
-Type=simple
-User=nobody
-ExecStart=/usr/local/bin/wstunnel -v --server wss://0.0.0.0:443 --restrictTo=127.0.0.1:591
-Restart=no
+#[Service]
+#Type=simple
+#User=nobody
+#ExecStart=/usr/local/bin/wstunnel -v --server wss://0.0.0.0:443 --restrictTo=127.0.0.1:591
+#Restart=no
 
-[Install]
-WantedBy=multi-user.target
-END
-systemctl enable --now wstunnel
+#[Install]
+#WantedBy=multi-user.target
+#END
+#systemctl enable --now wstunnel
 
-cat /etc/wireguard/wstunnel.sh << END
-remote_ip=${remote}
-END
+#cat /etc/wireguard/wstunnel.sh << END
+#remote_ip=${remote}
+#END
 
-cat /etc/wireguard/wg0.wstunnel << END
-REMOTE_HOST=(server's IP address goes here)
-REMOTE_PORT=51820
+#cat /etc/wireguard/wg0.wstunnel << END
+#REMOTE_HOST=(server's IP address goes here)
+#REMOTE_PORT=51820
 # Use the following line if you're connecting to your VPN server using a domain name.
 #UPDATE_HOSTS='/etc/hosts'
-END
+#END
 
 cat /etc/wireguard/wg0.conf <<END
-Endpoint = 127.0.0.1:591
-Table = off
-PreUp = source /etc/wireguard/wstunnel.sh && pre_up %i
-PostUp = source /etc/wireguard/wstunnel.sh && post_up %i
-PostDown = source /etc/wireguard/wstunnel.sh && post_down %i
-END
+#Endpoint = 127.0.0.1:591
+#Table = off
+#PreUp = source /etc/wireguard/wstunnel.sh && pre_up %i
+#PostUp = source /etc/wireguard/wstunnel.sh && post_up %i
+#PostDown = source /etc/wireguard/wstunnel.sh && post_down %i
+#END
 
-systemctl restart wg-quick up wg0
+#systemctl restart wg-quick up wg0
 
 # Tambahan
 cd /usr/bin
