@@ -2,7 +2,6 @@
 # Proxy mod
 # wisnucokrosatrio
 # ==========================================
-
 # Link Hosting Kalian
 wisnuvpn="raw.githubusercontent.com/samratu/large/sae/websocket"
 
@@ -18,7 +17,6 @@ Documentation=https://t.me/zerossl
 After=network.target nss-lookup.target
 
 [Service]
-Type=simple
 User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
@@ -41,12 +39,11 @@ chmod +x /usr/local/bin/ws-nontls
 # Installing Service
 cat > /etc/systemd/system/ws-nontls.service << END
 [Unit]
-Description=SSH WEBSOCKET ROUTING GAJAH BY WISNU
+Description=SSH WEBSOCKET ROUTING GAJAH BY shanum
 Documentation=https://t.me/zerossl
 After=network.target nss-lookup.target
 
 [Service]
-Type=simple
 User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
@@ -74,7 +71,6 @@ Documentation=https://t.me/zerossl
 After=network.target nss-lookup.target
 
 [Service]
-Type=simple
 User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
@@ -84,7 +80,9 @@ Restart=on-failure
 
 [Install]
 WantedBy=multi-user.target
+
 END
+
 systemctl daemon-reload
 systemctl enable ws-ovpn
 systemctl restart ws-ovpn
@@ -101,7 +99,6 @@ Documentation=https://t.me/zerossl
 After=network.target nss-lookup.target
 
 [Service]
-Type=simple
 User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
@@ -111,6 +108,7 @@ Restart=on-failure
 
 [Install]
 WantedBy=multi-user.target
+
 END
 
 systemctl daemon-reload
