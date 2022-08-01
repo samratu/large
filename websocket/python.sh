@@ -13,7 +13,6 @@ wisnuvpn="raw.githubusercontent.com/samratu/large/sae/websocket"
 wget -q -O /usr/local/bin/ovpn-tls https://${wisnuvpn}/ovpn-tls.py
 chmod +x /usr/local/bin/ovpn-tls
 
-
 # Installing Service
 cat > /etc/systemd/system/ovpn-tls.service << END
 [Unit]
@@ -85,7 +84,6 @@ Restart=on-failure
 
 [Install]
 WantedBy=multi-user.target
-
 END
 
 systemctl daemon-reload
@@ -113,7 +111,6 @@ Restart=on-failure
 
 [Install]
 WantedBy=multi-user.target
-
 END
 
 systemctl daemon-reload
