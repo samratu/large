@@ -16,7 +16,7 @@ RESPONSE = 'HTTP/1.1 101 <b><font color="green">SUN AMATAK AJIKU SI JARAN GOYANG
 
 class Server(threading.Thread):
     def __init__(self, host, port):
-        threading.Thread.__init__()
+        threading.Thread.__init__(self)
         self.running = False
         self.host = host
         self.port = port
@@ -78,7 +78,6 @@ class Server(threading.Thread):
                 c.close()
         finally:
             self.threadsLock.release()
-
 
 class ConnectionHandler(threading.Thread):
     def __init__(self, socClient, server, addr):
@@ -220,7 +219,6 @@ class ConnectionHandler(threading.Thread):
             if error:
                 break
 
-
 def print_usage():
     print 'Usage: proxy.py -p <port>'
     print '       proxy.py -b <bindAddr> -p <port>'
@@ -243,7 +241,6 @@ def parse_args(argv):
             LISTENING_ADDR = arg
         elif opt in ("-p", "--port"):
             LISTENING_PORT = int(arg)
-
 
 def main(host=LISTENING_ADDR, port=LISTENING_PORT):
     print "\n:-------PythonProxy-------:\n"
