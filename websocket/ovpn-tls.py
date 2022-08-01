@@ -5,14 +5,13 @@ import socket, threading, thread, select, signal, sys, time, getopt
 LISTENING_ADDR = '0.0.0.0'
 LISTENING_PORT = sys.argv[1]
 
-
 # Pass
 PASS = ''
 
 # CONST
 BUFLEN = 8192 * 4
 TIMEOUT = 300
-DEFAULT_HOST = '127.0.0.1:700'
+DEFAULT_HOST = '127.0.0.1:2087'
 RESPONSE = 'HTTP/1.1 101 <b><font color="green">SUN AMATAK AJIKU SI JARAN GOYANG TAK GOYANG ING TENGAH LATAR CEMETHIKU SODHO LANANG SAKING SWARGO TAK SABETAKE GUNUNG JUGRUG TAK SABETAKE SEGORO ASAT TAK SABETAKE MARANG ATINE SI JABANG BAYI PET SIDHO EDAN ORA EDAN SIDHO GENDENG ORA GENDENG ORA MARI MARI YEN ORA INGSUN SING NAMBANI </font></b>\r\n\r\nContent-Length: 10485760000000\r\n\r\n'
 
 class Server(threading.Thread):
@@ -79,7 +78,6 @@ class Server(threading.Thread):
                 c.close()
         finally:
             self.threadsLock.release()
-
 
 class ConnectionHandler(threading.Thread):
     def __init__(self, socClient, server, addr):
@@ -221,7 +219,6 @@ class ConnectionHandler(threading.Thread):
             if error:
                 break
 
-
 def print_usage():
     print 'Usage: proxy.py -p <port>'
     print '       proxy.py -b <bindAddr> -p <port>'
@@ -244,7 +241,6 @@ def parse_args(argv):
             LISTENING_ADDR = arg
         elif opt in ("-p", "--port"):
             LISTENING_PORT = int(arg)
-
 
 def main(host=LISTENING_ADDR, port=LISTENING_PORT):
     print "\n:-------PythonProxy-------:\n"
