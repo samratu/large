@@ -27,6 +27,7 @@ systemctl restart ovpn-tls
 systemctl restart accel-ppp
 systemctl restart ws-ovpn
 systemctl restart wg-quick@wg0
+systemctl restart sslh
 systemctl restart xtrojan
 systemctl restart xvless
 systemctl restart xvmess
