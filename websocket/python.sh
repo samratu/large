@@ -3,20 +3,16 @@
 # wisnucokrosatrio
 # ==========================================
 # Link Hosting Kalian
-wisnuvpn="raw.githubusercontent.com/samratu/large/sae/websocket"
+wisnuvpn="raw.githubusercontent.com/inoyaksorojawi/large/sae/websocket"
 
 # Getting Proxy Template
-#wget -q -O /usr/local/bin/ws-proxy https://${wisnuvpn}/ws-proxy.js
-#chmod +x /usr/local/bin/ws-proxy
-
-# Getting Proxy Template
-wget -q -O /usr/local/bin/ovpn-tls https://${wisnuvpn}/ovpn-tls.py
-chmod +x /usr/local/bin/ovpn-tls
+wget -q -O /usr/local/bin/ws-tls https://${wisnuvpn}/ws-tls.py
+chmod +x /usr/local/bin/ws-tls
 
 # Installing Service
-cat > /etc/systemd/system/ovpn-tls.service << END
+cat > /etc/systemd/system/ws-tls.service << END
 [Unit]
-Description=OVPN WEBSOCKET ROUTING GAJAH BY WISNU
+Description=SSH WEBSOCKET TLS ROUTING INDONESIA BY ZEROSSL
 Documentation=https://t.me/zerossl
 After=network.target nss-lookup.target
 
@@ -25,7 +21,7 @@ User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
-ExecStart=/usr/bin/python -O /usr/local/bin/ovpn-tls 2083
+ExecStart=/usr/bin/python -O /usr/local/bin/ws-tls 2087
 Restart=on-failure
 
 [Install]
@@ -33,12 +29,62 @@ WantedBy=multi-user.target
 END
 
 systemctl daemon-reload
-systemctl enable ovpn-tls
-systemctl restart ovpn-tls
+systemctl enable ws-tls
+systemctl restart ws-tls
 
 # Getting Proxy Template
-wget -q -O /usr/local/bin/ws-nontls https://${wisnuvpn}/ws-nontls.py
-chmod +x /usr/local/bin/ws-nontls
+wget -q -O /usr/local/bin/wsstunnel https://${wisnuvpn}/wsstunnel.py
+chmod +x /usr/local/bin/wsstunnel
+
+# Installing Service
+cat > /etc/systemd/system/wsstunnel.service << END
+[Unit]
+Description=SSH WEBSOCKET TLS ROUTING INDONESIA BY ZEROSSL
+Documentation=https://t.me/zerossl
+After=network.target nss-lookup.target
+
+[Service]
+User=root
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+NoNewPrivileges=true
+ExecStart=/usr/bin/python -O /usr/local/bin/wsstunnel
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+END
+
+systemctl daemon-reload
+systemctl enable wsstunnel
+systemctl restart wsstunnel
+
+# Getting Proxy Template
+wget -q -O /usr/local/bin/ws-tunnel https://${wisnuvpn}/ws-tunnel.py
+chmod +x /usr/local/bin/ws-tunnel
+
+# Installing Service
+cat > /etc/systemd/system/ws-tunnel.service << END
+[Unit]
+Description=SSH WEBSOCKET TLS ROUTING INDONESIA BY ZEROSSL
+Documentation=https://t.me/zerossl
+After=network.target nss-lookup.target
+
+[Service]
+User=root
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+NoNewPrivileges=true
+ExecStart=/usr/bin/python -O /usr/local/bin/ws-tunnel
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+END
+
+systemctl daemon-reload
+systemctl enable ws-tunnel
+systemctl restart ws-tunnel
 
 # Installing Service
 cat > /etc/systemd/system/ws-nontls.service << END
@@ -91,13 +137,13 @@ systemctl enable ws-ovpn
 systemctl restart ws-ovpn
 
 # Getting Proxy Template
-wget -q -O /usr/local/bin/ws-tls https://${wisnuvpn}/ws-tls.py
-chmod +x /usr/local/bin/ws-tls
+wget -q -O /usr/local/bin/ovpn-tls https://${wisnuvpn}/ovpn-tls.py
+chmod +x /usr/local/bin/ovpn-tls
 
 # Installing Service
-cat > /etc/systemd/system/ws-tls.service << END
+cat > /etc/systemd/system/ovpn-tls.service << END
 [Unit]
-Description=SSH WEBSOCKET TLS ROUTING INDONESIA BY ZEROSSL
+Description=OVPN WEBSOCKET ROTING PENGKOL BY GANDRING
 Documentation=https://t.me/zerossl
 After=network.target nss-lookup.target
 
@@ -106,7 +152,7 @@ User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
-ExecStart=/usr/bin/python -O /usr/local/bin/ws-tls 2087
+ExecStart=/usr/bin/python -O /usr/local/bin/ovpn-tls 127.0.0.1:2083
 Restart=on-failure
 
 [Install]
@@ -114,5 +160,5 @@ WantedBy=multi-user.target
 END
 
 systemctl daemon-reload
-systemctl enable ws-tls
-systemctl restart ws-tls
+systemctl enable ovpn-tls
+systemctl restart ovpn-tls
