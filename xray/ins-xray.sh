@@ -158,7 +158,6 @@ cat > /etc/xray/config.json << END
     }
 END
 
-# Buat Config Xray
 cat > /etc/xray/tes.json << END
 {
   "log": {
@@ -498,6 +497,29 @@ LimitNOFILE=1000000
 WantedBy=multi-user.target
 END
 
+# / / Installation Xray Service
+cat > /etc/systemd/system/tes.service << END
+[Unit]
+Description=XRAY ROUTING DAM COLO PENGKOL BY WISNU
+Documentation=https://t.me/zerossl
+After=network.target nss-lookup.target
+
+[Service]
+User=www-data
+User=root
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+NoNewPrivileges=true
+ExecStart=/usr/local/bin/xray run -config /etc/xray/tes.json
+Restart=on-failure
+RestartPreventExitStatus=23
+LimitNPROC=10000
+LimitNOFILE=1000000
+
+[Install]
+WantedBy=multi-user.target
+END
+
 cat > /etc/systemd/system/xvmess.service << END
 [Unit]
 Description=XVMESS ROUTING GAJAH DEMAK BY GANDRING
@@ -589,33 +611,15 @@ LimitNOFILE=1000000
 WantedBy=multi-user.target
 END
 
-# / / Installation Xray Service
-cat > /etc/systemd/system/tes.service << END
-[Unit]
-Description=XVLESS ROUTING DAM COLO PENGKOL BY Z
-Documentation=https://t.me/zerossl
-After=network.target nss-lookup.target
-
-[Service]
-User=www-data
-User=root
-CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-NoNewPrivileges=true
-ExecStart=/usr/local/bin/xray run -config /etc/xray/tes.json
-Restart=on-failure
-RestartPreventExitStatus=23
-LimitNPROC=10000
-LimitNOFILE=1000000
-
-[Install]
-WantedBy=multi-user.target
-END
-
 systemctl daemon-reload
 systemctl enable xray.service
 systemctl start xray.service
 systemctl restart xray.service
+
+systemctl daemon-reload
+systemctl enable tes.service
+systemctl start tes.service
+systemctl restart tes.service
 
 ##restart&start service
 systemctl daemon-reload
@@ -640,12 +644,6 @@ systemctl enable xvmess.service
 systemctl start xvmess.service
 systemctl restart xvmess.service
 
-##restart&start service
-systemctl daemon-reload
-systemctl enable tes.service
-systemctl start tes.service
-systemctl restart tes.service
-
 # Install Trojan Go
 latest_version="$(curl -s "https://api.github.com/repos/p4gefau1t/trojan-go/releases" | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
 trojango_link="https://github.com/p4gefau1t/trojan-go/releases/download/v${latest_version}/trojan-go-linux-amd64.zip"
@@ -659,14 +657,7 @@ chmod +x /usr/local/bin/trojan-go
 mkdir /var/log/trojan-go/
 touch /etc/trojan-go/akun.conf
 touch /var/log/trojan-go/trojan-go.log
-mkdir -p /usr/lib/trojan-go >/dev/null 2>&1
-	wget -q -N --no-check-certificate https://github.com/p4gefau1t/trojan-go/releases/download/$(curl -fsSL https://api.github.com/repos/p4gefau1t/trojan-go/releases | grep '"tag_name":' | head -n 1 | sed -E 's/.*"([^"]+)".*/\1/')/trojan-go-linux-amd64.zip 
-	unzip -o -d /usr/lib/trojan-go/ ./trojan-go-linux-amd64.zip >/dev/null 2>&1
-	mv /usr/lib/trojan-go/trojan-go /usr/local/bin/ >/dev/null 2>&1
-	chmod +x /usr/local/bin/trojan-go
-    rm -rf ./trojan-go-linux-amd64.zip >/dev/null 2>&1
-sleep 1
-echo -e "[ ${green}INFO$NC ] Setting config trojan-go"
+
 # Buat Config Trojan Go
 cat > /etc/trojan-go/config.json << END
 {
@@ -745,7 +736,6 @@ CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
 ExecStart=/usr/local/bin/trojan-go -config /etc/trojan-go/config.json
-LimitNOFILE=51200
 Restart=on-failure
 RestartPreventExitStatus=23
 
@@ -758,9 +748,6 @@ cat > /etc/trojan-go/uuid.txt << END
 $uuid
 END
 
-# restart
-# // Enable & Start Service
-# Accept port Xray
 sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2096 -j ACCEPT
 sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 2087 -j ACCEPT
 sudo iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 443 -j ACCEPT
@@ -778,22 +765,30 @@ sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2083 -j ACCEPT
 sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 8880 -j ACCEPT
 sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 8080 -j ACCEPT
 sudo iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2053 -j ACCEPT
+
+sudo iptables -I INPUT -p tcp --dport 80 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+sudo iptables -I INPUT -p udp --dport 80 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+sudo iptables -I OUTPUT -p tcp --sport 80 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+sudo iptables -I OUTPUT -p udp --sport 80 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+sudo iptables -A INPUT -p tcp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+sudo iptables -A INPUT -p udp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+sudo iptables -A OUTPUT -p tcp --sport 443 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+sudo iptables -A OUTPUT -p udp --sport 443 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+
 sudo iptables-save > /etc/iptables.up.rules
 sudo iptables-restore -t < /etc/iptables.up.rules
 sudo netfilter-persistent save >/dev/null 2>&1
 sudo netfilter-persistent reload >/dev/null 2>&1
-echo -e "$yell[SERVICE]$NC Restart All service"
+
 systemctl daemon-reload
 systemctl stop trojan-go
 systemctl start trojan-go
 systemctl enable trojan-go
 systemctl restart trojan-go
 
-cd
-mkdir /etc/stunnel5
 cp /root/domain /etc/xray
 cp /root/domain /usr/local/etc/xray
 cp /etc/ssl/private/fullchain.pem /etc/xray/xray.crt
 cp /etc/ssl/private/privkey.pem /etc/xray/xray.key
-touch /etc/trojan-go/akun.conf
+
 rm -f ins-xray.sh >/dev/null 2>&1
