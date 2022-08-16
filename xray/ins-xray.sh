@@ -157,6 +157,53 @@ cat > /etc/xray/config.json << END
       }
     }
 END
+
+# Buat Config Xray
+cat > /etc/xray/tes.json << END
+{
+  "log": {
+    "access": "/var/log/xray/access.log",
+    "error": "/var/log/xray/error.log",
+    "loglevel": "info"
+  },
+  "inbounds": [
+    {
+      "port": 29053,
+      "protocol": "vmess",
+      "settings": {
+        "clients": [
+          {
+            "id": "${uuid1}",
+            "alterId": 32
+#xray-vmess-tls
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "certificates": [
+            {
+              "certificateFile": "${path_crt}",
+              "keyFile": "${path_key}"
+            }
+          ]
+        },
+        "tcpSettings": {},
+        "kcpSettings": {},
+        "httpSettings": {},
+        "wsSettings": {
+          "path": "/vmess/",
+          "headers": {
+            "Host": ""
+          }
+        },
+        "quicSettings": {}
+      }
+    }
+END
+
 #path_key="/root/.acme.sh/$domain_ecc/$domain.key"
 # Buat Config Xray
 cat > /usr/local/etc/xray/%i.json << END
@@ -542,6 +589,29 @@ LimitNOFILE=1000000
 WantedBy=multi-user.target
 END
 
+# / / Installation Xray Service
+cat > /etc/systemd/system/tes.service << END
+[Unit]
+Description=XVLESS ROUTING DAM COLO PENGKOL BY Z
+Documentation=https://t.me/zerossl
+After=network.target nss-lookup.target
+
+[Service]
+User=www-data
+User=root
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+NoNewPrivileges=true
+ExecStart=/usr/local/bin/xray run -config /etc/xray/tes.json
+Restart=on-failure
+RestartPreventExitStatus=23
+LimitNPROC=10000
+LimitNOFILE=1000000
+
+[Install]
+WantedBy=multi-user.target
+END
+
 systemctl daemon-reload
 systemctl enable xray.service
 systemctl start xray.service
@@ -569,6 +639,12 @@ systemctl daemon-reload
 systemctl enable xvmess.service
 systemctl start xvmess.service
 systemctl restart xvmess.service
+
+##restart&start service
+systemctl daemon-reload
+systemctl enable tes.service
+systemctl start tes.service
+systemctl restart tes.service
 
 # Install Trojan Go
 latest_version="$(curl -s "https://api.github.com/repos/p4gefau1t/trojan-go/releases" | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
