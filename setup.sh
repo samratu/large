@@ -110,7 +110,7 @@ echo -e " 🔰 PORT OPENSSH : 22" |tee -a log-install.txt
 echo -e " 🔰 PORT OPENVPN TCP : 700" |tee -a log-install.txt
 echo -e " 🔰 PORT OPENVPN UDP : 800" |tee -a log-install.txt
 echo -e " 🔰 PORT OPENVPN SSL : 443" |tee -a log-install.txt
-echo -e " 🔰 PORT STUNNEL5 : 500, 600" |tee -a log-install.txt
+echo -e " 🔰 PORT STUNNEL5 : 443, 500, 400" |tee -a log-install.txt
 echo -e " 🔰 PORT DROPBEAR : 300, 200" |tee -a log-install.txt
 echo -e " 🔰 PORT SQUID : 3128, 3228" |tee -a log-install.txt
 echo -e " 🔰 UDPGW : 9100, 9200, 9300-9900" |tee -a log-install.txt
@@ -124,8 +124,8 @@ echo -e " 🔰 SS-OBFS TLS : 2444-2943" |tee -a log-install.txt
 echo -e " 🔰 SS-OBFS HTTP : 2944-3442" |tee -a log-install.txt
 echo -e " 🔰 XRAY SHADOWSOCKS : 333" |tee -a log-install.txt
 echo -e " 🔰 XRAY MTPROTO : 111" |tee -a log-install.txt
-echo -e " 🔰 WEBSOCKET TLS : 2087" |tee -a log-install.txt
-echo -e " 🔰 WEBSOCKET NON TLS : 2086" |tee -a log-install.txt
+echo -e " 🔰 WEBSOCKET TLS : 443" |tee -a log-install.txt
+echo -e " 🔰 WEBSOCKET NON TLS : 80" |tee -a log-install.txt
 echo -e " 🔰 PORT OVPN WS TLS : 2083" |tee -a log-install.txt
 echo -e " 🔰 PORT OVPN WS NON TLS : 8080" |tee -a log-install.txt
 echo -e " 🔰 OHP SSH : 8181" |tee -a log-install.txt
@@ -167,12 +167,14 @@ echo -e " 🔰 SOCKS5 WS NON TLS  : 80" |tee -a log-install.txt
 echo -e " 🔰 SOCKS5 GRPC TLS : 443" |tee -a log-install.txt
 echo -e " 🔰 SOCKS5 GRPC NON TLS : 80" |tee -a log-install.txt
 echo -e " 🔰 SOCKS5 TCP TLS : 10809 |tee -a log-install.txt
+echo -e " 🔰 SOCKS5 UDP : 999 |tee -a log-install.txt
 echo -e " 🔰 SHADOWSOCKS TCP TLS : 414" |tee -a log-install.txt
 echo -e " 🔰 SHADOWSOCKS WS TLS : 443" |tee -a log-install.txt
 echo -e " 🔰 SHADOWSOCKS WS NON TLS : 80" |tee -a log-install.txt
 echo -e " 🔰 SHADOWSOCKS GRPC TLS : 443" |tee -a log-install.txt
 echo -e " 🔰 SHADOWSOCKS GRPC NON TLS : 80" |tee -a log-install.txt
-echo -e " 🔰 SHADOWSOCKS 2022 TCP TLS : 212" |tee -a log-install.txt
+echo -e " 🔰 SHADOWSOCKS 2022 UDP : 212" |tee -a log-install.txt
+echo -e " 🔰 SHADOWSOCKS 2022 TCP TLS : 414" |tee -a log-install.txt
 echo -e " 🔰 SHADOWSOCKS 2022 WS NON TLS : 80" |tee -a log-install.txt
 echo -e " 🔰 SHADOWSOCKS 2022 WS TLS : 443" |tee -a log-install.txt
 echo -e " 🔰 SHADOWSOCKS 2022 GRPC TLS : 443" |tee -a log-install.txt
