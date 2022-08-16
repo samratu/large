@@ -24,10 +24,6 @@ clear
 if [ -e "/var/log/auth.log" ]; then
         LOG="/var/log/auth.log";
 fi
-if [ -e "/var/log/secure" ]; then
-        LOG="/var/log/secure";
-fi
-                
 data=( `ps aux | grep -i dropbear | awk '{print $2}'`);
 cat $LOG | grep -i dropbear | grep -i "Password auth succeeded" > /tmp/login-db.txt;
 for PID in "${data[@]}"
@@ -43,9 +39,9 @@ done
 MYIP=$(wget -qO- ipinfo.io/ip);
 MYIP6=$(wget -qO- https://ipv6.icanhazip.com);
 ws="$(cat ~/log-install.txt | grep -w "WEBSOCKET TLS" | cut -d: -f2|sed 's/ //g')"
-otcp="$(cat ~/log-install.txt | grep -w "PORT OPENVPN TCP" | cut -d: -f2|sed 's/ //g')"
-oudp="$(cat ~/log-install.txt | grep -w "PORT OPENVPN UDP" | cut -d: -f2|sed 's/ //g')"
-ossl="$(cat ~/log-install.txt | grep -w "PORT OPENVPN SSL" | cut -d: -f2|sed 's/ //g')"
+otcp="$(cat ~/log-install.txt | grep -w "PORT OVPN TCP" | cut -d: -f2|sed 's/ //g')"
+oudp="$(cat ~/log-install.txt | grep -w "PORT OVPN UDP" | cut -d: -f2|sed 's/ //g')"
+ossl="$(cat ~/log-install.txt | grep -w "PORT OVPN SSL" | cut -d: -f2|sed 's/ //g')"
 otls="$(cat ~/log-install.txt | grep -w "PORT OVPN WS TLS" | cut -d: -f2|sed 's/ //g')"
 onontls="$(cat ~/log-install.txt | grep -w "PORT OVPN WS NON TLS" | cut -d: -f2|sed 's/ //g')"
 ws2="$(cat ~/log-install.txt | grep -w "WEBSOCKET NON TLS" | cut -d: -f2|sed 's/ //g')"
@@ -71,6 +67,10 @@ systemctl restart sslh
 systemctl restart ws-ovpn
 systemctl restart ovpn-tls
 systemctl restart ssh-ohp
+systemctl restart ws-ohp
+systemctl restart wsstunnel
+systemctl restart ws-tunnel
+systemctl restart wstls-ohp
 systemctl restart dropbear-ohp
 systemctl restart openvpn-ohp
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
@@ -90,7 +90,7 @@ echo -e "OVPN WS NONTLS $off:$onontls"
 echo -e "Port TCP       $off:$otcp"
 echo -e "Port UDP       $off:$oudp"
 echo -e "Port SSL       $off:$ossl"
-echo -e "UDPGW   :9100-9200-9300--9400-9900"
+echo -e "UDPGW   :9100,9200-->>9900"
 echo -e "Created :$hariini"
 echo -e "Expired :$expi"
 echo -e "OVPN TCP:http://$MYIP:88/tcp.ovpn"
@@ -102,7 +102,7 @@ echo -e "━━━━━━━━━━━━━━━━━━━"
 echo -e "OVPN ZIP:http://$MYIP:88/gandring.zip"
 echo -e "━━━━━━━━━━━━━━━━━━━"
 echo -e "Payload SSH & OVPN WEBSOCKET"
-echo -e "GET / HTTP/1.1[crlf]Host: ${domain}[crlf]Upgrade: Websocket[crlf]Connection: Keep-Alive[crlf]User-Agent: [ua][crlf][crlf]"
+echo -e "GET ws://bugmu.com [protocol][crlf]/ HTTP/1.1[crlf]Host: $domain[crlf]Upgrade: Websocket[crlf]Connection: Keep-Alive[crlf]User-Agent: [ua][crlf][crlf]"
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\033[1;46m🔰LUXURY EDITION ZEROSSL🔰\e[m"   
 echo -e "\033[1;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"

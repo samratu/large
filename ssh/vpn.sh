@@ -15,7 +15,7 @@ LIGHT='\033[0;37m'
 MYIP=$(wget -qO- ipinfo.io/ip);
 # ==================================================
 # Link Hosting Kalian
-wisnuvpn="raw.githubusercontent.com/samratu/large/sae/ssh"
+wisnuvpn="raw.githubusercontent.com/inoyaksorojawi/large/sae/ssh"
 
 # initialisasi var
 export DEBIAN_FRONTEND=noninteractive
@@ -92,7 +92,7 @@ cat > /etc/openvpn/ssl.ovpn <<-END
 client
 dev tun
 proto tcp
-remote xxxxxxxxx 443
+remote xxxxxxxxx 2087
 resolv-retry infinite
 route-method exe
 nobind
@@ -109,7 +109,7 @@ cd
 # pada tulisan xxx ganti dengan alamat ip address VPS anda 
 /etc/init.d/openvpn restart
 
-# masukkan certificatenya ke dalam config client TCP 700
+# masukkan certificatenya ke dalam config client TCP 600
 echo '<ca>' >> /etc/openvpn/tcp.ovpn
 cat /etc/openvpn/server/ca.crt >> /etc/openvpn/tcp.ovpn
 echo '</ca>' >> /etc/openvpn/tcp.ovpn
